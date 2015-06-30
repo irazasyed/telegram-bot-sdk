@@ -1,0 +1,28 @@
+{
+  "name": "irazasyed/telegram-bot-sdk",
+  "description": "The Unofficial Telegram Bot API PHP SDK",
+  "keywords": ["telegram", "telegram bot", "telegram api", "telegram bot api", "telegram sdk", "telegram php"],
+  "type": "library",
+  "homepage": "https://github.com/irazasyed/telegram-bot-sdk",
+  "license": "GPL-3.0",
+  "authors": [
+    {
+      "name": "Syed Irfaq R.",
+      "email": "syed+gh@lukonet.com",
+      "homepage": "https://github.com/irazasyed"
+    }
+  ],
+  "require": {
+    "php": ">=5.5.0",
+    "guzzlehttp/guzzle": "~6.0",
+    "illuminate/support": "5.0.*|5.1.*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Irazasyed\\Telegram\\": "src/"
+    }
+  },
+  "suggest": {
+    "irazasyed/larasupport": "Allows you to use any Laravel Package in Lumen by adding support!"
+  }
+}
