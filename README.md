@@ -190,6 +190,51 @@ To remove webhook (if it was set before).
 $response = $telegram->removeWebhook();
 ```
 
+### Use Custom Keyboard
+
+#### ReplyKeyboardMarkup
+
+The below example will send a message and automatically show a custom keyboard. 
+Since we passed third parameter as true, the keyboard will be shown only once.
+
+See [ReplyKeyboardMarkup](https://core.telegram.org/bots/api#replykeyboardmarkup) docs for a list of supported parameters and other info.
+
+Example:
+
+```php
+$reply_markup = $telegram->replyKeyboardMarkup([
+                   ['YES', 'NO', 'IDK'],
+                   ['COOL', 'LOL'],
+                   ['Button'],
+                   ['Last Button']
+               ], true, true);
+$response = $telegram->sendMessage('CHAT_ID', 'Hello World', false, null, $reply_markup);
+$messageId = $response->getMessageId();
+```
+
+#### ReplyKeyboardHide
+
+Telegram clients will hide the current custom keyboard and display the default letter-keyboard.
+See [ReplyKeyboardHide](https://core.telegram.org/bots/api#replykeyboardhide) docs for more info.
+
+Supported Parameter: boolean `$selective` defaults to false.
+```php
+$reply_markup = $telegram->replyKeyboardHide();
+$response = $telegram->sendMessage('CHAT_ID', 'Hello World', false, null, $reply_markup);
+```
+
+#### ForceReply
+
+Shows reply interface to the user, as if they manually selected the bot‘s message and tapped ’Reply'.
+See [ForceReply](https://core.telegram.org/bots/api#forcereply) docs for more info.
+
+Supported Parameter: boolean `$selective` defaults to false.
+
+```php
+$reply_markup = $telegram->forceReply();
+$response = $telegram->sendMessage('CHAT_ID', 'Hello World', false, null, $reply_markup);
+```
+
 ## Asynchronous Requests (Non-Blocking)
 
 By default, sending an API request to Telegram Bot API will be a synchronous request, and block the execution of the script until it gets a response from the server or timeouts after 60 secs (throwing a Guzzle exception).
