@@ -3,6 +3,7 @@
 namespace Irazasyed\Telegram;
 
 use Irazasyed\Telegram\Objects\User;
+use Irazasyed\Telegram\Objects\Update;
 use Irazasyed\Telegram\Objects\Message;
 use Irazasyed\Telegram\Objects\UserProfilePhotos;
 use Irazasyed\Telegram\FileUpload\InputFile;
@@ -433,13 +434,19 @@ class Telegram
      * @param int $limit
      * @param int $timeout
      *
-     * @return \Irazasyed\Telegram\Objects\UserProfilePhotos
+     * @return Update[]
      */
     public function getUpdates($offset = null, $limit = null, $timeout = null)
     {
         $response = $this->get('getUpdates', compact('offset', 'limit', 'timeout'));
+        $body = $response->getDecodedBody();
 
-        return new Update($response->getDecodedBody());
+        $updates = [];
+        foreach ($body as $update) {
+            $updates[] = new Update($update);
+        }
+
+        return $updates;
     }
 
     /**
