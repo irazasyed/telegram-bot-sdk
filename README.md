@@ -192,13 +192,13 @@ $response = $telegram->removeWebhook();
 
 ## Asynchronous Requests (Non-Blocking)
 
-By default, sending an API request to Telegram Bot API will be a synchronous request, and block the execution of the script until it gets a response from the server or timeouts after 60 secs (throwing a Guzzle exception). 
+By default, sending an API request to Telegram Bot API will be a synchronous request, and block the execution of the script until it gets a response from the server or timeouts after 60 secs (throwing a Guzzle exception).
 However, an asynchronous non-blocking request can be sent by calling `setAsyncRequest(true)` before making any API request or at the time of initializing the library:
 
 ### Make specific API requests async
 ```php
 // When building the API request, just make a call to the setAsyncRequest method passing true
-// now making a request won't block the execution of the script. 
+// now making a request won't block the execution of the script.
 // Similarly if you want to do the other way around, just pass false (Make a specific API call a synchronous request).
 $telegram
    ->setAsyncRequest(true)
@@ -217,14 +217,17 @@ use Irazasyed\Telegram\Telegram;
 $telegram = new Telegram('BOT TOKEN', true);
 ```
 
-If you want all the requests to be asynchronous non-blocking requests and only a specific call to be synchronous request, 
+If you want all the requests to be asynchronous non-blocking requests and only a specific call to be synchronous request,
 you can pass the `setAsyncRequest(false)` before making an API call, see above for example.
- 
-This means that we are sending the request and not waiting for a response. 
+
+This means that we are sending the request and not waiting for a response.
 The TelegramResponse object that you will get back has NULL for HTTP status code.
 
 
 ## Additional information
+
+> The library takes advantage of the amazing Laravel Collection API to automatically map the data.
+> So it's a lot easier to work with the array of data. Supports all the methods listed on the [official docs](http://laravel.com/docs/5.1/collections).
 
 Any issues, feedback, suggestions or questions please use issue tracker [here](https://github.com/irazasyed/telegram-bot-sdk/issues).
 
