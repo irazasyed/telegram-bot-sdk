@@ -3,21 +3,14 @@
 namespace Irazasyed\Telegram;
 
 use Irazasyed\Telegram\Objects\User;
-use Irazasyed\Telegram\Objects\Update;
 use Irazasyed\Telegram\Objects\Message;
 use Irazasyed\Telegram\Objects\UserProfilePhotos;
-
-use Irazasyed\Telegram\TelegramClient;
-use Irazasyed\Telegram\TelegramRequest;
-use Irazasyed\Telegram\TelegramResponse;
 use Irazasyed\Telegram\FileUpload\InputFile;
 use Irazasyed\Telegram\HttpClients\GuzzleHttpClient;
 use Irazasyed\Telegram\Exceptions\TelegramSDKException;
 
 /**
- * Class Telegram
- *
- * @package Telegram
+ * Class Telegram.
  */
 class Telegram
 {
@@ -49,7 +42,7 @@ class Telegram
     /**
      * Indicates if the request to Telegram will be asynchronous (non-blocking).
      *
-     * @var boolean
+     * @var bool
      */
     protected $isAsyncRequest = false;
 
@@ -183,12 +176,11 @@ class Telegram
      *
      * @link https://core.telegram.org/bots/api#sendmessage
      *
-     * @param integer                                          $chat_id
+     * @param int                                              $chat_id
      * @param string                                           $text
      * @param bool                                             $disable_web_page_preview
-     * @param integer                                          $reply_to_message_id
+     * @param int                                              $reply_to_message_id
      * @param ReplyKeyboardMarkup|ReplyKeyboardHide|ForceReply $reply_markup
-     *
      *
      * @return \Irazasyed\Telegram\Objects\Message
      */
@@ -210,9 +202,9 @@ class Telegram
      *
      * @link https://core.telegram.org/bots/api#forwardmessage
      *
-     * @param integer $chat_id
-     * @param integer $from_chat_id
-     * @param integer $message_id
+     * @param int $chat_id
+     * @param int $from_chat_id
+     * @param int $message_id
      *
      * @return \Irazasyed\Telegram\Objects\Message
      */
@@ -229,10 +221,10 @@ class Telegram
      *
      * @link https://core.telegram.org/bots/api#sendphoto
      *
-     * @param integer                                          $chat_id
+     * @param int                                              $chat_id
      * @param string                                           $photo
      * @param string                                           $caption
-     * @param integer                                          $reply_to_message_id
+     * @param int                                              $reply_to_message_id
      * @param ReplyKeyboardMarkup|ReplyKeyboardHide|ForceReply $reply_markup
      *
      * @return \Irazasyed\Telegram\Objects\Message
@@ -249,9 +241,9 @@ class Telegram
      *
      * @link https://core.telegram.org/bots/api#sendaudio
      *
-     * @param integer                                          $chat_id
+     * @param int                                              $chat_id
      * @param string                                           $audio
-     * @param integer                                          $reply_to_message_id
+     * @param int                                              $reply_to_message_id
      * @param ReplyKeyboardMarkup|ReplyKeyboardHide|ForceReply $reply_markup
      *
      * @return \Irazasyed\Telegram\Objects\Message
@@ -268,9 +260,9 @@ class Telegram
      *
      * @link https://core.telegram.org/bots/api#senddocument
      *
-     * @param integer                                          $chat_id
+     * @param int                                              $chat_id
      * @param string                                           $document
-     * @param integer                                          $reply_to_message_id
+     * @param int                                              $reply_to_message_id
      * @param ReplyKeyboardMarkup|ReplyKeyboardHide|ForceReply $reply_markup
      *
      * @return \Irazasyed\Telegram\Objects\Message
@@ -287,9 +279,9 @@ class Telegram
      *
      * @link https://core.telegram.org/bots/api#sendsticker
      *
-     * @param integer                                          $chat_id
+     * @param int                                              $chat_id
      * @param string                                           $sticker
-     * @param integer                                          $reply_to_message_id
+     * @param int                                              $reply_to_message_id
      * @param ReplyKeyboardMarkup|ReplyKeyboardHide|ForceReply $reply_markup
      *
      * @return \Irazasyed\Telegram\Objects\Message
@@ -313,9 +305,9 @@ class Telegram
      * @see  sendDocument
      * @link https://core.telegram.org/bots/api#sendvideo
      *
-     * @param integer                                          $chat_id
+     * @param int                                              $chat_id
      * @param string                                           $video
-     * @param integer                                          $reply_to_message_id
+     * @param int                                              $reply_to_message_id
      * @param ReplyKeyboardMarkup|ReplyKeyboardHide|ForceReply $reply_markup
      *
      * @return \Irazasyed\Telegram\Objects\Message
@@ -332,10 +324,10 @@ class Telegram
      *
      * @link https://core.telegram.org/bots/api#sendlocation
      *
-     * @param integer                                          $chat_id
+     * @param int                                              $chat_id
      * @param float                                            $latitude
      * @param float                                            $longitude
-     * @param integer                                          $reply_to_message_id
+     * @param int                                              $reply_to_message_id
      * @param ReplyKeyboardMarkup|ReplyKeyboardHide|ForceReply $reply_markup
      *
      * @return \Irazasyed\Telegram\Objects\Message
@@ -353,8 +345,8 @@ class Telegram
      *
      * @link https://core.telegram.org/bots/api#sendchataction
      *
-     * @param integer $chat_id
-     * @param string  $action
+     * @param int    $chat_id
+     * @param string $action
      *
      * @return \Irazasyed\Telegram\TelegramResponse
      *
@@ -370,7 +362,7 @@ class Telegram
             'record_audio',
             'upload_audio',
             'upload_document',
-            'find_location'
+            'find_location',
         ];
 
         if (isset($action) && in_array($action, $validActions)) {
@@ -380,15 +372,14 @@ class Telegram
         throw new TelegramSDKException('Invalid Action! Accepted value: '.implode(', ', $validActions));
     }
 
-
     /**
      * Returns a list of profile pictures for a user.
      *
      * @link https://core.telegram.org/bots/api#getuserprofilephotos
      *
-     * @param integer $user_id
-     * @param integer $offset
-     * @param integer $limit
+     * @param int $user_id
+     * @param int $offset
+     * @param int $limit
      *
      * @return \Irazasyed\Telegram\Objects\UserProfilePhotos
      */
@@ -405,6 +396,7 @@ class Telegram
      * @param string $url HTTPS url to send updates to.
      *
      * @return \Irazasyed\Telegram\TelegramResponse
+     *
      * @throws \Irazasyed\Telegram\Exceptions\TelegramSDKException
      */
     public function setWebhook($url)
@@ -478,6 +470,7 @@ class Telegram
      * @param array  $params
      *
      * @return \Irazasyed\Telegram\Objects\Message
+     *
      * @throws \Irazasyed\Telegram\Exceptions\TelegramSDKException
      */
     public function uploadFile($endpoint, array $params = [])
@@ -491,11 +484,11 @@ class Telegram
             }
             $multipart_params[$i]['name'] = $name;
             $multipart_params[$i]['contents'] = $contents;
-            $i++;
+            ++$i;
         }
 
         $response = $this->post($endpoint, [
-            'multipart' => $multipart_params
+            'multipart' => $multipart_params,
         ]);
 
         return new Message($response->getDecodedBody());
@@ -521,7 +514,6 @@ class Telegram
 
         return $this->lastResponse = $this->client->sendRequest($request);
     }
-
 
     /**
      * Instantiates a new TelegramRequest entity.

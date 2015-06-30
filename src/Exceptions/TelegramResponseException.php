@@ -1,4 +1,5 @@
 <?php
+
 namespace Irazasyed\Telegram\Exceptions;
 
 use Irazasyed\Telegram\TelegramResponse;
@@ -34,7 +35,7 @@ class TelegramResponseException extends TelegramSDKException
     }
 
     /**
-     * A factory for creating the appropriate exception based on the response from Graph.
+     * A factory for creating the appropriate exception based on the response from Telegram.
      *
      * @param TelegramResponse $response The response that threw the exception.
      *
@@ -77,7 +78,7 @@ class TelegramResponseException extends TelegramSDKException
     }
 
     /**
-     * Returns the HTTP status code
+     * Returns the HTTP status code.
      *
      * @return int
      */
@@ -87,7 +88,7 @@ class TelegramResponseException extends TelegramSDKException
     }
 
     /**
-     * Returns the error type
+     * Returns the error type.
      *
      * @return string
      */

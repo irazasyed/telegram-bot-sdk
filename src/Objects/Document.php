@@ -10,7 +10,7 @@ class Document extends BaseObject
     public function relations()
     {
         return [
-            'thumb' => PhotoSize::class
+            'thumb' => PhotoSize::class,
         ];
     }
 }

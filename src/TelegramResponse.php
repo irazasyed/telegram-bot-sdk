@@ -2,17 +2,14 @@
 
 namespace Irazasyed\Telegram;
 
-use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use GuzzleHttp\Promise\PromiseInterface;
 use Irazasyed\Telegram\Exceptions\TelegramResponseException;
 
 /**
- * Class TelegramResponse
+ * Class TelegramResponse.
  *
  * Handles the response from Telegram API.
- *
- * @package Telegram
  */
 class TelegramResponse
 {
@@ -54,8 +51,8 @@ class TelegramResponse
     /**
      * Gets the relevant data from the Http client.
      *
-     * @param \Irazasyed\Telegram\TelegramRequest          $request
-     * @param ResponseInterface|PromiseInterface $response
+     * @param \Irazasyed\Telegram\TelegramRequest $request
+     * @param ResponseInterface|PromiseInterface  $response
      */
     public function __construct(TelegramRequest $request, $response)
     {
@@ -74,7 +71,7 @@ class TelegramResponse
         }
 
         $this->request = $request;
-        $this->endPoint = (string)$request->getEndpoint();
+        $this->endPoint = (string) $request->getEndpoint();
     }
 
     /**
@@ -151,7 +148,7 @@ class TelegramResponse
     /**
      * Checks if response is an error.
      *
-     * @return boolean
+     * @return bool
      */
     public function isError()
     {
@@ -185,7 +182,7 @@ class TelegramResponse
     {
         return $this->thrownException;
     }
-    
+
     /**
      * Converts raw API response to proper decoded response.
      */

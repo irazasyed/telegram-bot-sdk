@@ -40,7 +40,7 @@ class InputFile
     }
 
     /**
-     * Opens file stream
+     * Opens file stream.
      *
      * @return resource
      *
@@ -62,7 +62,7 @@ class InputFile
     /**
      * Returns true if the path to the file is remote.
      *
-     * @return boolean
+     * @return bool
      */
     protected function isRemoteFile()
     {

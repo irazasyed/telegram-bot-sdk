@@ -5,15 +5,12 @@ namespace Irazasyed\Telegram\HttpClients;
 use GuzzleHttp\Client;
 use GuzzleHttp\Promise;
 use GuzzleHttp\RequestOptions;
-use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Exception\RequestException;
 
 /**
- * Class GuzzleHttpClient
- *
- * @package Telegram
+ * Class GuzzleHttpClient.
  */
 class GuzzleHttpClient implements HttpClientInterface
 {
@@ -38,7 +35,7 @@ class GuzzleHttpClient implements HttpClientInterface
     }
 
     /**
-     * Unwrap Promises
+     * Unwrap Promises.
      */
     public function __destruct()
     {
@@ -91,7 +88,6 @@ class GuzzleHttpClient implements HttpClientInterface
             } else {
                 $response = $response->wait();
             }
-
         } catch (RequestException $e) {
             $response = $e->getResponse();
             $request = $e->getRequest();

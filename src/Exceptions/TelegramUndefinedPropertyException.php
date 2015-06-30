@@ -1,10 +1,9 @@
 <?php
+
 namespace Irazasyed\Telegram\Exceptions;
 
 /**
- * Class TelegramUndefinedPropertyException
- *
- * @package Telegram
+ * Class TelegramUndefinedPropertyException.
  */
 class TelegramUndefinedPropertyException extends \Exception
 {

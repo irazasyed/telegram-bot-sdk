@@ -5,11 +5,9 @@ namespace Irazasyed\Telegram;
 use Irazasyed\Telegram\Exceptions\TelegramSDKException;
 
 /**
- * Class TelegramRequest
+ * Class TelegramRequest.
  *
  * Builds Telegram Bot API Request Entity.
- *
- * @package Telegram
  */
 class TelegramRequest
 {
@@ -46,7 +44,7 @@ class TelegramRequest
     /**
      * Indicates if the request to Telegram will be asynchronous (non-blocking).
      *
-     * @var boolean
+     * @var bool
      */
     protected $isAsyncRequest = false;
 
@@ -57,7 +55,7 @@ class TelegramRequest
      * @param string|null $method
      * @param string|null $endpoint
      * @param array|null  $params
-     * @param boolean     $isAsyncRequest
+     * @param bool        $isAsyncRequest
      */
     public function __construct(
         $accessToken = null,
@@ -270,7 +268,7 @@ class TelegramRequest
     public function getDefaultHeaders()
     {
         return [
-            'User-Agent' => 'Telegram Bot PHP SDK v'.Telegram::VERSION.' - (https://github.com/irazasyed/telegram-bot-sdk)'
+            'User-Agent' => 'Telegram Bot PHP SDK v'.Telegram::VERSION.' - (https://github.com/irazasyed/telegram-bot-sdk)',
         ];
     }
 }

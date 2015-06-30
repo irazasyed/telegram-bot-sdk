@@ -2,18 +2,13 @@
 
 namespace Irazasyed\Telegram;
 
-use Irazasyed\Telegram\TelegramRequest;
-use Irazasyed\Telegram\TelegramResponse;
 use Irazasyed\Telegram\HttpClients\GuzzleHttpClient;
 use Irazasyed\Telegram\HttpClients\HttpClientInterface;
-
 use Psr\Http\Message\ResponseInterface;
 use GuzzleHttp\Promise\PromiseInterface;
 
 /**
- * Class TelegramClient
- *
- * @package Telegram
+ * Class TelegramClient.
  */
 class TelegramClient
 {
@@ -92,7 +87,7 @@ class TelegramClient
             $url,
             $request->getMethod(),
             $request->getHeaders(),
-            $request->isAsyncRequest()
+            $request->isAsyncRequest(),
         ];
     }
 
