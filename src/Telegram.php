@@ -425,6 +425,24 @@ class Telegram
     }
 
     /**
+     * Use this method to receive incoming updates using long polling.
+     *
+     * @link https://core.telegram.org/bots/api#getupdates
+     *
+     * @param int $offset
+     * @param int $limit
+     * @param int $timeout
+     *
+     * @return \Irazasyed\Telegram\Objects\UserProfilePhotos
+     */
+    public function getUpdates($offset = null, $limit = null, $timeout = null)
+    {
+        $response = $this->get('getUpdates', compact('offset', 'limit', 'timeout'));
+
+        return new Update($response->getDecodedBody());
+    }
+
+    /**
      * Sends a GET request to Telegram Bot API and returns the result.
      *
      * @param string $endpoint
