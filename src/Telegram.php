@@ -415,6 +415,21 @@ class Telegram
     }
 
     /**
+     * Returns webhook updates sent by Telegram.
+     * Works only if you set a webhook.
+     *
+     * @see setWebhook
+     *
+     * @return \Irazasyed\Telegram\Objects\Update
+     */
+    public function getWebhookUpdates()
+    {
+        $body = json_decode(file_get_contents('php://input'), true);
+
+        return new Update($body);
+    }
+
+    /**
      * Removes the outgoing webhook (if any).
      *
      * @return \Irazasyed\Telegram\TelegramResponse
