@@ -435,19 +435,13 @@ class Telegram
      * @param int $limit
      * @param int $timeout
      *
-     * @return Update[]
+     * @return \Irazasyed\Telegram\Objects\Update
      */
     public function getUpdates($offset = null, $limit = null, $timeout = null)
     {
         $response = $this->get('getUpdates', compact('offset', 'limit', 'timeout'));
-        $body = $response->getDecodedBody();
 
-        $updates = [];
-        foreach ($body as $update) {
-            $updates[] = new Update($update);
-        }
-
-        return $updates;
+        return new Update($response->getDecodedBody());
     }
 
     /**
@@ -483,6 +477,7 @@ class Telegram
     public static function replyKeyboardHide($selective = false)
     {
         $hide_keyboard = true;
+
         return json_encode(compact('hide_keyboard', 'selective'));
     }
 
@@ -498,6 +493,7 @@ class Telegram
     public static function forceReply($selective = false)
     {
         $force_reply = true;
+
         return json_encode(compact('force_reply', 'selective'));
     }
 
