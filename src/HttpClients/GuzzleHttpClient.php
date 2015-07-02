@@ -8,6 +8,7 @@ use GuzzleHttp\RequestOptions;
 use Psr\Http\Message\ResponseInterface;
 use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Exception\RequestException;
+use Irazasyed\Telegram\Exceptions\TelegramSDKException;
 
 /**
  * Class GuzzleHttpClient.
