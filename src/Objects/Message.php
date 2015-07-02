@@ -10,13 +10,20 @@ class Message extends BaseObject
     public function relations()
     {
         return [
-            'from' => User::class,
             'chat' => $this->mapChatRelative(),
+            'from' => User::class,
+            'forward_from' => User::class,
+            'reply_to_message' => Message::class,
             'audio' => Audio::class,
             'document' => Document::class,
             'photo' => PhotoSize::class,
             'sticker' => Sticker::class,
+            'video' => Video::class,
+            'contact' => Contact::class,
             'location' => Location::class,
+            'new_chat_participant' => User::class,
+            'left_chat_participant' => User::class,
+            'new_chat_photo' => PhotoSize::class,
         ];
     }
 
