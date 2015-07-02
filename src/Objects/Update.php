@@ -13,4 +13,14 @@ class Update extends BaseObject
             'message' => Message::class,
         ];
     }
+
+    /**
+     * Get recent message.
+     *
+     * @return Update
+     */
+    public function recentMessage()
+    {
+        return new static($this->last());
+    }
 }
