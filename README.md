@@ -276,6 +276,10 @@ The TelegramResponse object that you will get back has NULL for HTTP status code
 
 Any issues, feedback, suggestions or questions please use issue tracker [here](https://github.com/irazasyed/telegram-bot-sdk/issues).
 
+## Contributing
+
+Thank you for considering contributing to the project. Please review the [CONTRIBUTING](https://github.com/irazasyed/telegram-bot-sdk/blob/master/CONTRIBUTING.md) guidelines before submitting any pull requests.
+
 ## License
 
 This project is released under the [BSD 3-Clause](https://github.com/irazasyed/telegram-bot-sdk/blob/master/LICENSE) License.
