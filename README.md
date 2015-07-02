@@ -278,4 +278,6 @@ Any issues, feedback, suggestions or questions please use issue tracker [here](h
 
 ## License
 
-[GPL-3](LICENSE) © [Syed I.R](http://lk.gd/irazasyed)
+This project is released under the [BSD 3-Clause](https://github.com/irazasyed/telegram-bot-sdk/blob/master/LICENSE) License.
+
+© 2015 [Syed Irfaq R.](http://lk.gd/irazasyed), All rights reserved.

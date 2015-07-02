@@ -4,7 +4,7 @@
   "keywords": ["telegram", "telegram bot", "telegram api", "telegram bot api", "telegram sdk", "telegram php"],
   "type": "library",
   "homepage": "https://github.com/irazasyed/telegram-bot-sdk",
-  "license": "GPL-3.0",
+  "license": "BSD-3-Clause",
   "authors": [
     {
       "name": "Syed Irfaq R.",
