@@ -196,6 +196,15 @@ To remove webhook (if it was set before).
 $response = $telegram->removeWebhook();
 ```
 
+#### Get Updates from Webhook
+
+When you set your webhook URL, Telegram will start sending POST requests whenever there's any incoming message/update with your bot. 
+Below function will help you retrieve the updates. Returns an `Update` object.
+
+```php
+$updates = $telegram->getWebhookUpdates();
+```
+
 ### Use Custom Keyboard
 
 #### ReplyKeyboardMarkup
