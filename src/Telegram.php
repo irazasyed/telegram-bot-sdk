@@ -2,7 +2,6 @@
 
 namespace Irazasyed\Telegram;
 
-use Irazasyed\Telegram\Objects\KeyboardMarkup;
 use Irazasyed\Telegram\Objects\User;
 use Irazasyed\Telegram\Objects\Update;
 use Irazasyed\Telegram\Objects\Message;
