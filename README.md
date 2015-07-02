@@ -217,13 +217,15 @@ See [ReplyKeyboardMarkup](https://core.telegram.org/bots/api#replykeyboardmarkup
 Example:
 
 ```php
-$reply_markup = $telegram->replyKeyboardMarkup([
-                   ['YES', 'NO', 'IDK'],
-                   ['COOL', 'LOL'],
-                   ['Button'],
-                   ['Last Button']
-               ], true, true);
+$keyboard = [
+    ['7', '8', '9'],
+    ['4', '5', '6'],
+    ['1', '2', '3'],
+         ['0']
+];
+$reply_markup = $telegram->replyKeyboardMarkup($keyboard, true, true);
 $response = $telegram->sendMessage('CHAT_ID', 'Hello World', false, null, $reply_markup);
+
 $messageId = $response->getMessageId();
 ```
 
