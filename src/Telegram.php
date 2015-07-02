@@ -59,7 +59,7 @@ class Telegram
      *
      * @throws \Irazasyed\Telegram\Exceptions\TelegramSDKException
      */
-    public function __construct($token, $async = false, $http_client_handler = null)
+    public function __construct($token = null, $async = false, $http_client_handler = null)
     {
         $this->accessToken = isset($token) ? $token : getenv(static::BOT_TOKEN_ENV_NAME);
         if (!$this->accessToken) {
