@@ -5,7 +5,7 @@ Telegram Bot API - PHP SDK
 >
 > Please review the official [documentation](https://core.telegram.org/bots/api) of [Telegram Bot API](https://core.telegram.org/bots) to understand the usage better.
 
-[![Telegram Bot API PHP SDK](https://cloud.githubusercontent.com/assets/1915268/8475216/fe774802-20d3-11e5-9692-f54502716d64.png)](https://lk.gd/irazasyed)
+[![Telegram Bot API PHP SDK](https://cloud.githubusercontent.com/assets/1915268/8475216/fe774802-20d3-11e5-9692-f54502716d64.png)](https://github.com/irazasyed)
 
 <p align="center">
 <a href="https://github.com/irazasyed/telegram-bot-sdk/releases"><img src="https://img.shields.io/github/release/irazasyed/telegram-bot-sdk.svg?style=flat-square" alt="Latest Version"></img></a>
@@ -306,4 +306,4 @@ See License section for more details.
 
 This project is released under the [BSD 3-Clause](https://github.com/irazasyed/telegram-bot-sdk/blob/master/LICENSE) License.
 
-© 2015 [Syed Irfaq R.](http://lk.gd/irazasyed), All rights reserved.
+© 2015 [Syed Irfaq R.](https://github.com/irazasyed), All rights reserved.
