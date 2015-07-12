@@ -18,7 +18,7 @@ class Telegram
     /**
      * @const string Version number of the Telegram Bot PHP SDK.
      */
-    const VERSION = '0.2.2';
+    const VERSION = '0.2.3';
 
     /**
      * @const string The name of the environment variable that contains the Telegram Bot API Access Token.
@@ -565,10 +565,16 @@ class Telegram
         $i = 0;
         $multipart_params = [];
         foreach ($params as $name => $contents) {
-            if (is_file($contents)) {
-                $file = new InputFile($contents);
-                $contents = $file->open();
+            if (is_null($contents)) {
+                continue;
             }
+
+            if (is_file($contents)) {
+                $contents = (new InputFile($contents))->open();
+            } else {
+                $contents = (string) $contents;
+            }
+            
             $multipart_params[$i]['name'] = $name;
             $multipart_params[$i]['contents'] = $contents;
             ++$i;
