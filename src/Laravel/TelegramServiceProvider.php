@@ -22,23 +22,10 @@ class TelegramServiceProvider extends ServiceProvider
     protected $config_filepath;
 
     /**
-     * Indicates if the package is loaded in Laravel 4.
-     *
-     * @var bool
-     */
-    protected $isLaravel4 = false;
-
-    /**
      * Bootstrap the application events.
      */
     public function boot()
     {
-        if ($this->isLaravel4) {
-            $this->package('irazasyed/laravel-telegram-bot', 'telegram');
-
-            return;
-        }
-
         $this->publishes([
             $this->config_filepath => config_path('telegram.php'),
         ]);
@@ -50,14 +37,8 @@ class TelegramServiceProvider extends ServiceProvider
     public function register()
     {
         $this->registerTelegram();
-
-        if (method_exists($this, 'package')) {
-            $this->isLaravel4 = true;
-
-            return;
-        }
-
-        $this->config_filepath = realpath(__DIR__.'/config/telegram.php');
+        
+        $this->config_filepath = __DIR__.'/config/telegram.php';
 
         $this->mergeConfigFrom($this->config_filepath, 'telegram');
     }
@@ -68,13 +49,12 @@ class TelegramServiceProvider extends ServiceProvider
     public function registerTelegram()
     {
         $this->app->singleton('telegram', function ($app) {
-            $packageNamespace = ($this->isLaravel4) ? 'telegram::telegram.' : 'telegram.';
             $config = $app['config'];
 
             $telegram = new Telegram(
-                $config->get($packageNamespace.'bot_token', false),
-                $config->get($packageNamespace.'async_requests', false),
-                $config->get($packageNamespace.'http_client_handler', null)
+                $config->get('telegram.bot_token', false),
+                $config->get('telegram.async_requests', false),
+                $config->get('telegram.http_client_handler', null)
             );
 
             return $telegram;
