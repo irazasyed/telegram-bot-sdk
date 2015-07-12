@@ -14,8 +14,13 @@ Telegram Bot API - PHP SDK
 
 ## Quick start
 
+### Requirements
+- PHP5.5+
+- Composer (Optional)
+- Telegram Bot API Access Token - Talk to [@BotFather](https://core.telegram.org/bots#botfather) and generate one.
+- Laravel 5 or Lumen Installation (Optional only if you want to use with either of these frameworks).
 
-### Required setup / Installation
+### Installation
 
 #### Install Through Composer
 
@@ -34,7 +39,7 @@ If you're using Laravel, then follow the below instructions. Otherwise, you can 
 Open `config/app.php` and, to your "providers" array at the bottom, add:
 
 ```php
-'Irazasyed\Telegram\Laravel\TelegramServiceProvider'
+Irazasyed\Telegram\Laravel\TelegramServiceProvider::class
 ```
 
 #### Step 2: Add Facade (Optional)
@@ -42,7 +47,7 @@ Open `config/app.php` and, to your "providers" array at the bottom, add:
 Optionally add an alias to make it easier to use the library. Open `config/app.php` and, to your "aliases" array at the bottom, add:
 
 ```php
-'Telegram'  => 'Irazasyed\Telegram\Laravel\Facades\Telegram'
+'Telegram'  => Irazasyed\Telegram\Laravel\Facades\Telegram::class
 ```
 
 #### Step 3: Publish Config
