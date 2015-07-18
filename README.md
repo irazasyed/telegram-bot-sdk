@@ -124,7 +124,6 @@ $response = $telegram->getMe();
 
 $botId = $response->getId();
 $firstName = $response->getFirstName();
-$lastName = $response->getLastName();
 $username = $response->getUsername();
 ```
 
