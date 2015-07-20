@@ -2,6 +2,7 @@
 
 namespace Irazasyed\Telegram;
 
+use Irazasyed\Telegram\HttpClients\HttpClientInterface;
 use Irazasyed\Telegram\Objects\User;
 use Irazasyed\Telegram\Objects\Update;
 use Irazasyed\Telegram\Objects\Message;
