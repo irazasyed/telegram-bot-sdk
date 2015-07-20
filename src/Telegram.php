@@ -67,7 +67,7 @@ class Telegram
 
         $httpClientHandler = null;
         if (isset($http_client_handler)) {
-            if ($http_client_handler instanceof TelegramHttpClientInterface) {
+            if ($http_client_handler instanceof HttpClientInterface) {
                 $httpClientHandler = $http_client_handler;
             } elseif ($http_client_handler === 'guzzle') {
                 $httpClientHandler = new GuzzleHttpClient();
