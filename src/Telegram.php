@@ -2,7 +2,7 @@
 
 namespace Irazasyed\Telegram;
 
-use Irazasyed\Telegram\HttpClients\HttpClientInterface;
+
 use Irazasyed\Telegram\Objects\User;
 use Irazasyed\Telegram\Objects\Update;
 use Irazasyed\Telegram\Objects\Message;
@@ -10,6 +10,7 @@ use Irazasyed\Telegram\Objects\UserProfilePhotos;
 use Irazasyed\Telegram\FileUpload\InputFile;
 use Irazasyed\Telegram\HttpClients\GuzzleHttpClient;
 use Irazasyed\Telegram\Exceptions\TelegramSDKException;
+use Irazasyed\Telegram\HttpClients\HttpClientInterface;
 
 /**
  * Class Telegram.
@@ -19,7 +20,7 @@ class Telegram
     /**
      * @const string Version number of the Telegram Bot PHP SDK.
      */
-    const VERSION = '0.2.4';
+    const VERSION = '0.2.5';
 
     /**
      * @const string The name of the environment variable that contains the Telegram Bot API Access Token.
@@ -73,7 +74,7 @@ class Telegram
             } elseif ($http_client_handler === 'guzzle') {
                 $httpClientHandler = new GuzzleHttpClient();
             } else {
-                throw new \InvalidArgumentException('The HTTP Client Handler must be set to "guzzle", or be an instance of Irazasyed\Telegram\HttpClients\TelegramHttpClientInterface');
+                throw new \InvalidArgumentException('The HTTP Client Handler must be set to "guzzle", or be an instance of Irazasyed\Telegram\HttpClients\HttpClientInterface');
             }
         }
 
