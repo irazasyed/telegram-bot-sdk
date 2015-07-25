@@ -246,14 +246,15 @@ class Telegram
      *
      * @param int            $chat_id
      * @param string         $audio
+     * @param int            $duration
      * @param int            $reply_to_message_id
      * @param KeyboardMarkup $reply_markup
      *
      * @return \Irazasyed\Telegram\Objects\Message
      */
-    public function sendAudio($chat_id, $audio, $reply_to_message_id = null, $reply_markup = null)
+    public function sendAudio($chat_id, $audio, $duration = null, $reply_to_message_id = null, $reply_markup = null)
     {
-        $params = compact('chat_id', 'audio', 'reply_to_message_id', 'reply_markup');
+        $params = compact('chat_id', 'audio', 'duration', 'reply_to_message_id', 'reply_markup');
 
         return $this->uploadFile('sendAudio', $params);
     }
