@@ -310,14 +310,15 @@ class Telegram
      *
      * @param int            $chat_id
      * @param string         $video
+     * @param string         $caption
      * @param int            $reply_to_message_id
      * @param KeyboardMarkup $reply_markup
      *
      * @return \Irazasyed\Telegram\Objects\Message
      */
-    public function sendVideo($chat_id, $video, $reply_to_message_id = null, $reply_markup = null)
+    public function sendVideo($chat_id, $video, $caption = null, $reply_to_message_id = null, $reply_markup = null)
     {
-        $params = compact('chat_id', 'video', 'reply_to_message_id', 'reply_markup');
+        $params = compact('chat_id', 'video', 'caption', 'reply_to_message_id', 'reply_markup');
 
         return $this->uploadFile('sendVideo', $params);
     }
