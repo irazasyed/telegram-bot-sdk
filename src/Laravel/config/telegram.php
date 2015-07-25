@@ -34,7 +34,7 @@ return [
     |--------------------------------------------------------------------------
     |
     | If you'd like to use a custom HTTP Client Handler.
-    | Should be an instance of \Irazasyed\Telegram\HttpClients\TelegramHttpClientInterface
+    | Should be an instance of \Irazasyed\Telegram\HttpClients\HttpClientInterface
     |
     | Default: GuzzlePHP
     |
