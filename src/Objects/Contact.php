@@ -1,6 +1,6 @@
 <?php
 
-namespace Telegram\Objects;
+namespace Irazasyed\Telegram\Objects;
 
 class Contact extends BaseObject
 {
