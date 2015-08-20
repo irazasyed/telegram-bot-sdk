@@ -19,6 +19,7 @@ class Message extends BaseObject
             'photo' => PhotoSize::class,
             'sticker' => Sticker::class,
             'video' => Video::class,
+            'voice' => Voice::class,
             'contact' => Contact::class,
             'location' => Location::class,
             'new_chat_participant' => User::class,

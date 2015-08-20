@@ -240,23 +240,44 @@ class Telegram
     }
 
     /**
-     * Send audio files.
+     * Send regular audio files.
+     *
+     * @link https://core.telegram.org/bots/api#sendaudio
+     *
+     * @param int $chat_id
+     * @param string $audio
+     * @param int $duration
+     * @param string $performer
+     * @param string $title
+     * @param int $reply_to_message_id
+     * @param KeyboardMarkup $reply_markup
+     * @return Message
+     */
+    public function sendAudio($chat_id, $audio, $duration = null, $performer = null, $title = null, $reply_to_message_id = null, $reply_markup = null)
+    {
+        $params = compact('chat_id', 'audio', 'duration', 'performer', 'title', 'reply_to_message_id', 'reply_markup');
+
+        return $this->uploadFile('sendAudio', $params);
+    }
+
+    /**
+     * Send voice audio files.
      *
      * @link https://core.telegram.org/bots/api#sendaudio
      *
      * @param int            $chat_id
-     * @param string         $audio
+     * @param string         $voice
      * @param int            $duration
      * @param int            $reply_to_message_id
      * @param KeyboardMarkup $reply_markup
      *
      * @return \Irazasyed\Telegram\Objects\Message
      */
-    public function sendAudio($chat_id, $audio, $duration = null, $reply_to_message_id = null, $reply_markup = null)
+    public function sendVoice($chat_id, $voice, $duration = null, $reply_to_message_id = null, $reply_markup = null)
     {
-        $params = compact('chat_id', 'audio', 'duration', 'reply_to_message_id', 'reply_markup');
+        $params = compact('chat_id', 'voice', 'duration', 'reply_to_message_id', 'reply_markup');
 
-        return $this->uploadFile('sendAudio', $params);
+        return $this->uploadFile('sendVoice', $params);
     }
 
     /**
