@@ -595,10 +595,12 @@ class Telegram
                 continue;
             }
 
-            if (is_file($contents)) {
-                $contents = (new InputFile($contents))->open();
-            } else {
-                $contents = (string) $contents;
+            if (! is_resource($contents)) {
+                if (is_file($contents)) {
+                    $contents = (new InputFile($contents))->open();
+                } else {
+                    $contents = (string) $contents;
+                }
             }
             
             $multipart_params[$i]['name'] = $name;
