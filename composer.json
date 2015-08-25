@@ -24,5 +24,10 @@
   },
   "suggest": {
     "irazasyed/larasupport": "Allows you to use any Laravel Package in Lumen by adding support!"
+  },
+  "extra": {
+      "branch-alias": {
+          "dev-master": "1.0-dev"
+      }
   }
 }
