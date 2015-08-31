@@ -420,13 +420,16 @@ class Telegram
     /**
      * Set a Webhook to receive incoming updates via an outgoing webhook.
      *
+     * @link https://core.telegram.org/bots/api#setwebhook
+     * 
      * @param string $url HTTPS url to send updates to.
-     *
+     * @param string $certificate Upload your public key certificate so that the root certificate in use can be checked.
+     * 
      * @return \Irazasyed\Telegram\TelegramResponse
      *
      * @throws \Irazasyed\Telegram\Exceptions\TelegramSDKException
      */
-    public function setWebhook($url)
+    public function setWebhook($url, $certificate = null)
     {
         if (filter_var($url, FILTER_VALIDATE_URL) === false) {
             throw new TelegramSDKException('Invalid URL Provided');
@@ -436,7 +439,7 @@ class Telegram
             throw new TelegramSDKException('Invalid URL, should be a HTTPS url.');
         }
 
-        return $this->get('setWebhook', compact('url'));
+        return $this->uploadFile('setWebhook', compact('url', 'certificate'));
     }
 
     /**
