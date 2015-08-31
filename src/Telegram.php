@@ -296,17 +296,25 @@ class Telegram
      *
      * @link https://core.telegram.org/bots/api#sendaudio
      *
-     * @param int $chat_id
-     * @param string $audio
-     * @param int $duration
-     * @param string $performer
-     * @param string $title
-     * @param int $reply_to_message_id
+     * @param int            $chat_id
+     * @param string         $audio
+     * @param int            $duration
+     * @param string         $performer
+     * @param string         $title
+     * @param int            $reply_to_message_id
      * @param KeyboardMarkup $reply_markup
+     *
      * @return Message
      */
-    public function sendAudio($chat_id, $audio, $duration = null, $performer = null, $title = null, $reply_to_message_id = null, $reply_markup = null)
-    {
+    public function sendAudio(
+        $chat_id,
+        $audio,
+        $duration = null,
+        $performer = null,
+        $title = null,
+        $reply_to_message_id = null,
+        $reply_markup = null
+    ) {
         $params = compact('chat_id', 'audio', 'duration', 'performer', 'title', 'reply_to_message_id', 'reply_markup');
 
         return $this->uploadFile('sendAudio', $params);
@@ -391,8 +399,14 @@ class Telegram
      *
      * @return \Irazasyed\Telegram\Objects\Message
      */
-    public function sendVideo($chat_id, $video, $duration = null, $caption = null, $reply_to_message_id = null, $reply_markup = null)
-    {
+    public function sendVideo(
+        $chat_id,
+        $video,
+        $duration = null,
+        $caption = null,
+        $reply_to_message_id = null,
+        $reply_markup = null
+    ) {
         $params = compact('chat_id', 'video', 'duration', 'caption', 'reply_to_message_id', 'reply_markup');
 
         return $this->uploadFile('sendVideo', $params);
@@ -473,10 +487,10 @@ class Telegram
      * Set a Webhook to receive incoming updates via an outgoing webhook.
      *
      * @link https://core.telegram.org/bots/api#setwebhook
-     * 
-     * @param string $url HTTPS url to send updates to.
+     *
+     * @param string $url         HTTPS url to send updates to.
      * @param string $certificate Upload your public key certificate so that the root certificate in use can be checked.
-     * 
+     *
      * @return \Irazasyed\Telegram\TelegramResponse
      *
      * @throws \Irazasyed\Telegram\Exceptions\TelegramSDKException
@@ -650,14 +664,14 @@ class Telegram
                 continue;
             }
 
-            if (! is_resource($contents)) {
+            if (!is_resource($contents)) {
                 if (is_file($contents)) {
                     $contents = (new InputFile($contents))->open();
                 } else {
-                    $contents = (string) $contents;
+                    $contents = (string)$contents;
                 }
             }
-            
+
             $multipart_params[$i]['name'] = $name;
             $multipart_params[$i]['contents'] = $contents;
             ++$i;
