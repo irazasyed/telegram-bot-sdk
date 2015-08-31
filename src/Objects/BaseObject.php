@@ -66,19 +66,6 @@ abstract class BaseObject extends Collection
         }
 
         return $this->items = $results;
-//        return $this->map(function ($data) use ($relations) {
-//            if (!is_array($data)) {
-//                return $data;
-//            }
-//
-//            foreach ($relations as $property => $class) {
-//                if (array_key_exists($property, $data)) {
-//                    $data[$property] = new $class($data[$property]);
-//                }
-//            }
-//
-//            return $data;
-//        });
     }
 
     /**
