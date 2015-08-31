@@ -20,7 +20,7 @@ class Telegram
     /**
      * @const string Version number of the Telegram Bot PHP SDK.
      */
-    const VERSION = '0.2.6';
+    const VERSION = '1.0.0-dev';
 
     /**
      * @const string The name of the environment variable that contains the Telegram Bot API Access Token.
