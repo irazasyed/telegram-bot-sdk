@@ -607,6 +607,33 @@ class Telegram
     }
 
     /**
+     * Processes Inbound Commands.
+     *
+     * @param bool|false $webhook
+     *
+     * @return mixed
+     */
+    public function commandsHandler($webhook = false)
+    {
+        if ($webhook) {
+            $update = $this->getWebhookUpdates();
+            $this->getCommandBus()->handler($update->getMessage()->getText(), $update);
+        } else {
+            $updates = $this->getUpdates();
+            $highestId = -1;
+            foreach ($updates as $update) {
+                $highestId = $update['update_id'];
+
+                $this->getCommandBus()->handler($update['message']->getText(), $update);
+            }
+
+            if ($highestId != -1 && !$webhook) {
+                return $this->getUpdates($highestId + 1, 1);
+            }
+        }
+    }
+
+    /**
      * Sends a GET request to Telegram Bot API and returns the result.
      *
      * @param string $endpoint
