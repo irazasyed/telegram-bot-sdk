@@ -68,7 +68,7 @@ class Telegram
     {
         $this->accessToken = isset($token) ? $token : getenv(static::BOT_TOKEN_ENV_NAME);
         if (!$this->accessToken) {
-            throw new TelegramSDKException('Required "token" key not supplied in config and could not find fallback environment variable "'.static::BOT_TOKEN_ENV_NAME.'"');
+            throw new TelegramSDKException('Required "token" not supplied in config and could not find fallback environment variable "'.static::BOT_TOKEN_ENV_NAME.'"');
         }
 
         $httpClientHandler = null;
