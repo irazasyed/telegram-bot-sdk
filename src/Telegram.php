@@ -62,7 +62,7 @@ class Telegram
      *                                                                will be asynchronous (non-blocking).
      * @param string|TelegramHttpClientInterface $http_client_handler (Optional) Custom HTTP Client Handler.
      *
-     * @throws \Irazasyed\Telegram\Exceptions\TelegramSDKException
+     * @throws TelegramSDKException
      */
     public function __construct($token = null, $async = false, $http_client_handler = null)
     {
@@ -237,7 +237,7 @@ class Telegram
      * @param int            $reply_to_message_id
      * @param KeyboardMarkup $reply_markup
      *
-     * @return \Irazasyed\Telegram\Objects\Message
+     * @return Message
      */
     public function sendMessage(
         $chat_id,
@@ -261,7 +261,7 @@ class Telegram
      * @param int $from_chat_id
      * @param int $message_id
      *
-     * @return \Irazasyed\Telegram\Objects\Message
+     * @return Message
      */
     public function forwardMessage($chat_id, $from_chat_id, $message_id)
     {
@@ -282,7 +282,7 @@ class Telegram
      * @param int            $reply_to_message_id
      * @param KeyboardMarkup $reply_markup
      *
-     * @return \Irazasyed\Telegram\Objects\Message
+     * @return Message
      */
     public function sendPhoto($chat_id, $photo, $caption = null, $reply_to_message_id = null, $reply_markup = null)
     {
@@ -331,7 +331,7 @@ class Telegram
      * @param int            $reply_to_message_id
      * @param KeyboardMarkup $reply_markup
      *
-     * @return \Irazasyed\Telegram\Objects\Message
+     * @return Message
      */
     public function sendVoice($chat_id, $voice, $duration = null, $reply_to_message_id = null, $reply_markup = null)
     {
@@ -350,7 +350,7 @@ class Telegram
      * @param int            $reply_to_message_id
      * @param KeyboardMarkup $reply_markup
      *
-     * @return \Irazasyed\Telegram\Objects\Message
+     * @return Message
      */
     public function sendDocument($chat_id, $document, $reply_to_message_id = null, $reply_markup = null)
     {
@@ -369,9 +369,9 @@ class Telegram
      * @param int            $reply_to_message_id
      * @param KeyboardMarkup $reply_markup
      *
-     * @return \Irazasyed\Telegram\Objects\Message
+     * @return Message
      *
-     * @throws \Irazasyed\Telegram\Exceptions\TelegramSDKException
+     * @throws TelegramSDKException
      */
     public function sendSticker($chat_id, $sticker, $reply_to_message_id = null, $reply_markup = null)
     {
@@ -397,7 +397,7 @@ class Telegram
      * @param int            $reply_to_message_id
      * @param KeyboardMarkup $reply_markup
      *
-     * @return \Irazasyed\Telegram\Objects\Message
+     * @return Message
      */
     public function sendVideo(
         $chat_id,
@@ -423,7 +423,7 @@ class Telegram
      * @param int            $reply_to_message_id
      * @param KeyboardMarkup $reply_markup
      *
-     * @return \Irazasyed\Telegram\Objects\Message
+     * @return Message
      */
     public function sendLocation($chat_id, $latitude, $longitude, $reply_to_message_id = null, $reply_markup = null)
     {
@@ -443,7 +443,7 @@ class Telegram
      *
      * @return \Irazasyed\Telegram\TelegramResponse
      *
-     * @throws \Irazasyed\Telegram\Exceptions\TelegramSDKException
+     * @throws TelegramSDKException
      */
     public function sendChatAction($chat_id, $action)
     {
@@ -474,7 +474,7 @@ class Telegram
      * @param int $offset
      * @param int $limit
      *
-     * @return \Irazasyed\Telegram\Objects\UserProfilePhotos
+     * @return UserProfilePhotos
      */
     public function getUserProfilePhotos($user_id, $offset = null, $limit = null)
     {
@@ -493,7 +493,7 @@ class Telegram
      *
      * @return \Irazasyed\Telegram\TelegramResponse
      *
-     * @throws \Irazasyed\Telegram\Exceptions\TelegramSDKException
+     * @throws TelegramSDKException
      */
     public function setWebhook($url, $certificate = null)
     {
@@ -514,7 +514,7 @@ class Telegram
      *
      * @see setWebhook
      *
-     * @return \Irazasyed\Telegram\Objects\Update
+     * @return Update
      */
     public function getWebhookUpdates()
     {
@@ -544,7 +544,7 @@ class Telegram
      * @param int $limit
      * @param int $timeout
      *
-     * @return \Irazasyed\Telegram\Objects\Update
+     * @return Update
      */
     public function getUpdates($offset = null, $limit = null, $timeout = null)
     {
@@ -678,9 +678,9 @@ class Telegram
      * @param string $endpoint
      * @param array  $params
      *
-     * @return \Irazasyed\Telegram\Objects\Message
+     * @return Message
      *
-     * @throws \Irazasyed\Telegram\Exceptions\TelegramSDKException
+     * @throws TelegramSDKException
      */
     public function uploadFile($endpoint, array $params = [])
     {
