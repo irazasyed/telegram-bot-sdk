@@ -2,12 +2,13 @@
 
 namespace Irazasyed\Telegram;
 
-
 use Irazasyed\Telegram\Objects\User;
 use Irazasyed\Telegram\Objects\Update;
 use Irazasyed\Telegram\Objects\Message;
 use Irazasyed\Telegram\Objects\UserProfilePhotos;
 use Irazasyed\Telegram\FileUpload\InputFile;
+use Irazasyed\Telegram\Commands\CommandBus;
+use Irazasyed\Telegram\Commands\CommandInterface;
 use Irazasyed\Telegram\HttpClients\GuzzleHttpClient;
 use Irazasyed\Telegram\Exceptions\TelegramSDKException;
 use Irazasyed\Telegram\HttpClients\HttpClientInterface;
@@ -46,6 +47,11 @@ class Telegram
      * @var bool Indicates if the request to Telegram will be asynchronous (non-blocking).
      */
     protected $isAsyncRequest = false;
+
+    /**
+     * @var CommandBus|null Telegram Command Bus.
+     */
+    protected $commandBus = null;
 
     /**
      * Instantiates a new Telegram super-class object.
@@ -155,6 +161,54 @@ class Telegram
     public function isAsyncRequest()
     {
         return $this->isAsyncRequest;
+    }
+
+    /**
+     * Returns SDK's Command Bus.
+     *
+     * @return CommandBus
+     */
+    public function getCommandBus()
+    {
+        if (is_null($this->commandBus)) {
+            return $this->commandBus = new CommandBus($this);
+        }
+
+        return $this->commandBus;
+    }
+
+    /**
+     * Add Telegram Command to the Command Bus.
+     *
+     * @param CommandInterface|string $command
+     *
+     * @return CommandBus
+     */
+    public function addCommand($command)
+    {
+        return $this->getCommandBus()->addCommand($command);
+    }
+
+    /**
+     * Add Telegram Commands to the Command Bus.
+     *
+     * @param array $commands
+     *
+     * @return CommandBus
+     */
+    public function addCommands(array $commands)
+    {
+        return $this->getCommandBus()->addCommands($commands);
+    }
+
+    /**
+     * Returns list of available commands.
+     *
+     * @return array
+     */
+    public function getCommands()
+    {
+        return $this->getCommandBus()->getCommands();
     }
 
     /**
