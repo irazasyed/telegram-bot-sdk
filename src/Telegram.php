@@ -18,12 +18,12 @@ use Irazasyed\Telegram\HttpClients\HttpClientInterface;
 class Telegram
 {
     /**
-     * @const string Version number of the Telegram Bot PHP SDK.
+     * @var string Version number of the Telegram Bot PHP SDK.
      */
     const VERSION = '1.0.0-dev';
 
     /**
-     * @const string The name of the environment variable that contains the Telegram Bot API Access Token.
+     * @var string The name of the environment variable that contains the Telegram Bot API Access Token.
      */
     const BOT_TOKEN_ENV_NAME = 'TELEGRAM_BOT_TOKEN';
 
@@ -43,9 +43,7 @@ class Telegram
     protected $lastResponse;
 
     /**
-     * Indicates if the request to Telegram will be asynchronous (non-blocking).
-     *
-     * @var bool
+     * @var bool Indicates if the request to Telegram will be asynchronous (non-blocking).
      */
     protected $isAsyncRequest = false;
 
