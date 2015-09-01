@@ -153,15 +153,15 @@ class CommandBus
      * @param $message
      *
      * @return mixed
-     *
-     * @throws \Irazasyed\Telegram\Exceptions\TelegramSDKException
      */
     public function execute($name, $arguments, $message)
     {
         if (array_key_exists($name, $this->commands)) {
             return $this->commands[$name]->make($this->telegram, $arguments, $message);
+        } elseif (array_key_exists('help', $this->commands)) {
+            return $this->commands['help']->make($this->telegram, $arguments, $message);
         }
 
-        return $this->commands['help']->make($this->telegram, $arguments, $message);
+        return 'Ok';
     }
 }
