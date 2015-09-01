@@ -34,7 +34,7 @@ class CommandBus
     public function __construct(Telegram $telegram)
     {
         $this->telegram = $telegram;
-        $this->addCommand(new HelpCommand());
+//        $this->addCommand(new HelpCommand());
     }
 
     /**
