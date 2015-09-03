@@ -7,6 +7,7 @@ use Irazasyed\Telegram\Objects\Update;
 use Irazasyed\Telegram\Objects\Message;
 use Irazasyed\Telegram\Objects\UserProfilePhotos;
 use Irazasyed\Telegram\FileUpload\InputFile;
+use Irazasyed\Telegram\TelegramResponse;
 use Irazasyed\Telegram\Commands\CommandBus;
 use Irazasyed\Telegram\Commands\CommandInterface;
 use Irazasyed\Telegram\HttpClients\GuzzleHttpClient;
@@ -57,10 +58,10 @@ class Telegram
      * Instantiates a new Telegram super-class object.
      *
      *
-     * @param string                             $token               The Telegram Bot API Access Token.
-     * @param bool                               $async               (Optional) Indicates if the request to Telegram
+     * @param string                     $token                       The Telegram Bot API Access Token.
+     * @param bool                       $async                       (Optional) Indicates if the request to Telegram
      *                                                                will be asynchronous (non-blocking).
-     * @param string|TelegramHttpClientInterface $http_client_handler (Optional) Custom HTTP Client Handler.
+     * @param string|HttpClientInterface $http_client_handler         (Optional) Custom HTTP Client Handler.
      *
      * @throws TelegramSDKException
      */
@@ -217,7 +218,7 @@ class Telegram
      *
      * @link https://core.telegram.org/bots/api#getme
      *
-     * @return \Irazasyed\Telegram\Objects\User
+     * @return User
      */
     public function getMe()
     {
@@ -231,11 +232,11 @@ class Telegram
      *
      * @link https://core.telegram.org/bots/api#sendmessage
      *
-     * @param int            $chat_id
-     * @param string         $text
-     * @param bool           $disable_web_page_preview
-     * @param int            $reply_to_message_id
-     * @param KeyboardMarkup $reply_markup
+     * @param int    $chat_id
+     * @param string $text
+     * @param bool   $disable_web_page_preview
+     * @param int    $reply_to_message_id
+     * @param string $reply_markup
      *
      * @return Message
      */
@@ -276,11 +277,11 @@ class Telegram
      *
      * @link https://core.telegram.org/bots/api#sendphoto
      *
-     * @param int            $chat_id
-     * @param string         $photo
-     * @param string         $caption
-     * @param int            $reply_to_message_id
-     * @param KeyboardMarkup $reply_markup
+     * @param int    $chat_id
+     * @param string $photo
+     * @param string $caption
+     * @param int    $reply_to_message_id
+     * @param string $reply_markup
      *
      * @return Message
      */
@@ -296,13 +297,13 @@ class Telegram
      *
      * @link https://core.telegram.org/bots/api#sendaudio
      *
-     * @param int            $chat_id
-     * @param string         $audio
-     * @param int            $duration
-     * @param string         $performer
-     * @param string         $title
-     * @param int            $reply_to_message_id
-     * @param KeyboardMarkup $reply_markup
+     * @param int    $chat_id
+     * @param string $audio
+     * @param int    $duration
+     * @param string $performer
+     * @param string $title
+     * @param int    $reply_to_message_id
+     * @param string $reply_markup
      *
      * @return Message
      */
@@ -325,11 +326,11 @@ class Telegram
      *
      * @link https://core.telegram.org/bots/api#sendaudio
      *
-     * @param int            $chat_id
-     * @param string         $voice
-     * @param int            $duration
-     * @param int            $reply_to_message_id
-     * @param KeyboardMarkup $reply_markup
+     * @param int    $chat_id
+     * @param string $voice
+     * @param int    $duration
+     * @param int    $reply_to_message_id
+     * @param string $reply_markup
      *
      * @return Message
      */
@@ -345,10 +346,10 @@ class Telegram
      *
      * @link https://core.telegram.org/bots/api#senddocument
      *
-     * @param int            $chat_id
-     * @param string         $document
-     * @param int            $reply_to_message_id
-     * @param KeyboardMarkup $reply_markup
+     * @param int    $chat_id
+     * @param string $document
+     * @param int    $reply_to_message_id
+     * @param string $reply_markup
      *
      * @return Message
      */
@@ -364,10 +365,10 @@ class Telegram
      *
      * @link https://core.telegram.org/bots/api#sendsticker
      *
-     * @param int            $chat_id
-     * @param string         $sticker
-     * @param int            $reply_to_message_id
-     * @param KeyboardMarkup $reply_markup
+     * @param int    $chat_id
+     * @param string $sticker
+     * @param int    $reply_to_message_id
+     * @param string $reply_markup
      *
      * @return Message
      *
@@ -390,12 +391,12 @@ class Telegram
      * @see  sendDocument
      * @link https://core.telegram.org/bots/api#sendvideo
      *
-     * @param int            $chat_id
-     * @param string         $video
-     * @param int            $duration
-     * @param string         $caption
-     * @param int            $reply_to_message_id
-     * @param KeyboardMarkup $reply_markup
+     * @param int    $chat_id
+     * @param string $video
+     * @param int    $duration
+     * @param string $caption
+     * @param int    $reply_to_message_id
+     * @param string $reply_markup
      *
      * @return Message
      */
@@ -417,11 +418,11 @@ class Telegram
      *
      * @link https://core.telegram.org/bots/api#sendlocation
      *
-     * @param int            $chat_id
-     * @param float          $latitude
-     * @param float          $longitude
-     * @param int            $reply_to_message_id
-     * @param KeyboardMarkup $reply_markup
+     * @param int    $chat_id
+     * @param float  $latitude
+     * @param float  $longitude
+     * @param int    $reply_to_message_id
+     * @param string $reply_markup
      *
      * @return Message
      */
@@ -441,7 +442,7 @@ class Telegram
      * @param int    $chat_id
      * @param string $action
      *
-     * @return \Irazasyed\Telegram\TelegramResponse
+     * @return TelegramResponse
      *
      * @throws TelegramSDKException
      */
@@ -491,7 +492,7 @@ class Telegram
      * @param string $url         HTTPS url to send updates to.
      * @param string $certificate Upload your public key certificate so that the root certificate in use can be checked.
      *
-     * @return \Irazasyed\Telegram\TelegramResponse
+     * @return TelegramResponse
      *
      * @throws TelegramSDKException
      */
@@ -526,7 +527,7 @@ class Telegram
     /**
      * Removes the outgoing webhook (if any).
      *
-     * @return \Irazasyed\Telegram\TelegramResponse
+     * @return TelegramResponse
      */
     public function removeWebhook()
     {
@@ -617,7 +618,8 @@ class Telegram
     {
         if ($webhook) {
             $update = $this->getWebhookUpdates();
-            $this->getCommandBus()->handler($update->getMessage()->getText(), $update);
+
+            return $this->getCommandBus()->handler($update->getMessage()->getText(), $update);
         } else {
             $updates = $this->getUpdates();
             $highestId = -1;
@@ -757,12 +759,13 @@ class Telegram
      * @param $method
      * @param $arguments
      *
-     * @return bool|\Irazasyed\Telegram\TelegramResponse
+     * @return bool|TelegramResponse
      */
     public function __call($method, $arguments)
     {
         $action = substr($method, 0, 3);
         if ($action === 'get') {
+            /** @noinspection PhpUndefinedFunctionInspection */
             $class_name = studly_case(substr($method, 3));
             $class = 'Irazasyed\Telegram\Objects\\'.$class_name;
             $response = $this->get($method, $arguments[0] ?: []);

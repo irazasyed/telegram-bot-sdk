@@ -2,6 +2,7 @@
 
 namespace Irazasyed\Telegram;
 
+use Irazasyed\Telegram\TelegramRequest;
 use Psr\Http\Message\ResponseInterface;
 use GuzzleHttp\Promise\PromiseInterface;
 use Irazasyed\Telegram\Exceptions\TelegramResponseException;
@@ -51,8 +52,8 @@ class TelegramResponse
     /**
      * Gets the relevant data from the Http client.
      *
-     * @param \Irazasyed\Telegram\TelegramRequest $request
-     * @param ResponseInterface|PromiseInterface  $response
+     * @param TelegramRequest                    $request
+     * @param ResponseInterface|PromiseInterface $response
      */
     public function __construct(TelegramRequest $request, $response)
     {
@@ -71,7 +72,7 @@ class TelegramResponse
         }
 
         $this->request = $request;
-        $this->endPoint = (string) $request->getEndpoint();
+        $this->endPoint = (string)$request->getEndpoint();
     }
 
     /**

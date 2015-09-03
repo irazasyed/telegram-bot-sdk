@@ -3,6 +3,7 @@
 namespace Irazasyed\Telegram\Exceptions;
 
 use Irazasyed\Telegram\TelegramResponse;
+use Irazasyed\Telegram\Exceptions\TelegramSDKException;
 
 class TelegramResponseException extends TelegramSDKException
 {
@@ -19,9 +20,8 @@ class TelegramResponseException extends TelegramSDKException
     /**
      * Creates a TelegramResponseException.
      *
-     * @param \Irazasyed\Telegram\TelegramResponse                $response          The response that threw the
-     *                                                                               exception.
-     * @param \Irazasyed\Telegram\Exceptions\TelegramSDKException $previousException The more detailed exception.
+     * @param TelegramResponse     $response          The response that threw the exception.
+     * @param TelegramSDKException $previousException The more detailed exception.
      */
     public function __construct(TelegramResponse $response, TelegramSDKException $previousException = null)
     {

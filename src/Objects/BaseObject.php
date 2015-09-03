@@ -106,9 +106,9 @@ abstract class BaseObject extends Collection
      * @param $name
      * @param $arguments
      *
-     * @return bool|\Irazasyed\Telegram\Objects\BaseObject|mixed|static
+     * @return bool|BaseObject|mixed|static
      *
-     * @throws \Irazasyed\Telegram\Exceptions\TelegramUndefinedPropertyException
+     * @throws TelegramUndefinedPropertyException
      */
     public function __call($name, $arguments)
     {

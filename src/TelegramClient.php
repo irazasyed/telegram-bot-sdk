@@ -2,10 +2,13 @@
 
 namespace Irazasyed\Telegram;
 
-use Irazasyed\Telegram\HttpClients\GuzzleHttpClient;
-use Irazasyed\Telegram\HttpClients\HttpClientInterface;
+use Irazasyed\Telegram\TelegramRequest;
+use Irazasyed\Telegram\TelegramResponse;
+use Irazasyed\Telegram\TelegramSDKException;
 use Psr\Http\Message\ResponseInterface;
 use GuzzleHttp\Promise\PromiseInterface;
+use Irazasyed\Telegram\HttpClients\GuzzleHttpClient;
+use Irazasyed\Telegram\HttpClients\HttpClientInterface;
 
 /**
  * Class TelegramClient.
@@ -94,11 +97,11 @@ class TelegramClient
     /**
      * Send an API request and process the result.
      *
-     * @param \Irazasyed\Telegram\TelegramRequest $request
+     * @param TelegramRequest $request
      *
-     * @return \Irazasyed\Telegram\TelegramResponse
+     * @return TelegramResponse
      *
-     * @throws \Irazasyed\Telegram\TelegramSDKException
+     * @throws TelegramSDKException
      */
     public function sendRequest(TelegramRequest $request)
     {
@@ -127,10 +130,10 @@ class TelegramClient
     /**
      * Creates response object.
      *
-     * @param \Irazasyed\Telegram\TelegramRequest $request
-     * @param ResponseInterface|PromiseInterface  $response
+     * @param TelegramRequest                    $request
+     * @param ResponseInterface|PromiseInterface $response
      *
-     * @return \Irazasyed\Telegram\TelegramResponse
+     * @return TelegramResponse
      */
     protected function getResponse(TelegramRequest $request, $response)
     {

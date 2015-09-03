@@ -15,21 +15,21 @@ use Irazasyed\Telegram\Exceptions\TelegramSDKException;
 class CommandBus
 {
     /**
-     * @var \Irazasyed\Telegram\Telegram
-     */
-    private $telegram;
-
-    /**
      * @var array Holds all commands.
      */
     protected $commands = [];
 
     /**
+     * @var Telegram
+     */
+    private $telegram;
+
+    /**
      * Instantiate Command Bus
      *
-     * @param \Irazasyed\Telegram\Telegram $telegram
+     * @param Telegram $telegram
      *
-     * @throws \Irazasyed\Telegram\Exceptions\TelegramSDKException
+     * @throws TelegramSDKException
      */
     public function __construct(Telegram $telegram)
     {
@@ -70,7 +70,7 @@ class CommandBus
      *
      * @return $this
      *
-     * @throws \Irazasyed\Telegram\Exceptions\TelegramSDKException
+     * @throws TelegramSDKException
      */
     public function addCommand($command)
     {
@@ -111,7 +111,7 @@ class CommandBus
      *
      * @return mixed
      *
-     * @throws \Irazasyed\Telegram\Exceptions\TelegramSDKException
+     * @throws TelegramSDKException
      */
     public function handler($message, $update)
     {
@@ -125,6 +125,7 @@ class CommandBus
         return $update;
     }
 
+
     /**
      * Parse a Command for a Match.
      *
@@ -132,12 +133,12 @@ class CommandBus
      *
      * @return array
      *
-     * @throws \Irazasyed\Telegram\Commands\InvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     public function parseCommand($text)
     {
         if (trim($text) === '') {
-            throw new InvalidArgumentException('Message is empty, Cannot parse for command');
+            throw new \InvalidArgumentException('Message is empty, Cannot parse for command');
         }
 
         preg_match('/^\/([^\s@]+)@?(\S+)?\s?(.*)$/', $text, $matches);

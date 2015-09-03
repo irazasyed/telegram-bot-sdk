@@ -28,7 +28,7 @@ class GuzzleHttpClient implements HttpClientInterface
     private static $promises = [];
 
     /**
-     * @param \GuzzleHttp\Client|null The Guzzle client.
+     * @param Client|null The Guzzle client.
      */
     public function __construct(Client $client = null)
     {
@@ -46,7 +46,7 @@ class GuzzleHttpClient implements HttpClientInterface
     /**
      * Sets HTTP client.
      *
-     * @param \GuzzleHttp\Client $client
+     * @param Client $client
      *
      * @return GuzzleHttpClient
      */

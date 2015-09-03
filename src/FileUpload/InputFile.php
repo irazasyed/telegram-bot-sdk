@@ -22,7 +22,7 @@ class InputFile
      *
      * @param string $filePath
      *
-     * @throws \Irazasyed\Telegram\Exceptions\TelegramSDKException
+     * @throws TelegramSDKException
      */
     public function __construct($filePath)
     {
@@ -44,7 +44,7 @@ class InputFile
      *
      * @return resource
      *
-     * @throws \Irazasyed\Telegram\Exceptions\TelegramSDKException
+     * @throws TelegramSDKException
      */
     public function open()
     {

@@ -3,6 +3,8 @@
 namespace Irazasyed\Telegram\Commands;
 
 use Irazasyed\Telegram\Telegram;
+use Irazasyed\Telegram\Objects\Update;
+use Irazasyed\Telegram\Commands\CommandBus;
 use Irazasyed\Telegram\Exceptions\TelegramSDKException;
 
 /**
@@ -44,10 +46,9 @@ abstract class Command implements CommandInterface
     protected $arguments;
 
     /**
-     * @var array Holds an Update object.
+     * @var Update Holds an Update object.
      */
     protected $update;
-
 
     /**
      * Get Command Name.
@@ -110,7 +111,7 @@ abstract class Command implements CommandInterface
     /**
      * Returns Original Update.
      *
-     * @return array
+     * @return Update
      */
     public function getUpdate()
     {
@@ -130,7 +131,7 @@ abstract class Command implements CommandInterface
     /**
      * Returns an instance of Command Bus.
      *
-     * @return \Irazasyed\Telegram\Commands\CommandBus
+     * @return CommandBus
      */
     public function getCommandBus()
     {
