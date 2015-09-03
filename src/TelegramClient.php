@@ -4,14 +4,16 @@ namespace Irazasyed\Telegram;
 
 use Irazasyed\Telegram\TelegramRequest;
 use Irazasyed\Telegram\TelegramResponse;
-use Irazasyed\Telegram\TelegramSDKException;
+use Irazasyed\Telegram\Exceptions\TelegramSDKException;
 use Psr\Http\Message\ResponseInterface;
 use GuzzleHttp\Promise\PromiseInterface;
 use Irazasyed\Telegram\HttpClients\GuzzleHttpClient;
 use Irazasyed\Telegram\HttpClients\HttpClientInterface;
 
 /**
- * Class TelegramClient.
+ * Class TelegramClient
+ *
+ * @package Irazasyed\Telegram
  */
 class TelegramClient
 {
@@ -93,6 +95,7 @@ class TelegramClient
             $request->isAsyncRequest(),
         ];
     }
+
 
     /**
      * Send an API request and process the result.

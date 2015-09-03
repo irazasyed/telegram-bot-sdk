@@ -5,6 +5,11 @@ namespace Irazasyed\Telegram\Exceptions;
 use Irazasyed\Telegram\TelegramResponse;
 use Irazasyed\Telegram\Exceptions\TelegramSDKException;
 
+/**
+ * Class TelegramResponseException
+ *
+ * @package Irazasyed\Telegram\Exceptions
+ */
 class TelegramResponseException extends TelegramSDKException
 {
     /**

@@ -2,6 +2,11 @@
 
 namespace Irazasyed\Telegram\Objects;
 
+/**
+ * Class Video
+ *
+ * @package Irazasyed\Telegram\Objects
+ */
 class Video extends BaseObject
 {
     /**

@@ -2,6 +2,11 @@
 
 namespace Irazasyed\Telegram\Objects;
 
+/**
+ * Class UserProfilePhotos
+ *
+ * @package Irazasyed\Telegram\Objects
+ */
 class UserProfilePhotos extends BaseObject
 {
     /**

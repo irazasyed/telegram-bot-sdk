@@ -2,6 +2,11 @@
 
 namespace Irazasyed\Telegram\Objects;
 
+/**
+ * Class Voice
+ *
+ * @package Irazasyed\Telegram\Objects
+ */
 class Voice extends BaseObject
 {
     /**

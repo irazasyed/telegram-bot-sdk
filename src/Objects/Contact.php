@@ -2,6 +2,11 @@
 
 namespace Irazasyed\Telegram\Objects;
 
+/**
+ * Class Contact
+ *
+ * @package Irazasyed\Telegram\Objects
+ */
 class Contact extends BaseObject
 {
     /**

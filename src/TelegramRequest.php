@@ -5,9 +5,11 @@ namespace Irazasyed\Telegram;
 use Irazasyed\Telegram\Exceptions\TelegramSDKException;
 
 /**
- * Class TelegramRequest.
+ * Class TelegramRequest
  *
  * Builds Telegram Bot API Request Entity.
+ *
+ * @package Irazasyed\Telegram
  */
 class TelegramRequest
 {

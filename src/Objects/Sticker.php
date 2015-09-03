@@ -2,6 +2,11 @@
 
 namespace Irazasyed\Telegram\Objects;
 
+/**
+ * Class Sticker
+ *
+ * @package Irazasyed\Telegram\Objects
+ */
 class Sticker extends BaseObject
 {
     /**

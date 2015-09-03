@@ -5,12 +5,15 @@ namespace Irazasyed\Telegram;
 use Irazasyed\Telegram\TelegramRequest;
 use Psr\Http\Message\ResponseInterface;
 use GuzzleHttp\Promise\PromiseInterface;
+use Irazasyed\Telegram\Exceptions\TelegramSDKException;
 use Irazasyed\Telegram\Exceptions\TelegramResponseException;
 
 /**
- * Class TelegramResponse.
+ * Class TelegramResponse
  *
  * Handles the response from Telegram API.
+ *
+ * @package Irazasyed\Telegram
  */
 class TelegramResponse
 {

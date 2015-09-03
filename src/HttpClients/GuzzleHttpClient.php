@@ -11,7 +11,9 @@ use GuzzleHttp\Exception\RequestException;
 use Irazasyed\Telegram\Exceptions\TelegramSDKException;
 
 /**
- * Class GuzzleHttpClient.
+ * Class GuzzleHttpClient
+ *
+ * @package Irazasyed\Telegram\HttpClients
  */
 class GuzzleHttpClient implements HttpClientInterface
 {
@@ -27,8 +29,9 @@ class GuzzleHttpClient implements HttpClientInterface
      */
     private static $promises = [];
 
+
     /**
-     * @param Client|null The Guzzle client.
+     * @param Client|null $client
      */
     public function __construct(Client $client = null)
     {

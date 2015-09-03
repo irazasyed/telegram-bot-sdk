@@ -5,6 +5,11 @@ namespace Irazasyed\Telegram\Objects;
 use Illuminate\Support\Collection;
 use Irazasyed\Telegram\Exceptions\TelegramUndefinedPropertyException;
 
+/**
+ * Class BaseObject
+ *
+ * @package Irazasyed\Telegram\Objects
+ */
 abstract class BaseObject extends Collection
 {
     /**

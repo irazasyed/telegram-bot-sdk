@@ -2,6 +2,11 @@
 
 namespace Irazasyed\Telegram\Objects;
 
+/**
+ * Class PhotoSize
+ *
+ * @package Irazasyed\Telegram\Objects
+ */
 class PhotoSize extends BaseObject
 {
     /**

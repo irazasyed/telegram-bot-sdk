@@ -5,6 +5,11 @@ namespace Irazasyed\Telegram\Laravel;
 use Irazasyed\Telegram\Telegram;
 use Illuminate\Support\ServiceProvider;
 
+/**
+ * Class TelegramServiceProvider
+ *
+ * @package Irazasyed\Telegram\Laravel
+ */
 class TelegramServiceProvider extends ServiceProvider
 {
     /**
@@ -58,7 +63,7 @@ class TelegramServiceProvider extends ServiceProvider
             );
 
             // Register Commands
-            $telegram->addCommands($config->get('telegram.commands'), []);
+            $telegram->addCommands($config->get('telegram.commands', []));
 
             return $telegram;
         });

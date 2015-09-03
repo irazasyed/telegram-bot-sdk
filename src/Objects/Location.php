@@ -2,6 +2,11 @@
 
 namespace Irazasyed\Telegram\Objects;
 
+/**
+ * Class Location
+ *
+ * @package Irazasyed\Telegram\Objects
+ */
 class Location extends BaseObject
 {
     /**

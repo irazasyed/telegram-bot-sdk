@@ -2,6 +2,11 @@
 
 namespace Irazasyed\Telegram\Commands;
 
+/**
+ * Class HelpCommand
+ *
+ * @package Irazasyed\Telegram\Commands
+ */
 class HelpCommand extends Command
 {
     /**
@@ -23,7 +28,7 @@ class HelpCommand extends Command
 
         $response = '';
         foreach ($commands as $name => $handler) {
-            $response .= sprintf('/%s - %s' . PHP_EOL, $name, $handler->getDescription());
+            $response .= sprintf('/%s - %s'.PHP_EOL, $name, $handler->getDescription());
         }
 
         $this->replyWithMessage($response);

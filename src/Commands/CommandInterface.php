@@ -2,6 +2,11 @@
 
 namespace Irazasyed\Telegram\Commands;
 
+/**
+ * Interface CommandInterface
+ *
+ * @package Irazasyed\Telegram\Commands
+ */
 interface CommandInterface
 {
     /**

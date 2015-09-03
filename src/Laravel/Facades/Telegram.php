@@ -4,6 +4,11 @@ namespace Irazasyed\Telegram\Laravel\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
+/**
+ * Class Telegram
+ *
+ * @package Irazasyed\Telegram\Laravel\Facades
+ */
 class Telegram extends Facade
 {
     /**

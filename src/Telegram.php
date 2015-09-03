@@ -15,7 +15,9 @@ use Irazasyed\Telegram\Exceptions\TelegramSDKException;
 use Irazasyed\Telegram\HttpClients\HttpClientInterface;
 
 /**
- * Class Telegram.
+ * Class Telegram
+ *
+ * @package Irazasyed\Telegram
  */
 class Telegram
 {

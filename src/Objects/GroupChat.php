@@ -2,6 +2,11 @@
 
 namespace Irazasyed\Telegram\Objects;
 
+/**
+ * Class GroupChat
+ *
+ * @package Irazasyed\Telegram\Objects
+ */
 class GroupChat extends BaseObject
 {
     /**

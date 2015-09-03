@@ -2,6 +2,11 @@
 
 namespace Irazasyed\Telegram\Objects;
 
+/**
+ * Class Message
+ *
+ * @package Irazasyed\Telegram\Objects
+ */
 class Message extends BaseObject
 {
     /**

@@ -5,6 +5,11 @@ namespace Irazasyed\Telegram\FileUpload;
 use GuzzleHttp\Psr7;
 use Irazasyed\Telegram\Exceptions\TelegramSDKException;
 
+/**
+ * Class InputFile
+ *
+ * @package Irazasyed\Telegram\FileUpload
+ */
 class InputFile
 {
     /**

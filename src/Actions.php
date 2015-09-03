@@ -2,6 +2,11 @@
 
 namespace Irazasyed\Telegram;
 
+/**
+ * Class Actions
+ *
+ * @package Irazasyed\Telegram
+ */
 class Actions
 {
     /** @var string Set chat status as Typing */
