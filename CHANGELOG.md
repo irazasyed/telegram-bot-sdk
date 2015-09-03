@@ -12,13 +12,14 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Default Help Command.
 - Chat Actions Helper Class.
 - CHANGELOG File.
+- Add Magic Methods Documentation for Commands Class - Thanks @jonnywilliamson - PR#26.
 
 ### Changed
 - `uploadFile()` method to support loading resource directly - Thanks @rkhitin - PR#17.
 - Added optional `performer` and `title` fields to `sendAudio()` as per official API Changes - Thanks @jonnywilliamson - PR#19.
 - Added `certificate` param to `setWebhook()` method as per Official API Changes.
 - Refactor Upload File Method.
-- Format Code and Revise Doc Blocks.
+- Format Code, Simplify FQNs, Code Cleanup and Revise Doc Blocks.
 - Revise Token Exception Text.
 - Clean Up Base Object Class.
 
