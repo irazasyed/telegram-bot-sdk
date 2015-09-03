@@ -115,7 +115,8 @@ class CommandBus
      */
     public function handler($message, $update)
     {
-        if ($match = $this->parseCommand($message)) {
+        $match = $this->parseCommand($message);
+        if ($match) {
             $command = $match[1];
             $bot = (!empty($match[2])) ? $match[2] : '';
             $arguments = $match[3];
