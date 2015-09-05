@@ -1,25 +1,25 @@
 <?php
 
-namespace Irazasyed\Telegram;
+namespace Telegram\Bot;
 
-use Irazasyed\Telegram\Objects\User;
-use Irazasyed\Telegram\Objects\Update;
-use Irazasyed\Telegram\Objects\Message;
-use Irazasyed\Telegram\Objects\UserProfilePhotos;
-use Irazasyed\Telegram\FileUpload\InputFile;
-use Irazasyed\Telegram\TelegramResponse;
-use Irazasyed\Telegram\Commands\CommandBus;
-use Irazasyed\Telegram\Commands\CommandInterface;
-use Irazasyed\Telegram\HttpClients\GuzzleHttpClient;
-use Irazasyed\Telegram\Exceptions\TelegramSDKException;
-use Irazasyed\Telegram\HttpClients\HttpClientInterface;
+use Telegram\Bot\Objects\User;
+use Telegram\Bot\Objects\Update;
+use Telegram\Bot\Objects\Message;
+use Telegram\Bot\Objects\UserProfilePhotos;
+use Telegram\Bot\FileUpload\InputFile;
+use Telegram\Bot\TelegramResponse;
+use Telegram\Bot\Commands\CommandBus;
+use Telegram\Bot\Commands\CommandInterface;
+use Telegram\Bot\HttpClients\GuzzleHttpClient;
+use Telegram\Bot\Exceptions\TelegramSDKException;
+use Telegram\Bot\HttpClients\HttpClientInterface;
 
 /**
  * Class Telegram
  *
- * @package Irazasyed\Telegram
+ * @package Telegram\Bot
  */
-class Telegram
+class Api
 {
     /**
      * @var string Version number of the Telegram Bot PHP SDK.
@@ -81,7 +81,7 @@ class Telegram
             } elseif ($http_client_handler === 'guzzle') {
                 $httpClientHandler = new GuzzleHttpClient();
             } else {
-                throw new \InvalidArgumentException('The HTTP Client Handler must be set to "guzzle", or be an instance of Irazasyed\Telegram\HttpClients\HttpClientInterface');
+                throw new \InvalidArgumentException('The HTTP Client Handler must be set to "guzzle", or be an instance of Telegram\Bot\HttpClients\HttpClientInterface');
             }
         }
 
@@ -769,7 +769,7 @@ class Telegram
         if ($action === 'get') {
             /** @noinspection PhpUndefinedFunctionInspection */
             $class_name = studly_case(substr($method, 3));
-            $class = 'Irazasyed\Telegram\Objects\\'.$class_name;
+            $class = 'Telegram\Bot\Objects\\'.$class_name;
             $response = $this->get($method, $arguments[0] ?: []);
 
             if (class_exists($class)) {

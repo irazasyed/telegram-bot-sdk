@@ -1,11 +1,11 @@
 <?php
 
-namespace Irazasyed\Telegram\Commands;
+namespace Telegram\Bot\Commands;
 
 /**
  * Class HelpCommand
  *
- * @package Irazasyed\Telegram\Commands
+ * @package Telegram\Bot\Commands
  */
 class HelpCommand extends Command
 {

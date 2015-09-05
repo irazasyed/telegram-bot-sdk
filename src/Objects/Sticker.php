@@ -1,11 +1,11 @@
 <?php
 
-namespace Irazasyed\Telegram\Objects;
+namespace Telegram\Bot\Objects;
 
 /**
  * Class Sticker
  *
- * @package Irazasyed\Telegram\Objects
+ * @package Telegram\Bot\Objects
  */
 class Sticker extends BaseObject
 {

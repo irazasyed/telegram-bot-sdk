@@ -1,19 +1,19 @@
 <?php
 
-namespace Irazasyed\Telegram;
+namespace Telegram\Bot;
 
-use Irazasyed\Telegram\TelegramRequest;
+use Telegram\Bot\TelegramRequest;
 use Psr\Http\Message\ResponseInterface;
 use GuzzleHttp\Promise\PromiseInterface;
-use Irazasyed\Telegram\Exceptions\TelegramSDKException;
-use Irazasyed\Telegram\Exceptions\TelegramResponseException;
+use Telegram\Bot\Exceptions\TelegramSDKException;
+use Telegram\Bot\Exceptions\TelegramResponseException;
 
 /**
  * Class TelegramResponse
  *
  * Handles the response from Telegram API.
  *
- * @package Irazasyed\Telegram
+ * @package Telegram\Bot
  */
 class TelegramResponse
 {

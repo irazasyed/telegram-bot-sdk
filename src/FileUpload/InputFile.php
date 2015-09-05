@@ -1,14 +1,14 @@
 <?php
 
-namespace Irazasyed\Telegram\FileUpload;
+namespace Telegram\Bot\FileUpload;
 
 use GuzzleHttp\Psr7;
-use Irazasyed\Telegram\Exceptions\TelegramSDKException;
+use Telegram\Bot\Exceptions\TelegramSDKException;
 
 /**
  * Class InputFile
  *
- * @package Irazasyed\Telegram\FileUpload
+ * @package Telegram\Bot\FileUpload
  */
 class InputFile
 {

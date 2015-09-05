@@ -1,13 +1,13 @@
 <?php
 
-namespace Irazasyed\Telegram\Laravel\Facades;
+namespace Telegram\Bot\Laravel\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
 /**
  * Class Telegram
  *
- * @package Irazasyed\Telegram\Laravel\Facades
+ * @package Telegram\Bot\Laravel\Facades
  */
 class Telegram extends Facade
 {

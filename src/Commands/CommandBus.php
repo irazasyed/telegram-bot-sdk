@@ -1,16 +1,16 @@
 <?php
 
-namespace Irazasyed\Telegram\Commands;
+namespace Telegram\Bot\Commands;
 
-use Irazasyed\Telegram\Telegram;
-use Irazasyed\Telegram\Commands\HelpCommand;
-use Irazasyed\Telegram\Commands\CommandInterface;
-use Irazasyed\Telegram\Exceptions\TelegramSDKException;
+use Telegram\Bot\Api;
+use Telegram\Bot\Commands\HelpCommand;
+use Telegram\Bot\Commands\CommandInterface;
+use Telegram\Bot\Exceptions\TelegramSDKException;
 
 /**
  * Class CommandBus
  *
- * @package Irazasyed\Telegram\Commands
+ * @package Telegram\Bot\Commands
  */
 class CommandBus
 {
@@ -27,11 +27,11 @@ class CommandBus
     /**
      * Instantiate Command Bus
      *
-     * @param Telegram $telegram
+     * @param Api $telegram
      *
      * @throws TelegramSDKException
      */
-    public function __construct(Telegram $telegram)
+    public function __construct(Api $telegram)
     {
         $this->telegram = $telegram;
 //        $this->addCommand(new HelpCommand());
@@ -89,7 +89,7 @@ class CommandBus
             return $this;
         }
 
-        throw new TelegramSDKException(sprintf('Command class "%s" should be an instance of "Irazasyed\Telegram\Commands\CommandInterface"',
+        throw new TelegramSDKException(sprintf('Command class "%s" should be an instance of "Telegram\Bot\Commands\CommandInterface"',
             get_class($command)));
     }
 

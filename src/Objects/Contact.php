@@ -1,11 +1,11 @@
 <?php
 
-namespace Irazasyed\Telegram\Objects;
+namespace Telegram\Bot\Objects;
 
 /**
  * Class Contact
  *
- * @package Irazasyed\Telegram\Objects
+ * @package Telegram\Bot\Objects
  */
 class Contact extends BaseObject
 {

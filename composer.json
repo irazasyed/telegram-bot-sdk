@@ -19,7 +19,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Irazasyed\\Telegram\\": "src/"
+      "Telegram\\Bot\\": "src/"
     }
   },
   "suggest": {

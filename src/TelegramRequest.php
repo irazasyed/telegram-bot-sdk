@@ -1,15 +1,15 @@
 <?php
 
-namespace Irazasyed\Telegram;
+namespace Telegram\Bot;
 
-use Irazasyed\Telegram\Exceptions\TelegramSDKException;
+use Telegram\Bot\Exceptions\TelegramSDKException;
 
 /**
  * Class TelegramRequest
  *
  * Builds Telegram Bot API Request Entity.
  *
- * @package Irazasyed\Telegram
+ * @package Telegram\Bot
  */
 class TelegramRequest
 {

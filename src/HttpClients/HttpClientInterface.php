@@ -1,11 +1,11 @@
 <?php
 
-namespace Irazasyed\Telegram\HttpClients;
+namespace Telegram\Bot\HttpClients;
 
 /**
  * Interface HttpClientInterface
  *
- * @package Irazasyed\Telegram\HttpClients
+ * @package Telegram\Bot\HttpClients
  */
 interface HttpClientInterface
 {

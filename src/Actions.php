@@ -1,11 +1,11 @@
 <?php
 
-namespace Irazasyed\Telegram;
+namespace Telegram\Bot;
 
 /**
  * Class Actions
  *
- * @package Irazasyed\Telegram
+ * @package Telegram\Bot
  */
 class Actions
 {

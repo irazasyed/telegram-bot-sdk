@@ -1,14 +1,14 @@
 <?php
 
-namespace Irazasyed\Telegram\Objects;
+namespace Telegram\Bot\Objects;
 
 use Illuminate\Support\Collection;
-use Irazasyed\Telegram\Exceptions\TelegramUndefinedPropertyException;
+use Telegram\Bot\Exceptions\TelegramUndefinedPropertyException;
 
 /**
  * Class BaseObject
  *
- * @package Irazasyed\Telegram\Objects
+ * @package Telegram\Bot\Objects
  */
 abstract class BaseObject extends Collection
 {

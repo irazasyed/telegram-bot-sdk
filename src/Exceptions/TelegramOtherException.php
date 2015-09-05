@@ -1,11 +1,11 @@
 <?php
 
-namespace Irazasyed\Telegram\Exceptions;
+namespace Telegram\Bot\Exceptions;
 
 /**
  * Class TelegramOtherException
  *
- * @package Irazasyed\Telegram\Exceptions
+ * @package Telegram\Bot\Exceptions
  */
 class TelegramOtherException extends TelegramSDKException
 {

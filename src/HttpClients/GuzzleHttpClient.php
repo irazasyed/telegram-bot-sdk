@@ -1,6 +1,6 @@
 <?php
 
-namespace Irazasyed\Telegram\HttpClients;
+namespace Telegram\Bot\HttpClients;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Promise;
@@ -8,12 +8,12 @@ use GuzzleHttp\RequestOptions;
 use Psr\Http\Message\ResponseInterface;
 use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Exception\RequestException;
-use Irazasyed\Telegram\Exceptions\TelegramSDKException;
+use Telegram\Bot\Exceptions\TelegramSDKException;
 
 /**
  * Class GuzzleHttpClient
  *
- * @package Irazasyed\Telegram\HttpClients
+ * @package Telegram\Bot\HttpClients
  */
 class GuzzleHttpClient implements HttpClientInterface
 {

@@ -1,14 +1,14 @@
 <?php
 
-namespace Irazasyed\Telegram\Laravel;
+namespace Telegram\Bot\Laravel;
 
-use Irazasyed\Telegram\Telegram;
+use Telegram\Bot\Api;
 use Illuminate\Support\ServiceProvider;
 
 /**
  * Class TelegramServiceProvider
  *
- * @package Irazasyed\Telegram\Laravel
+ * @package Telegram\Bot\Laravel
  */
 class TelegramServiceProvider extends ServiceProvider
 {
@@ -56,7 +56,7 @@ class TelegramServiceProvider extends ServiceProvider
         $this->app->singleton('telegram', function ($app) {
             $config = $app['config'];
 
-            $telegram = new Telegram(
+            $telegram = new Api(
                 $config->get('telegram.bot_token', false),
                 $config->get('telegram.async_requests', false),
                 $config->get('telegram.http_client_handler', null)
