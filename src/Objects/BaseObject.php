@@ -58,7 +58,7 @@ abstract class BaseObject extends Collection
         $relations = $this->relations();
 
         if (!$relations || !is_array($relations)) {
-            return;
+            return false;
         }
 
         $results = $this->all();
