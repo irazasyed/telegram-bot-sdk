@@ -110,7 +110,6 @@ class TelegramClient
 
         $timeOut = static::DEFAULT_REQUEST_TIMEOUT;
 
-        $method = $request->getMethod();
         if ($method === 'POST') {
             $options = $request->getPostParams();
         } else {
