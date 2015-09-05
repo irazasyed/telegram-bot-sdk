@@ -632,7 +632,7 @@ class Api
             $updates = $this->getUpdates();
             $highestId = -1;
             foreach ($updates as $update) {
-                $highestId = $update->getUpdate_id();
+                $highestId = $update->getUpdateId();
 
                 $this->getCommandBus()->handler($update->getMessage()->getText(), $update);
             }
