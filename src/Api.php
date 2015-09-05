@@ -14,8 +14,9 @@ use Telegram\Bot\HttpClients\GuzzleHttpClient;
 use Telegram\Bot\Exceptions\TelegramSDKException;
 use Telegram\Bot\HttpClients\HttpClientInterface;
 
+
 /**
- * Class Telegram
+ * Class Api
  *
  * @package Telegram\Bot
  */

@@ -111,7 +111,7 @@ abstract class BaseObject extends Collection
      * @param $name
      * @param $arguments
      *
-     * @return bool|BaseObject|mixed|static
+     * @return mixed
      *
      * @throws TelegramUndefinedPropertyException
      */

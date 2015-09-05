@@ -5,28 +5,60 @@ namespace Telegram\Bot;
 /**
  * Class Actions
  *
+ * Chat Actions let you broadcast a type of action depending on what the user is about to receive.
+ * The status is set for 5 seconds or less (when a message arrives from your bot, Telegram clients clear its typing
+ * status).
+ *
  * @package Telegram\Bot
  */
 class Actions
 {
-    /** @var string Set chat status as Typing */
+    /**
+     * Sets chat status as Typing.
+     *
+     * @var string
+     */
     const TYPING = 'typing';
 
-    /** @var string Set chat status as Sending Photo */
+    /**
+     * Sets chat status as Sending Photo.
+     *
+     * @var string
+     */
     const UPLOAD_PHOTO = 'upload_photo';
 
-    /** @var string Set chat status as Sending Video */
+    /**
+     * Sets chat status as Sending Video.
+     *
+     * @var string
+     */
     const UPLOAD_VIDEO = 'upload_video';
 
-    /** @var string Set chat status as Sending Audio */
+    /**
+     * Sets chat status as Sending Audio.
+     *
+     * @var string
+     */
     const UPLOAD_AUDIO = 'upload_audio';
 
-    /** @var string Set chat status as Sending Document */
+    /**
+     * Sets chat status as Sending Document.
+     *
+     * @var string
+     */
     const UPLOAD_DOCUMENT = 'upload_document';
 
-    /** @var string Set chat status as Choosing Geo */
+    /**
+     * Sets chat status as Choosing Geo.
+     *
+     * @var string
+     */
     const FIND_LOCATION = 'find_location';
 
-    /** @var string Set chat status as Recording Video */
+    /**
+     * Sets chat status as Recording Video.
+     *
+     * @var string
+     */
     const RECORD_VIDEO = 'record_video';
 }
