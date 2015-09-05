@@ -13,7 +13,7 @@ use Telegram\Bot\Exceptions\TelegramUndefinedPropertyException;
 abstract class BaseObject extends Collection
 {
     /**
-     * Builds collection enitity.
+     * Builds collection entity.
      *
      * @param array|mixed $data
      */
