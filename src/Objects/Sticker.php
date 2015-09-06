@@ -6,6 +6,12 @@ namespace Telegram\Bot\Objects;
  * Class Sticker
  *
  * @package Telegram\Bot\Objects
+ *
+ * @method string       getFileId()     Unique identifier for this file.
+ * @method int          getWidth()      Sticker width.
+ * @method int          getHeight()     Sticker height.
+ * @method PhotoSize    getThumb()      (Optional). Sticker thumbnail in .webp or .jpg format.
+ * @method int          getFileSize()   (Optional). File size.
  */
 class Sticker extends BaseObject
 {
