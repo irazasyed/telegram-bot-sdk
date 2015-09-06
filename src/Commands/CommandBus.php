@@ -3,8 +3,6 @@
 namespace Telegram\Bot\Commands;
 
 use Telegram\Bot\Api;
-use Telegram\Bot\Commands\HelpCommand;
-use Telegram\Bot\Commands\CommandInterface;
 use Telegram\Bot\Exceptions\TelegramSDKException;
 
 /**
@@ -20,7 +18,7 @@ class CommandBus
     protected $commands = [];
 
     /**
-     * @var Telegram
+     * @var Api
      */
     private $telegram;
 
@@ -34,7 +32,6 @@ class CommandBus
     public function __construct(Api $telegram)
     {
         $this->telegram = $telegram;
-//        $this->addCommand(new HelpCommand());
     }
 
     /**

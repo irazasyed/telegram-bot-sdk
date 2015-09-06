@@ -2,7 +2,6 @@
 
 namespace Telegram\Bot;
 
-use Telegram\Bot\TelegramRequest;
 use Psr\Http\Message\ResponseInterface;
 use GuzzleHttp\Promise\PromiseInterface;
 use Telegram\Bot\Exceptions\TelegramSDKException;

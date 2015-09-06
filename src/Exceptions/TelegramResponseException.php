@@ -3,7 +3,6 @@
 namespace Telegram\Bot\Exceptions;
 
 use Telegram\Bot\TelegramResponse;
-use Telegram\Bot\Exceptions\TelegramSDKException;
 
 /**
  * Class TelegramResponseException

@@ -7,7 +7,6 @@ use Telegram\Bot\Objects\Update;
 use Telegram\Bot\Objects\Message;
 use Telegram\Bot\Objects\UserProfilePhotos;
 use Telegram\Bot\FileUpload\InputFile;
-use Telegram\Bot\TelegramResponse;
 use Telegram\Bot\Commands\CommandBus;
 use Telegram\Bot\Commands\CommandInterface;
 use Telegram\Bot\HttpClients\GuzzleHttpClient;

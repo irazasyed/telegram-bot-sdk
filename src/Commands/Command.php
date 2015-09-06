@@ -4,8 +4,6 @@ namespace Telegram\Bot\Commands;
 
 use Telegram\Bot\Api;
 use Telegram\Bot\Objects\Update;
-use Telegram\Bot\Commands\CommandBus;
-use Telegram\Bot\Exceptions\TelegramSDKException;
 
 /**
  * Class Command
