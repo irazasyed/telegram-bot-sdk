@@ -270,7 +270,7 @@ class TelegramRequest
     public function getDefaultHeaders()
     {
         return [
-            'User-Agent' => 'Telegram Bot PHP SDK v'.Telegram::VERSION.' - (https://github.com/irazasyed/telegram-bot-sdk)',
+            'User-Agent' => 'Telegram Bot PHP SDK v'.Api::VERSION.' - (https://github.com/irazasyed/telegram-bot-sdk)',
         ];
     }
 }
