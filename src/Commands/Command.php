@@ -2,6 +2,7 @@
 
 namespace Telegram\Bot\Commands;
 
+use Telegram\Bot\Api;
 use Telegram\Bot\Objects\Update;
 use Telegram\Bot\Commands\CommandBus;
 use Telegram\Bot\Exceptions\TelegramSDKException;
@@ -37,7 +38,7 @@ abstract class Command implements CommandInterface
     protected $description;
 
     /**
-     * @var Telegram Holds the Super Class Instance.
+     * @var Api Holds the Super Class Instance.
      */
     protected $telegram;
 
@@ -66,7 +67,7 @@ abstract class Command implements CommandInterface
      *
      * @param $name
      *
-     * @return $this
+     * @return Command
      */
     public function setName($name)
     {
@@ -90,7 +91,7 @@ abstract class Command implements CommandInterface
      *
      * @param $description
      *
-     * @return $this
+     * @return Command
      */
     public function setDescription($description)
     {
@@ -102,7 +103,7 @@ abstract class Command implements CommandInterface
     /**
      * Returns Telegram Instance.
      *
-     * @return Telegram
+     * @return Api
      */
     public function getTelegram()
     {

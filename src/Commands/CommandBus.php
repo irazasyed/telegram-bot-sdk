@@ -52,7 +52,7 @@ class CommandBus
      *
      * @param array $commands
      *
-     * @return $this
+     * @return CommandBus
      */
     public function addCommands(array $commands)
     {
@@ -68,7 +68,7 @@ class CommandBus
      *
      * @param CommandInterface|string $command Either an object or full path to the command class.
      *
-     * @return $this
+     * @return CommandBus
      *
      * @throws TelegramSDKException
      */

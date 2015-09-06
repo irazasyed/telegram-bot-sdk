@@ -128,7 +128,7 @@ class Api
      *
      * @param string $accessToken The bot access token to save.
      *
-     * @return Telegram
+     * @return Api
      *
      * @throws \InvalidArgumentException
      */
