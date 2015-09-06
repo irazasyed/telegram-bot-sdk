@@ -544,17 +544,23 @@ class Api
      *
      * @link https://core.telegram.org/bots/api#getupdates
      *
-     * @param int $offset
-     * @param int $limit
-     * @param int $timeout
+     * @param int|null $offset
+     * @param int|null $limit
+     * @param int|null $timeout
      *
-     * @return Update
+     * @return Update[]
      */
     public function getUpdates($offset = null, $limit = null, $timeout = null)
     {
         $response = $this->get('getUpdates', compact('offset', 'limit', 'timeout'));
+        $updates = $response->getDecodedBody();
 
-        return new Update($response->getDecodedBody());
+        $data = [];
+        foreach ($updates['result'] as $update) {
+            $data[] = new Update($update);
+        }
+
+        return $data;
     }
 
     /**
