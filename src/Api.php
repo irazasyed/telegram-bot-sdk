@@ -632,15 +632,16 @@ class Api
             $updates = $this->getUpdates();
             $highestId = -1;
             foreach ($updates as $update) {
-                $highestId = $update['update_id'];
+                $highestId = $update->getUpdateId();
 
-                $this->getCommandBus()->handler($update['message']->getText(), $update);
+                $this->getCommandBus()->handler($update->getMessage()->getText(), $update);
             }
 
             if ($highestId != -1 && !$webhook) {
                 return $this->getUpdates($highestId + 1, 1);
             }
         }
+        return true;
     }
 
     /**

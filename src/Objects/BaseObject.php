@@ -13,7 +13,7 @@ use Telegram\Bot\Exceptions\TelegramUndefinedPropertyException;
 abstract class BaseObject extends Collection
 {
     /**
-     * Builds collection enitity.
+     * Builds collection entity.
      *
      * @param array|mixed $data
      */
@@ -58,7 +58,7 @@ abstract class BaseObject extends Collection
         $relations = $this->relations();
 
         if (!$relations || !is_array($relations)) {
-            return;
+            return false;
         }
 
         $results = $this->all();
