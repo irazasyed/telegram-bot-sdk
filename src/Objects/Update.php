@@ -7,7 +7,7 @@ namespace Telegram\Bot\Objects;
  *
  * @package Telegram\Bot\Objects
  *
- * @method int      getUpdateId()  The update's unique identifier. Update identifiers start from a certain positive number and increase sequentially.
+ * @method int      getUpdateId()   The update's unique identifier. Update identifiers start from a certain positive number and increase sequentially.
  * @method Message  getMessage()    (Optional). New incoming message of any kind - text, photo, sticker, etc.
  *
  */
