@@ -654,7 +654,7 @@ class Api
      *
      * @throws TelegramSDKException
      */
-    public function get($endpoint, $params = [])
+    protected function get($endpoint, $params = [])
     {
         return $this->sendRequest(
             'GET',
@@ -673,7 +673,7 @@ class Api
      *
      * @throws TelegramSDKException
      */
-    public function post($endpoint, array $params = [])
+    protected function post($endpoint, array $params = [])
     {
         return $this->sendRequest(
             'POST',
@@ -693,7 +693,7 @@ class Api
      *
      * @throws TelegramSDKException
      */
-    public function uploadFile($endpoint, array $params = [])
+    protected function uploadFile($endpoint, array $params = [])
     {
         $i = 0;
         $multipart_params = [];
@@ -729,7 +729,7 @@ class Api
      *
      * @throws TelegramSDKException
      */
-    public function sendRequest(
+    protected function sendRequest(
         $method,
         $endpoint,
         array $params = []
@@ -748,7 +748,7 @@ class Api
      *
      * @return TelegramRequest
      */
-    public function request(
+    protected function request(
         $method,
         $endpoint,
         array $params = []
