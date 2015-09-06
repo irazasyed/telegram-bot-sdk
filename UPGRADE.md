@@ -7,26 +7,20 @@ Please make sure you are viewing this file on the master branch. Check out the [
 
 There are some breaking and major changes in this new version. Follow the below instructions.
 
-1. Update package version in `composer.json` file to `^1.0` and do composer update.
+1. Update the package by firing the following command in your terminal:
    
-   `composer.json`:
-   
-   ```json
-   "irazasyed/telegram-bot-sdk": "^1.0"
    ```
-   
-   Fire this command after you update your `composer.json` file.
- 
-   ```
-   $ composer update irazasyed/telegram-bot-sdk
+   $ composer require irazasyed/telegram-bot-sdk ^1.0
    ```
    
 2. The Namespace has been renamed from `Irazasyed\Telegram` to `Telegram\Bot`, So you need to update the namespace across your project wherever you're injecting any of the classes from the Package.
 
 3. The `Telegram.php` file has been renamed to `Api.php`, Hence you need to change `Irazasyed\Telegram\Telegram` to `Telegram\Bot\Api` if you're injecting in your project or initilizating the library. Ex:
+
    ```php
    $telegram = new Telegram\Bot\Api($token);
    ```
+   
 4. If you're using `sendAudio()` method anywhere in your project, Make sure you update that as per the new parameters and API change. Refer changelog and [this](https://github.com/irazasyed/telegram-bot-sdk/blob/master/src/Api.php#L297-L324).
 
 ## Upgrading in Laravel / Lumen Project
