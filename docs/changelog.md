@@ -19,6 +19,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - New Documentation Page.
 - Telegram Bot SDK [API Docs](https://irazasyed.github.io/telegram-bot-sdk/api).
 - [Upgrade](upgrade.md) Guide.
+- Methods to Detect and Determine Message/Update Type.
 
 ### Changed
 - `uploadFile()` method to support loading resource directly - Thanks @rkhitin - ([#17](https://github.com/irazasyed/telegram-bot-sdk/pull/17)).
