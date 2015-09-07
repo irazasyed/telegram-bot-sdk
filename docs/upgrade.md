@@ -1,9 +1,8 @@
-Upgrade Guide
-=============
+# Upgrade Guide
 
 Please make sure you are viewing this file on the master branch. Check out the [CHANGELOG][changelog] for detailed info on whats changed.
 
-# Upgrading To 1.0 from 0.x
+## Upgrading To 1.0 from 0.x
 
 There are some breaking and major changes in this new version. Follow the below instructions to apply the changes.
 
@@ -31,7 +30,7 @@ $telegram = new Telegram\Bot\Api($token);
 
 If you're using `sendAudio()` method anywhere in your project, Make sure you update that as per the new parameters and API change. Refer the [CHANGELOG][changelog] and API [file](https://github.com/irazasyed/telegram-bot-sdk/blob/master/src/Api.php#L297-L324).
 
-## Upgrading To 1.0 in Laravel / Lumen
+### Upgrading To 1.0 in Laravel / Lumen
 
 Addition to the above instructions, You also need to apply the below instructions to get the package working in your Laravel or Lumen Project.
 
@@ -72,9 +71,8 @@ If you use facade, then you need to update the `aliases` array in `config/app.ph
 Fire the following command to apply the new changes. **Please note**, The below command will overwrite your current changes to the config file, So take a backup before firing this command:
 
 
-```php
-$ php artisan vendor:publish --provider="Telegram\Bot\Laravel\TelegramServiceProvider" --force
-```
+    php artisan vendor:publish --provider="Telegram\Bot\Laravel\TelegramServiceProvider" --force
+
 
 That's all folks, Enjoy! 
 
