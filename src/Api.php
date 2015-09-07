@@ -641,7 +641,44 @@ class Api
                 return $this->getUpdates($highestId + 1, 1);
             }
         }
+
         return true;
+    }
+
+    /**
+     * Determine if a given type is the message.
+     *
+     * @param string $type
+     * @param Update $update
+     *
+     * @return bool
+     */
+    public function isMessageType($type, Update $update)
+    {
+        $message_keys = $update->getMessage()->keys();
+
+        if (in_array($type, $message_keys)) {
+            return true;
+        }
+
+        return $this->detectMessageType($update) === $type;
+    }
+
+    /**
+     * Detect Message Type Based on Update Object.
+     *
+     * @param Update $update
+     *
+     * @return string|null
+     */
+    public function detectMessageType(Update $update)
+    {
+        $types = ['audio', 'document', 'photo', 'sticker', 'video', 'voice', 'contact', 'location', 'text'];
+
+        return $update->getMessage()
+            ->keys()
+            ->intersect($types)
+            ->pop();
     }
 
     /**
