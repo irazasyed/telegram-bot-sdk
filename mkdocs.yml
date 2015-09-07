@@ -1,0 +1,20 @@
+site_name: Telegram Bot API SDK Docs
+site_author: Syed Irfaq R.
+copyright: © Copyright 2015, Syed Irfaq R.
+repo_url: https://github.com/irazasyed/telegram-bot-sdk/
+pages:
+- Home: index.md
+- API: 'api-docs.md'
+- Usage:
+    - 'Initial Setup': 'usage/initial-setup.md'
+    - 'Available Methods & Examples': 'usage/available-methods-examples.md'
+    - 'Asynchronous Requests': 'usage/async.md'
+    - 'Commands System': 'usage/commands.md'
+    - 'Keyboards': 'usage/keyboards.md'
+    - 'Webhook & Updates': 'usage/webhook-updates.md'
+- Upgrade Guide: upgrade.md
+- About:
+    - 'Change Log': 'changelog.md'
+    - 'Contributing': 'contributing.md'
+    - 'License': 'license.md'
+theme: yeti
