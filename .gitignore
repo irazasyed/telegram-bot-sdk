@@ -2,3 +2,5 @@ composer.phar
 composer.lock
 vendor/
 site/
+mkdocs.yml
+sami.php
