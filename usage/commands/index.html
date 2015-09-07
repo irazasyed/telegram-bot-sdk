@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="Syed Irfaq R.">
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+
+	<title>Commands System - Telegram Bot API SDK</title>
+
+        <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome-4.0.3.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="../../css/highlight.css">
+
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+
+        
+        <script>
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+            ga('create', 'UA-54567513-6', 'irazasyed.github.io');
+            ga('send', 'pageview');
+        </script>
+        
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+
+            <!-- Main title -->
+            <a class="navbar-brand" href="../..">Telegram Bot API SDK</a>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+            
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                
+                
+                    <li >
+                        <a href="../..">Home</a>
+                    </li>
+                
+                
+                
+                    <li >
+                        <a href="../../api-docs/">API</a>
+                    </li>
+                
+                
+                
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Usage <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../initial-setup/">Initial Setup</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../available-methods-examples/">Available Methods & Examples</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../async/">Asynchronous Requests</a>
+</li>
+
+                        
+                            
+<li class="active">
+    <a href="./">Commands System</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../keyboards/">Keyboards</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../webhook-updates/">Webhook & Updates</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li >
+                        <a href="../../upgrade/">Upgrade Guide</a>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">About <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../../changelog/">Change Log</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../contributing/">Contributing</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../license/">License</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                </ul>
+            
+
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                        <i class="fa fa-search"></i> Search
+                    </a>
+                </li>
+                
+                    <li >
+                        <a rel="next" href="../async/">
+                            <i class="fa fa-arrow-left"></i> Previous
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="prev" href="../keyboards/">
+                            Next <i class="fa fa-arrow-right"></i>
+                        </a>
+                    </li>
+                
+                
+                    <li>
+                        <a href="https://github.com/irazasyed/telegram-bot-sdk/">
+                            
+                                <i class="fa fa-github"></i>
+                            
+                            GitHub
+                        </a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+</div>
+
+        <div class="container">
+            
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+    
+        <li class="main active"><a href="#commands">Commands</a></li>
+        
+            <li><a href="#introduction">Introduction</a></li>
+        
+            <li><a href="#writing-commands">Writing Commands</a></li>
+        
+            <li><a href="#registering-commands">Registering Commands</a></li>
+        
+            <li><a href="#handling-commands">Handling Commands</a></li>
+        
+    
+    </ul>
+</div></div>
+                <div class="col-md-9" role="main">
+
+<h1 id="commands">Commands</h1>
+<h2 id="introduction">Introduction</h2>
+<p>The SDK comes with a commands system that lets you handle and manage all inbound commands seamlessly and efficiently. The Commands Handler System is smart enough to trigger the right command when it sees one in an inbound message from Telegram. The commands are lazy loaded and processed on-demand, So registering them won't cause any performance issues to your application.</p>
+<p>Lets get started with writing and registering our command.</p>
+<h2 id="writing-commands">Writing Commands</h2>
+<p>First step before the Commands Handler System can start handling all your inbound commands is to write one. All the commands you write should extend the <code>Telegram\Bot\Commands\Command</code> class which is an implementation of <a href="https://github.com/irazasyed/telegram-bot-sdk/blob/master/src/Commands/CommandInterface.php">Telegram\Bot\Commands\CommandInterface</a>. You may store your custom commands in any directory as long as your commands can be autoloaded based on your <code>composer.json</code> settings and are registered properly with the Commands Handler System.</p>
+<p>So for this example, Will build a <code>/start</code> command which will be triggered when a user sends <code>/start</code> or when they start an interaction with your bot for the first time.</p>
+<h3 id="command-structure">Command Structure</h3>
+<p>You should always add the <code>$name</code> and <code>$description</code> properties of the class with the appropriate values, which will be used when displaying a list of commands as well as when processing inbound message.</p>
+<p>Example Command:</p>
+<pre><code class="php">&lt;?php
+
+namespace Vendor\App\Commands;
+
+use Telegram\Bot\Actions;
+use Telegram\Bot\Commands\Command;
+
+class StartCommand extends Command
+{
+    /**
+     * @var string Command Name
+     */
+    protected $name = &quot;start&quot;;
+
+    /**
+     * @var string Command Description
+     */
+    protected $description = &quot;Start Command to get you started&quot;;
+
+    /**
+     * @inheritdoc
+     */
+    public function handle($arguments)
+    {
+        // This will send a message using `sendMessage` method behind the scenes to
+        // the user/chat id who triggered this command.
+        // `replyWith&lt;Message|Photo|Audio|Video|Voice|Document|Sticker|Location|ChatAction&gt;()` all the available methods are dynamically
+        // handled when you replace `send&lt;Method&gt;` with `replyWith` and use all their parameters except chat_id.
+        $this-&gt;replyWithMessage('Hello! Welcome to our bot, Here are our available commands:');
+
+        // This will update the chat status to typing...
+        $this-&gt;replyWithChatAction(Actions::TYPING);
+
+        // This will prepare a list of available commands and send the user.
+        // First, Get an array of all registered commands
+        // They'll be in 'command-name' =&gt; 'Command Handler Class' format.
+        $commands = $this-&gt;getTelegram()-&gt;getCommands();
+
+        // Build the list
+        $response = '';
+        foreach ($commands as $name =&gt; $command) {
+            $response .= sprintf('/%s - %s' . PHP_EOL, $name, $command-&gt;getDescription());
+        }
+
+        // Reply with the commands list
+        $this-&gt;replyWithMessage($response);
+
+        // Trigger another command dynamically from within this command
+        // When you want to chain multiple commands within one or process the request further.
+        // The method supports second parameter arguments which you can optionally pass, By default
+        // it'll pass the same arguments that are received for this command originally.
+        $this-&gt;triggerCommand('subscribe');
+    }
+}
+</code></pre>
+
+<p>Notice, The <code>$name</code> of the command is <code>start</code> so when a user sends <code>/start</code>, this class would be triggered.
+So always make sure the name is correct and in lowercase. The description is helpful when you get a list of all the available commands either with the <code>/help</code> command or for other purposes using the <code>getCommands()</code> method.</p>
+<p>All the commands you create should implement the <code>handle($arguments)</code> method which would be called when a user sends the command and will be passed with the arguments (Currently we don't break the arguments into an array but you can use methods like <code>explode()</code> to break by space and use it for whatever purposes).</p>
+<p>In your handle method, You also get access to <code>getTelegram()</code> and <code>getUpdate()</code> methods which gives you access to the super class and the original update object sent from Telegram.</p>
+<p>The commands system as you can see in above example command comes with a few helper methods (They're optional just to help you and make things easier):</p>
+<ol>
+<li><code>replyWith&lt;Message|Photo|Audio|Video|Voice|Document|Sticker|Location|ChatAction&gt;()</code> - Basically, All the <code>send&lt;API Method&gt;</code> are supported and are pre-filled with the chat id of the message that triggered the command. All other params of each method can easily be passed to it like you would normally as per the docs (Exclude <code>chat_id</code> since it already is adding behind the scenes).</li>
+<li><code>triggerCommand(&lt;Command Name&gt;)</code> - This is useful to chain a bunch of commands within a command. Say for example, I want to fire the <code>/subscribe</code> command that is registered already with the Commands Handler System. By using this method, I can tell the system to simulate the <code>/subscribe</code> command as if the user sent it and i can then process such request normally within that command. I would use this method to trigger that command in my <code>/start</code> command for example. So as soon as the user sends <code>/start</code> or interacts with my bot for the first time, they would also be automatically triggering <code>/subscribe</code> command which for example could be subscribing them for some alerts from your bot. The function supports second param called <code>$arguments</code> which is optional and can be used to send some arguments from the original command (The one which is triggering) to the other command. By default, The arguments would be the same as what Telegram originally sent it.</li>
+</ol>
+<p>If a command is not registered but the user fires one (Lets say an invalid command), By default the system will look for a help command if its registered and if yes, then it'll be triggered. So the default help command class if you were to use would respond the user with the available list of commands with description.</p>
+<h2 id="registering-commands">Registering Commands</h2>
+<p>The first step is to register our commands after we create one.</p>
+<h3 id="registering-single-command">Registering Single Command</h3>
+<p>In order to register a single command, we can make use of <code>addCommand()</code> method which supports either the command object or full path to the command itself and it'll automatically initialize it behind the scenes.</p>
+<p><strong>Standalone:</strong></p>
+<pre><code class="php">$telegram-&gt;addCommand(Telegram\Bot\Commands\HelpCommand::class);
+
+// OR
+
+$command = new Telegram\Bot\Commands\HelpCommand();
+$telegram-&gt;addCommand($command);
+</code></pre>
+
+<p><strong>Laravel:</strong>
+Registering Commands in Laravel is actually very easy. Simply open the <code>telegram.php</code> configuration file and add all your commands full path to the <code>commands</code> array and the SDK will take care of the rest.</p>
+<p>Example:</p>
+<pre><code class="php">'commands' =&gt; [
+    Telegram\Bot\Commands\HelpCommand::class,
+    Vendor\Project\Commands\StartCommand::class,
+    Vendor\Project\Commands\SettingsCommand::class,
+]
+</code></pre>
+
+<p>By default, The SDK registers a Help Command in Laravel, But you can either choose to disable it by simply commenting out the HelpCommand line/removing it completely or Replace it with your own Help Command.</p>
+<p>You can also register commands on-fly using the same <code>addCommand()</code> method like above in Standalone example.</p>
+<p>Example:</p>
+<pre><code class="php">Telegram::addCommand(Telegram\Bot\Commands\HelpCommand::class);
+
+// OR
+
+$command = new Telegram\Bot\Commands\HelpCommand();
+Telegram::addCommand($command);
+</code></pre>
+
+<h3 id="registering-multiple-commands">Registering Multiple Commands</h3>
+<p>To register multiple commands, You can pass an array with all the commands that has to be registered to the <code>addCommands()</code> method.</p>
+<p>Example:</p>
+<pre><code class="php">// Standalone
+$telegram-&gt;addCommands([
+   Telegram\Bot\Commands\HelpCommand::class,
+   Vendor\Project\TestCommand::class,
+   Vendor\Project\StartCommand::class,
+]);
+
+// Laravel
+Telegram::addCommands([
+   Telegram\Bot\Commands\HelpCommand::class,
+   Vendor\Project\TestCommand::class,
+   Vendor\Project\StartCommand::class,
+]);
+</code></pre>
+
+<blockquote>
+<p><strong>Note:</strong> All commands are lazy loaded.</p>
+</blockquote>
+<h2 id="handling-commands">Handling Commands</h2>
+<p>Now to handle inbound commands, You have to use the new method called <code>commandsHandler()</code>.
+Here's an example used with a Webhook registered:</p>
+<pre><code class="php">// Laravel
+Route::post('/&lt;token&gt;/webhook', function () {
+    Telegram::commandsHandler(true);
+
+    return 'ok';
+});
+
+// Standalone
+$telegram-&gt;commandsHandler(true);
+</code></pre>
+
+<p>The method accepts a boolean value, Defaults to <code>false</code> which means the commands should manually be processed using <code>getUpdates()</code> method. Set it to <code>true</code> to process incoming updates sent from Telegram to your Webhook. The commands handler system will go through the incoming Update object to see if there is any command that matches the registered once and process them accordingly.</p></div>
+            
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            
+                <p>Copyright &copy; 2015, <a href="https://github.com/irazasyed">Syed Irfaq R.</a> |  <a href="https://irazasyed.github.io/telegram-bot-sdk/api/">API Docs</a></p>
+            
+            <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+
+        <script src="../../js/jquery-1.10.2.min.js"></script>
+        <script src="../../js/bootstrap-3.0.3.min.js"></script>
+        <script src="../../js/highlight.pack.js"></script>
+        <script>var base_url = '../..';</script>
+        <script data-main="../../mkdocs/js/search.js" src="../../mkdocs/js/require.js"></script>
+        <script src="../../js/base.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>
+                            From here you can search these documents. Enter
+                            your search terms below.
+                        </p>
+                        <form role="form">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query">
+                            </div>
+                        </form>
+                        <div id="mkdocs-search-results"></div>
+                    </div>
+                    <div class="modal-footer">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </body>
+</html>

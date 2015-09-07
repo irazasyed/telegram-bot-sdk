@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="Syed Irfaq R.">
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+
+	<title>Keyboards - Telegram Bot API SDK</title>
+
+        <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome-4.0.3.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="../../css/highlight.css">
+
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+
+        
+        <script>
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+            ga('create', 'UA-54567513-6', 'irazasyed.github.io');
+            ga('send', 'pageview');
+        </script>
+        
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+
+            <!-- Main title -->
+            <a class="navbar-brand" href="../..">Telegram Bot API SDK</a>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+            
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                
+                
+                    <li >
+                        <a href="../..">Home</a>
+                    </li>
+                
+                
+                
+                    <li >
+                        <a href="../../api-docs/">API</a>
+                    </li>
+                
+                
+                
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Usage <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../initial-setup/">Initial Setup</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../available-methods-examples/">Available Methods & Examples</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../async/">Asynchronous Requests</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../commands/">Commands System</a>
+</li>
+
+                        
+                            
+<li class="active">
+    <a href="./">Keyboards</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../webhook-updates/">Webhook & Updates</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li >
+                        <a href="../../upgrade/">Upgrade Guide</a>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">About <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../../changelog/">Change Log</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../contributing/">Contributing</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../license/">License</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                </ul>
+            
+
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                        <i class="fa fa-search"></i> Search
+                    </a>
+                </li>
+                
+                    <li >
+                        <a rel="next" href="../commands/">
+                            <i class="fa fa-arrow-left"></i> Previous
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="prev" href="../webhook-updates/">
+                            Next <i class="fa fa-arrow-right"></i>
+                        </a>
+                    </li>
+                
+                
+                    <li>
+                        <a href="https://github.com/irazasyed/telegram-bot-sdk/">
+                            
+                                <i class="fa fa-github"></i>
+                            
+                            GitHub
+                        </a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+</div>
+
+        <div class="container">
+            
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+    
+        <li class="main active"><a href="#keyboards">Keyboards</a></li>
+        
+            <li><a href="#reply-keyboard-markup">Reply Keyboard Markup</a></li>
+        
+            <li><a href="#reply-keyboard-hide">Reply Keyboard Hide</a></li>
+        
+            <li><a href="#force-reply">Force Reply</a></li>
+        
+    
+    </ul>
+</div></div>
+                <div class="col-md-9" role="main">
+
+<h1 id="keyboards">Keyboards</h1>
+<blockquote>
+<p>One of the coolest things about Telegram Bot API are the new custom keyboards. Whenever your bot sends a message, it can pass along a special keyboard with predefined reply options. Telegram apps that receive the message will display your keyboard to the user. Tapping any of the buttons will immediately send the respective command. This way you can drastically simplify user interaction with your bot.</p>
+<p>Telegram currently support text and emoji for your buttons. Here are some custom keyboard examples:</p>
+</blockquote>
+<p align="center">
+<img src="https://core.telegram.org/file/811140184/1/5YJxx-rostA/ad3f74094485fb97bd" title="Keyboard for a poll bot" style="max-height: 300px; padding: 10px 5px">
+<img src="https://core.telegram.org/file/811140880/1/jS-YSVkDCNQ/b397dfcefc6da0dc70" title="Keyboard for a calculator bot. Because you can." style="max-height: 300px; padding: 10px 5px">
+<img src="https://core.telegram.org/file/811140733/2/KoysqJKQ_kI/a1ee46a377796c3961" title="Keyboard for a trivia bot" style="max-height: 300px; padding: 10px 5px">
+</p>
+
+<h2 id="reply-keyboard-markup">Reply Keyboard Markup</h2>
+<p>The below example will send a message and automatically show a custom keyboard.
+Since we passed third parameter as true, the keyboard will be shown only once.</p>
+<p>See <a href="https://core.telegram.org/bots/api#replykeyboardmarkup">ReplyKeyboardMarkup</a> docs for a list of supported parameters and other info.</p>
+<p>Example:</p>
+<pre><code class="php">$keyboard = [
+    ['7', '8', '9'],
+    ['4', '5', '6'],
+    ['1', '2', '3'],
+         ['0']
+];
+
+$reply_markup = $telegram-&gt;replyKeyboardMarkup($keyboard, true, true);
+$response = $telegram-&gt;sendMessage('CHAT_ID', 'Hello World', false, null, $reply_markup);
+
+$messageId = $response-&gt;getMessageId();
+</code></pre>
+
+<h2 id="reply-keyboard-hide">Reply Keyboard Hide</h2>
+<p>Telegram clients will hide the current custom keyboard and display the default letter-keyboard.
+See <a href="https://core.telegram.org/bots/api#replykeyboardhide">ReplyKeyboardHide</a> docs for more info.</p>
+<p>Supported Parameter: boolean <code>$selective</code> defaults to <code>false</code>.</p>
+<pre><code class="php">$reply_markup = $telegram-&gt;replyKeyboardHide();
+$response = $telegram-&gt;sendMessage('CHAT_ID', 'Hello World', false, null, $reply_markup);
+</code></pre>
+
+<h2 id="force-reply">Force Reply</h2>
+<p>Shows reply interface to the user, as if they manually selected the bot‘s message and tapped ’Reply'.
+See <a href="https://core.telegram.org/bots/api#forcereply">ForceReply</a> docs for more info.</p>
+<p>Supported Parameter: boolean <code>$selective</code> defaults to <code>false</code>.</p>
+<pre><code class="php">$reply_markup = $telegram-&gt;forceReply();
+$response = $telegram-&gt;sendMessage('CHAT_ID', 'Hello World', false, null, $reply_markup);
+</code></pre></div>
+            
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            
+                <p>Copyright &copy; 2015, <a href="https://github.com/irazasyed">Syed Irfaq R.</a> |  <a href="https://irazasyed.github.io/telegram-bot-sdk/api/">API Docs</a></p>
+            
+            <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+
+        <script src="../../js/jquery-1.10.2.min.js"></script>
+        <script src="../../js/bootstrap-3.0.3.min.js"></script>
+        <script src="../../js/highlight.pack.js"></script>
+        <script>var base_url = '../..';</script>
+        <script data-main="../../mkdocs/js/search.js" src="../../mkdocs/js/require.js"></script>
+        <script src="../../js/base.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>
+                            From here you can search these documents. Enter
+                            your search terms below.
+                        </p>
+                        <form role="form">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query">
+                            </div>
+                        </form>
+                        <div id="mkdocs-search-results"></div>
+                    </div>
+                    <div class="modal-footer">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </body>
+</html>
