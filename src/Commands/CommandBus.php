@@ -3,6 +3,7 @@
 namespace Telegram\Bot\Commands;
 
 use Telegram\Bot\Api;
+use Telegram\Bot\Objects\Update;
 use Telegram\Bot\Exceptions\TelegramSDKException;
 
 /**
@@ -106,11 +107,11 @@ class CommandBus
      * @param $message
      * @param $update
      *
-     * @return mixed
+     * @return Update
      *
      * @throws TelegramSDKException
      */
-    public function handler($message, $update)
+    public function handler($message, Update $update)
     {
         $match = $this->parseCommand($message);
         if ($match) {
