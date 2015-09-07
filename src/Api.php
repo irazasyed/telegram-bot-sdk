@@ -672,9 +672,7 @@ class Api
      */
     public function isMessageType($type, Update $update)
     {
-        $message_keys = $update->getMessage()->keys();
-
-        if (in_array($type, $message_keys)) {
+        if ($update->getMessage()->has(strtolower($type))) {
             return true;
         }
 
