@@ -3,7 +3,6 @@
 namespace Telegram\Bot\Objects;
 
 use Illuminate\Support\Collection;
-use Telegram\Bot\Exceptions\TelegramUndefinedPropertyException;
 
 /**
  * Class BaseObject
@@ -113,7 +112,6 @@ abstract class BaseObject extends Collection
      *
      * @return mixed
      *
-     * @throws TelegramUndefinedPropertyException
      */
     public function __call($name, $arguments)
     {
@@ -121,19 +119,15 @@ abstract class BaseObject extends Collection
 
         if ($action === 'get') {
             $property = snake_case(substr($name, 3));
-            $response = $this->get($property, false);
+            $response = $this->get($property);
 
-            if ($response) {
-                // Map relative property to an object
-                $relations = $this->relations();
-                if (isset($relations[$property])) {
-                    return new $relations[$property]($response);
-                }
-
-                return $response;
+            // Map relative property to an object
+            $relations = $this->relations();
+            if (isset($relations[$property])) {
+                return new $relations[$property]($response);
             }
 
-            throw new TelegramUndefinedPropertyException();
+            return $response;
         }
 
         return false;
