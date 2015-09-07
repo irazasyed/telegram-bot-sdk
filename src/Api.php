@@ -618,32 +618,49 @@ class Api
     /**
      * Processes Inbound Commands.
      *
-     * @param bool|false $webhook
+     * @param bool $webhook
      *
-     * @return mixed
+     * @return Update|Objects\Update[]
      */
     public function commandsHandler($webhook = false)
     {
         if ($webhook) {
             $update = $this->getWebhookUpdates();
+            $this->processCommand($update);
 
-            return $this->getCommandBus()->handler($update->getMessage()->getText(), $update);
-        } else {
-            $updates = $this->getUpdates();
-            $highestId = -1;
-            foreach ($updates as $update) {
-                $highestId = $update->getUpdateId();
-
-                $this->getCommandBus()->handler($update->getMessage()->getText(), $update);
-            }
-
-            if ($highestId != -1 && !$webhook) {
-                return $this->getUpdates($highestId + 1, 1);
-            }
+            return $update;
         }
 
-        return true;
+        $updates = $this->getUpdates();
+        $highestId = -1;
+
+        foreach ($updates as $update) {
+            $highestId = $update->getUpdateId();
+            $this->processCommand($update);
+        }
+
+        //An update is considered confirmed as soon as getUpdates is called with an offset higher than its update_id.
+        if ($highestId != -1) {
+            $this->getUpdates($highestId + 1, 1);
+        }
+
+        return $updates;
     }
+
+    /**
+     * Check update object for a command and process.
+     *
+     * @param $update
+     */
+    protected function processCommand(Update $update)
+    {
+        $message = $update->getMessage();
+
+        if ($message->has('text')) {
+            $this->getCommandBus()->handler($message->getText(), $update);
+        }
+    }
+
 
     /**
      * Determine if a given type is the message.
@@ -655,9 +672,7 @@ class Api
      */
     public function isMessageType($type, Update $update)
     {
-        $message_keys = $update->getMessage()->keys();
-
-        if (in_array($type, $message_keys)) {
+        if ($update->getMessage()->has(strtolower($type))) {
             return true;
         }
 
