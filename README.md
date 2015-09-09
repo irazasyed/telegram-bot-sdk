@@ -13,8 +13,10 @@ Telegram Bot API - PHP SDK
 ## Overview
 
 > Telegram Bot API is an HTTP-based interface created for developers keen on building bots for Telegram.
-> To learn how to create and set up a bot, please consult the [Introduction to Bots][telegram-bot] and [Bot FAQ](https://core.telegram.org/bots/faq) on official Telegram site.
+> 
+> To learn more about the Telegram Bot API, please consult the [Introduction to Bots](https://core.telegram.org/bots) and [Bot FAQ](https://core.telegram.org/bots/faq) on official Telegram site.
 >
+> To get started writing your bots using this SDK, Please refer the [documentation][docs].
 
 ## Documentation
 
