@@ -14,7 +14,7 @@ use Telegram\Bot\Exceptions\TelegramSDKException;
 class CommandBus
 {
     /**
-     * @var array Holds all commands.
+     * @var Command[] Holds all commands.
      */
     protected $commands = [];
 
@@ -82,6 +82,11 @@ class CommandBus
         }
 
         if ($command instanceof CommandInterface) {
+
+            /**
+             * At this stage we definitely have a proper command to use.
+             * @var Command $command
+             */
             $this->commands[$command->getName()] = $command;
 
             return $this;
