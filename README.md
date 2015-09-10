@@ -22,6 +22,11 @@ Telegram Bot API - PHP SDK
 
 Documentation for the SDK can be found on the [website][docs].
 
+## Share Your Bots
+
+If you're using this SDK to build your Telegram Bots, We'd love to know and share the bot with the world. Just fill up this small [form][bot-form] with your bot details [here][bot-form] and it'll automatically will be published on our master list of all Telegram Bots that have been developed using this library.
+
+You can find the list of bots that are developed using this library [here](https://docs.google.com/spreadsheets/d/1gM2IwrEDlxsLj6BpDHsfcNHC2lCa0wrYrbCOb3fygv0/pubhtml?gid=1111879877&single=true).
 
 ## Additional information
 
@@ -45,3 +50,4 @@ This project is released under the [BSD 3-Clause](https://github.com/irazasyed/t
 © 2015 [Syed Irfaq R.](https://github.com/irazasyed), All rights reserved.
 
 [docs]: https://irazasyed.github.io/telegram-bot-sdk/
+[bot-form]: http://goo.gl/forms/YQhUhxSsyI
