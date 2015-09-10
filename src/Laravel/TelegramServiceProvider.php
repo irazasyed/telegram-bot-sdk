@@ -4,6 +4,7 @@ namespace Telegram\Bot\Laravel;
 
 use Telegram\Bot\Api;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Contracts\Foundation\Application;
 
 /**
  * Class TelegramServiceProvider
@@ -41,7 +42,7 @@ class TelegramServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->registerTelegram();
+        $this->registerTelegram($this->app);
 
         $this->config_filepath = __DIR__.'/config/telegram.php';
 
@@ -50,10 +51,12 @@ class TelegramServiceProvider extends ServiceProvider
 
     /**
      * Initialize Telegram Bot SDK Library with Default Config.
+     *
+     * @param Application $app
      */
-    public function registerTelegram()
+    protected function registerTelegram(Application $app)
     {
-        $this->app->singleton('telegram', function ($app) {
+        $app->singleton(Api::class, function ($app) {
             $config = $app['config'];
 
             $telegram = new Api(
@@ -67,6 +70,8 @@ class TelegramServiceProvider extends ServiceProvider
 
             return $telegram;
         });
+
+        $app->alias(Api::class, 'telegram');
     }
 
     /**
@@ -76,6 +81,6 @@ class TelegramServiceProvider extends ServiceProvider
      */
     public function provides()
     {
-        return ['telegram'];
+        return ['telegram', Api::class];
     }
 }
