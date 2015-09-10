@@ -620,7 +620,7 @@ class Api
      *
      * @param bool $webhook
      *
-     * @return Update|Objects\Update[]
+     * @return Update|Update[]
      */
     public function commandsHandler($webhook = false)
     {
@@ -650,7 +650,7 @@ class Api
     /**
      * Check update object for a command and process.
      *
-     * @param $update
+     * @param Update $update
      */
     protected function processCommand(Update $update)
     {
