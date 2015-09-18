@@ -665,33 +665,40 @@ class Api
     /**
      * Determine if a given type is the message.
      *
-     * @param string $type
-     * @param Update $update
+     * @param string         $type
+     * @param Update|Message $object
      *
      * @return bool
      */
-    public function isMessageType($type, Update $update)
+    public function isMessageType($type, $object)
     {
-        if ($update->getMessage()->has(strtolower($type))) {
+        if ($object instanceof Update) {
+            $object = $object->getMessage();
+        }
+
+        if ($object->has(strtolower($type))) {
             return true;
         }
 
-        return $this->detectMessageType($update) === $type;
+        return $this->detectMessageType($object) === $type;
     }
 
     /**
-     * Detect Message Type Based on Update Object.
+     * Detect Message Type Based on Update or Message Object.
      *
-     * @param Update $update
+     * @param Update|Message $object
      *
      * @return string|null
      */
-    public function detectMessageType(Update $update)
+    public function detectMessageType($object)
     {
+        if ($object instanceof Update) {
+            $object = $object->getMessage();
+        }
+
         $types = ['audio', 'document', 'photo', 'sticker', 'video', 'voice', 'contact', 'location', 'text'];
 
-        return $update->getMessage()
-            ->keys()
+        return $object->keys()
             ->intersect($types)
             ->pop();
     }
