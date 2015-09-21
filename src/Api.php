@@ -2,6 +2,7 @@
 
 namespace Telegram\Bot;
 
+use Telegram\Bot\Objects\File;
 use Telegram\Bot\Objects\User;
 use Telegram\Bot\Objects\Update;
 use Telegram\Bot\Objects\Message;
@@ -484,6 +485,26 @@ class Api
         $response = $this->get('getUserProfilePhotos', compact('user_id', 'offset', 'limit'));
 
         return new UserProfilePhotos($response->getDecodedBody());
+    }
+
+    /**
+     * Returns basic info about a file and prepare it for downloading.
+     *
+     * The file can then be downloaded via the link
+     * https://api.telegram.org/file/bot<token>/<file_path>,
+     * where <file_path> is taken from the response.
+     *
+     * @link https://core.telegram.org/bots/api#getFile
+     *
+     * @param string $file_id
+     *
+     * @return File
+     */
+    public function getFile($file_id)
+    {
+        $response = $this->get('getFile', compact('file_id'));
+
+        return new File($response->getDecodedBody());
     }
 
     /**
