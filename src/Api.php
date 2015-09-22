@@ -6,10 +6,10 @@ use Telegram\Bot\Objects\File;
 use Telegram\Bot\Objects\User;
 use Telegram\Bot\Objects\Update;
 use Telegram\Bot\Objects\Message;
-use Telegram\Bot\Objects\UserProfilePhotos;
-use Telegram\Bot\FileUpload\InputFile;
 use Telegram\Bot\Commands\CommandBus;
+use Telegram\Bot\FileUpload\InputFile;
 use Telegram\Bot\Commands\CommandInterface;
+use Telegram\Bot\Objects\UserProfilePhotos;
 use Telegram\Bot\HttpClients\GuzzleHttpClient;
 use Telegram\Bot\Exceptions\TelegramSDKException;
 use Telegram\Bot\HttpClients\HttpClientInterface;
@@ -225,7 +225,7 @@ class Api
      */
     public function getMe()
     {
-        $response = $this->get('getMe');
+        $response = $this->post('getMe');
 
         return new User($response->getDecodedBody());
     }
@@ -251,7 +251,7 @@ class Api
         $reply_markup = null
     ) {
         $params = compact('chat_id', 'text', 'disable_web_page_preview', 'reply_to_message_id', 'reply_markup');
-        $response = $this->get('sendMessage', $params);
+        $response = $this->post('sendMessage', $params);
 
         return new Message($response->getDecodedBody());
     }
@@ -270,7 +270,7 @@ class Api
     public function forwardMessage($chat_id, $from_chat_id, $message_id)
     {
         $params = compact('chat_id', 'from_chat_id', 'message_id');
-        $response = $this->get('forwardMessage', $params);
+        $response = $this->post('forwardMessage', $params);
 
         return new Message($response->getDecodedBody());
     }
@@ -432,7 +432,7 @@ class Api
     public function sendLocation($chat_id, $latitude, $longitude, $reply_to_message_id = null, $reply_markup = null)
     {
         $params = compact('chat_id', 'latitude', 'longitude', 'reply_to_message_id', 'reply_markup');
-        $response = $this->get('sendLocation', $params);
+        $response = $this->post('sendLocation', $params);
 
         return new Message($response->getDecodedBody());
     }
@@ -463,7 +463,7 @@ class Api
         ];
 
         if (isset($action) && in_array($action, $validActions)) {
-            return $this->get('sendChatAction', compact('chat_id', 'action'));
+            return $this->post('sendChatAction', compact('chat_id', 'action'));
         }
 
         throw new TelegramSDKException('Invalid Action! Accepted value: '.implode(', ', $validActions));
@@ -482,7 +482,7 @@ class Api
      */
     public function getUserProfilePhotos($user_id, $offset = null, $limit = null)
     {
-        $response = $this->get('getUserProfilePhotos', compact('user_id', 'offset', 'limit'));
+        $response = $this->post('getUserProfilePhotos', compact('user_id', 'offset', 'limit'));
 
         return new UserProfilePhotos($response->getDecodedBody());
     }
@@ -502,7 +502,7 @@ class Api
      */
     public function getFile($file_id)
     {
-        $response = $this->get('getFile', compact('file_id'));
+        $response = $this->post('getFile', compact('file_id'));
 
         return new File($response->getDecodedBody());
     }
@@ -556,7 +556,7 @@ class Api
     {
         $url = '';
 
-        return $this->get('setWebhook', compact('url'));
+        return $this->post('setWebhook', compact('url'));
     }
 
     /**
@@ -572,7 +572,7 @@ class Api
      */
     public function getUpdates($offset = null, $limit = null, $timeout = null)
     {
-        $response = $this->get('getUpdates', compact('offset', 'limit', 'timeout'));
+        $response = $this->post('getUpdates', compact('offset', 'limit', 'timeout'));
         $updates = $response->getDecodedBody();
 
         $data = [];
@@ -748,13 +748,18 @@ class Api
      *
      * @param string $endpoint
      * @param array  $params
+     * @param bool   $fileUpload Set true if a file is being uploaded.
      *
      * @return TelegramResponse
-     *
-     * @throws TelegramSDKException
      */
-    protected function post($endpoint, array $params = [])
+    protected function post($endpoint, array $params = [], $fileUpload = false)
     {
+        if ($fileUpload) {
+            $params = ['multipart' => $params];
+        } else {
+            $params = ['form_params' => $params];
+        }
+
         return $this->sendRequest(
             'POST',
             $endpoint,
@@ -791,9 +796,7 @@ class Api
             ++$i;
         }
 
-        $response = $this->post($endpoint, [
-            'multipart' => $multipart_params,
-        ]);
+        $response = $this->post($endpoint, $multipart_params, true);
 
         return new Message($response->getDecodedBody());
     }
@@ -857,7 +860,7 @@ class Api
             /** @noinspection PhpUndefinedFunctionInspection */
             $class_name = studly_case(substr($method, 3));
             $class = 'Telegram\Bot\Objects\\'.$class_name;
-            $response = $this->get($method, $arguments[0] ?: []);
+            $response = $this->post($method, $arguments[0] ?: []);
 
             if (class_exists($class)) {
                 return new $class($response->getDecodedBody());
