@@ -161,7 +161,9 @@ class CommandBus
      */
     public function execute($name, $arguments, $message)
     {
-        if (array_key_exists($name, $this->commands)) {
+        if (array_key_exists($name, $this->commands)
+            && $this->commands[$name]->availableFor($this->telegram)
+        ) {
             return $this->commands[$name]->make($this->telegram, $arguments, $message);
         } elseif (array_key_exists('help', $this->commands)) {
             return $this->commands['help']->make($this->telegram, $arguments, $message);
