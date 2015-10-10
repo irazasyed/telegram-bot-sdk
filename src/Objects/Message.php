@@ -8,9 +8,9 @@ namespace Telegram\Bot\Objects;
  * @package Telegram\Bot\Objects
  *
  * @method int              getMessageId()              Unique message identifier.
- * @method User             getFrom()                   Sender.
+ * @method User             getFrom()                   (Optional). Sender, can be empty for messages sent to channels.
  * @method int              getDate()                   Date the message was sent in Unix time.
- * @method User|GroupChat   getChat()                   Conversation the message belongs to, private or group.
+ * @method Chat             getChat()                   Conversation the message belongs to.
  * @method User             getForwardFrom()            (Optional). For forwarded messages, sender of the original message.
  * @method int              getForwardDate()            (Optional). For forwarded messages, date the original message was sent in Unix time.
  * @method Message          getReplyToMessage()         (Optional). For replies, the original message. Note that the Message object in this field will not contain further reply_to_message fields even if it itself is a reply.
@@ -26,9 +26,9 @@ namespace Telegram\Bot\Objects;
  * @method Location         getLocation()               (Optional). Message is a shared location, information about the location.
  * @method User             getNewChatParticipant()     (Optional). A new member was added to the group, information about them (this member may be bot itself).
  * @method User             getLeftChatParticipant()    (Optional). A member was removed from the group, information about them (this member may be bot itself).
- * @method string           getNewChatTitle()           (Optional). A group title was changed to this value.
- * @method PhotoSize[]      getNewChatPhoto()           (Optional). A group photo was change to this value.
- * @method bool             getDeleteChatPhoto()        (Optional). Informs that the group photo was deleted.
+ * @method string           getNewChatTitle()           (Optional). A chat title was changed to this value
+ * @method PhotoSize[]      getNewChatPhoto()           (Optional). A chat photo was change to this value.
+ * @method bool             getDeleteChatPhoto()        (Optional). Informs that the chat photo was deleted.
  * @method bool             getGroupChatCreated()       (Optional). Informs that the group has been created.
  */
 class Message extends BaseObject
@@ -39,7 +39,7 @@ class Message extends BaseObject
     public function relations()
     {
         return [
-            'chat' => $this->mapChatRelative(),
+            'chat' => Chat::class,
             'from' => User::class,
             'forward_from' => User::class,
             'reply_to_message' => Message::class,
@@ -55,15 +55,5 @@ class Message extends BaseObject
             'left_chat_participant' => User::class,
             'new_chat_photo' => PhotoSize::class,
         ];
-    }
-
-    /**
-     * Find chat type and return appropriate class.
-     *
-     * @return mixed
-     */
-    protected function mapChatRelative()
-    {
-        return $this->get('chat.title', false) ? GroupChat::class : User::class;
     }
 }
