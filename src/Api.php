@@ -235,11 +235,11 @@ class Api
      *
      * @link https://core.telegram.org/bots/api#sendmessage
      *
-     * @param int    $chat_id
-     * @param string $text
-     * @param bool   $disable_web_page_preview
-     * @param int    $reply_to_message_id
-     * @param string $reply_markup
+     * @param int|string $chat_id
+     * @param string     $text
+     * @param bool       $disable_web_page_preview
+     * @param int        $reply_to_message_id
+     * @param string     $reply_markup
      *
      * @return Message
      */
@@ -261,9 +261,9 @@ class Api
      *
      * @link https://core.telegram.org/bots/api#forwardmessage
      *
-     * @param int $chat_id
-     * @param int $from_chat_id
-     * @param int $message_id
+     * @param int|string $chat_id
+     * @param int        $from_chat_id
+     * @param int        $message_id
      *
      * @return Message
      */
@@ -280,11 +280,11 @@ class Api
      *
      * @link https://core.telegram.org/bots/api#sendphoto
      *
-     * @param int    $chat_id
-     * @param string $photo
-     * @param string $caption
-     * @param int    $reply_to_message_id
-     * @param string $reply_markup
+     * @param int|string $chat_id
+     * @param string     $photo
+     * @param string     $caption
+     * @param int        $reply_to_message_id
+     * @param string     $reply_markup
      *
      * @return Message
      */
@@ -300,13 +300,13 @@ class Api
      *
      * @link https://core.telegram.org/bots/api#sendaudio
      *
-     * @param int    $chat_id
-     * @param string $audio
-     * @param int    $duration
-     * @param string $performer
-     * @param string $title
-     * @param int    $reply_to_message_id
-     * @param string $reply_markup
+     * @param int|string $chat_id
+     * @param string     $audio
+     * @param int        $duration
+     * @param string     $performer
+     * @param string     $title
+     * @param int        $reply_to_message_id
+     * @param string     $reply_markup
      *
      * @return Message
      */
@@ -325,34 +325,14 @@ class Api
     }
 
     /**
-     * Send voice audio files.
-     *
-     * @link https://core.telegram.org/bots/api#sendaudio
-     *
-     * @param int    $chat_id
-     * @param string $voice
-     * @param int    $duration
-     * @param int    $reply_to_message_id
-     * @param string $reply_markup
-     *
-     * @return Message
-     */
-    public function sendVoice($chat_id, $voice, $duration = null, $reply_to_message_id = null, $reply_markup = null)
-    {
-        $params = compact('chat_id', 'voice', 'duration', 'reply_to_message_id', 'reply_markup');
-
-        return $this->uploadFile('sendVoice', $params);
-    }
-
-    /**
      * Send general files.
      *
      * @link https://core.telegram.org/bots/api#senddocument
      *
-     * @param int    $chat_id
-     * @param string $document
-     * @param int    $reply_to_message_id
-     * @param string $reply_markup
+     * @param int|string $chat_id
+     * @param string     $document
+     * @param int        $reply_to_message_id
+     * @param string     $reply_markup
      *
      * @return Message
      */
@@ -368,10 +348,10 @@ class Api
      *
      * @link https://core.telegram.org/bots/api#sendsticker
      *
-     * @param int    $chat_id
-     * @param string $sticker
-     * @param int    $reply_to_message_id
-     * @param string $reply_markup
+     * @param int|string $chat_id
+     * @param string     $sticker
+     * @param int        $reply_to_message_id
+     * @param string     $reply_markup
      *
      * @return Message
      *
@@ -394,12 +374,12 @@ class Api
      * @see  sendDocument
      * @link https://core.telegram.org/bots/api#sendvideo
      *
-     * @param int    $chat_id
-     * @param string $video
-     * @param int    $duration
-     * @param string $caption
-     * @param int    $reply_to_message_id
-     * @param string $reply_markup
+     * @param int|string $chat_id
+     * @param string     $video
+     * @param int        $duration
+     * @param string     $caption
+     * @param int        $reply_to_message_id
+     * @param string     $reply_markup
      *
      * @return Message
      */
@@ -417,15 +397,35 @@ class Api
     }
 
     /**
+     * Send voice audio files.
+     *
+     * @link https://core.telegram.org/bots/api#sendaudio
+     *
+     * @param int|string $chat_id
+     * @param string     $voice
+     * @param int        $duration
+     * @param int        $reply_to_message_id
+     * @param string     $reply_markup
+     *
+     * @return Message
+     */
+    public function sendVoice($chat_id, $voice, $duration = null, $reply_to_message_id = null, $reply_markup = null)
+    {
+        $params = compact('chat_id', 'voice', 'duration', 'reply_to_message_id', 'reply_markup');
+
+        return $this->uploadFile('sendVoice', $params);
+    }
+
+    /**
      * Send point on the map.
      *
      * @link https://core.telegram.org/bots/api#sendlocation
      *
-     * @param int    $chat_id
-     * @param float  $latitude
-     * @param float  $longitude
-     * @param int    $reply_to_message_id
-     * @param string $reply_markup
+     * @param int|string $chat_id
+     * @param float      $latitude
+     * @param float      $longitude
+     * @param int        $reply_to_message_id
+     * @param string     $reply_markup
      *
      * @return Message
      */
@@ -442,8 +442,8 @@ class Api
      *
      * @link https://core.telegram.org/bots/api#sendchataction
      *
-     * @param int    $chat_id
-     * @param string $action
+     * @param int|string $chat_id
+     * @param string     $action
      *
      * @return TelegramResponse
      *
