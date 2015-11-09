@@ -2,7 +2,7 @@
 
 namespace Telegram\Bot;
 
-use Telegram\Bot\Objects\File;
+use Illuminate\Contracts\Container\Container;
 use Telegram\Bot\Objects\User;
 use Telegram\Bot\Objects\Update;
 use Telegram\Bot\Objects\Message;
@@ -56,6 +56,11 @@ class Api
      * @var CommandBus|null Telegram Command Bus.
      */
     protected $commandBus = null;
+
+    /**
+     * @var Container IoC Container
+     */
+    protected static $container = null;
 
     /**
      * Instantiates a new Telegram super-class object.
@@ -1018,5 +1023,37 @@ class Api
         }
 
         return false;
+    }
+
+    /**
+     * Set the IoC Container
+     *
+     * @param $container Container instance
+     *
+     * @return void
+     */
+    public static function setContainer(Container $container)
+    {
+        self::$container = $container;
+    }
+
+    /**
+     * Get the IoC Container
+     *
+     * @return Container
+     */
+    public function getContainer()
+    {
+        return self::$container;
+    }
+
+    /**
+     * Check if IoC Container has been set
+     *
+     * @return Container
+     */
+    public function hasContainer()
+    {
+        return self::$container !== null;
     }
 }
