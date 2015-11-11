@@ -180,26 +180,35 @@ class CommandBus
      * Use PHP Reflection and Laravel Container to instantiate the command with type hinted dependecies.
      *
      * @param $container Container
-     * @param $command
+     * @param $commandClass
      *
      * @return object
      */
-    private function buildDependencyInjectedCommand($command) {
+    private function buildDependencyInjectedCommand($commandClass) {
 
-        $container = $this->telegram->getContainer();
+        // check if the command has a constructor
+        if (! method_exists($commandClass, '__construct')) {
+            return new $commandClass;
+        }
 
-        $constructorReflector = new \ReflectionMethod($command, '__construct');
+        // get constructor params
+        $constructorReflector = new \ReflectionMethod($commandClass, '__construct');
         $params = $constructorReflector->getParameters();
 
-        if (! $params) return new $command;
+        // if no params are needed proceed with normal instantiation
+        if (! $params) return new $commandClass;
 
+        // otherwise fetch each dependency out of the container
+        $container = $this->telegram->getContainer();
         $dependencies = [];
         foreach ($params as $param) {
             $dependencies[] = $container->make($param->getClass()->name);
         }
 
-        $classReflector = new \ReflectionClass($command);
+        // and instantiate the object with dependencies through ReflectionClass
+        $classReflector = new \ReflectionClass($commandClass);
 
         return $classReflector->newInstanceArgs($dependencies);
     }
+
 }
