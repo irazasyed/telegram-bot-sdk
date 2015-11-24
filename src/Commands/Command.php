@@ -186,10 +186,10 @@ abstract class Command implements CommandInterface
             if (!method_exists($this->telegram, $methodName)) {
                 return 'Method Not Found';
             }
+            
+            $params = array_merge(['chat_id' => $this->update->getMessage()->getChat()->getId()], $arguments);
 
-            array_unshift($arguments, $this->update->getMessage()->getChat()->getId());
-
-            return call_user_func_array([$this->telegram, $methodName], $arguments);
+            return call_user_func_array([$this->telegram, $methodName], $params);
         }
 
         return 'Method Not Found';
