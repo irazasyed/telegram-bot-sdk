@@ -25,7 +25,7 @@ class Api
     /**
      * @var string Version number of the Telegram Bot PHP SDK.
      */
-    const VERSION = '1.0.0';
+    const VERSION = '2.0.0';
 
     /**
      * @var string The name of the environment variable that contains the Telegram Bot API Access Token.
@@ -233,24 +233,32 @@ class Api
     /**
      * Send text messages.
      *
+     * <code>
+     * $params = [
+     *   'chat_id'                  => '',
+     *   'text'                     => '',
+     *   'parse_mode'               => '',
+     *   'disable_web_page_preview' => '',
+     *   'reply_to_message_id'      => '',
+     *   'reply_markup'             => '',
+     * ];
+     * </code>
+     *
      * @link https://core.telegram.org/bots/api#sendmessage
      *
-     * @param int|string $chat_id
-     * @param string     $text
-     * @param bool       $disable_web_page_preview
-     * @param int        $reply_to_message_id
-     * @param string     $reply_markup
+     * @param array    $params
+     *
+     * @var int|string $params ['chat_id']
+     * @var string     $params ['text']
+     * @var string     $params ['parse_mode']
+     * @var bool       $params ['disable_web_page_preview']
+     * @var int        $params ['reply_to_message_id']
+     * @var string     $params ['reply_markup']
      *
      * @return Message
      */
-    public function sendMessage(
-        $chat_id,
-        $text,
-        $disable_web_page_preview = false,
-        $reply_to_message_id = null,
-        $reply_markup = null
-    ) {
-        $params = compact('chat_id', 'text', 'disable_web_page_preview', 'reply_to_message_id', 'reply_markup');
+    public function sendMessage(array $params)
+    {
         $response = $this->post('sendMessage', $params);
 
         return new Message($response->getDecodedBody());
@@ -259,17 +267,26 @@ class Api
     /**
      * Forward messages of any kind.
      *
+     * <code>
+     * $params = [
+     *   'chat_id'      => '',
+     *   'from_chat_id' => '',
+     *   'message_id'   => '',
+     * ];
+     * </code>
+     *
      * @link https://core.telegram.org/bots/api#forwardmessage
      *
-     * @param int|string $chat_id
-     * @param int        $from_chat_id
-     * @param int        $message_id
+     * @param array    $params
+     *
+     * @var int|string $params ['chat_id']
+     * @var int        $params ['from_chat_id']
+     * @var int        $params ['message_id']
      *
      * @return Message
      */
-    public function forwardMessage($chat_id, $from_chat_id, $message_id)
+    public function forwardMessage(array $params)
     {
-        $params = compact('chat_id', 'from_chat_id', 'message_id');
         $response = $this->post('forwardMessage', $params);
 
         return new Message($response->getDecodedBody());
@@ -278,92 +295,125 @@ class Api
     /**
      * Send Photos.
      *
+     * <code>
+     * $params = [
+     *   'chat_id'             => '',
+     *   'photo'               => '',
+     *   'caption'             => '',
+     *   'reply_to_message_id' => '',
+     *   'reply_markup'        => '',
+     * ];
+     * </code>
+     *
      * @link https://core.telegram.org/bots/api#sendphoto
      *
-     * @param int|string $chat_id
-     * @param string     $photo
-     * @param string     $caption
-     * @param int        $reply_to_message_id
-     * @param string     $reply_markup
+     * @param array    $params
+     *
+     * @var int|string $params ['chat_id']
+     * @var string     $params ['photo']
+     * @var string     $params ['caption']
+     * @var int        $params ['reply_to_message_id']
+     * @var string     $params ['reply_markup']
      *
      * @return Message
      */
-    public function sendPhoto($chat_id, $photo, $caption = null, $reply_to_message_id = null, $reply_markup = null)
+    public function sendPhoto(array $params)
     {
-        $params = compact('chat_id', 'photo', 'caption', 'reply_to_message_id', 'reply_markup');
-
         return $this->uploadFile('sendPhoto', $params);
     }
 
     /**
      * Send regular audio files.
      *
+     * <code>
+     * $params = [
+     *   'chat_id'             => '',
+     *   'audio'               => '',
+     *   'duration'            => '',
+     *   'performer'           => '',
+     *   'title'               => '',
+     *   'reply_to_message_id' => '',
+     *   'reply_markup'        => '',
+     * ];
+     * </code>
+     *
      * @link https://core.telegram.org/bots/api#sendaudio
      *
-     * @param int|string $chat_id
-     * @param string     $audio
-     * @param int        $duration
-     * @param string     $performer
-     * @param string     $title
-     * @param int        $reply_to_message_id
-     * @param string     $reply_markup
+     * @param array    $params
+     *
+     * @var int|string $params ['chat_id']
+     * @var string     $params ['audio']
+     * @var int        $params ['duration']
+     * @var string     $params ['performer']
+     * @var string     $params ['title']
+     * @var int        $params ['reply_to_message_id']
+     * @var string     $params ['reply_markup']
      *
      * @return Message
      */
-    public function sendAudio(
-        $chat_id,
-        $audio,
-        $duration = null,
-        $performer = null,
-        $title = null,
-        $reply_to_message_id = null,
-        $reply_markup = null
-    ) {
-        $params = compact('chat_id', 'audio', 'duration', 'performer', 'title', 'reply_to_message_id', 'reply_markup');
-
+    public function sendAudio(array $params)
+    {
         return $this->uploadFile('sendAudio', $params);
     }
 
     /**
      * Send general files.
      *
+     * <code>
+     * $params = [
+     *   'chat_id'             => '',
+     *   'document'            => '',
+     *   'reply_to_message_id' => '',
+     *   'reply_markup'        => '',
+     * ];
+     * </code>
+     *
      * @link https://core.telegram.org/bots/api#senddocument
      *
-     * @param int|string $chat_id
-     * @param string     $document
-     * @param int        $reply_to_message_id
-     * @param string     $reply_markup
+     * @param array    $params
+     *
+     * @var int|string $params ['chat_id']
+     * @var string     $params ['document']
+     * @var int        $params ['reply_to_message_id']
+     * @var string     $params ['reply_markup']
      *
      * @return Message
      */
-    public function sendDocument($chat_id, $document, $reply_to_message_id = null, $reply_markup = null)
+    public function sendDocument(array $params)
     {
-        $params = compact('chat_id', 'document', 'reply_to_message_id', 'reply_markup');
-
         return $this->uploadFile('sendDocument', $params);
     }
 
     /**
      * Send .webp stickers.
      *
+     * <code>
+     * $params = [
+     *   'chat_id' => '',
+     *   'sticker' => '',
+     *   'reply_to_message_id' => '',
+     *   'reply_markup' => '',
+     * ];
+     * </code>
+     *
      * @link https://core.telegram.org/bots/api#sendsticker
      *
-     * @param int|string $chat_id
-     * @param string     $sticker
-     * @param int        $reply_to_message_id
-     * @param string     $reply_markup
+     * @param array    $params
+     *
+     * @var int|string $params ['chat_id']
+     * @var string     $params ['sticker']
+     * @var int        $params ['reply_to_message_id']
+     * @var string     $params ['reply_markup']
      *
      * @return Message
      *
      * @throws TelegramSDKException
      */
-    public function sendSticker($chat_id, $sticker, $reply_to_message_id = null, $reply_markup = null)
+    public function sendSticker(array $params)
     {
-        if (is_file($sticker) && (pathinfo($sticker, PATHINFO_EXTENSION) !== 'webp')) {
+        if (is_file($params['sticker']) && (pathinfo($params['sticker'], PATHINFO_EXTENSION) !== 'webp')) {
             throw new TelegramSDKException('Invalid Sticker Provided. Supported Format: Webp');
         }
-
-        $params = compact('chat_id', 'sticker', 'reply_to_message_id', 'reply_markup');
 
         return $this->uploadFile('sendSticker', $params);
     }
@@ -371,67 +421,93 @@ class Api
     /**
      * Send Video File, Telegram clients support mp4 videos (other formats may be sent as Document).
      *
+     * <code>
+     * $params = [
+     *   'chat_id'             => '',
+     *   'video'               => '',
+     *   'duration'            => '',
+     *   'caption'             => '',
+     *   'reply_to_message_id' => '',
+     *   'reply_markup'        => '',
+     * ];
+     * </code>
+     *
      * @see  sendDocument
      * @link https://core.telegram.org/bots/api#sendvideo
      *
-     * @param int|string $chat_id
-     * @param string     $video
-     * @param int        $duration
-     * @param string     $caption
-     * @param int        $reply_to_message_id
-     * @param string     $reply_markup
+     * @param array    $params
+     *
+     * @var int|string $params ['chat_id']
+     * @var string     $params ['video']
+     * @var int        $params ['duration']
+     * @var string     $params ['caption']
+     * @var int        $params ['reply_to_message_id']
+     * @var string     $params ['reply_markup']
      *
      * @return Message
      */
-    public function sendVideo(
-        $chat_id,
-        $video,
-        $duration = null,
-        $caption = null,
-        $reply_to_message_id = null,
-        $reply_markup = null
-    ) {
-        $params = compact('chat_id', 'video', 'duration', 'caption', 'reply_to_message_id', 'reply_markup');
-
+    public function sendVideo(array $params)
+    {
         return $this->uploadFile('sendVideo', $params);
     }
 
     /**
      * Send voice audio files.
      *
+     * <code>
+     * $params = [
+     *   'chat_id'             => '',
+     *   'voice'               => '',
+     *   'duration'            => '',
+     *   'reply_to_message_id' => '',
+     *   'reply_markup'        => '',
+     * ];
+     * </code>
+     *
      * @link https://core.telegram.org/bots/api#sendaudio
      *
-     * @param int|string $chat_id
-     * @param string     $voice
-     * @param int        $duration
-     * @param int        $reply_to_message_id
-     * @param string     $reply_markup
+     * @param array    $params
+     *
+     * @var int|string $params ['chat_id']
+     * @var string     $params ['voice']
+     * @var int        $params ['duration']
+     * @var int        $params ['reply_to_message_id']
+     * @var string     $params ['reply_markup']
      *
      * @return Message
      */
-    public function sendVoice($chat_id, $voice, $duration = null, $reply_to_message_id = null, $reply_markup = null)
+    public function sendVoice(array $params)
     {
-        $params = compact('chat_id', 'voice', 'duration', 'reply_to_message_id', 'reply_markup');
-
         return $this->uploadFile('sendVoice', $params);
     }
 
     /**
      * Send point on the map.
      *
+     * <code>
+     * $params = [
+     *   'chat_id'             => '',
+     *   'latitude'            => '',
+     *   'longitude'           => '',
+     *   'reply_to_message_id' => '',
+     *   'reply_markup'        => '',
+     * ];
+     * </code>
+     *
      * @link https://core.telegram.org/bots/api#sendlocation
      *
-     * @param int|string $chat_id
-     * @param float      $latitude
-     * @param float      $longitude
-     * @param int        $reply_to_message_id
-     * @param string     $reply_markup
+     * @param array    $params
+     *
+     * @var int|string $params ['chat_id']
+     * @var float      $params ['latitude']
+     * @var float      $params ['longitude']
+     * @var int        $params ['reply_to_message_id']
+     * @var string     $params ['reply_markup']
      *
      * @return Message
      */
-    public function sendLocation($chat_id, $latitude, $longitude, $reply_to_message_id = null, $reply_markup = null)
+    public function sendLocation(array $params)
     {
-        $params = compact('chat_id', 'latitude', 'longitude', 'reply_to_message_id', 'reply_markup');
         $response = $this->post('sendLocation', $params);
 
         return new Message($response->getDecodedBody());
@@ -440,16 +516,25 @@ class Api
     /**
      * Broadcast a Chat Action.
      *
+     * <code>
+     * $params = [
+     *   'chat_id' => '',
+     *   'action'  => '',
+     * ];
+     * </code>
+     *
      * @link https://core.telegram.org/bots/api#sendchataction
      *
-     * @param int|string $chat_id
-     * @param string     $action
+     * @param array    $params
+     *
+     * @var int|string $params ['chat_id']
+     * @var string     $params ['action']
      *
      * @return TelegramResponse
      *
      * @throws TelegramSDKException
      */
-    public function sendChatAction($chat_id, $action)
+    public function sendChatAction(array $params)
     {
         $validActions = [
             'typing',
@@ -462,8 +547,8 @@ class Api
             'find_location',
         ];
 
-        if (isset($action) && in_array($action, $validActions)) {
-            return $this->post('sendChatAction', compact('chat_id', 'action'));
+        if (isset($params['action']) && in_array($params['action'], $validActions)) {
+            return $this->post('sendChatAction', $params);
         }
 
         throw new TelegramSDKException('Invalid Action! Accepted value: '.implode(', ', $validActions));
@@ -472,17 +557,27 @@ class Api
     /**
      * Returns a list of profile pictures for a user.
      *
+     * <code>
+     * $params = [
+     *   'user_id' => '',
+     *   'offset'  => '',
+     *   'limit'   => '',
+     * ];
+     * </code>
+     *
      * @link https://core.telegram.org/bots/api#getuserprofilephotos
      *
-     * @param int $user_id
-     * @param int $offset
-     * @param int $limit
+     * @param array $params
+     *
+     * @var int     $params ['user_id']
+     * @var int     $params ['offset']
+     * @var int     $params ['limit']
      *
      * @return UserProfilePhotos
      */
-    public function getUserProfilePhotos($user_id, $offset = null, $limit = null)
+    public function getUserProfilePhotos(array $params)
     {
-        $response = $this->post('getUserProfilePhotos', compact('user_id', 'offset', 'limit'));
+        $response = $this->post('getUserProfilePhotos', $params);
 
         return new UserProfilePhotos($response->getDecodedBody());
     }
@@ -490,19 +585,27 @@ class Api
     /**
      * Returns basic info about a file and prepare it for downloading.
      *
+     * <code>
+     * $params = [
+     *   'file_id' => '',
+     * ];
+     * </code>
+     *
      * The file can then be downloaded via the link
      * https://api.telegram.org/file/bot<token>/<file_path>,
      * where <file_path> is taken from the response.
      *
      * @link https://core.telegram.org/bots/api#getFile
      *
-     * @param string $file_id
+     * @param array $params
+     *
+     * @var string  $params ['file_id']
      *
      * @return File
      */
-    public function getFile($file_id)
+    public function getFile(array $params)
     {
-        $response = $this->post('getFile', compact('file_id'));
+        $response = $this->post('getFile', $params);
 
         return new File($response->getDecodedBody());
     }
@@ -510,26 +613,35 @@ class Api
     /**
      * Set a Webhook to receive incoming updates via an outgoing webhook.
      *
+     * <code>
+     * $params = [
+     *   'url'         => '',
+     *   'certificate' => '',
+     * ];
+     * </code>
+     *
      * @link https://core.telegram.org/bots/api#setwebhook
      *
-     * @param string $url         HTTPS url to send updates to.
-     * @param string $certificate Upload your public key certificate so that the root certificate in use can be checked.
+     * @param array $params
+     *
+     * @var string  $params ['url']         HTTPS url to send updates to.
+     * @var string  $params ['certificate'] Upload your public key certificate so that the root certificate in use can be checked.
      *
      * @return TelegramResponse
      *
      * @throws TelegramSDKException
      */
-    public function setWebhook($url, $certificate = null)
+    public function setWebhook(array $params)
     {
-        if (filter_var($url, FILTER_VALIDATE_URL) === false) {
+        if (filter_var($params['url'], FILTER_VALIDATE_URL) === false) {
             throw new TelegramSDKException('Invalid URL Provided');
         }
 
-        if (parse_url($url, PHP_URL_SCHEME) !== 'https') {
+        if (parse_url($params['url'], PHP_URL_SCHEME) !== 'https') {
             throw new TelegramSDKException('Invalid URL, should be a HTTPS url.');
         }
 
-        return $this->uploadFile('setWebhook', compact('url', 'certificate'));
+        return $this->uploadFile('setWebhook', $params);
     }
 
     /**
@@ -562,17 +674,27 @@ class Api
     /**
      * Use this method to receive incoming updates using long polling.
      *
+     * <code>
+     * $params = [
+     *   'offset'  => '',
+     *   'limit'   => '',
+     *   'timeout' => '',
+     * ];
+     * </code>
+     *
      * @link https://core.telegram.org/bots/api#getupdates
      *
-     * @param int|null $offset
-     * @param int|null $limit
-     * @param int|null $timeout
+     * @param array  $params
+     *
+     * @var int|null $params ['offset']
+     * @var int|null $params ['limit']
+     * @var int|null $params ['timeout']
      *
      * @return Update[]
      */
-    public function getUpdates($offset = null, $limit = null, $timeout = null)
+    public function getUpdates(array $params = [])
     {
-        $response = $this->post('getUpdates', compact('offset', 'limit', 'timeout'));
+        $response = $this->post('getUpdates', $params);
         $updates = $response->getDecodedBody();
 
         $data = [];
@@ -586,54 +708,77 @@ class Api
     /**
      * Builds a custom keyboard markup.
      *
+     * <code>
+     * $params = [
+     *   'keyboard'          => '',
+     *   'resize_keyboard'   => '',
+     *   'one_time_keyboard' => '',
+     *   'selective'         => '',
+     * ];
+     * </code>
+     *
      * @link https://core.telegram.org/bots/api#replykeyboardmarkup
      *
-     * @param array $keyboard
-     * @param bool  $resize_keyboard
-     * @param bool  $one_time_keyboard
-     * @param bool  $selective
+     * @param array $params
+     *
+     * @var array   $params ['keyboard']
+     * @var bool    $params ['resize_keyboard']
+     * @var bool    $params ['one_time_keyboard']
+     * @var bool    $params ['selective']
      *
      * @return string
      */
-    public function replyKeyboardMarkup(
-        $keyboard,
-        $resize_keyboard = false,
-        $one_time_keyboard = false,
-        $selective = false
-    ) {
-        return json_encode(compact('keyboard', 'resize_keyboard', 'one_time_keyboard', 'selective'));
+    public function replyKeyboardMarkup(array $params)
+    {
+        return json_encode($params);
     }
 
     /**
      * Hide the current custom keyboard and display the default letter-keyboard.
      *
+     * <code>
+     * $params = [
+     *   'hide_keyboard' => true,
+     *   'selective'     => false,
+     * ];
+     * </code>
+     *
      * @link https://core.telegram.org/bots/api#replykeyboardhide
      *
-     * @param bool $selective
+     * @param array $params
+     *
+     * @var bool    $params ['hide_keyboard']
+     * @var bool    $params ['selective']
      *
      * @return string
      */
-    public static function replyKeyboardHide($selective = false)
+    public static function replyKeyboardHide(array $params = [])
     {
-        $hide_keyboard = true;
-
-        return json_encode(compact('hide_keyboard', 'selective'));
+        return json_encode(array_merge(['hide_keyboard' => true, 'selective' => false], $params));
     }
 
     /**
      * Display a reply interface to the user (act as if the user has selected the bot‘s message and tapped ’Reply').
      *
+     * <code>
+     * $params = [
+     *   'force_reply' => true,
+     *   'selective'   => false,
+     * ];
+     * </code>
+     *
      * @link https://core.telegram.org/bots/api#forcereply
      *
-     * @param bool $selective
+     * @param array $params
+     *
+     * @var bool    $params ['force_reply']
+     * @var bool    $params ['selective']
      *
      * @return string
      */
-    public static function forceReply($selective = false)
+    public static function forceReply(array $params = [])
     {
-        $force_reply = true;
-
-        return json_encode(compact('force_reply', 'selective'));
+        return json_encode(array_merge(['force_reply' => true, 'selective' => false], $params));
     }
 
     /**
@@ -662,7 +807,10 @@ class Api
 
         //An update is considered confirmed as soon as getUpdates is called with an offset higher than its update_id.
         if ($highestId != -1) {
-            $this->getUpdates($highestId + 1, 1);
+            $params = [];
+            $params['offset'] = $highestId + 1;
+            $params['limit'] = 1;
+            $this->getUpdates($params);
         }
 
         return $updates;
