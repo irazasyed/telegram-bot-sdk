@@ -24,7 +24,8 @@
     }
   },
   "suggest": {
-    "irazasyed/larasupport": "Allows you to use any Laravel Package in Lumen by adding support!"
+    "irazasyed/larasupport": "Allows you to use any Laravel Package in Lumen by adding support!",
+    "illuminate/container": "Hold dependencies to be injected in commands constructors"
   },
   "extra": {
       "branch-alias": {
