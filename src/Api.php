@@ -58,6 +58,11 @@ class Api
     protected $commandBus = null;
 
     /**
+     * @var string|null Telegram bot's username.
+     */
+    protected $name = null;
+
+    /**
      * Instantiates a new Telegram super-class object.
      *
      *
@@ -228,6 +233,21 @@ class Api
         $response = $this->post('getMe');
 
         return new User($response->getDecodedBody());
+    }
+
+    /**
+     * A simple method for getting your bot's name.
+     * Returns string information about the bot's name.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        if (!isset($this->name))
+        {
+            $this->name = $this->getMe()['username'];
+        }
+        return $this->name;
     }
 
     /**

@@ -51,6 +51,11 @@ abstract class Command implements CommandInterface
     protected $update;
 
     /**
+     * @var array|null List of bots' name which this command is available for.
+     */
+    protected $bots;
+
+    /**
      * Get Command Name.
      *
      * @return string
@@ -136,6 +141,16 @@ abstract class Command implements CommandInterface
     public function getCommandBus()
     {
         return $this->telegram->getCommandBus();
+    }
+
+    /**
+     * Checks if this command is available for this bot.
+     *
+     * @return Boolean
+     */
+    public function availableFor(Api $telegram)
+    {
+        return isset($this->bots) ? in_array($telegram->getName(), $this->bots) : true;
     }
 
     /**
