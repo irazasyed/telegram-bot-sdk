@@ -17,10 +17,18 @@
     "guzzlehttp/guzzle": "~6.0",
     "illuminate/support": "5.0.*|5.1.*"
   },
+  "require-dev": {
+    "phpunit/phpunit": "^5.0",
+    "phpspec/prophecy": "^1.5"
+  },
   "autoload": {
     "psr-4": {
-      "Telegram\\Bot\\": "src/",
-      "test\\TelegramBotSDK\\": "tests/"
+      "Telegram\\Bot\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Telegram\\Tests\\": "tests/"
     }
   },
   "suggest": {
@@ -28,12 +36,8 @@
     "illuminate/container": "Hold dependencies to be injected in commands constructors"
   },
   "extra": {
-      "branch-alias": {
-          "dev-master": "2.0-dev"
-      }
-  },
-  "require-dev": {
-    "phpunit/phpunit": "^5.0",
-    "phpspec/prophecy": "^1.5"
+    "branch-alias": {
+      "dev-master": "2.0-dev"
+    }
   }
 }

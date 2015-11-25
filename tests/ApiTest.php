@@ -1,7 +1,6 @@
 <?php
 
-namespace test\TelegramBotSDK;
-
+namespace Telegram\Tests;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
@@ -14,14 +13,16 @@ use Telegram\Bot\Commands\CommandBus;
 use Telegram\Bot\HttpClients\GuzzleHttpClient;
 use Telegram\Bot\Objects\Update;
 use Telegram\Bot\TelegramClient;
-use test\TelegramBotSDK\Mocks\MockCommand;
-use test\TelegramBotSDK\Mocks\MockCommandTwo;
+use Telegram\Tests\Mocks\MockCommand;
+use Telegram\Tests\Mocks\MockCommandTwo;
 
-class ApiTest extends \PHPUnit_Framework_TestCase {
+class ApiTest extends \PHPUnit_Framework_TestCase
+{
 
     protected $api, $prophet;
 
-    public function setUp() {
+    public function setUp()
+    {
         $this->api = new Api('token');
         $this->prophet = new Prophet();
     }
@@ -29,44 +30,52 @@ class ApiTest extends \PHPUnit_Framework_TestCase {
     /**
      * @expectedException Telegram\Bot\Exceptions\TelegramSDKException
      */
-    public function testThrowsExceptionOnNullToken() {
+    public function testThrowsExceptionOnNullToken()
+    {
         new Api();
     }
 
-    public function testReturnsPassedToken() {
+    public function testReturnsPassedToken()
+    {
         $this->assertEquals('token', $this->api->getAccessToken());
         $this->api->setAccessToken('another');
         $this->assertEquals('another', $this->api->getAccessToken());
     }
 
-    public function testReturnsClientObject() {
+    public function testReturnsClientObject()
+    {
         $this->assertInstanceOf(TelegramClient::class, $this->api->getClient());
     }
 
-    public function testReturnsCommandBus() {
+    public function testReturnsCommandBus()
+    {
         $this->assertInstanceOf(CommandBus::class, $this->api->getCommandBus());
     }
 
-    public function testAddsAndReturnsInstantiatedCommands() {
+    public function testAddsAndReturnsInstantiatedCommands()
+    {
         $this->api->addCommand(MockCommand::class);
         $commands = $this->api->getCommands();
         $this->assertInstanceOf(MockCommand::class, $commands['mycommand']);
     }
 
-    public function testAddsMultipleCommands() {
+    public function testAddsMultipleCommands()
+    {
         $this->api->addCommands([MockCommand::class, MockCommandTwo::class]);
         $commands = $this->api->getCommands();
         $this->assertInstanceOf(MockCommand::class, $commands['mycommand']);
         $this->assertInstanceOf(MockCommandTwo::class, $commands['mycommand2']);
     }
 
-    public function testCommandsHandlerReturnsUpdates() {
+    public function testCommandsHandlerReturnsUpdates()
+    {
         $this->setTelegramTextResponse('/start');
         $updates = $this->api->commandsHandler();
         $this->assertInstanceOf(Update::class, $updates[0]);
     }
 
-    public function testHandlesTheRightCommand() {
+    public function testHandlesTheRightCommand()
+    {
         $this->setTelegramTextResponse('/mycommand');
         $command = $this->addStubCommand('mycommand');
         $command2 = $this->addStubCommand('mycommand2');
@@ -82,10 +91,13 @@ class ApiTest extends \PHPUnit_Framework_TestCase {
      *
      * @param string $message
      */
-    private function setTelegramTextResponse($message = '/start') {
-        $response = ['result' => [
-            ['message' => ['text' => $message]]
-        ]];
+    private function setTelegramTextResponse($message = '/start')
+    {
+        $response = [
+            'result' => [
+                ['message' => ['text' => $message]]
+            ]
+        ];
         $this->setTelegramResponse($response);
     }
 
@@ -95,7 +107,8 @@ class ApiTest extends \PHPUnit_Framework_TestCase {
      *
      * @param $body
      */
-    private function setTelegramResponse($body) {
+    private function setTelegramResponse($body)
+    {
         $body = json_encode($body);
         $mock = new MockHandler([
             new Response(200, [], $body),
@@ -111,9 +124,11 @@ class ApiTest extends \PHPUnit_Framework_TestCase {
      * Creates a stub command that responds to getName() and make() method calls
      *
      * @param string $name
+     *
      * @return \Prophecy\Prophecy\ObjectProphecy
      */
-    private function addStubCommand($name = 'start') {
+    private function addStubCommand($name = 'start')
+    {
         $command = $this->prophet->prophesize(MockCommand::class);
         $command->getName()->willReturn($name);
         $command->make(Argument::any(), Argument::any(), Argument::any())->willReturn(null);

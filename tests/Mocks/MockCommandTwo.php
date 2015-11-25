@@ -1,18 +1,17 @@
 <?php
 
-namespace test\TelegramBotSDK\Mocks;
-
+namespace Telegram\Tests\Mocks;
 
 use Telegram\Bot\Commands\Command;
 
-class MockCommandTwo extends Command {
-
+class MockCommandTwo extends Command
+{
     protected $name = 'mycommand2';
 
     protected $description = 'another mock command';
 
-    public function handle($args) {
+    public function handle($args)
+    {
 
     }
-
 }
