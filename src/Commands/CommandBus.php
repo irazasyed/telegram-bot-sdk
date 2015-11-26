@@ -126,7 +126,7 @@ class CommandBus
     public function handler($message, Update $update)
     {
         $match = $this->parseCommand($message);
-        if ($match) {
+        if (!empty($match)) {
             $command = $match[1];
             $bot = (!empty($match[2])) ? $match[2] : '';
             $arguments = $match[3];
@@ -189,7 +189,7 @@ class CommandBus
 
         // check if the command has a constructor
         if (!method_exists($commandClass, '__construct')) {
-            return new $commandClass;
+            return new $commandClass();
         }
 
         // get constructor params
@@ -197,8 +197,8 @@ class CommandBus
         $params = $constructorReflector->getParameters();
 
         // if no params are needed proceed with normal instantiation
-        if (!$params) {
-            return new $commandClass;
+        if (empty($params)) {
+            return new $commandClass();
         }
 
         // otherwise fetch each dependency out of the container
