@@ -91,6 +91,7 @@ class CommandBus
 
             /**
              * At this stage we definitely have a proper command to use.
+             *
              * @var Command $command
              */
             $this->commands[$command->getName()] = $command;
@@ -179,15 +180,15 @@ class CommandBus
     /**
      * Use PHP Reflection and Laravel Container to instantiate the command with type hinted dependecies.
      *
-     * @param $container Container
      * @param $commandClass
      *
      * @return object
      */
-    private function buildDependencyInjectedCommand($commandClass) {
+    private function buildDependencyInjectedCommand($commandClass)
+    {
 
         // check if the command has a constructor
-        if (! method_exists($commandClass, '__construct')) {
+        if (!method_exists($commandClass, '__construct')) {
             return new $commandClass;
         }
 
@@ -196,7 +197,9 @@ class CommandBus
         $params = $constructorReflector->getParameters();
 
         // if no params are needed proceed with normal instantiation
-        if (! $params) return new $commandClass;
+        if (!$params) {
+            return new $commandClass;
+        }
 
         // otherwise fetch each dependency out of the container
         $container = $this->telegram->getContainer();
