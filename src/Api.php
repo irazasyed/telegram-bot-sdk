@@ -942,7 +942,7 @@ class Api
             }
 
             if (!is_resource($contents)) {
-                $contents = is_file($contents) ? (new InputFile($contents))->open() : (string)$contents;
+                $contents = (is_file($contents) || filter_var($contents, FILTER_VALIDATE_URL)) ? (new InputFile($contents))->open() : (string)$contents;
             }
 
             $multipart_params[$i]['name'] = $name;
