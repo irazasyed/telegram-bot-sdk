@@ -105,7 +105,7 @@ class TelegramRequest
     public function validateAccessToken()
     {
         $accessToken = $this->getAccessToken();
-        if (!$accessToken) {
+        if ($accessToken === null) {
             throw new TelegramSDKException('You must provide your bot access token to make any API requests.');
         }
     }

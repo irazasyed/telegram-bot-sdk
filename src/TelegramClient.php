@@ -36,6 +36,11 @@ class TelegramClient
     const DEFAULT_VIDEO_UPLOAD_REQUEST_TIMEOUT = 7200;
 
     /**
+     * @var HttpClientInterface|null HTTP Client
+     */
+    protected $httpClientHandler;
+
+    /**
      * Instantiates a new TelegramClient object.
      *
      * @param HttpClientInterface|null $httpClientHandler
