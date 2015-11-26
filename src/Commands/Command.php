@@ -144,8 +144,8 @@ abstract class Command implements CommandInterface
     public function make($telegram, $arguments, $update)
     {
         $this->telegram = $telegram;
-        $this->update = $update;
         $this->arguments = $arguments;
+        $this->update = $update;
 
         return $this->handle($arguments);
     }
