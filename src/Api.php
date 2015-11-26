@@ -3,6 +3,7 @@
 namespace Telegram\Bot;
 
 use Illuminate\Contracts\Container\Container;
+use Telegram\Bot\Objects\File;
 use Telegram\Bot\Objects\User;
 use Telegram\Bot\Objects\Update;
 use Telegram\Bot\Objects\Message;
