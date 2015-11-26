@@ -26,11 +26,11 @@ class HelpCommand extends Command
     {
         $commands = $this->telegram->getCommands();
 
-        $response = '';
+        $text = '';
         foreach ($commands as $name => $handler) {
-            $response .= sprintf('/%s - %s'.PHP_EOL, $name, $handler->getDescription());
+            $text .= sprintf('/%s - %s'.PHP_EOL, $name, $handler->getDescription());
         }
 
-        $this->replyWithMessage(['text' => $response]);
+        $this->replyWithMessage(compact('text'));
     }
 }
