@@ -188,9 +188,9 @@ abstract class Command implements CommandInterface
             }
 
             $chat_id = $this->update->getMessage()->getChat()->getId();
-            $params[] = array_merge(compact('chat_id'), $arguments[0]);
+            $params = array_merge(compact('chat_id'), $arguments[0]);
 
-            return call_user_func_array([$this->telegram, $methodName], $params);
+            return call_user_func_array([$this->telegram, $methodName], [$params]);
         }
 
         return 'Method Not Found';
