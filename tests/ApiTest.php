@@ -2,23 +2,31 @@
 
 namespace Telegram\Bot\Tests;
 
+use Telegram\Bot\Api;
+use Prophecy\Prophet;
+use Prophecy\Argument;
 use GuzzleHttp\Client;
-use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
-use Prophecy\Argument;
-use Prophecy\Prophet;
-use Telegram\Bot\Api;
-use Telegram\Bot\Commands\CommandBus;
-use Telegram\Bot\HttpClients\GuzzleHttpClient;
+use InvalidArgumentException;
 use Telegram\Bot\Objects\Update;
 use Telegram\Bot\TelegramClient;
+use GuzzleHttp\Handler\MockHandler;
+use Telegram\Bot\Commands\CommandBus;
 use Telegram\Bot\Tests\Mocks\MockCommand;
 use Telegram\Bot\Tests\Mocks\MockCommandTwo;
+use Telegram\Bot\HttpClients\GuzzleHttpClient;
 
 class ApiTest extends \PHPUnit_Framework_TestCase
 {
-    protected $api, $prophet;
+    /**
+     * @var Api
+     */
+    protected $api;
+    /**
+     * @var Prophet
+     */
+    protected $prophet;
 
     public function setUp()
     {
@@ -32,6 +40,17 @@ class ApiTest extends \PHPUnit_Framework_TestCase
     public function testThrowsExceptionOnNullToken()
     {
         new Api();
+    }
+
+    /**
+     * @test
+     * @dataProvider badTypes
+     * @expectedException InvalidArgumentException
+     * @link https://phpunit.de/manual/3.7/en/appendixes.annotations.html#appendixes.annotations.dataProvider
+     */
+    public function it_should_only_allow_a_string_as_the_api_token($type)
+    {
+        $this->api->setAccessToken($type);
     }
 
     public function testReturnsPassedToken()
@@ -86,6 +105,50 @@ class ApiTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @test
+     * @expectedException Telegram\Bot\Exceptions\TelegramSDKException
+     */
+    function it_should_throw_exception_if_supplied_command_class_does_not_exist()
+    {
+        $this->api->addCommand('nonexistclass');
+    }
+
+    /**
+     * @test
+     * @expectedException Telegram\Bot\Exceptions\TelegramSDKException
+     */
+    function it_should_check_a_supplied_command_object_is_of_the_correct_type()
+    {
+        $this->api->addCommand(new \stdClass());
+    }
+
+    /** @test */
+    function it_should_remove_a_command()
+    {
+        $this->api->addCommands([MockCommand::class, MockCommandTwo::class]);
+        $this->api->removeCommand('mycommand');
+
+        $commands = $this->api->getCommands();
+
+        $this->assertCount(1, $commands);
+        $this->assertArrayNotHasKey('mycommand', $commands);
+        $this->assertInstanceOf(MockCommandTwo::class, $commands['mycommand2']);
+    }
+
+    /** @test */
+    public function it_should_remove_multiple_commands()
+    {
+        $this->api->addCommands([MockCommand::class, MockCommandTwo::class]);
+        $this->api->removeCommands(['mycommand', 'mycommand2']);
+
+        $commands = $this->api->getCommands();
+
+        $this->assertCount(0, $commands);
+        $this->assertArrayNotHasKey('mycommand', $commands);
+        $this->assertArrayNotHasKey('mycommand2', $commands);
+    }
+
+    /**
      * Shortcut to setTelegramResponse().
      *
      * @param string $message
@@ -135,5 +198,28 @@ class ApiTest extends \PHPUnit_Framework_TestCase
         $this->api->addCommand($command->reveal());
 
         return $command;
+    }
+
+    /**
+     * Gets an array of arrays.
+     *
+     * These are types of data that should not be allowed to be used
+     * as an API token.
+     *
+     * @return array
+     */
+    public function badTypes()
+    {
+        return [
+            [
+                new \stdClass()
+            ],
+            [
+                ['token']
+            ],
+            [
+                12345
+            ]
+        ];
     }
 }
