@@ -108,7 +108,7 @@ class ApiTest extends \PHPUnit_Framework_TestCase
      * @test
      * @expectedException Telegram\Bot\Exceptions\TelegramSDKException
      */
-    function it_should_throw_exception_if_supplied_command_class_does_not_exist()
+    public function it_should_throw_exception_if_supplied_command_class_does_not_exist()
     {
         $this->api->addCommand('nonexistclass');
     }
@@ -117,13 +117,13 @@ class ApiTest extends \PHPUnit_Framework_TestCase
      * @test
      * @expectedException Telegram\Bot\Exceptions\TelegramSDKException
      */
-    function it_should_check_a_supplied_command_object_is_of_the_correct_type()
+    public function it_should_check_a_supplied_command_object_is_of_the_correct_type()
     {
         $this->api->addCommand(new \stdClass());
     }
 
     /** @test */
-    function it_should_remove_a_command()
+    public function it_should_remove_a_command()
     {
         $this->api->addCommands([MockCommand::class, MockCommandTwo::class]);
         $this->api->removeCommand('mycommand');
