@@ -3,9 +3,8 @@
 namespace Telegram\Bot\Objects;
 
 /**
- * Class PhotoSize
+ * Class PhotoSize.
  *
- * @package Telegram\Bot\Objects
  *
  * @method string   getFileId()     Unique identifier for this file.
  * @method int      getWidth()      Photo width.
@@ -15,7 +14,7 @@ namespace Telegram\Bot\Objects;
 class PhotoSize extends BaseObject
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function relations()
     {

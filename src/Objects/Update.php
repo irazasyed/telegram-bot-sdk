@@ -3,18 +3,16 @@
 namespace Telegram\Bot\Objects;
 
 /**
- * Class Update
+ * Class Update.
  *
- * @package Telegram\Bot\Objects
  *
  * @method int      getUpdateId()   The update's unique identifier. Update identifiers start from a certain positive number and increase sequentially.
  * @method Message  getMessage()    (Optional). New incoming message of any kind - text, photo, sticker, etc.
- *
  */
 class Update extends BaseObject
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function relations()
     {

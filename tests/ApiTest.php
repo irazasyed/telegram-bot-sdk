@@ -18,7 +18,6 @@ use Telegram\Bot\Tests\Mocks\MockCommandTwo;
 
 class ApiTest extends \PHPUnit_Framework_TestCase
 {
-
     protected $api, $prophet;
 
     public function setUp()
@@ -87,7 +86,7 @@ class ApiTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Shortcut to setTelegramResponse()
+     * Shortcut to setTelegramResponse().
      *
      * @param string $message
      */
@@ -95,15 +94,15 @@ class ApiTest extends \PHPUnit_Framework_TestCase
     {
         $response = [
             'result' => [
-                ['message' => ['text' => $message]]
-            ]
+                ['message' => ['text' => $message]],
+            ],
         ];
         $this->setTelegramResponse($response);
     }
 
     /**
      * Recreates the Api object, using a mock http client, with predefined
-     * responses containing the provided $body
+     * responses containing the provided $body.
      *
      * @param $body
      */
@@ -112,7 +111,7 @@ class ApiTest extends \PHPUnit_Framework_TestCase
         $body = json_encode($body);
         $mock = new MockHandler([
             new Response(200, [], $body),
-            new Response(200, [], $body) // two times because Api::commandsHandler makes two requests
+            new Response(200, [], $body), // two times because Api::commandsHandler makes two requests
         ]);
         $handler = HandlerStack::create($mock);
         $client = new GuzzleHttpClient(new Client(['handler' => $handler]));
@@ -121,7 +120,7 @@ class ApiTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Creates a stub command that responds to getName() and make() method calls
+     * Creates a stub command that responds to getName() and make() method calls.
      *
      * @param string $name
      *
@@ -137,5 +136,4 @@ class ApiTest extends \PHPUnit_Framework_TestCase
 
         return $command;
     }
-
 }

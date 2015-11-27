@@ -3,9 +3,8 @@
 namespace Telegram\Bot\Objects;
 
 /**
- * Class UserProfilePhotos
+ * Class UserProfilePhotos.
  *
- * @package Telegram\Bot\Objects
  *
  * @method int          getTotalCount()     Total number of profile pictures the target user has.
  * @method PhotoSize[]  getPhotos()         Requested profile pictures (in up to 4 sizes each).
@@ -13,7 +12,7 @@ namespace Telegram\Bot\Objects;
 class UserProfilePhotos extends BaseObject
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function relations()
     {

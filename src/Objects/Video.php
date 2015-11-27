@@ -3,9 +3,8 @@
 namespace Telegram\Bot\Objects;
 
 /**
- * Class Video
+ * Class Video.
  *
- * @package Telegram\Bot\Objects
  *
  * @method string       getFileId()     Unique identifier for this file.
  * @method int          getWidth()      Video width as defined by sender.
@@ -18,7 +17,7 @@ namespace Telegram\Bot\Objects;
 class Video extends BaseObject
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function relations()
     {

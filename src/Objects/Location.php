@@ -3,9 +3,8 @@
 namespace Telegram\Bot\Objects;
 
 /**
- * Class Location
+ * Class Location.
  *
- * @package Telegram\Bot\Objects
  *
  * @method float    getLongitude()  Longitude as defined by sender.
  * @method float    getLatitude()   Latitude as defined by sender.
@@ -13,7 +12,7 @@ namespace Telegram\Bot\Objects;
 class Location extends BaseObject
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function relations()
     {

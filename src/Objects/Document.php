@@ -3,9 +3,8 @@
 namespace Telegram\Bot\Objects;
 
 /**
- * Class Document
+ * Class Document.
  *
- * @package Telegram\Bot\Objects
  *
  * @method string       getFileId()     Unique file identifier.
  * @method PhotoSize    getThumb()      (Optional). Document thumbnail as defined by sender.
@@ -16,7 +15,7 @@ namespace Telegram\Bot\Objects;
 class Document extends BaseObject
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function relations()
     {

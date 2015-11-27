@@ -5,9 +5,7 @@ namespace Telegram\Bot\Objects;
 use Illuminate\Support\Collection;
 
 /**
- * Class BaseObject
- *
- * @package Telegram\Bot\Objects
+ * Class BaseObject.
  */
 abstract class BaseObject extends Collection
 {
@@ -67,7 +65,7 @@ abstract class BaseObject extends Collection
                     $results[$key][$property] = new $class($results[$key][$property]);
                     continue;
                 }
-                
+
                 if ($key === $property) {
                     $results[$key] = new $class($results[$key]);
                 }
@@ -116,7 +114,6 @@ abstract class BaseObject extends Collection
      * @param $arguments
      *
      * @return mixed
-     *
      */
     public function __call($name, $arguments)
     {

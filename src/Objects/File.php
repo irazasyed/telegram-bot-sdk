@@ -3,9 +3,8 @@
 namespace Telegram\Bot\Objects;
 
 /**
- * Class File
+ * Class File.
  *
- * @package Telegram\Bot\Objects
  *
  * @method string   getFileId()     Unique identifier for this file.
  * @method int      getFileSize()   (Optional). File size, if known.
@@ -14,7 +13,7 @@ namespace Telegram\Bot\Objects;
 class File extends BaseObject
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function relations()
     {

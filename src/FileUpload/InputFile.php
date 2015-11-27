@@ -6,9 +6,7 @@ use GuzzleHttp\Psr7;
 use Telegram\Bot\Exceptions\TelegramSDKException;
 
 /**
- * Class InputFile
- *
- * @package Telegram\Bot\FileUpload
+ * Class InputFile.
  */
 class InputFile
 {
@@ -47,9 +45,9 @@ class InputFile
     /**
      * Opens file stream.
      *
-     * @return resource
-     *
      * @throws TelegramSDKException
+     *
+     * @return resource
      */
     public function open()
     {

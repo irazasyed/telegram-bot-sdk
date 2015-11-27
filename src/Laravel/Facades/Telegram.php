@@ -5,9 +5,7 @@ namespace Telegram\Bot\Laravel\Facades;
 use Illuminate\Support\Facades\Facade;
 
 /**
- * Class Telegram
- *
- * @package Telegram\Bot\Laravel\Facades
+ * Class Telegram.
  */
 class Telegram extends Facade
 {
