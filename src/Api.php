@@ -209,6 +209,30 @@ class Api
     }
 
     /**
+     * Remove Telegram Command to the Command Bus.
+     *
+     * @param string $name
+     *
+     * @return CommandBus
+     */
+    public function removeCommand($name)
+    {
+        return $this->getCommandBus()->removeCommand($name);
+    }
+
+    /**
+     * Remove Telegram Commands from the Command Bus.
+     *
+     * @param array $names
+     *
+     * @return CommandBus
+     */
+    public function removeCommands(array $names)
+    {
+        return $this->getCommandBus()->removeCommands($names);
+    }
+
+    /**
      * Returns list of available commands.
      *
      * @return array
