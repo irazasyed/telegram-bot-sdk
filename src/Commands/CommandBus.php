@@ -110,6 +110,22 @@ class CommandBus
     }
 
     /**
+     * Removes a list of commands.
+     *
+     * @param array $names
+     *
+     * @return CommandBus
+     */
+    public function removeCommands(array $names)
+    {
+        foreach ($names as $name) {
+            $this->removeCommand($name);
+        }
+
+        return $this;
+    }
+
+    /**
      * Handles Inbound Messages and Executes Appropriate Command.
      *
      * @param $message
@@ -173,7 +189,7 @@ class CommandBus
     }
 
     /**
-     * Use PHP Reflection and Laravel Container to instantiate the command with type hinted dependecies.
+     * Use PHP Reflection and Laravel Container to instantiate the command with type hinted dependencies.
      *
      * @param $commandClass
      *
