@@ -1,6 +1,6 @@
 <?php
 
-namespace Telegram\Tests\Bot;
+namespace Telegram\Bot\Tests;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
@@ -13,8 +13,8 @@ use Telegram\Bot\Commands\CommandBus;
 use Telegram\Bot\HttpClients\GuzzleHttpClient;
 use Telegram\Bot\Objects\Update;
 use Telegram\Bot\TelegramClient;
-use Telegram\Tests\Bot\Mocks\MockCommand;
-use Telegram\Tests\Bot\Mocks\MockCommandTwo;
+use Telegram\Bot\Tests\Mocks\MockCommand;
+use Telegram\Bot\Tests\Mocks\MockCommandTwo;
 
 class ApiTest extends \PHPUnit_Framework_TestCase
 {

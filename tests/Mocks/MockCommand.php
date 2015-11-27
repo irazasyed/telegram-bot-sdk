@@ -1,6 +1,6 @@
 <?php
 
-namespace Telegram\Tests\Bot\Mocks;
+namespace Telegram\Bot\Tests\Mocks;
 
 use Telegram\Bot\Commands\Command;
 
