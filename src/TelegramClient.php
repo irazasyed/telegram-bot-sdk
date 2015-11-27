@@ -2,16 +2,14 @@
 
 namespace Telegram\Bot;
 
-use Telegram\Bot\Exceptions\TelegramSDKException;
-use Psr\Http\Message\ResponseInterface;
 use GuzzleHttp\Promise\PromiseInterface;
+use Psr\Http\Message\ResponseInterface;
+use Telegram\Bot\Exceptions\TelegramSDKException;
 use Telegram\Bot\HttpClients\GuzzleHttpClient;
 use Telegram\Bot\HttpClients\HttpClientInterface;
 
 /**
- * Class TelegramClient
- *
- * @package Telegram\Bot
+ * Class TelegramClient.
  */
 class TelegramClient
 {
@@ -99,15 +97,14 @@ class TelegramClient
         ];
     }
 
-
     /**
      * Send an API request and process the result.
      *
      * @param TelegramRequest $request
      *
-     * @return TelegramResponse
-     *
      * @throws TelegramSDKException
+     *
+     * @return TelegramResponse
      */
     public function sendRequest(TelegramRequest $request)
     {

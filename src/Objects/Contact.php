@@ -3,9 +3,8 @@
 namespace Telegram\Bot\Objects;
 
 /**
- * Class Contact
+ * Class Contact.
  *
- * @package Telegram\Bot\Objects
  *
  * @method string   getPhoneNumber()    Contact's phone number.
  * @method string   getFirstName()      Contact's first name.
@@ -15,7 +14,7 @@ namespace Telegram\Bot\Objects;
 class Contact extends BaseObject
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function relations()
     {

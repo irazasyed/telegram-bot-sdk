@@ -3,9 +3,8 @@
 namespace Telegram\Bot\Objects;
 
 /**
- * Class Message
+ * Class Message.
  *
- * @package Telegram\Bot\Objects
  *
  * @method int              getMessageId()              Unique message identifier.
  * @method User             getFrom()                   (Optional). Sender, can be empty for messages sent to channels.
@@ -34,26 +33,26 @@ namespace Telegram\Bot\Objects;
 class Message extends BaseObject
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function relations()
     {
         return [
-            'chat' => Chat::class,
-            'from' => User::class,
-            'forward_from' => User::class,
-            'reply_to_message' => Message::class,
-            'audio' => Audio::class,
-            'document' => Document::class,
-            'photo' => PhotoSize::class,
-            'sticker' => Sticker::class,
-            'video' => Video::class,
-            'voice' => Voice::class,
-            'contact' => Contact::class,
-            'location' => Location::class,
-            'new_chat_participant' => User::class,
+            'chat'                  => Chat::class,
+            'from'                  => User::class,
+            'forward_from'          => User::class,
+            'reply_to_message'      => self::class,
+            'audio'                 => Audio::class,
+            'document'              => Document::class,
+            'photo'                 => PhotoSize::class,
+            'sticker'               => Sticker::class,
+            'video'                 => Video::class,
+            'voice'                 => Voice::class,
+            'contact'               => Contact::class,
+            'location'              => Location::class,
+            'new_chat_participant'  => User::class,
             'left_chat_participant' => User::class,
-            'new_chat_photo' => PhotoSize::class,
+            'new_chat_photo'        => PhotoSize::class,
         ];
     }
 }

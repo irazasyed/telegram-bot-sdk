@@ -3,9 +3,7 @@
 namespace Telegram\Bot\HttpClients;
 
 /**
- * Interface HttpClientInterface
- *
- * @package Telegram\Bot\HttpClients
+ * Interface HttpClientInterface.
  */
 interface HttpClientInterface
 {

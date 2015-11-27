@@ -3,9 +3,8 @@
 namespace Telegram\Bot\Objects;
 
 /**
- * Class User
+ * Class User.
  *
- * @package Telegram\Bot\Objects
  *
  * @method int      getId()         Unique identifier for this user or bot.
  * @method string   getFirstName()  User's or bot's first name.
@@ -15,7 +14,7 @@ namespace Telegram\Bot\Objects;
 class User extends BaseObject
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function relations()
     {

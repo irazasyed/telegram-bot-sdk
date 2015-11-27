@@ -3,9 +3,8 @@
 namespace Telegram\Bot\Objects;
 
 /**
- * Class Audio
+ * Class Audio.
  *
- * @package Telegram\Bot\Objects
  *
  * @method string   getFileId()     Unique identifier for this file.
  * @method int      getDuration()   Duration of the audio in seconds as defined by sender.
@@ -17,7 +16,7 @@ namespace Telegram\Bot\Objects;
 class Audio extends BaseObject
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function relations()
     {

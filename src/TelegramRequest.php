@@ -5,11 +5,9 @@ namespace Telegram\Bot;
 use Telegram\Bot\Exceptions\TelegramSDKException;
 
 /**
- * Class TelegramRequest
+ * Class TelegramRequest.
  *
  * Builds Telegram Bot API Request Entity.
- *
- * @package Telegram\Bot
  */
 class TelegramRequest
 {

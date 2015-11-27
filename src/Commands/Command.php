@@ -6,9 +6,8 @@ use Telegram\Bot\Api;
 use Telegram\Bot\Objects\Update;
 
 /**
- * Class Command
+ * Class Command.
  *
- * @package Telegram\Bot\Commands
  *
  * @method mixed replyWithMessage($use_sendMessage_parameters)       Reply Chat with a message. You can use all the sendMessage() parameters except chat_id.
  * @method mixed replyWithPhoto($use_sendPhoto_parameters)           Reply Chat with a Photo. You can use all the sendPhoto() parameters except chat_id.
@@ -139,7 +138,7 @@ abstract class Command implements CommandInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function make($telegram, $arguments, $update)
     {
@@ -164,7 +163,7 @@ abstract class Command implements CommandInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     abstract public function handle($arguments);
 

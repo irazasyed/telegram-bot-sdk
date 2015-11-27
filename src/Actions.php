@@ -3,13 +3,11 @@
 namespace Telegram\Bot;
 
 /**
- * Class Actions
+ * Class Actions.
  *
  * Chat Actions let you broadcast a type of action depending on what the user is about to receive.
  * The status is set for 5 seconds or less (when a message arrives from your bot, Telegram clients clear its typing
  * status).
- *
- * @package Telegram\Bot
  */
 class Actions
 {

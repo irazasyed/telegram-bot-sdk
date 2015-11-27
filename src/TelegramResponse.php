@@ -2,17 +2,15 @@
 
 namespace Telegram\Bot;
 
-use Psr\Http\Message\ResponseInterface;
 use GuzzleHttp\Promise\PromiseInterface;
-use Telegram\Bot\Exceptions\TelegramSDKException;
+use Psr\Http\Message\ResponseInterface;
 use Telegram\Bot\Exceptions\TelegramResponseException;
+use Telegram\Bot\Exceptions\TelegramSDKException;
 
 /**
- * Class TelegramResponse
+ * Class TelegramResponse.
  *
  * Handles the response from Telegram API.
- *
- * @package Telegram\Bot
  */
 class TelegramResponse
 {
@@ -74,7 +72,7 @@ class TelegramResponse
         }
 
         $this->request = $request;
-        $this->endPoint = (string)$request->getEndpoint();
+        $this->endPoint = (string) $request->getEndpoint();
     }
 
     /**

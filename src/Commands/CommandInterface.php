@@ -3,9 +3,7 @@
 namespace Telegram\Bot\Commands;
 
 /**
- * Interface CommandInterface
- *
- * @package Telegram\Bot\Commands
+ * Interface CommandInterface.
  */
 interface CommandInterface
 {

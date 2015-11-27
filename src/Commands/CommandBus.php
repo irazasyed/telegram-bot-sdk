@@ -3,13 +3,11 @@
 namespace Telegram\Bot\Commands;
 
 use Telegram\Bot\Api;
-use Telegram\Bot\Objects\Update;
 use Telegram\Bot\Exceptions\TelegramSDKException;
+use Telegram\Bot\Objects\Update;
 
 /**
- * Class CommandBus
- *
- * @package Telegram\Bot\Commands
+ * Class CommandBus.
  */
 class CommandBus
 {
@@ -24,7 +22,7 @@ class CommandBus
     private $telegram;
 
     /**
-     * Instantiate Command Bus
+     * Instantiate Command Bus.
      *
      * @param Api $telegram
      *
@@ -66,9 +64,9 @@ class CommandBus
      *
      * @param CommandInterface|string $command Either an object or full path to the command class.
      *
-     * @return CommandBus
-     *
      * @throws TelegramSDKException
+     *
+     * @return CommandBus
      */
     public function addCommand($command)
     {
@@ -78,18 +76,16 @@ class CommandBus
                     $command));
             }
 
-
             if ($this->telegram->hasContainer()) {
                 $command = $this->buildDependencyInjectedCommand($command);
             } else {
                 $command = new $command();
             }
-
         }
 
         if ($command instanceof CommandInterface) {
 
-            /**
+            /*
              * At this stage we definitely have a proper command to use.
              *
              * @var Command $command
@@ -119,9 +115,9 @@ class CommandBus
      * @param $message
      * @param $update
      *
-     * @return Update
-     *
      * @throws TelegramSDKException
+     *
+     * @return Update
      */
     public function handler($message, Update $update)
     {
@@ -136,15 +132,14 @@ class CommandBus
         return $update;
     }
 
-
     /**
      * Parse a Command for a Match.
      *
      * @param $text
      *
-     * @return array
-     *
      * @throws \InvalidArgumentException
+     *
+     * @return array
      */
     public function parseCommand($text)
     {
@@ -213,5 +208,4 @@ class CommandBus
 
         return $classReflector->newInstanceArgs($dependencies);
     }
-
 }

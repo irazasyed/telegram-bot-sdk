@@ -12,6 +12,5 @@ class MockCommand extends Command
 
     public function handle($args)
     {
-
     }
 }

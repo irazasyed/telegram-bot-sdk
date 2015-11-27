@@ -3,9 +3,8 @@
 namespace Telegram\Bot\Objects;
 
 /**
- * Class Sticker
+ * Class Sticker.
  *
- * @package Telegram\Bot\Objects
  *
  * @method string       getFileId()     Unique identifier for this file.
  * @method int          getWidth()      Sticker width.
@@ -16,7 +15,7 @@ namespace Telegram\Bot\Objects;
 class Sticker extends BaseObject
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function relations()
     {

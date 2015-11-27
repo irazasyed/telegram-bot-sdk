@@ -3,9 +3,8 @@
 namespace Telegram\Bot\Objects;
 
 /**
- * Class Chat
+ * Class Chat.
  *
- * @package Telegram\Bot\Objects
  *
  * @method int      getId()        Unique identifier for this chat, not exceeding 1e13 by absolute value.
  * @method string   getType()      Type of chat, can be either “private” or “group” or “channel”.
@@ -17,7 +16,7 @@ namespace Telegram\Bot\Objects;
 class Chat extends BaseObject
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function relations()
     {

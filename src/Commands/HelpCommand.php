@@ -3,24 +3,22 @@
 namespace Telegram\Bot\Commands;
 
 /**
- * Class HelpCommand
- *
- * @package Telegram\Bot\Commands
+ * Class HelpCommand.
  */
 class HelpCommand extends Command
 {
     /**
      * @var string Command Name
      */
-    protected $name = "help";
+    protected $name = 'help';
 
     /**
      * @var string Command Description
      */
-    protected $description = "Help command, Get a list of commands";
+    protected $description = 'Help command, Get a list of commands';
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function handle($arguments)
     {

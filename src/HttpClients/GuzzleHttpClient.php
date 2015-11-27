@@ -3,17 +3,15 @@
 namespace Telegram\Bot\HttpClients;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Promise;
+use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\RequestOptions;
 use Psr\Http\Message\ResponseInterface;
-use GuzzleHttp\Promise\PromiseInterface;
-use GuzzleHttp\Exception\RequestException;
 use Telegram\Bot\Exceptions\TelegramSDKException;
 
 /**
- * Class GuzzleHttpClient
- *
- * @package Telegram\Bot\HttpClients
+ * Class GuzzleHttpClient.
  */
 class GuzzleHttpClient implements HttpClientInterface
 {
@@ -28,7 +26,6 @@ class GuzzleHttpClient implements HttpClientInterface
      * @var PromiseInterface[]
      */
     private static $promises = [];
-
 
     /**
      * @param Client|null $client
@@ -71,7 +68,7 @@ class GuzzleHttpClient implements HttpClientInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function send(
         $url,
@@ -117,11 +114,11 @@ class GuzzleHttpClient implements HttpClientInterface
     private function getOptions(array $headers, $body, $options = [], $timeOut, $isAsyncRequest = false)
     {
         $default_options = [
-            RequestOptions::HEADERS => $headers,
-            RequestOptions::BODY => $body,
-            RequestOptions::TIMEOUT => $timeOut,
+            RequestOptions::HEADERS         => $headers,
+            RequestOptions::BODY            => $body,
+            RequestOptions::TIMEOUT         => $timeOut,
             RequestOptions::CONNECT_TIMEOUT => 10,
-            RequestOptions::SYNCHRONOUS => !$isAsyncRequest,
+            RequestOptions::SYNCHRONOUS     => !$isAsyncRequest,
         ];
 
         return array_merge($default_options, $options);

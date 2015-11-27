@@ -5,9 +5,7 @@ namespace Telegram\Bot\Exceptions;
 use Telegram\Bot\TelegramResponse;
 
 /**
- * Class TelegramResponseException
- *
- * @package Telegram\Bot\Exceptions
+ * Class TelegramResponseException.
  */
 class TelegramResponseException extends TelegramSDKException
 {
