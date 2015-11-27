@@ -8,9 +8,15 @@ php:
 
 sudo: false
 
-install:
+matrix:
+  fast_finish: true
+  allow_failures:
+    - php: hhvm
+    - php: 7.0
+
+before_script:
   - travis_retry composer self-update
-  - travis_retry composer install --no-interaction --prefer-source
+  - travis_retry composer update --no-interaction --prefer-source
 
 script:
   - if [ "$TRAVIS_PHP_VERSION" != "5.5" ] && [ "$TRAVIS_PHP_VERSION" != "5.6" ]; then vendor/bin/phpunit; fi
@@ -19,9 +25,3 @@ script:
 after_script:
   - if [ "$TRAVIS_PHP_VERSION" == "5.5" ] || [ "$TRAVIS_PHP_VERSION" == "5.6" ]; then wget https://scrutinizer-ci.com/ocular.phar; fi
   - if [ "$TRAVIS_PHP_VERSION" == "5.5" ] || [ "$TRAVIS_PHP_VERSION" == "5.6" ]; then php ocular.phar code-coverage:upload --format=php-clover build/logs/clover.xml; fi
-
-matrix:
-  fast_finish: true
-  allow_failures:
-    - php: hhvm
-    - php: 7.0
