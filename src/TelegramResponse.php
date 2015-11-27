@@ -177,7 +177,7 @@ class TelegramResponse
     /**
      * Returns the exception that was thrown for this request.
      *
-     * @return TelegramSDKException|null
+     * @return TelegramSDKException
      */
     public function getThrownException()
     {
