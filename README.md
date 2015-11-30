@@ -1,6 +1,8 @@
 Telegram Bot API - PHP SDK
 ==========================
 
+[![Join the chat at https://gitter.im/irazasyed/telegram-bot-sdk](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/irazasyed/telegram-bot-sdk?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 > The (Unofficial) [Telegram Bot API](https://core.telegram.org/bots) PHP SDK. Lets you develop Telegram Bots easily! Supports Laravel out of the box.
 
 [![Telegram Bot API PHP SDK](https://cloud.githubusercontent.com/assets/1915268/8475216/fe774802-20d3-11e5-9692-f54502716d64.png)](https://github.com/irazasyed)
