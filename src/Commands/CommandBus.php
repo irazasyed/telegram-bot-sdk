@@ -112,7 +112,7 @@ class CommandBus
      *
      * @param $name
      *
-     * @return $this
+     * @return CommandBus
      */
     public function removeCommand($name)
     {
