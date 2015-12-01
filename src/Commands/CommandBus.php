@@ -103,10 +103,14 @@ class CommandBus
      * Remove a command from the list.
      *
      * @param $name
+     *
+     * @return $this
      */
     public function removeCommand($name)
     {
         unset($this->commands[$name]);
+
+        return $this;
     }
 
     /**
