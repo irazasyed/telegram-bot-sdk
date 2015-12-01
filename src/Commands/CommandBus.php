@@ -72,8 +72,12 @@ class CommandBus
     {
         if (!is_object($command)) {
             if (!class_exists($command)) {
-                throw new TelegramSDKException(sprintf('Command class "%s" not found! Please make sure the class exists.',
-                    $command));
+                throw new TelegramSDKException(
+                    sprintf(
+                        'Command class "%s" not found! Please make sure the class exists.',
+                        $command
+                    )
+                );
             }
 
             if ($this->telegram->hasContainer()) {
@@ -95,18 +99,26 @@ class CommandBus
             return $this;
         }
 
-        throw new TelegramSDKException(sprintf('Command class "%s" should be an instance of "Telegram\Bot\Commands\CommandInterface"',
-            get_class($command)));
+        throw new TelegramSDKException(
+            sprintf(
+                'Command class "%s" should be an instance of "Telegram\Bot\Commands\CommandInterface"',
+                get_class($command)
+            )
+        );
     }
 
     /**
      * Remove a command from the list.
      *
      * @param $name
+     *
+     * @return CommandBus
      */
     public function removeCommand($name)
     {
         unset($this->commands[$name]);
+
+        return $this;
     }
 
     /**

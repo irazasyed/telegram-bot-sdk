@@ -273,7 +273,7 @@ class Api
      *
      * @link https://core.telegram.org/bots/api#sendmessage
      *
-     * @param array $params
+     * @param array    $params
      *
      * @var int|string $params ['chat_id']
      * @var string     $params ['text']
@@ -304,7 +304,7 @@ class Api
      *
      * @link https://core.telegram.org/bots/api#forwardmessage
      *
-     * @param array $params
+     * @param array    $params
      *
      * @var int|string $params ['chat_id']
      * @var int        $params ['from_chat_id']
@@ -334,7 +334,7 @@ class Api
      *
      * @link https://core.telegram.org/bots/api#sendphoto
      *
-     * @param array $params
+     * @param array    $params
      *
      * @var int|string $params ['chat_id']
      * @var string     $params ['photo']
@@ -366,7 +366,7 @@ class Api
      *
      * @link https://core.telegram.org/bots/api#sendaudio
      *
-     * @param array $params
+     * @param array    $params
      *
      * @var int|string $params ['chat_id']
      * @var string     $params ['audio']
@@ -397,7 +397,7 @@ class Api
      *
      * @link https://core.telegram.org/bots/api#senddocument
      *
-     * @param array $params
+     * @param array    $params
      *
      * @var int|string $params ['chat_id']
      * @var string     $params ['document']
@@ -425,7 +425,7 @@ class Api
      *
      * @link https://core.telegram.org/bots/api#sendsticker
      *
-     * @param array $params
+     * @param array    $params
      *
      * @var int|string $params ['chat_id']
      * @var string     $params ['sticker']
@@ -462,7 +462,7 @@ class Api
      * @see  sendDocument
      * @link https://core.telegram.org/bots/api#sendvideo
      *
-     * @param array $params
+     * @param array    $params
      *
      * @var int|string $params ['chat_id']
      * @var string     $params ['video']
@@ -493,7 +493,7 @@ class Api
      *
      * @link https://core.telegram.org/bots/api#sendaudio
      *
-     * @param array $params
+     * @param array    $params
      *
      * @var int|string $params ['chat_id']
      * @var string     $params ['voice']
@@ -523,7 +523,7 @@ class Api
      *
      * @link https://core.telegram.org/bots/api#sendlocation
      *
-     * @param array $params
+     * @param array    $params
      *
      * @var int|string $params ['chat_id']
      * @var float      $params ['latitude']
@@ -552,7 +552,7 @@ class Api
      *
      * @link https://core.telegram.org/bots/api#sendchataction
      *
-     * @param array $params
+     * @param array    $params
      *
      * @var int|string $params ['chat_id']
      * @var string     $params ['action']
@@ -596,9 +596,9 @@ class Api
      *
      * @param array $params
      *
-     * @var int $params ['user_id']
-     * @var int $params ['offset']
-     * @var int $params ['limit']
+     * @var int     $params ['user_id']
+     * @var int     $params ['offset']
+     * @var int     $params ['limit']
      *
      * @return UserProfilePhotos
      */
@@ -626,7 +626,7 @@ class Api
      *
      * @param array $params
      *
-     * @var string $params ['file_id']
+     * @var string  $params ['file_id']
      *
      * @return File
      */
@@ -651,8 +651,9 @@ class Api
      *
      * @param array $params
      *
-     * @var string $params ['url']         HTTPS url to send updates to.
-     * @var string $params ['certificate'] Upload your public key certificate so that the root certificate in use can be checked.
+     * @var string  $params ['url']         HTTPS url to send updates to.
+     * @var string  $params ['certificate'] Upload your public key certificate so that the root certificate in
+     *                                      use can be checked.
      *
      * @throws TelegramSDKException
      *
@@ -711,7 +712,7 @@ class Api
      *
      * @link https://core.telegram.org/bots/api#getupdates
      *
-     * @param array $params
+     * @param array  $params
      *
      * @var int|null $params ['offset']
      * @var int|null $params ['limit']
@@ -748,10 +749,10 @@ class Api
      *
      * @param array $params
      *
-     * @var array $params ['keyboard']
-     * @var bool  $params ['resize_keyboard']
-     * @var bool  $params ['one_time_keyboard']
-     * @var bool  $params ['selective']
+     * @var array   $params ['keyboard']
+     * @var bool    $params ['resize_keyboard']
+     * @var bool    $params ['one_time_keyboard']
+     * @var bool    $params ['selective']
      *
      * @return string
      */
@@ -774,8 +775,8 @@ class Api
      *
      * @param array $params
      *
-     * @var bool $params ['hide_keyboard']
-     * @var bool $params ['selective']
+     * @var bool    $params ['hide_keyboard']
+     * @var bool    $params ['selective']
      *
      * @return string
      */
@@ -798,8 +799,8 @@ class Api
      *
      * @param array $params
      *
-     * @var bool $params ['force_reply']
-     * @var bool $params ['selective']
+     * @var bool    $params ['force_reply']
+     * @var bool    $params ['selective']
      *
      * @return string
      */
@@ -962,7 +963,8 @@ class Api
             }
 
             if (!is_resource($contents)) {
-                $contents = (is_file($contents) || filter_var($contents, FILTER_VALIDATE_URL)) ? (new InputFile($contents))->open() : (string) $contents;
+                $validUrl = filter_var($contents, FILTER_VALIDATE_URL);
+                $contents = (is_file($contents) || $validUrl) ? (new InputFile($contents))->open() : (string)$contents;
             }
 
             $multipart_params[$i]['name'] = $name;
