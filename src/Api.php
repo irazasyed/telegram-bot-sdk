@@ -946,7 +946,7 @@ class Api
      * Used primarily for file uploads.
      *
      * @param string $endpoint
-     * @param string  $params
+     * @param array  $params
      *
      * @throws TelegramSDKException
      *
