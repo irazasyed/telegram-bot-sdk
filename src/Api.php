@@ -652,7 +652,8 @@ class Api
      * @param array $params
      *
      * @var string  $params ['url']         HTTPS url to send updates to.
-     * @var string  $params ['certificate'] Upload your public key certificate so that the root certificate in use can be checked.
+     * @var string  $params ['certificate'] Upload your public key certificate so that the root certificate in
+     *                                      use can be checked.
      *
      * @throws TelegramSDKException
      *
