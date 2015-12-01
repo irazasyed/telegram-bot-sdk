@@ -191,7 +191,7 @@ abstract class Command implements CommandInterface
 
             return call_user_func_array([$this->telegram, $methodName], [$params]);
         }
-
+        
         return 'Method Not Found';
     }
 }
