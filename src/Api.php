@@ -151,7 +151,7 @@ class Api
      *
      * @param bool $isAsyncRequest
      *
-     * @return TelegramRequest
+     * @return Api
      */
     public function setAsyncRequest($isAsyncRequest)
     {
@@ -235,7 +235,7 @@ class Api
     /**
      * Returns list of available commands.
      *
-     * @return array
+     * @return Commands\Command[]
      */
     public function getCommands()
     {
@@ -946,7 +946,7 @@ class Api
      * Used primarily for file uploads.
      *
      * @param string $endpoint
-     * @param array  $params
+     * @param string  $params
      *
      * @throws TelegramSDKException
      *
@@ -1071,7 +1071,7 @@ class Api
     /**
      * Check if IoC Container has been set.
      *
-     * @return Container
+     * @return boolean
      */
     public function hasContainer()
     {
