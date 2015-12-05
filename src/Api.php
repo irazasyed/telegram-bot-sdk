@@ -962,7 +962,7 @@ class Api
                 continue;
             }
 
-            if (!is_resource($contents)) {
+            if (!is_resource($contents) && $name !== 'url') {
                 $validUrl = filter_var($contents, FILTER_VALIDATE_URL);
                 $contents = (is_file($contents) || $validUrl) ? (new InputFile($contents))->open() : (string)$contents;
             }
