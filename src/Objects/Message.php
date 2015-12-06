@@ -20,19 +20,19 @@ namespace Telegram\Bot\Objects;
  * @method Sticker          getSticker()                (Optional). Message is a sticker, information about the sticker.
  * @method Video            getVideo()                  (Optional). Message is a video, information about the video.
  * @method Voice            getVoice()                  (Optional). Message is a voice message, information about the file.
- * @method string           getCaption()                (Optional). Caption for the photo or video contact
+ * @method string           getCaption()                (Optional). Caption for the photo or video contact.
  * @method Contact          getContact()                (Optional). Message is a shared contact, information about the contact.
  * @method Location         getLocation()               (Optional). Message is a shared location, information about the location.
  * @method User             getNewChatParticipant()     (Optional). A new member was added to the group, information about them (this member may be bot itself).
  * @method User             getLeftChatParticipant()    (Optional). A member was removed from the group, information about them (this member may be bot itself).
- * @method string           getNewChatTitle()           (Optional). A chat title was changed to this value
+ * @method string           getNewChatTitle()           (Optional). A chat title was changed to this value.
  * @method PhotoSize[]      getNewChatPhoto()           (Optional). A chat photo was change to this value.
  * @method bool             getDeleteChatPhoto()        (Optional). Informs that the chat photo was deleted.
  * @method bool             getGroupChatCreated()       (Optional). Informs that the group has been created.
- * @method bool             getSupergroupChatCreated()  (Optional). Informs that the super group has been created
- * @method bool             getChannelChatCreated()     (Optional). Informs that the channel has been created
+ * @method bool             getSupergroupChatCreated()  (Optional). Informs that the super group has been created.
+ * @method bool             getChannelChatCreated()     (Optional). Informs that the channel has been created.
  * @method int              getMigrateToChatId()        (Optional). The chat has been migrated to a chat with specified identifier, not exceeding 1e13 by absolute value.
- * @method int              getMigrateFromChatId()      (Optional). The chat has been migrated from a chat with specified identifier, not exceeding 1e13 by absolute value
+ * @method int              getMigrateFromChatId()      (Optional). The chat has been migrated from a chat with specified identifier, not exceeding 1e13 by absolute value.
  */
 class Message extends BaseObject
 {
