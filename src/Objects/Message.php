@@ -29,6 +29,10 @@ namespace Telegram\Bot\Objects;
  * @method PhotoSize[]      getNewChatPhoto()           (Optional). A chat photo was change to this value.
  * @method bool             getDeleteChatPhoto()        (Optional). Informs that the chat photo was deleted.
  * @method bool             getGroupChatCreated()       (Optional). Informs that the group has been created.
+ * @method bool             getSupergroupChatCreated()  (Optional). Informs that the super group has been created
+ * @method bool             getChannelChatCreated()     (Optional). Informs that the channel has been created
+ * @method int              getMigrateToChatId()        (Optional). The chat has been migrated to a chat with specified identifier, not exceeding 1e13 by absolute value.
+ * @method int              getMigrateFromChatId()      (Optional). The chat has been migrated from a chat with specified identifier, not exceeding 1e13 by absolute value
  */
 class Message extends BaseObject
 {
