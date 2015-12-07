@@ -10,6 +10,7 @@ use Telegram\Bot\TelegramClient;
 use Telegram\Bot\Objects\Update;
 use Telegram\Bot\Objects\Message;
 use Telegram\Bot\TelegramResponse;
+use Telegram\Bot\Tests\Mocks\Mocker;
 use Telegram\Bot\Commands\CommandBus;
 use Telegram\Bot\Tests\Mocks\MockCommand;
 use Telegram\Bot\Tests\Mocks\MockCommandTwo;
@@ -42,7 +43,7 @@ class ApiTest extends \PHPUnit_Framework_TestCase
      *
      * @param mixed $type The item under test
      */
-    public function it_should_only_allow_a_string_as_the_api_token($type)
+    public function it_only_allows_a_string_as_the_api_token($type)
     {
         $this->api->setAccessToken($type);
     }
@@ -81,16 +82,16 @@ class ApiTest extends \PHPUnit_Framework_TestCase
 
     public function testCommandsHandlerReturnsUpdates()
     {
-        $this->api = TGMocks::createMessageResponse('/start');
+        $this->api = Mocker::createMessageResponse('/start');
         $updates = $this->api->commandsHandler();
         $this->assertInstanceOf(Update::class, $updates[0]);
     }
 
     public function testHandlesTheRightCommand()
     {
-        $this->api = TGMocks::createMessageResponse('/mycommand');
-        $command = TGMocks::createMockCommand('mycommand');
-        $command2 = TGMocks::createMockCommand('mycommand2');
+        $this->api = Mocker::createMessageResponse('/mycommand');
+        $command = Mocker::createMockCommand('mycommand');
+        $command2 = Mocker::createMockCommand('mycommand2');
 
         $this->api->addCommands([$command->reveal(), $command2->reveal()]);
 
@@ -104,7 +105,7 @@ class ApiTest extends \PHPUnit_Framework_TestCase
      * @test
      * @expectedException \Telegram\Bot\Exceptions\TelegramSDKException
      */
-    public function it_should_throw_exception_if_supplied_command_class_does_not_exist()
+    public function it_throws_exception_if_supplied_command_class_does_not_exist()
     {
         $this->api->addCommand('nonexistclass');
     }
@@ -113,13 +114,13 @@ class ApiTest extends \PHPUnit_Framework_TestCase
      * @test
      * @expectedException \Telegram\Bot\Exceptions\TelegramSDKException
      */
-    public function it_should_check_a_supplied_command_object_is_of_the_correct_type()
+    public function it_checks_a_supplied_command_object_is_of_the_correct_type()
     {
         $this->api->addCommand(new \stdClass());
     }
 
     /** @test */
-    public function it_should_remove_a_command()
+    public function it_removes_a_command()
     {
         $this->api->addCommands([MockCommand::class, MockCommandTwo::class]);
         $this->api->removeCommand('mycommand');
@@ -132,7 +133,7 @@ class ApiTest extends \PHPUnit_Framework_TestCase
     }
 
     /** @test */
-    public function it_should_remove_multiple_commands()
+    public function it_removes_multiple_commands()
     {
         $this->api->addCommands([MockCommand::class, MockCommandTwo::class]);
         $this->api->removeCommands(['mycommand', 'mycommand2']);
@@ -148,9 +149,9 @@ class ApiTest extends \PHPUnit_Framework_TestCase
      * @test
      * @expectedException \InvalidArgumentException
      */
-    public function it_should_throw_exception_if_inbound_message_has_blank_text()
+    public function it_throws_exception_if_inbound_message_has_blank_text()
     {
-        $this->api = TGMocks::createMessageResponse('');
+        $this->api = Mocker::createMessageResponse('');
 
         $this->api->commandsHandler();
     }
@@ -160,7 +161,7 @@ class ApiTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertEmpty($this->api->getLastResponse());
 
-        $this->api = TGMocks::createMessageResponse('/start');
+        $this->api = Mocker::createMessageResponse('/start');
         $this->api->commandsHandler();
 
         $lastResponse = $this->api->getLastResponse();
@@ -185,9 +186,9 @@ class ApiTest extends \PHPUnit_Framework_TestCase
      * @test
      * @expectedException \Telegram\Bot\Exceptions\TelegramResponseException
      */
-    public function it_should_throw_an_exception_if_the_api_response_is_not_ok()
+    public function it_throws_an_exception_if_the_api_response_is_not_ok()
     {
-        $this->api = TGMocks::createApiResponse([], false);
+        $this->api = Mocker::createApiResponse([], false);
 
         $this->api->getMe();
     }
@@ -195,7 +196,7 @@ class ApiTest extends \PHPUnit_Framework_TestCase
     /** @test */
     public function it_checks_a_user_object_is_returned_when_getMe_is_requested()
     {
-        $this->api = TGMocks::createApiResponse(
+        $this->api = Mocker::createApiResponse(
             [
                 'id'         => 123456789,
                 'first_name' => 'Test',
@@ -213,11 +214,11 @@ class ApiTest extends \PHPUnit_Framework_TestCase
     }
 
     /** @test */
-    public function it_checks_a_message_object_is_returned_when_sendMessage_is_executed()
+    public function it_checks_a_message_object_is_returned_when_sendMessage_is_sent()
     {
         $chatId = 987654321;
         $text = 'Test message';
-        $this->api = TGMocks::createApiResponse(
+        $this->api = Mocker::createApiResponse(
             [
                 'chat' => [
                     'id' => $chatId,
@@ -227,7 +228,7 @@ class ApiTest extends \PHPUnit_Framework_TestCase
         );
 
         /** @var Message $response */
-        $response = $this->api->sendMessage(['chat_id' => $chatId, 'text' => $text, ]);
+        $response = $this->api->sendMessage(['chat_id' => $chatId, 'text' => $text,]);
 
         $this->assertInstanceOf(Message::class, $response);
         $this->assertEquals($chatId, $response->getChat()->getId());

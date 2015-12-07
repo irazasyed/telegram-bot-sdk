@@ -1,6 +1,6 @@
 <?php
 
-namespace Telegram\Bot\Tests;
+namespace Telegram\Bot\Tests\Mocks;
 
 use Telegram\Bot\Api;
 use Prophecy\Prophet;
@@ -9,10 +9,9 @@ use GuzzleHttp\Client;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Handler\MockHandler;
-use Telegram\Bot\Tests\Mocks\MockCommand;
 use Telegram\Bot\HttpClients\GuzzleHttpClient;
 
-class TGMocks
+class Mocker
 {
     /**
      * Creates a stub command that responds to getName() and make() method calls.
