@@ -5,7 +5,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [2.0.0][unreleased] - (Unreleased)
 ### Added
 - More doc blocks to the code.
-- New `getFile()` method - Thanks @jonnywilliamson ([#39](https://github.com/irazasyed/telegram-bot-sdk/pull/39)).
+- New `getFile()` method & File Object - Thanks @jonnywilliamson ([#39](https://github.com/irazasyed/telegram-bot-sdk/pull/39)).
 - Channel Username Support.
 - Dependency Injection in Commands - Thanks @antoniomadonna ([#53](https://github.com/irazasyed/telegram-bot-sdk/pull/53)).
 - PHPUnit Tests - Thanks @antoniomadonna ([#58](https://github.com/irazasyed/telegram-bot-sdk/pull/58)).
