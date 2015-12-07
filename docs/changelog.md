@@ -2,6 +2,49 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.0][unreleased] - (Unreleased)
+### Added
+- More doc blocks to the code.
+- New `getFile()` method - Thanks @jonnywilliamson ([#39](https://github.com/irazasyed/telegram-bot-sdk/pull/39)).
+- Channel Username Support.
+- Dependency Injection in Commands - Thanks @antoniomadonna ([#53](https://github.com/irazasyed/telegram-bot-sdk/pull/53)).
+- PHPUnit Tests - Thanks @antoniomadonna ([#58](https://github.com/irazasyed/telegram-bot-sdk/pull/58)).
+- Travis Config.
+- PHPUnit 4.8 Version to Support PHP5.5 Testing.
+- Git Attributes File.
+- Composer Config & Other Options.
+- Composer script test to make it easier to run phpunit by firing `composer test`.
+- Nitpick Config.
+- New `removeCommand()` & `removeCommands()` methods to the API & their Tests - Thanks @jonnywilliamson ([#66](https://github.com/irazasyed/telegram-bot-sdk/pull/66)).
+- New Remote Files Upload Support - ([#42](https://github.com/irazasyed/telegram-bot-sdk/issues/42)).
+- Laravel 5.2 Support.
+- New Message Object Properties - Thanks @jonnywilliamson ([#75](https://github.com/irazasyed/telegram-bot-sdk/pull/75)).
+- More PHPUnit Tests & Mocking 'Telegram Response' class - Thanks @jonnywilliamson ([#76](https://github.com/irazasyed/telegram-bot-sdk/pull/76)).
+
+### Changed
+- Methods' Params to Array, To support constant changes by Telegram - ([#54](https://github.com/irazasyed/telegram-bot-sdk/issues/54)) **[BC]**.
+- Revise Doc Blocks.
+- Update Commands Class to Reflect Param Changes.
+- Update Help Command.
+- Refactor Command Magic Method Arguments.
+- Refactor Laravel Service Provider to Support DI.
+- Message Detecting methods to support Message object too - Thanks @jonnywilliamson ([#37](https://github.com/irazasyed/telegram-bot-sdk/pull/37)).
+- Switch to POST requests method to make API requests - Thanks @jonnywilliamson ([#40](https://github.com/irazasyed/telegram-bot-sdk/pull/40)).
+- Update Chat field change to new Chat Object in place of GroupChat Object - Thanks @jonnywilliamson ([#46](https://github.com/irazasyed/telegram-bot-sdk/pull/46)).
+- Improve `mapRelatives` to initialize inner properties - Thanks @alexsoft ([#49](https://github.com/irazasyed/telegram-bot-sdk/pull/49)).
+- Tests Namespace.
+- Tests to Autoload in Dev.
+- PHPUnit Tests Config.
+- Applied Scrutinizer's Best Practises & Other Fixes.
+- CS Fixes & Doc Block Updates - Thanks @jonnywilliamson ([#72](https://github.com/irazasyed/telegram-bot-sdk/pull/72)).
+
+### Fixed
+- `ReplyWith` Params Bug.
+- `uploadFile` Bug Opening Webhook URL.
+- 
+### Removed
+- Group Chat Object.
+
 ## [1.0.0] - 2015-09-08
 ### Added
 - New `sendVoice()` method as per API Changes - Thanks @jonnywilliamson ([#19](https://github.com/irazasyed/telegram-bot-sdk/pull/19)).
