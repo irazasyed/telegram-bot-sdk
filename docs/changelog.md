@@ -41,7 +41,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 - `ReplyWith` Params Bug.
 - `uploadFile` Bug Opening Webhook URL.
-- 
+
 ### Removed
 - Group Chat Object.
 
