@@ -8,11 +8,35 @@ use Prophecy\Argument;
 use GuzzleHttp\Client;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
+use Telegram\Bot\Objects\Update;
 use GuzzleHttp\Handler\MockHandler;
 use Telegram\Bot\HttpClients\GuzzleHttpClient;
 
 class Mocker
 {
+    /**
+     * Create a mocked API object with a container.
+     *
+     * @return \Prophecy\Prophecy\ObjectProphecy
+     */
+    public static function createApi()
+    {
+        $api = (new Prophet())->prophesize(Api::class);
+        $api->hasContainer()->willReturn(true);
+
+        return $api;
+    }
+
+    /**
+     * Create a mocked Update Object
+     *
+     * @return \Prophecy\Prophecy\ObjectProphecy
+     */
+    public static function createUpdateObject()
+    {
+        return (new Prophet())->prophesize(Update::class);
+    }
+
     /**
      * Creates a stub command that responds to getName() and make() method calls.
      *
@@ -38,7 +62,7 @@ class Mocker
      *
      * @return Api
      */
-    public static function createUpdateResponse(array $updateFields, $updateId = '1')
+    public static function createUpdateResponse(array $updateFields = [], $updateId = '1')
     {
         $defaultResponseFields = [
             'message_id' => '',
