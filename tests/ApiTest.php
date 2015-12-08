@@ -5,9 +5,7 @@ namespace Telegram\Bot\Tests;
 use Telegram\Bot\Api;
 use Prophecy\Argument;
 use InvalidArgumentException;
-use Telegram\Bot\HttpClients\GuzzleHttpClient;
 use Telegram\Bot\Objects\File;
-use Telegram\Bot\Objects\Location;
 use Telegram\Bot\Objects\User;
 use Telegram\Bot\TelegramClient;
 use Telegram\Bot\Objects\Update;
@@ -17,6 +15,7 @@ use Telegram\Bot\Tests\Mocks\Mocker;
 use Telegram\Bot\Commands\CommandBus;
 use Telegram\Bot\Tests\Mocks\MockCommand;
 use Telegram\Bot\Tests\Mocks\MockCommandTwo;
+use Telegram\Bot\HttpClients\GuzzleHttpClient;
 
 class ApiTest extends \PHPUnit_Framework_TestCase
 {
