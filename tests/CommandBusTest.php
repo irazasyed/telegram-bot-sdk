@@ -21,14 +21,17 @@ class CommandBusTest extends \PHPUnit_Framework_TestCase
         $this->commandBus = new CommandBus(Mocker::createApi()->reveal());
     }
 
-    public function testAddsAndReturnsInstantiatedCommands()
+    /** @test */
+    public function it_adds_a_command_and_checks_commands_can_be_returned()
     {
         $this->commandBus->addCommand(MockCommand::class);
         $commands = $this->commandBus->getCommands();
         $this->assertInstanceOf(MockCommand::class, $commands['mycommand']);
+        $this->assertCount(1, $commands);
     }
 
-    public function testAddsMultipleCommands()
+    /** @test */
+    public function it_adds_multiple_commands()
     {
         $this->commandBus->addCommands([MockCommand::class, MockCommandTwo::class]);
         $commands = $this->commandBus->getCommands();
@@ -86,7 +89,7 @@ class CommandBusTest extends \PHPUnit_Framework_TestCase
      * @test
      * @expectedException \InvalidArgumentException
      */
-    public function it_throws_exception_if_message_is_blank_text()
+    public function it_throws_exception_if_message_is_only_blank_text()
     {
         $this->commandBus->parseCommand('');
     }
