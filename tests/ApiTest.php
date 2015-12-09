@@ -190,6 +190,32 @@ class ApiTest extends \PHPUnit_Framework_TestCase
     }
 
     /** @test */
+    public function it_checks_ability_to_set_timeouts()
+    {
+        $chatId = 987654321;
+        $text = 'Test message';
+        $this->api = Mocker::createApiResponse(
+            [
+                'chat' => [
+                    'id' => $chatId,
+                ],
+                'text' => $text,
+            ]
+        );
+
+        $this->api->setTimeOut(1);
+        $this->api->setConnectTimeOut(1);
+
+        /** @var Message $response */
+        $response = $this->api->sendMessage(['chat_id' => $chatId, 'text' => $text]);
+
+        /** @var GuzzleHttpClient $clientHandler */
+        $clientHandler = $this->api->getClient()->getHttpClientHandler();
+        $this->assertEquals(1, $clientHandler->getTimeOut());
+        $this->assertEquals(1, $clientHandler->getConnectTimeOut());
+    }
+
+    /** @test */
     public function it_checks_a_message_object_is_returned_when_forwardMessage_is_sent()
     {
         $chatId = 987654321;
