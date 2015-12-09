@@ -28,6 +28,20 @@ class GuzzleHttpClient implements HttpClientInterface
     private static $promises = [];
 
     /**
+     * Timeout of the request in seconds.
+     *
+     * @var int
+     */
+    protected $timeOut = 30;
+
+    /**
+     * Connection timeout of the request in seconds.
+     *
+     * @var int
+     */
+    protected $connectTimeOut = 10;
+
+    /**
      * @param Client|null $client
      */
     public function __construct(Client $client = null)
@@ -76,10 +90,14 @@ class GuzzleHttpClient implements HttpClientInterface
         array $headers = [],
         array $options = [],
         $timeOut = 30,
-        $isAsyncRequest = false
+        $isAsyncRequest = false,
+        $connectTimeOut = 10
     ) {
+        $this->timeOut = $timeOut;
+        $this->connectTimeOut = $connectTimeOut;
+
         $body = isset($options['body']) ? $options['body'] : null;
-        $options = $this->getOptions($headers, $body, $options, $timeOut, $isAsyncRequest);
+        $options = $this->getOptions($headers, $body, $options, $timeOut, $isAsyncRequest, $connectTimeOut);
 
         try {
             $response = $this->getClient()->requestAsync($method, $url, $options);
@@ -108,19 +126,36 @@ class GuzzleHttpClient implements HttpClientInterface
      * @param       $options
      * @param       $timeOut
      * @param       $isAsyncRequest
+     * @param int   $connectTimeOut
      *
      * @return array
      */
-    private function getOptions(array $headers, $body, $options = [], $timeOut, $isAsyncRequest = false)
+    private function getOptions(array $headers, $body, $options, $timeOut, $isAsyncRequest = false, $connectTimeOut = 10)
     {
         $default_options = [
             RequestOptions::HEADERS         => $headers,
             RequestOptions::BODY            => $body,
             RequestOptions::TIMEOUT         => $timeOut,
-            RequestOptions::CONNECT_TIMEOUT => 10,
+            RequestOptions::CONNECT_TIMEOUT => $connectTimeOut,
             RequestOptions::SYNCHRONOUS     => !$isAsyncRequest,
         ];
 
         return array_merge($default_options, $options);
+    }
+
+    /**
+     * @return int
+     */
+    public function getTimeOut()
+    {
+        return $this->timeOut;
+    }
+
+    /**
+     * @return int
+     */
+    public function getConnectTimeOut()
+    {
+        return $this->connectTimeOut;
     }
 }

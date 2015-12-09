@@ -49,6 +49,20 @@ class TelegramRequest
     protected $isAsyncRequest = false;
 
     /**
+     * Timeout of the request in seconds.
+     *
+     * @var int
+     */
+    protected $timeOut = 30;
+
+    /**
+     * Connection timeout of the request in seconds.
+     *
+     * @var int
+     */
+    protected $connectTimeOut = 10;
+
+    /**
      * Creates a new Request entity.
      *
      * @param string|null $accessToken
@@ -56,19 +70,25 @@ class TelegramRequest
      * @param string|null $endpoint
      * @param array|null  $params
      * @param bool        $isAsyncRequest
+     * @param int         $timeOut
+     * @param int         $connectTimeOut
      */
     public function __construct(
         $accessToken = null,
         $method = null,
         $endpoint = null,
         array $params = [],
-        $isAsyncRequest = false
+        $isAsyncRequest = false,
+        $timeOut = 60,
+        $connectTimeOut = 10
     ) {
         $this->setAccessToken($accessToken);
         $this->setMethod($method);
         $this->setEndpoint($endpoint);
         $this->setParams($params);
         $this->setAsyncRequest($isAsyncRequest);
+        $this->setTimeOut($timeOut);
+        $this->setConnectTimeOut($connectTimeOut);
     }
 
     /**
@@ -270,5 +290,45 @@ class TelegramRequest
         return [
             'User-Agent' => 'Telegram Bot PHP SDK v'.Api::VERSION.' - (https://github.com/irazasyed/telegram-bot-sdk)',
         ];
+    }
+
+    /**
+     * @return int
+     */
+    public function getTimeOut()
+    {
+        return $this->timeOut;
+    }
+
+    /**
+     * @param int $timeOut
+     *
+     * @return $this
+     */
+    public function setTimeOut($timeOut)
+    {
+        $this->timeOut = $timeOut;
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getConnectTimeOut()
+    {
+        return $this->connectTimeOut;
+    }
+
+    /**
+     * @param int $connectTimeOut
+     *
+     * @return $this
+     */
+    public function setConnectTimeOut($connectTimeOut)
+    {
+        $this->connectTimeOut = $connectTimeOut;
+
+        return $this;
     }
 }
