@@ -76,10 +76,11 @@ class GuzzleHttpClient implements HttpClientInterface
         array $headers = [],
         array $options = [],
         $timeOut = 30,
-        $isAsyncRequest = false
+        $isAsyncRequest = false,
+        $connectTimeOut = 10
     ) {
         $body = isset($options['body']) ? $options['body'] : null;
-        $options = $this->getOptions($headers, $body, $options, $timeOut, $isAsyncRequest);
+        $options = $this->getOptions($headers, $body, $options, $timeOut, $connectTimeOut, $isAsyncRequest);
 
         try {
             $response = $this->getClient()->requestAsync($method, $url, $options);
@@ -103,21 +104,22 @@ class GuzzleHttpClient implements HttpClientInterface
     /**
      * Prepares and returns request options.
      *
-     * @param array $headers
-     * @param       $body
-     * @param       $options
-     * @param       $timeOut
-     * @param       $isAsyncRequest
+     * @param array  $headers
+     * @param string $body
+     * @param array  $options
+     * @param int    $timeOut
+     * @param int    $connectTimeOut
+     * @param bool   $isAsyncRequest
      *
      * @return array
      */
-    private function getOptions(array $headers, $body, $options = [], $timeOut, $isAsyncRequest = false)
+    private function getOptions(array $headers, $body, $options = [], $timeOut, $connectTimeOut, $isAsyncRequest = false)
     {
         $default_options = [
             RequestOptions::HEADERS         => $headers,
             RequestOptions::BODY            => $body,
             RequestOptions::TIMEOUT         => $timeOut,
-            RequestOptions::CONNECT_TIMEOUT => 10,
+            RequestOptions::CONNECT_TIMEOUT => $connectTimeOut,
             RequestOptions::SYNCHRONOUS     => !$isAsyncRequest,
         ];
 

@@ -37,6 +37,11 @@ class TelegramRequest
     protected $params = [];
 
     /**
+     * @var array Special parameters for HttpClient.
+     */
+    protected $httpClientParams = [];
+
+    /**
      * @var array The files to send with this request.
      */
     protected $files = [];
@@ -68,6 +73,7 @@ class TelegramRequest
         $this->setMethod($method);
         $this->setEndpoint($endpoint);
         $this->setParams($params);
+        $this->setHttpClientParams($params);
         $this->setAsyncRequest($isAsyncRequest);
     }
 
@@ -181,6 +187,7 @@ class TelegramRequest
      */
     public function setParams(array $params = [])
     {
+        $params = self::filterParams($params, 'http_client_', false);
         $this->params = array_merge($this->params, $params);
 
         return $this;
@@ -194,6 +201,31 @@ class TelegramRequest
     public function getParams()
     {
         return $this->params;
+    }
+
+    /**
+     * Filter parameters for HttpClient.
+     *
+     * @param array $params
+     *
+     * @return $this
+     */
+    public function setHttpClientParams(array $params)
+    {
+        $params = self::filterParams($params, 'http_client_', true);
+        $this->httpClientParams = array_merge($this->httpClientParams, $params);
+
+        return $this;
+    }
+
+    /**
+     * Return special HttpClient params for this request.
+     *
+     * @return array
+     */
+    public function getHtpClientParams()
+    {
+        return $this->httpClientParams;
     }
 
     /**
@@ -270,5 +302,31 @@ class TelegramRequest
         return [
             'User-Agent' => 'Telegram Bot PHP SDK v'.Api::VERSION.' - (https://github.com/irazasyed/telegram-bot-sdk)',
         ];
+    }
+
+    /**
+     * Filter parameters with prefix (keep or remove them from array).
+     *
+     * @param array     $params
+     * @param string    $prefix
+     * @param bool|true $keep
+     *
+     * @return array
+     */
+    private static function filterParams(array $params, $prefix, $keep = true)
+    {
+        $mainKey = array_keys($params)[0];
+        $result = [];
+        foreach ($params[$mainKey] as $key => $value) {
+            $pos = strpos($key, $prefix);
+            if ($keep && $pos === 0) {
+                $key = substr($key, strlen($prefix));
+                $result[$key] = $value;
+            } elseif (!$keep && $pos !== 0) {
+                $result[$key] = $value;
+            }
+        }
+
+        return $keep ? $result : [$mainKey => $result];
     }
 }

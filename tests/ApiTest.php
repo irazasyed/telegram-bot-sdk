@@ -5,6 +5,7 @@ namespace Telegram\Bot\Tests;
 use Telegram\Bot\Api;
 use Prophecy\Argument;
 use InvalidArgumentException;
+use Telegram\Bot\HttpClients\TestGuzzleHttpClient;
 use Telegram\Bot\Objects\File;
 use Telegram\Bot\Objects\User;
 use Telegram\Bot\TelegramClient;
@@ -253,6 +254,36 @@ class ApiTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf(Message::class, $response);
         $this->assertEquals($chatId, $response->getChat()->getId());
         $this->assertEquals($text, $response->getText());
+    }
+
+    /** @test */
+    public function it_checks_a_timeout_is_passed_to_http_client()
+    {
+        $chatId = 987654321;
+        $text = 'Test message';
+        $this->api = Mocker::createApiResponse(
+            [
+                'chat' => [
+                    'id' => $chatId,
+                ],
+                'text' => $text,
+            ]
+        );
+
+        /** @var Message $response */
+        $response = $this->api->sendMessage(
+            [
+                'chat_id'                     => $chatId,
+                'text'                        => $text,
+                'http_client_timeout'         => 1,
+                'http_client_connect_timeout' => 1,
+            ]
+        );
+        /** @var TestGuzzleHttpClient $httpClient */
+        $httpClient = $this->api->getClient()->getHttpClientHandler();
+
+        $this->assertEquals(1, $httpClient->getTimeOut());
+        $this->assertEquals(1, $httpClient->getConnectTimeOut());
     }
 
     /** @test */

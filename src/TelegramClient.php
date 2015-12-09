@@ -24,6 +24,11 @@ class TelegramClient
     const DEFAULT_REQUEST_TIMEOUT = 60;
 
     /**
+     * @const int The connection timeout in seconds for a normal request.
+     */
+    const DEFAULT_REQUEST_CONNECT_TIMEOUT = 10;
+
+    /**
      * @const int The timeout in seconds for a request that contains file uploads.
      */
     const DEFAULT_FILE_UPLOAD_REQUEST_TIMEOUT = 3600;
@@ -94,6 +99,7 @@ class TelegramClient
             $request->getMethod(),
             $request->getHeaders(),
             $request->isAsyncRequest(),
+            $request->getHtpClientParams(),
         ];
     }
 
@@ -108,9 +114,10 @@ class TelegramClient
      */
     public function sendRequest(TelegramRequest $request)
     {
-        list($url, $method, $headers, $isAsyncRequest) = $this->prepareRequest($request);
+        list($url, $method, $headers, $isAsyncRequest, $httpClientParams) = $this->prepareRequest($request);
 
-        $timeOut = static::DEFAULT_REQUEST_TIMEOUT;
+        $timeOut = isset($httpClientParams['timeout']) ? $httpClientParams['timeout'] : static::DEFAULT_REQUEST_TIMEOUT;
+        $connectTimeOut = isset($httpClientParams['connect_timeout']) ? $httpClientParams['connect_timeout'] : static::DEFAULT_REQUEST_CONNECT_TIMEOUT;
 
         if ($method === 'POST') {
             $options = $request->getPostParams();
@@ -118,7 +125,7 @@ class TelegramClient
             $options = ['query' => $request->getParams()];
         }
 
-        $rawResponse = $this->httpClientHandler->send($url, $method, $headers, $options, $timeOut, $isAsyncRequest);
+        $rawResponse = $this->httpClientHandler->send($url, $method, $headers, $options, $timeOut, $isAsyncRequest, $connectTimeOut);
 
         $returnResponse = $this->getResponse($request, $rawResponse);
 
