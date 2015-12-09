@@ -13,8 +13,6 @@ use Telegram\Bot\Objects\Message;
 use Telegram\Bot\TelegramResponse;
 use Telegram\Bot\Tests\Mocks\Mocker;
 use Telegram\Bot\Commands\CommandBus;
-use Telegram\Bot\Tests\Mocks\MockCommand;
-use Telegram\Bot\Tests\Mocks\MockCommandTwo;
 use Telegram\Bot\HttpClients\GuzzleHttpClient;
 
 class ApiTest extends \PHPUnit_Framework_TestCase
@@ -30,9 +28,10 @@ class ApiTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @test
      * @expectedException \Telegram\Bot\Exceptions\TelegramSDKException
      */
-    public function testThrowsExceptionOnNullToken()
+    public function it_throws_exception_when_no_token_is_provided()
     {
         new Api();
     }
@@ -50,7 +49,8 @@ class ApiTest extends \PHPUnit_Framework_TestCase
         $this->api->setAccessToken($type);
     }
 
-    public function testReturnsPassedToken()
+    /** @test */
+    public function it_checks_the_passed_api_token_is_returned()
     {
         $this->assertEquals('token', $this->api->getAccessToken());
         $this->api->setAccessToken('another');
@@ -70,44 +70,33 @@ class ApiTest extends \PHPUnit_Framework_TestCase
     /** @test
      * @expectedException InvalidArgumentException
      */
-    public function it_throws_exception_if_httpclient_is_not_specified_correctly()
+    public function it_throws_exception_if_httpClient_is_not_specified_correctly()
     {
         $this->api = new Api('token', false, 'test');
     }
 
-    public function testReturnsClientObject()
+    /** @test */
+    public function it_checks_the_Client_object_is_returned()
     {
         $this->assertInstanceOf(TelegramClient::class, $this->api->getClient());
     }
 
-    public function testReturnsCommandBus()
+    /** @test */
+    public function it_checks_the_commandBus_is_returned()
     {
         $this->assertInstanceOf(CommandBus::class, $this->api->getCommandBus());
     }
 
-    public function testAddsAndReturnsInstantiatedCommands()
-    {
-        $this->api->addCommand(MockCommand::class);
-        $commands = $this->api->getCommands();
-        $this->assertInstanceOf(MockCommand::class, $commands['mycommand']);
-    }
-
-    public function testAddsMultipleCommands()
-    {
-        $this->api->addCommands([MockCommand::class, MockCommandTwo::class]);
-        $commands = $this->api->getCommands();
-        $this->assertInstanceOf(MockCommand::class, $commands['mycommand']);
-        $this->assertInstanceOf(MockCommandTwo::class, $commands['mycommand2']);
-    }
-
-    public function testCommandsHandlerReturnsUpdates()
+    /** @test */
+    public function it_checks_an_update_object_is_returned_when_a_command_is_handled()
     {
         $this->api = Mocker::createMessageResponse('/start');
         $updates = $this->api->commandsHandler();
         $this->assertInstanceOf(Update::class, $updates[0]);
     }
 
-    public function testHandlesTheRightCommand()
+    /** @test */
+    public function it_checks_the_correct_command_is_handled()
     {
         $this->api = Mocker::createMessageResponse('/mycommand');
         $command = Mocker::createMockCommand('mycommand');
@@ -119,61 +108,6 @@ class ApiTest extends \PHPUnit_Framework_TestCase
 
         $command->make(Argument::any(), Argument::any(), Argument::any())->shouldHaveBeenCalled();
         $command2->make(Argument::any(), Argument::any(), Argument::any())->shouldNotHaveBeenCalled();
-    }
-
-    /**
-     * @test
-     * @expectedException \Telegram\Bot\Exceptions\TelegramSDKException
-     */
-    public function it_throws_exception_if_supplied_command_class_does_not_exist()
-    {
-        $this->api->addCommand('nonexistclass');
-    }
-
-    /**
-     * @test
-     * @expectedException \Telegram\Bot\Exceptions\TelegramSDKException
-     */
-    public function it_checks_a_supplied_command_object_is_of_the_correct_type()
-    {
-        $this->api->addCommand(new \stdClass());
-    }
-
-    /** @test */
-    public function it_removes_a_command()
-    {
-        $this->api->addCommands([MockCommand::class, MockCommandTwo::class]);
-        $this->api->removeCommand('mycommand');
-
-        $commands = $this->api->getCommands();
-
-        $this->assertCount(1, $commands);
-        $this->assertArrayNotHasKey('mycommand', $commands);
-        $this->assertInstanceOf(MockCommandTwo::class, $commands['mycommand2']);
-    }
-
-    /** @test */
-    public function it_removes_multiple_commands()
-    {
-        $this->api->addCommands([MockCommand::class, MockCommandTwo::class]);
-        $this->api->removeCommands(['mycommand', 'mycommand2']);
-
-        $commands = $this->api->getCommands();
-
-        $this->assertCount(0, $commands);
-        $this->assertArrayNotHasKey('mycommand', $commands);
-        $this->assertArrayNotHasKey('mycommand2', $commands);
-    }
-
-    /**
-     * @test
-     * @expectedException \InvalidArgumentException
-     */
-    public function it_throws_exception_if_inbound_message_has_blank_text()
-    {
-        $this->api = Mocker::createMessageResponse('');
-
-        $this->api->commandsHandler();
     }
 
     /** @test */
