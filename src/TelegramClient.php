@@ -99,7 +99,7 @@ class TelegramClient
             $request->getMethod(),
             $request->getHeaders(),
             $request->isAsyncRequest(),
-            $request->getHtpClientParams(),
+            $request->getHttpClientParams(),
         ];
     }
 

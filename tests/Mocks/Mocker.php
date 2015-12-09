@@ -9,7 +9,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Handler\MockHandler;
-use Telegram\Bot\HttpClients\TestGuzzleHttpClient;
+use Telegram\Bot\HttpClients\GuzzleHttpClient;
 
 class Mocker
 {
@@ -123,7 +123,7 @@ class Mocker
             // two times because Api::commandsHandler makes two requests (when not using webhook method).
         ]);
         $handler = HandlerStack::create($mock);
-        $client = new TestGuzzleHttpClient(new Client(['handler' => $handler]));
+        $client = new GuzzleHttpClient(new Client(['handler' => $handler]));
 
         return new Api('token', false, $client);
     }

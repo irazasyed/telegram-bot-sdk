@@ -27,6 +27,12 @@ class GuzzleHttpClient implements HttpClientInterface
      */
     private static $promises = [];
 
+    /** @var  int */
+    protected $timeOut;
+
+    /** @var  int */
+    protected $connectTimeOut;
+
     /**
      * @param Client|null $client
      */
@@ -79,8 +85,11 @@ class GuzzleHttpClient implements HttpClientInterface
         $isAsyncRequest = false,
         $connectTimeOut = 10
     ) {
+        $this->timeOut = $timeOut;
+        $this->connectTimeOut = $connectTimeOut;
+
         $body = isset($options['body']) ? $options['body'] : null;
-        $options = $this->getOptions($headers, $body, $options, $timeOut, $connectTimeOut, $isAsyncRequest);
+        $options = $this->getOptions($headers, $body, $options, $timeOut, $isAsyncRequest, $connectTimeOut);
 
         try {
             $response = $this->getClient()->requestAsync($method, $url, $options);
@@ -108,12 +117,12 @@ class GuzzleHttpClient implements HttpClientInterface
      * @param string $body
      * @param array  $options
      * @param int    $timeOut
-     * @param int    $connectTimeOut
      * @param bool   $isAsyncRequest
+     * @param int    $connectTimeOut
      *
      * @return array
      */
-    private function getOptions(array $headers, $body, $options = [], $timeOut, $connectTimeOut, $isAsyncRequest = false)
+    private function getOptions(array $headers, $body, $options, $timeOut, $isAsyncRequest = false, $connectTimeOut = 10)
     {
         $default_options = [
             RequestOptions::HEADERS         => $headers,
@@ -124,5 +133,21 @@ class GuzzleHttpClient implements HttpClientInterface
         ];
 
         return array_merge($default_options, $options);
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getTimeOut()
+    {
+        return $this->timeOut;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getConnectTimeOut()
+    {
+        return $this->connectTimeOut;
     }
 }

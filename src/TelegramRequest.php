@@ -223,7 +223,7 @@ class TelegramRequest
      *
      * @return array
      */
-    public function getHtpClientParams()
+    public function getHttpClientParams()
     {
         return $this->httpClientParams;
     }
