@@ -19,11 +19,6 @@ class TelegramClient
     const BASE_BOT_URL = 'https://api.telegram.org/bot';
 
     /**
-     * @const int The timeout in seconds for a normal request.
-     */
-    const DEFAULT_REQUEST_TIMEOUT = 60;
-
-    /**
      * @const int The timeout in seconds for a request that contains file uploads.
      */
     const DEFAULT_FILE_UPLOAD_REQUEST_TIMEOUT = 3600;
@@ -110,7 +105,8 @@ class TelegramClient
     {
         list($url, $method, $headers, $isAsyncRequest) = $this->prepareRequest($request);
 
-        $timeOut = static::DEFAULT_REQUEST_TIMEOUT;
+        $timeOut = $request->getTimeOut();
+        $connectTimeOut = $request->getConnectTimeOut();
 
         if ($method === 'POST') {
             $options = $request->getPostParams();
@@ -118,7 +114,7 @@ class TelegramClient
             $options = ['query' => $request->getParams()];
         }
 
-        $rawResponse = $this->httpClientHandler->send($url, $method, $headers, $options, $timeOut, $isAsyncRequest);
+        $rawResponse = $this->httpClientHandler->send($url, $method, $headers, $options, $timeOut, $isAsyncRequest, $connectTimeOut);
 
         $returnResponse = $this->getResponse($request, $rawResponse);
 

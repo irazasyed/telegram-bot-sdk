@@ -61,6 +61,20 @@ class Api
     protected static $container = null;
 
     /**
+     * Timeout of the request in seconds.
+     *
+     * @var int
+     */
+    protected $timeOut = 30;
+
+    /**
+     * Connection timeout of the request in seconds.
+     *
+     * @var int
+     */
+    protected $connectTimeOut = 10;
+
+    /**
      * Instantiates a new Telegram super-class object.
      *
      *
@@ -1017,7 +1031,9 @@ class Api
             $method,
             $endpoint,
             $params,
-            $this->isAsyncRequest()
+            $this->isAsyncRequest(),
+            $this->getTimeOut(),
+            $this->getConnectTimeOut()
         );
     }
 
@@ -1078,5 +1094,45 @@ class Api
     public function hasContainer()
     {
         return self::$container !== null;
+    }
+
+    /**
+     * @return int
+     */
+    public function getTimeOut()
+    {
+        return $this->timeOut;
+    }
+
+    /**
+     * @param int $timeOut
+     *
+     * @return $this
+     */
+    public function setTimeOut($timeOut)
+    {
+        $this->timeOut = $timeOut;
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getConnectTimeOut()
+    {
+        return $this->connectTimeOut;
+    }
+
+    /**
+     * @param int $connectTimeOut
+     *
+     * @return $this
+     */
+    public function setConnectTimeOut($connectTimeOut)
+    {
+        $this->connectTimeOut = $connectTimeOut;
+
+        return $this;
     }
 }
