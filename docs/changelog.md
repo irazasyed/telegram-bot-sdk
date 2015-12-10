@@ -20,6 +20,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Laravel 5.2 Support.
 - New Message Object Properties - Thanks @jonnywilliamson ([#75](https://github.com/irazasyed/telegram-bot-sdk/pull/75)).
 - More PHPUnit Tests & Mocking 'Telegram Response' class - Thanks @jonnywilliamson ([#76](https://github.com/irazasyed/telegram-bot-sdk/pull/76)).
+- Added ability to change request timeout and connection timeout globally for all Telegram API requests (author: @ihoru) ([#81](https://github.com/irazasyed/telegram-bot-sdk/pull/81)).
 
 ### Changed
 - Methods' Params to Array, To support constant changes by Telegram - ([#54](https://github.com/irazasyed/telegram-bot-sdk/issues/54)) **[BC]**.
