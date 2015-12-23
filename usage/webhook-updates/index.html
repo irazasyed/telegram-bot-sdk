@@ -216,7 +216,9 @@
 <p>If you'd like to make sure that the Webhook request comes from Telegram, we recommend using a secret path in the URL, e.g. <code>https://www.example.com/&lt;token&gt;</code>. Since nobody else knows your bot's token, you can be pretty sure it's Telegram who made the request.</p>
 <p>See <a href="https://core.telegram.org/bots/api#setwebhook">setWebhook</a> docs for a list of supported parameters and other info.</p>
 <pre><code class="php">// Standalone
-$response = $telegram-&gt;setWebhook('https://example.com/&lt;token&gt;/webhook');
+$response = $telegram-&gt;setWebhook(array(
+    'url' =&gt; 'https://example.com/&lt;token&gt;/webhook'
+));
 
 // Laravel - Setup a POST route.
 $response = Telegram::setWebhook('https://example.com/&lt;token&gt;/webhook');
