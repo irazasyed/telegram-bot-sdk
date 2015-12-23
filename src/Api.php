@@ -740,8 +740,10 @@ class Api
         $updates = $response->getDecodedBody();
 
         $data = [];
-        foreach ($updates['result'] as $update) {
-            $data[] = new Update($update);
+        if (isset($updates['result'])) {
+            foreach ($updates['result'] as $update) {
+                $data[] = new Update($update);
+            }
         }
 
         return $data;
