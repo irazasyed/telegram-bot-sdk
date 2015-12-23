@@ -867,7 +867,7 @@ class Api
     {
         $message = $update->getMessage();
 
-        if ($message->has('text')) {
+        if ($message !== null && $message->has('text')) {
             $this->getCommandBus()->handler($message->getText(), $update);
         }
     }
