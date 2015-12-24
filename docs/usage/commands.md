@@ -46,11 +46,11 @@ class StartCommand extends Command
         // This will send a message using `sendMessage` method behind the scenes to
         // the user/chat id who triggered this command.
         // `replyWith<Message|Photo|Audio|Video|Voice|Document|Sticker|Location|ChatAction>()` all the available methods are dynamically
-        // handled when you replace `send<Method>` with `replyWith` and use all their parameters except chat_id.
-        $this->replyWithMessage('Hello! Welcome to our bot, Here are our available commands:');
+        // handled when you replace `send<Method>` with `replyWith` and use the same parameters - except chat_id does NOT need to be included in the array.
+        $this->replyWithMessage(['text' => 'Hello! Welcome to our bot, Here are our available commands:']);
 
         // This will update the chat status to typing...
-        $this->replyWithChatAction(Actions::TYPING);
+        $this->replyWithChatAction(['action' => Actions::TYPING]);
 
         // This will prepare a list of available commands and send the user.
         // First, Get an array of all registered commands
@@ -64,7 +64,7 @@ class StartCommand extends Command
         }
 
         // Reply with the commands list
-        $this->replyWithMessage($response);
+        $this->replyWithMessage(['text' => $response]);
 
         // Trigger another command dynamically from within this command
         // When you want to chain multiple commands within one or process the request further.
@@ -84,7 +84,7 @@ In your handle method, You also get access to `getTelegram()` and `getUpdate()` 
 
 The commands system as you can see in above example command comes with a few helper methods (They're optional just to help you and make things easier):
 
-1. `replyWith<Message|Photo|Audio|Video|Voice|Document|Sticker|Location|ChatAction>()` - Basically, All the `send<API Method>` are supported and are pre-filled with the chat id of the message that triggered the command. All other params of each method can easily be passed to it like you would normally as per the docs (Exclude `chat_id` since it already is adding behind the scenes).
+1. `replyWith<Message|Photo|Audio|Video|Voice|Document|Sticker|Location|ChatAction>()` - Basically, All the `send<API Method>` are supported and are pre-filled with the chat id of the message that triggered the command. All other params of each method can easily be passed to it like you would normally as per the docs (Exclude `chat_id` from the array since it's already being added.)
 2. `triggerCommand(<Command Name>)` - This is useful to chain a bunch of commands within a command. Say for example, I want to fire the `/subscribe` command that is registered already with the Commands Handler System. By using this method, I can tell the system to simulate the `/subscribe` command as if the user sent it and i can then process such request normally within that command. I would use this method to trigger that command in my `/start` command for example. So as soon as the user sends `/start` or interacts with my bot for the first time, they would also be automatically triggering `/subscribe` command which for example could be subscribing them for some alerts from your bot. The function supports second param called `$arguments` which is optional and can be used to send some arguments from the original command (The one which is triggering) to the other command. By default, The arguments would be the same as what Telegram originally sent it.
 
 If a command is not registered but the user fires one (Lets say an invalid command), By default the system will look for a help command if its registered and if yes, then it'll be triggered. So the default help command class if you were to use would respond the user with the available list of commands with description.
@@ -123,7 +123,7 @@ Example:
 
 By default, The SDK registers a Help Command in Laravel, But you can either choose to disable it by simply commenting out the HelpCommand line/removing it completely or Replace it with your own Help Command.
 
-You can also register commands on-fly using the same `addCommand()` method like above in Standalone example.
+You can also register/un-register commands on-fly using the same `addCommand()` or `removeCommand()` methods like above in Standalone example.
 
 Example:
 
@@ -158,6 +158,8 @@ Telegram::addCommands([
 ```
 
 > **Note:** All commands are lazy loaded.
+
+There is also a `removeCommands()` method to un-register multiple commands.
 
 ## Handling Commands
 

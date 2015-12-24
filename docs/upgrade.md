@@ -2,6 +2,54 @@
 
 Please make sure you are viewing this file on the master branch. Check out the [CHANGELOG][changelog] for detailed info on whats changed.
 
+## Upgrading To 2.0 from 1.x
+
+There are some breaking and major changes in this new version. Follow the below instructions to apply the changes.
+
+#### Upgrading Your Composer Dependency
+
+To update the package in composer, fire the following command in your terminal:
+
+    $ composer require irazasyed/telegram-bot-sdk ^2.0
+
+### Updating method parameters
+
+Due to rapid amount of changes Telegram have made to their method parameter names and order, this version now requires all main methods to be called with an _array of parameters_ rather than _individual parameters_.
+
+The affected methods are:
+
+ ```
+ sendMessage()
+ forwardMessage()
+ sendPhoto()
+ sendAudio()
+ sendDocument()
+ sendSticker()
+ sendVideo()
+ sendVoice()
+ sendLocation()
+ sendChatAction()
+ getUserProfilePhotos()
+ getUpdates()
+ setWebhook()
+ getFile()
+ replyKeyboardMarkup()
+ replyKeyboardHide()
+ forceReply()
+ ```
+
+ For example, in version 1.0 of the api the `sendMessage()` method would have been called as follows:
+ ```php
+    $response = $telegram->sendMessage('CHAT_ID', 'Hello World')
+ ```
+
+ You must now pass an associative array to the method instead like so:
+ ```php
+     $response = $telegram->sendMessage(['chat_id' => 'CHAT_ID', 'text' => 'Hello World'])
+ ```
+
+  All methods in the API are heavily documented, follow the official Telegram documentation and should provide easy guidance of required array key names, especially if you use an IDE.
+
 ## Upgrading To 1.0 from 0.x
 
 There are some breaking and major changes in this new version. Follow the below instructions to apply the changes.
