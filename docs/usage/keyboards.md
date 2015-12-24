@@ -13,7 +13,7 @@
 ## Reply Keyboard Markup
 
 The below example will send a message and automatically show a custom keyboard.
-Since we passed third parameter as true, the keyboard will be shown only once.
+If `one_time_keyboard` is set as true, the keyboard will be shown only once.
 
 See [ReplyKeyboardMarkup](https://core.telegram.org/bots/api#replykeyboardmarkup) docs for a list of supported parameters and other info.
 
@@ -27,8 +27,8 @@ $keyboard = [
          ['0']
 ];
 
-$reply_markup = $telegram->replyKeyboardMarkup($keyboard, true, true);
-$response = $telegram->sendMessage('CHAT_ID', 'Hello World', false, null, $reply_markup);
+$reply_markup = $telegram->replyKeyboardMarkup(['keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => true]);
+$response = $telegram->sendMessage(['chat_id' => 'CHAT_ID', 'text' => 'Hello World', 'reply_markup' => $reply_markup]);
 
 $messageId = $response->getMessageId();
 ```
@@ -38,10 +38,10 @@ $messageId = $response->getMessageId();
 Telegram clients will hide the current custom keyboard and display the default letter-keyboard.
 See [ReplyKeyboardHide](https://core.telegram.org/bots/api#replykeyboardhide) docs for more info.
 
-Supported Parameter: boolean `$selective` defaults to `false`.
+If called with no parameters, the `selective` option defaults to `false`.
 ```php
 $reply_markup = $telegram->replyKeyboardHide();
-$response = $telegram->sendMessage('CHAT_ID', 'Hello World', false, null, $reply_markup);
+$response = $telegram->sendMessage(['chat_id' => 'CHAT_ID', 'text' => 'Hello World', 'reply_markup' => $reply_markup]);
 ```
 
 ## Force Reply
@@ -49,9 +49,9 @@ $response = $telegram->sendMessage('CHAT_ID', 'Hello World', false, null, $reply
 Shows reply interface to the user, as if they manually selected the bot‘s message and tapped ’Reply'.
 See [ForceReply](https://core.telegram.org/bots/api#forcereply) docs for more info.
 
-Supported Parameter: boolean `$selective` defaults to `false`.
+If called with no parameters, the `selective` option defaults to `false`.
 
 ```php
 $reply_markup = $telegram->forceReply();
-$response = $telegram->sendMessage('CHAT_ID', 'Hello World', false, null, $reply_markup);
+$response = $telegram->sendMessage(['chat_id' => 'CHAT_ID', 'text' => 'Hello World', 'reply_markup' => $reply_markup]);
 ```
