@@ -26,7 +26,7 @@ The recommended way to install the SDK is with [Composer][composer]. Composer is
 
 You can add the SDK as a dependency using the composer.phar CLI:
 
-    php composer.phar require irazasyed/telegram-bot-sdk ^1.0
+    php composer.phar require irazasyed/telegram-bot-sdk ^2.0
 
 Or if you already have composer installed globally, then simply execute:
 
