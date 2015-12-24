@@ -30,14 +30,14 @@ You can add the SDK as a dependency using the composer.phar CLI:
 
 Or if you already have composer installed globally, then simply execute:
 
-    composer require irazasyed/telegram-bot-sdk ^1.0
+    composer require irazasyed/telegram-bot-sdk ^2.0
 
 Alternatively, you can specify the SDK as a dependency in your project's existing composer.json file:
 
 ```json
 {
     "require": {
-      "irazasyed/telegram-bot-sdk": "^1.0"
+      "irazasyed/telegram-bot-sdk": "^2.0"
     }
 }
 ```
