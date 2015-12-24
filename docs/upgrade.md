@@ -15,9 +15,10 @@ To update the package in composer, fire the following command in your terminal:
 ### Updating method parameters
 
 Due to rapid amount of changes Telegram have made to their method parameter names and order, this version now requires all main methods to be called with an _array of parameters_ rather than _individual parameters_.
- ```
+
 The affected methods are:
 
+ ```
  sendMessage()
  forwardMessage()
  sendPhoto()
@@ -42,7 +43,7 @@ The affected methods are:
     $response = $telegram->sendMessage('CHAT_ID', 'Hello World')
  ```
 
- You must now pass an associated array to the method instead like so:
+ You must now pass an associative array to the method instead like so:
  ```php
      $response = $telegram->sendMessage(['chat_id' => 'CHAT_ID', 'text' => 'Hello World'])
  ```

@@ -29,12 +29,25 @@ $response = $telegram->sendPhoto(['chat_id' => 'CHAT_ID', 'photo' => 'path/to/ph
 $messageId = $response->getMessageId();
 ```
 
+The ability to send an image directly from an URL has now been added to the library. Instead of supplying a local path and filename, you may now pass the image URL.
+
+```php
+$response = $telegram->sendPhoto(['chat_id' => 'CHAT_ID', 'photo' => 'http://example.com/photos/image.jpg', 'caption' => 'Some caption']);
+$messageId = $response->getMessageId();
+```
+
 ## Send a Chat Action
 
 See [sendChatAction](https://core.telegram.org/bots/api#sendchataction) docs for a list of supported actions and other info.
 
 ```php
 $telegram->sendChatAction(['chat_id' => 'CHAT_ID', 'action' => 'upload_photo']);
+```
+
+There is also a new helper method for supplying the chat action. This is especially useful with code completion with your IDE.
+
+```php
+$telegram->sendChatAction(['chat_id' => 'CHAT_ID', 'action' => Actions::RECORD_VIDEO ]);
 ```
 
 ## Get User Profile Photos
