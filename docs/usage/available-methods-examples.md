@@ -48,7 +48,8 @@ The ability to send an image directly from an URL has now been added to the libr
 ```php
 $response = $telegram->sendPhoto([
 	'chat_id' => 'CHAT_ID', 
-	'photo' => 'http://example.com/photos/image.jpg', 	'caption' => 'Some caption'
+	'photo' => 'http://example.com/photos/image.jpg',
+	'caption' => 'Some caption'
 ]);
 
 $messageId = $response->getMessageId();
