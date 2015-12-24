@@ -17,10 +17,10 @@ See [setWebhook](https://core.telegram.org/bots/api#setwebhook) docs for a list 
 
 ```php
 // Standalone
-$response = $telegram->setWebhook('https://example.com/<token>/webhook');
+$response = $telegram->setWebhook(['url' => 'https://example.com/<token>/webhook']);
 
 // Laravel - Setup a POST route.
-$response = Telegram::setWebhook('https://example.com/<token>/webhook');
+$response = Telegram::setWebhook(['url' => 'https://example.com/<token>/webhook']);
 ```
 
 > **Notes**
