@@ -13,11 +13,11 @@ However, an asynchronous non-blocking request can be sent by calling `setAsyncRe
 // Standalone
 $telegram
    ->setAsyncRequest(true)
-   ->sendPhoto('CHAT_ID', 'path/to/photo.jpg');
+   ->sendPhoto(['chat_id' => 'CHAT_ID', 'photo' => 'path/to/photo.jpg']);
 
 // Laravel
 Telegram::setAsyncRequest(true)
-          ->sendPhoto('CHAT_ID', 'path/to/photo.jpg');
+          ->sendPhoto(['chat_id' => 'CHAT_ID', 'photo' => 'path/to/photo.jpg']);
 ```
 
 ## Make All API Requests Async
