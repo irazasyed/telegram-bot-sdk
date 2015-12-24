@@ -18,21 +18,28 @@ See [setWebhook](https://core.telegram.org/bots/api#setwebhook) docs for a list 
 ```php
 // Standalone
 $response = $telegram->setWebhook(['url' => 'https://example.com/<token>/webhook']);
-//or if you are supplying a self-signed-certificate
-$response = $telegram->setWebhook(['url' => 'https://example.com/<token>/webhook', 'certificate' => '/path/to/public_key_certificate.pub']);
+
+// Or if you are supplying a self-signed-certificate
+$response = $telegram->setWebhook([
+	'url' => 'https://example.com/<token>/webhook',
+	'certificate' => '/path/to/public_key_certificate.pub'
+]);
 
 // Laravel - Setup a POST route.
 $response = Telegram::setWebhook(['url' => 'https://example.com/<token>/webhook']);
-//or if you are supplying a self-signed-certificate
-$response = Telegram::setWebhook(['url' => 'https://example.com/<token>/webhook', 'certificate' => '/path/to/public_key_certificate.pub']);
 
+// Or if you are supplying a self-signed-certificate
+$response = Telegram::setWebhook([
+	'url' => 'https://example.com/<token>/webhook',
+	'certificate' => '/path/to/public_key_certificate.pub'
+]);
 ```
 
 > **Notes**
 >
 > 1. You will not be able to receive updates using `getUpdates()` for as long as an outgoing webhook is set up.
 >
-> 2. To use a self-signed certificate, you need to upload your public key certificate using certificate parameter. Please upload as InputFile, sending a String will not work.
+> 2. To use a self-signed certificate, you need to upload your public key certificate using certificate parameter. Please pass the absolute path to the certificate when uploading.
 >
 > 3. Ports currently supported *for Webhooks*: **443, 80, 88, 8443**.
 

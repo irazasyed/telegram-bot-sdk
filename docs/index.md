@@ -21,16 +21,22 @@ Please review the official [documentation](https://core.telegram.org/bots/api) o
 
 The recommended way to install the SDK is with [Composer][composer]. Composer is a dependency management tool for PHP that allows you to declare the dependencies your project needs and installs them into your project.
 
-    # Install Composer
-    curl -sS https://getcomposer.org/installer | php
+```sh
+# Install Composer
+curl -sS https://getcomposer.org/installer | php
+```
 
 You can add the SDK as a dependency using the composer.phar CLI:
 
-    php composer.phar require irazasyed/telegram-bot-sdk ^2.0
+```sh
+php composer.phar require irazasyed/telegram-bot-sdk ^2.0
+```
 
 Or if you already have composer installed globally, then simply execute:
 
-    composer require irazasyed/telegram-bot-sdk ^2.0
+```sh
+composer require irazasyed/telegram-bot-sdk ^2.0
+```
 
 Alternatively, you can specify the SDK as a dependency in your project's existing composer.json file:
 
@@ -74,12 +80,15 @@ Optionally add an alias to make it easier to use the library. Open `config/app.p
 
 Open your terminal window and fire the following command to publish config file to your config directory:
 
-    php artisan vendor:publish --provider="Telegram\Bot\Laravel\TelegramServiceProvider"
+```sh
+php artisan vendor:publish --provider="Telegram\Bot\Laravel\TelegramServiceProvider"
+```
 
 OR
 
-    php artisan vendor:publish
-
+```sh
+php artisan vendor:publish
+```
 The former command publishes config file for just this package and the latter publishes vendor config files for other packages too. Depending on what you want to do, you can use any (Doesn't really matter).
 
 # Additional information

@@ -169,13 +169,21 @@ Here's an example used with a Webhook registered:
 ```php
 // Laravel
 Route::post('/<token>/webhook', function () {
-    Telegram::commandsHandler(true);
-
+    $update = Telegram::commandsHandler(true);
+	
+	// Commands handler method returns an Update object.
+	// So you can further process $update object 
+	// to however you want.
+	
     return 'ok';
 });
 
 // Standalone
-$telegram->commandsHandler(true);
+$update = $telegram->commandsHandler(true);
 ```
 
 The method accepts a boolean value, Defaults to `false` which means the commands should manually be processed using `getUpdates()` method. Set it to `true` to process incoming updates sent from Telegram to your Webhook. The commands handler system will go through the incoming Update object to see if there is any command that matches the registered once and process them accordingly.
+
+Commands Handler method will always return an Update object (Whether it processes the command or not), So you can use it to process further or for anything. 
+
+**Example**: In case the incoming message is not a command, You can use the returned Update object to save the incoming message and or respond accordingly.

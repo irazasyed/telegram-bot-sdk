@@ -27,8 +27,17 @@ $keyboard = [
          ['0']
 ];
 
-$reply_markup = $telegram->replyKeyboardMarkup(['keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => true]);
-$response = $telegram->sendMessage(['chat_id' => 'CHAT_ID', 'text' => 'Hello World', 'reply_markup' => $reply_markup]);
+$reply_markup = $telegram->replyKeyboardMarkup([
+	'keyboard' => $keyboard, 
+	'resize_keyboard' => true, 
+	'one_time_keyboard' => true
+]);
+
+$response = $telegram->sendMessage([
+	'chat_id' => 'CHAT_ID', 
+	'text' => 'Hello World', 
+	'reply_markup' => $reply_markup
+]);
 
 $messageId = $response->getMessageId();
 ```
@@ -41,7 +50,12 @@ See [ReplyKeyboardHide](https://core.telegram.org/bots/api#replykeyboardhide) do
 If called with no parameters, the `selective` option defaults to `false`.
 ```php
 $reply_markup = $telegram->replyKeyboardHide();
-$response = $telegram->sendMessage(['chat_id' => 'CHAT_ID', 'text' => 'Hello World', 'reply_markup' => $reply_markup]);
+
+$response = $telegram->sendMessage([
+	'chat_id' => 'CHAT_ID', 
+	'text' => 'Hello World', 
+	'reply_markup' => $reply_markup
+]);
 ```
 
 ## Force Reply
@@ -53,5 +67,10 @@ If called with no parameters, the `selective` option defaults to `false`.
 
 ```php
 $reply_markup = $telegram->forceReply();
-$response = $telegram->sendMessage(['chat_id' => 'CHAT_ID', 'text' => 'Hello World', 'reply_markup' => $reply_markup]);
+
+$response = $telegram->sendMessage([
+	'chat_id' => 'CHAT_ID', 
+	'text' => 'Hello World', 
+	'reply_markup' => $reply_markup
+]);
 ```

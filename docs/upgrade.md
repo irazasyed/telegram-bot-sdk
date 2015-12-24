@@ -10,7 +10,9 @@ There are some breaking and major changes in this new version. Follow the below 
 
 To update the package in composer, fire the following command in your terminal:
 
-    $ composer require irazasyed/telegram-bot-sdk ^2.0
+```sh
+$ composer require irazasyed/telegram-bot-sdk ^2.0
+```
 
 ### Updating method parameters
 
@@ -18,7 +20,7 @@ Due to rapid amount of changes Telegram have made to their method parameter name
 
 The affected methods are:
 
- ```
+```php
  sendMessage()
  forwardMessage()
  sendPhoto()
@@ -36,19 +38,24 @@ The affected methods are:
  replyKeyboardMarkup()
  replyKeyboardHide()
  forceReply()
- ```
+```
 
  For example, in version 1.0 of the api the `sendMessage()` method would have been called as follows:
- ```php
-    $response = $telegram->sendMessage('CHAT_ID', 'Hello World')
- ```
+ 
+```php
+$response = $telegram->sendMessage('CHAT_ID', 'Hello World');
+```
 
  You must now pass an associative array to the method instead like so:
- ```php
-     $response = $telegram->sendMessage(['chat_id' => 'CHAT_ID', 'text' => 'Hello World'])
- ```
+ 
+```php
+$response = $telegram->sendMessage([
+	'chat_id' => 'CHAT_ID', 
+	'text' => 'Hello World'
+]);
+```
 
-  All methods in the API are heavily documented, follow the official Telegram documentation and should provide easy guidance of required array key names, especially if you use an IDE.
+All methods in the API are heavily documented, follow the official Telegram documentation and should provide easy guidance of required array key names, especially if you use an IDE.
 
 ## Upgrading To 1.0 from 0.x
 
@@ -58,9 +65,9 @@ There are some breaking and major changes in this new version. Follow the below 
 
 To update the package in composer, fire the following command in your terminal:
 
-
-    $ composer require irazasyed/telegram-bot-sdk ^1.0
-
+```sh
+$ composer require irazasyed/telegram-bot-sdk ^1.0
+```
 
 #### Updating Namespace
 
@@ -119,8 +126,9 @@ If you use facade, then you need to update the `aliases` array in `config/app.ph
 Fire the following command to apply the new changes. **Please note**, The below command will overwrite your current changes to the config file, So take a backup before firing this command:
 
 
-    php artisan vendor:publish --provider="Telegram\Bot\Laravel\TelegramServiceProvider" --force
-
+```sh
+$ php artisan vendor:publish --provider="Telegram\Bot\Laravel\TelegramServiceProvider" --force
+```
 
 That's all folks, Enjoy! 
 
