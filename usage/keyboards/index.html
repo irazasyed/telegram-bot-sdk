@@ -69,12 +69,6 @@
                 
                 
                 
-                    <li >
-                        <a href="../../api-docs/">API</a>
-                    </li>
-                
-                
-                
                     <li class="dropdown active">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Usage <b class="caret"></b></a>
                         <ul class="dropdown-menu">
@@ -122,6 +116,12 @@
                 
                     <li >
                         <a href="../../upgrade/">Upgrade Guide</a>
+                    </li>
+                
+                
+                
+                    <li >
+                        <a href="../../api-docs/">API</a>
                     </li>
                 
                 
@@ -219,7 +219,7 @@
 
 <h2 id="reply-keyboard-markup">Reply Keyboard Markup</h2>
 <p>The below example will send a message and automatically show a custom keyboard.
-Since we passed third parameter as true, the keyboard will be shown only once.</p>
+If <code>one_time_keyboard</code> is set as true, the keyboard will be shown only once.</p>
 <p>See <a href="https://core.telegram.org/bots/api#replykeyboardmarkup">ReplyKeyboardMarkup</a> docs for a list of supported parameters and other info.</p>
 <p>Example:</p>
 <pre><code class="php">$keyboard = [
@@ -229,8 +229,17 @@ Since we passed third parameter as true, the keyboard will be shown only once.</
          ['0']
 ];
 
-$reply_markup = $telegram-&gt;replyKeyboardMarkup($keyboard, true, true);
-$response = $telegram-&gt;sendMessage('CHAT_ID', 'Hello World', false, null, $reply_markup);
+$reply_markup = $telegram-&gt;replyKeyboardMarkup([
+    'keyboard' =&gt; $keyboard, 
+    'resize_keyboard' =&gt; true, 
+    'one_time_keyboard' =&gt; true
+]);
+
+$response = $telegram-&gt;sendMessage([
+    'chat_id' =&gt; 'CHAT_ID', 
+    'text' =&gt; 'Hello World', 
+    'reply_markup' =&gt; $reply_markup
+]);
 
 $messageId = $response-&gt;getMessageId();
 </code></pre>
@@ -238,17 +247,27 @@ $messageId = $response-&gt;getMessageId();
 <h2 id="reply-keyboard-hide">Reply Keyboard Hide</h2>
 <p>Telegram clients will hide the current custom keyboard and display the default letter-keyboard.
 See <a href="https://core.telegram.org/bots/api#replykeyboardhide">ReplyKeyboardHide</a> docs for more info.</p>
-<p>Supported Parameter: boolean <code>$selective</code> defaults to <code>false</code>.</p>
+<p>If called with no parameters, the <code>selective</code> option defaults to <code>false</code>.</p>
 <pre><code class="php">$reply_markup = $telegram-&gt;replyKeyboardHide();
-$response = $telegram-&gt;sendMessage('CHAT_ID', 'Hello World', false, null, $reply_markup);
+
+$response = $telegram-&gt;sendMessage([
+    'chat_id' =&gt; 'CHAT_ID', 
+    'text' =&gt; 'Hello World', 
+    'reply_markup' =&gt; $reply_markup
+]);
 </code></pre>
 
 <h2 id="force-reply">Force Reply</h2>
 <p>Shows reply interface to the user, as if they manually selected the bot‘s message and tapped ’Reply'.
 See <a href="https://core.telegram.org/bots/api#forcereply">ForceReply</a> docs for more info.</p>
-<p>Supported Parameter: boolean <code>$selective</code> defaults to <code>false</code>.</p>
+<p>If called with no parameters, the <code>selective</code> option defaults to <code>false</code>.</p>
 <pre><code class="php">$reply_markup = $telegram-&gt;forceReply();
-$response = $telegram-&gt;sendMessage('CHAT_ID', 'Hello World', false, null, $reply_markup);
+
+$response = $telegram-&gt;sendMessage([
+    'chat_id' =&gt; 'CHAT_ID', 
+    'text' =&gt; 'Hello World', 
+    'reply_markup' =&gt; $reply_markup
+]);
 </code></pre></div>
             
         </div>
@@ -256,7 +275,7 @@ $response = $telegram-&gt;sendMessage('CHAT_ID', 'Hello World', false, null, $re
         <footer class="col-md-12">
             <hr>
             
-                <p>Copyright &copy; 2015, <a href="https://github.com/irazasyed">Syed Irfaq R.</a> |  <a href="https://irazasyed.github.io/telegram-bot-sdk/api/">API Docs</a></p>
+                <p>Copyright &copy; 2015-16, <a href="https://github.com/irazasyed">Syed Irfaq R.</a> |  <a href="https://irazasyed.github.io/telegram-bot-sdk/api/">API Docs</a></p>
             
             <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p>
         </footer>

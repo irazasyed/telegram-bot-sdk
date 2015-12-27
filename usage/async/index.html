@@ -69,12 +69,6 @@
                 
                 
                 
-                    <li >
-                        <a href="../../api-docs/">API</a>
-                    </li>
-                
-                
-                
                     <li class="dropdown active">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Usage <b class="caret"></b></a>
                         <ul class="dropdown-menu">
@@ -122,6 +116,12 @@
                 
                     <li >
                         <a href="../../upgrade/">Upgrade Guide</a>
+                    </li>
+                
+                
+                
+                    <li >
+                        <a href="../../api-docs/">API</a>
                     </li>
                 
                 
@@ -215,11 +215,11 @@ However, an asynchronous non-blocking request can be sent by calling <code>setAs
 // Standalone
 $telegram
    -&gt;setAsyncRequest(true)
-   -&gt;sendPhoto('CHAT_ID', 'path/to/photo.jpg');
+   -&gt;sendPhoto(['chat_id' =&gt; 'CHAT_ID', 'photo' =&gt; 'path/to/photo.jpg']);
 
 // Laravel
 Telegram::setAsyncRequest(true)
-          -&gt;sendPhoto('CHAT_ID', 'path/to/photo.jpg');
+          -&gt;sendPhoto(['chat_id' =&gt; 'CHAT_ID', 'photo' =&gt; 'path/to/photo.jpg']);
 </code></pre>
 
 <h2 id="make-all-api-requests-async">Make All API Requests Async</h2>
@@ -242,7 +242,7 @@ The <code>TelegramResponse</code> object that you will get back has NULL for HTT
         <footer class="col-md-12">
             <hr>
             
-                <p>Copyright &copy; 2015, <a href="https://github.com/irazasyed">Syed Irfaq R.</a> |  <a href="https://irazasyed.github.io/telegram-bot-sdk/api/">API Docs</a></p>
+                <p>Copyright &copy; 2015-16, <a href="https://github.com/irazasyed">Syed Irfaq R.</a> |  <a href="https://irazasyed.github.io/telegram-bot-sdk/api/">API Docs</a></p>
             
             <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p>
         </footer>

@@ -4,15 +4,7 @@
     
     <url>
      <loc>None/</loc>
-     <lastmod>2015-09-08</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-    
-
-    
-    <url>
-     <loc>None/api-docs/</loc>
-     <lastmod>2015-09-08</lastmod>
+     <lastmod>2015-12-28</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
@@ -21,37 +13,37 @@
         
     <url>
      <loc>None/usage/initial-setup/</loc>
-     <lastmod>2015-09-08</lastmod>
+     <lastmod>2015-12-28</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>None/usage/available-methods-examples/</loc>
-     <lastmod>2015-09-08</lastmod>
+     <lastmod>2015-12-28</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>None/usage/async/</loc>
-     <lastmod>2015-09-08</lastmod>
+     <lastmod>2015-12-28</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>None/usage/commands/</loc>
-     <lastmod>2015-09-08</lastmod>
+     <lastmod>2015-12-28</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>None/usage/keyboards/</loc>
-     <lastmod>2015-09-08</lastmod>
+     <lastmod>2015-12-28</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>None/usage/webhook-updates/</loc>
-     <lastmod>2015-09-08</lastmod>
+     <lastmod>2015-12-28</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
@@ -60,7 +52,15 @@
     
     <url>
      <loc>None/upgrade/</loc>
-     <lastmod>2015-09-08</lastmod>
+     <lastmod>2015-12-28</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+    
+    <url>
+     <loc>None/api-docs/</loc>
+     <lastmod>2015-12-28</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
@@ -69,19 +69,19 @@
         
     <url>
      <loc>None/changelog/</loc>
-     <lastmod>2015-09-08</lastmod>
+     <lastmod>2015-12-28</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>None/contributing/</loc>
-     <lastmod>2015-09-08</lastmod>
+     <lastmod>2015-12-28</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>None/license/</loc>
-     <lastmod>2015-09-08</lastmod>
+     <lastmod>2015-12-28</lastmod>
      <changefreq>daily</changefreq>
     </url>
         

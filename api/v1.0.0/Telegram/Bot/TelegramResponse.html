@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>Telegram\Bot\TelegramResponse | Telegram Bot SDK API</title>
+
+            <link rel="stylesheet" type="text/css" href="../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../css/sami.css">
+        <script src="../../js/jquery-1.11.1.min.js"></script>
+        <script src="../../js/bootstrap.min.js"></script>
+        <script src="../../js/typeahead.min.js"></script>
+        <script src="../../sami.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    
+    
+    </head>
+
+    <body id="class" data-name="class:Telegram_Bot_TelegramResponse" data-root-path="../../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                    <form action="#" method="GET">
+                <select id="version-switcher" name="version">
+                                            <option value="../../../v1.0.0/index.html" selected>Telegram Bot SDK 1.0</option>
+                                            <option value="../../../v2.0.0/index.html">Telegram Bot SDK 2.0</option>
+                                            <option value="../../../master/index.html">Telegram Bot SDK Dev</option>
+                                    </select>
+            </form>
+                <form id="search-form" action="../../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../index.html">Telegram Bot SDK API</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../classes.html">Classes</a></li>
+                                            <li><a href="../../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../traits.html">Traits</a></li>
+                    <li><a href="../../doc-index.html">Index</a></li>
+                    <li><a href="../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                                                            <li><a href="../../Telegram.html">Telegram</a></li>
+                                        <li><a href="../../Telegram/Bot.html">Bot</a></li>
+    
+                <li>TelegramResponse</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>TelegramResponse</h1>
+    </div>
+
+    <p>    class
+    <strong>TelegramResponse</strong>        (<a href="https://github.com/irazasyed/telegram-bot-sdk/blob/v1.0.0/src/TelegramResponse.php">View source</a>)
+</p>
+
+            <div class="description">
+            <p>Class TelegramResponse</p>            <p>Handles the response from Telegram API.</p>        </div>
+    
+    
+    
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___construct">__construct</a>(
+    <abbr title="Telegram\Bot\Telegram\Bot\TelegramRequest">TelegramRequest</abbr> $request, 
+    <abbr title="Psr\Http\Message\ResponseInterface">ResponseInterface</abbr>|<abbr title="GuzzleHttp\Promise\PromiseInterface">PromiseInterface</abbr> $response)
+                                            <p>Gets the relevant data from the Http client.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+    <a href="../../Telegram/Bot/TelegramRequest.html"><abbr title="Telegram\Bot\TelegramRequest">TelegramRequest</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getRequest">getRequest</a>()
+                                            <p>Return the original request that returned this response.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+    null|int
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getHttpStatusCode">getHttpStatusCode</a>()
+                                            <p>Gets the HTTP status code.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getEndpoint">getEndpoint</a>()
+                                            <p>Gets the Request Endpoint used to get the response.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+    string|null
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getAccessToken">getAccessToken</a>()
+                                            <p>Return the bot access token that was used for this request.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+    array
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getHeaders">getHeaders</a>()
+                                            <p>Return the HTTP headers for this response.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getBody">getBody</a>()
+                                            <p>Return the raw body response.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+    array
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getDecodedBody">getDecodedBody</a>()
+                                            <p>Return the decoded body response.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+    bool
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_isError">isError</a>()
+                                            <p>Checks if response is an error.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_throwException">throwException</a>()
+                                            <p>Throws the exception.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_makeException">makeException</a>()
+                                            <p>Instantiates an exception to be thrown later.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+    <a href="../../Telegram/Bot/Exceptions/TelegramSDKException.html"><abbr title="Telegram\Bot\Exceptions\TelegramSDKException">TelegramSDKException</abbr></a>|null
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getThrownException">getThrownException</a>()
+                                            <p>Returns the exception that was thrown for this request.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_decodeBody">decodeBody</a>()
+                                            <p>Converts raw API response to proper decoded response.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location">at line 60</div>
+        <code>                    
+    
+    <strong>__construct</strong>(
+    <abbr title="Telegram\Bot\Telegram\Bot\TelegramRequest">TelegramRequest</abbr> $request, 
+    <abbr title="Psr\Http\Message\ResponseInterface">ResponseInterface</abbr>|<abbr title="GuzzleHttp\Promise\PromiseInterface">PromiseInterface</abbr> $response)</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Gets the relevant data from the Http client.</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>
+    <abbr title="Telegram\Bot\Telegram\Bot\TelegramRequest">TelegramRequest</abbr></td>
+                <td>$request</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td>
+    <abbr title="Psr\Http\Message\ResponseInterface">ResponseInterface</abbr>|<abbr title="GuzzleHttp\Promise\PromiseInterface">PromiseInterface</abbr></td>
+                <td>$response</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getRequest">
+        <div class="location">at line 85</div>
+        <code>                    
+    <a href="../../Telegram/Bot/TelegramRequest.html"><abbr title="Telegram\Bot\TelegramRequest">TelegramRequest</abbr></a>
+    <strong>getRequest</strong>()</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Return the original request that returned this response.</p>                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>
+    <a href="../../Telegram/Bot/TelegramRequest.html"><abbr title="Telegram\Bot\TelegramRequest">TelegramRequest</abbr></a></td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getHttpStatusCode">
+        <div class="location">at line 96</div>
+        <code>                    
+    null|int
+    <strong>getHttpStatusCode</strong>()</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Gets the HTTP status code.</p>                    <p>Returns NULL if the request was asynchronous since we are not waiting for the response.</p>            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>
+    null|int</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getEndpoint">
+        <div class="location">at line 106</div>
+        <code>                    
+    string
+    <strong>getEndpoint</strong>()</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Gets the Request Endpoint used to get the response.</p>                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>
+    string</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getAccessToken">
+        <div class="location">at line 116</div>
+        <code>                    
+    string|null
+    <strong>getAccessToken</strong>()</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Return the bot access token that was used for this request.</p>                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>
+    string|null</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getHeaders">
+        <div class="location">at line 126</div>
+        <code>                    
+    array
+    <strong>getHeaders</strong>()</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Return the HTTP headers for this response.</p>                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>
+    array</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getBody">
+        <div class="location">at line 136</div>
+        <code>                    
+    string
+    <strong>getBody</strong>()</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Return the raw body response.</p>                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>
+    string</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getDecodedBody">
+        <div class="location">at line 146</div>
+        <code>                    
+    array
+    <strong>getDecodedBody</strong>()</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Return the decoded body response.</p>                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>
+    array</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_isError">
+        <div class="location">at line 156</div>
+        <code>                    
+    bool
+    <strong>isError</strong>()</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Checks if response is an error.</p>                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>
+    bool</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_throwException">
+        <div class="location">at line 166</div>
+        <code>                    
+    
+    <strong>throwException</strong>()</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Throws the exception.</p>                                </div>
+                <div class="tags">
+            
+            
+                            <h4>Exceptions</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../Telegram/Bot/Exceptions/TelegramSDKException.html"><abbr title="Telegram\Bot\Exceptions\TelegramSDKException">TelegramSDKException</abbr></a></td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_makeException">
+        <div class="location">at line 174</div>
+        <code>                    
+    
+    <strong>makeException</strong>()</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Instantiates an exception to be thrown later.</p>                                </div>
+                <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getThrownException">
+        <div class="location">at line 184</div>
+        <code>                    
+    <a href="../../Telegram/Bot/Exceptions/TelegramSDKException.html"><abbr title="Telegram\Bot\Exceptions\TelegramSDKException">TelegramSDKException</abbr></a>|null
+    <strong>getThrownException</strong>()</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Returns the exception that was thrown for this request.</p>                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>
+    <a href="../../Telegram/Bot/Exceptions/TelegramSDKException.html"><abbr title="Telegram\Bot\Exceptions\TelegramSDKException">TelegramSDKException</abbr></a>|null</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_decodeBody">
+        <div class="location">at line 192</div>
+        <code>                    
+    
+    <strong>decodeBody</strong>()</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Converts raw API response to proper decoded response.</p>                                </div>
+                <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>

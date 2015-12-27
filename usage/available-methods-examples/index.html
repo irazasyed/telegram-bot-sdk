@@ -69,12 +69,6 @@
                 
                 
                 
-                    <li >
-                        <a href="../../api-docs/">API</a>
-                    </li>
-                
-                
-                
                     <li class="dropdown active">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Usage <b class="caret"></b></a>
                         <ul class="dropdown-menu">
@@ -122,6 +116,12 @@
                 
                     <li >
                         <a href="../../upgrade/">Upgrade Guide</a>
+                    </li>
+                
+                
+                
+                    <li >
+                        <a href="../../api-docs/">API</a>
                     </li>
                 
                 
@@ -197,9 +197,9 @@
         
             <li><a href="#send-a-message">Send a Message</a></li>
         
-            <li><a href="#send-a-photo">Send a Photo</a></li>
-        
             <li><a href="#forward-a-message">Forward a Message</a></li>
+        
+            <li><a href="#send-a-photo">Send a Photo</a></li>
         
             <li><a href="#send-a-chat-action">Send a Chat Action</a></li>
         
@@ -216,30 +216,65 @@
 <p>The library supports all the methods listed on Telegram Bot API docs <a href="https://core.telegram.org/bots/api#available-methods">page</a>.</p>
 <h2 id="send-a-message">Send a Message</h2>
 <p>See <a href="https://core.telegram.org/bots/api#sendmessage">sendMessage</a> docs for a list of supported parameters and other info.</p>
-<pre><code class="php">$response = $telegram-&gt;sendMessage('CHAT_ID', 'Hello World');
-$messageId = $response-&gt;getMessageId();
-</code></pre>
+<pre><code class="php">$response = $telegram-&gt;sendMessage([
+    'chat_id' =&gt; 'CHAT_ID', 
+    'text' =&gt; 'Hello World'
+]);
 
-<h2 id="send-a-photo">Send a Photo</h2>
-<p>See <a href="https://core.telegram.org/bots/api#sendphoto">sendPhoto</a> docs for a list of supported parameters and other info.</p>
-<pre><code class="php">$response = $telegram-&gt;sendPhoto('CHAT_ID', 'path/to/photo.jpg', 'Some caption');
 $messageId = $response-&gt;getMessageId();
 </code></pre>
 
 <h2 id="forward-a-message">Forward a Message</h2>
 <p>See <a href="https://core.telegram.org/bots/api#forwardmessage">forwardMessage</a> docs for a list of supported parameters and other info.</p>
-<pre><code class="php">$response = $telegram-&gt;forwardMessage('CHAT_ID', 'FROM_CHAT_ID', 'MESSAGE_ID');
+<pre><code class="php">$response = $telegram-&gt;forwardMessage([
+    'chat_id' =&gt; 'CHAT_ID', 
+    'from_chat_id' =&gt; 'FROM_CHAT_ID', 
+    'message_id' =&gt; 'MESSAGE_ID'
+]);
+
+$messageId = $response-&gt;getMessageId();
+</code></pre>
+
+<h2 id="send-a-photo">Send a Photo</h2>
+<p>See <a href="https://core.telegram.org/bots/api#sendphoto">sendPhoto</a> docs for a list of supported parameters and other info.</p>
+<pre><code class="php">$response = $telegram-&gt;sendPhoto([
+    'chat_id' =&gt; 'CHAT_ID', 
+    'photo' =&gt; 'path/to/photo.jpg', 
+    'caption' =&gt; 'Some caption'
+]);
+
+$messageId = $response-&gt;getMessageId();
+</code></pre>
+
+<p>The ability to send an image directly from an URL has now been added to the library. Instead of supplying a local path and filename, you may now pass the image URL.</p>
+<pre><code class="php">$response = $telegram-&gt;sendPhoto([
+    'chat_id' =&gt; 'CHAT_ID', 
+    'photo' =&gt; 'http://example.com/photos/image.jpg',
+    'caption' =&gt; 'Some caption'
+]);
+
 $messageId = $response-&gt;getMessageId();
 </code></pre>
 
 <h2 id="send-a-chat-action">Send a Chat Action</h2>
 <p>See <a href="https://core.telegram.org/bots/api#sendchataction">sendChatAction</a> docs for a list of supported actions and other info.</p>
-<pre><code class="php">$telegram-&gt;sendChatAction('CHAT_ID', 'upload_photo');
+<pre><code class="php">$telegram-&gt;sendChatAction([
+    'chat_id' =&gt; 'CHAT_ID', 
+    'action' =&gt; 'upload_photo'
+]);
+</code></pre>
+
+<p>There is also a new helper method for supplying the chat action. This is especially useful with code completion with your IDE.</p>
+<pre><code class="php">$telegram-&gt;sendChatAction([
+    'chat_id' =&gt; 'CHAT_ID', 
+    'action' =&gt; Actions::RECORD_VIDEO
+]);
 </code></pre>
 
 <h2 id="get-user-profile-photos">Get User Profile Photos</h2>
 <p>See <a href="https://core.telegram.org/bots/api#getuserprofilephotos">getUserProfilePhotos</a> docs for a list of supported parameters and other info.</p>
-<pre><code class="php">$response = $telegram-&gt;getUserProfilePhotos('USER_ID');
+<pre><code class="php">$response = $telegram-&gt;getUserProfilePhotos(['user_id' =&gt; 'USER_ID']);
+
 $photos_count = $response-&gt;getTotalCount();
 $photos = $response-&gt;getPhotos();
 </code></pre>
@@ -254,7 +289,7 @@ $photos = $response-&gt;getPhotos();
         <footer class="col-md-12">
             <hr>
             
-                <p>Copyright &copy; 2015, <a href="https://github.com/irazasyed">Syed Irfaq R.</a> |  <a href="https://irazasyed.github.io/telegram-bot-sdk/api/">API Docs</a></p>
+                <p>Copyright &copy; 2015-16, <a href="https://github.com/irazasyed">Syed Irfaq R.</a> |  <a href="https://irazasyed.github.io/telegram-bot-sdk/api/">API Docs</a></p>
             
             <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p>
         </footer>

@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>Telegram\Bot\Commands\CommandBus | Telegram Bot SDK API</title>
+
+            <link rel="stylesheet" type="text/css" href="../../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../css/sami.css">
+        <script src="../../../js/jquery-1.11.1.min.js"></script>
+        <script src="../../../js/bootstrap.min.js"></script>
+        <script src="../../../js/typeahead.min.js"></script>
+        <script src="../../../sami.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    
+    
+    </head>
+
+    <body id="class" data-name="class:Telegram_Bot_Commands_CommandBus" data-root-path="../../../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                    <form action="#" method="GET">
+                <select id="version-switcher" name="version">
+                                            <option value="../../../../v1.0.0/index.html" selected>Telegram Bot SDK 1.0</option>
+                                            <option value="../../../../v2.0.0/index.html">Telegram Bot SDK 2.0</option>
+                                            <option value="../../../../master/index.html">Telegram Bot SDK Dev</option>
+                                    </select>
+            </form>
+                <form id="search-form" action="../../../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../../index.html">Telegram Bot SDK API</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../../classes.html">Classes</a></li>
+                                            <li><a href="../../../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../../traits.html">Traits</a></li>
+                    <li><a href="../../../doc-index.html">Index</a></li>
+                    <li><a href="../../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                                                            <li><a href="../../../Telegram.html">Telegram</a></li>
+                                        <li><a href="../../../Telegram/Bot.html">Bot</a></li>
+                                        <li><a href="../../../Telegram/Bot/Commands.html">Commands</a></li>
+    
+                <li>CommandBus</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>CommandBus</h1>
+    </div>
+
+    <p>    class
+    <strong>CommandBus</strong>        (<a href="https://github.com/irazasyed/telegram-bot-sdk/blob/v1.0.0/src/Commands/CommandBus.php">View source</a>)
+</p>
+
+            <div class="description">
+            <p>Class CommandBus</p>                    </div>
+    
+    
+    
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___construct">__construct</a>(
+    <abbr title="Telegram\Bot\Commands\Telegram\Bot\Api">Api</abbr> $telegram)
+                                            <p>Instantiate Command Bus</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+    array
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getCommands">getCommands</a>()
+                                            <p>Returns the list of commands.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+    <a href="../../../Telegram/Bot/Commands/CommandBus.html"><abbr title="Telegram\Bot\Commands\CommandBus">CommandBus</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_addCommands">addCommands</a>(
+    array $commands)
+                                            <p>Add a list of commands.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+    <a href="../../../Telegram/Bot/Commands/CommandBus.html"><abbr title="Telegram\Bot\Commands\CommandBus">CommandBus</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_addCommand">addCommand</a>(
+    <a href="../../../Telegram/Bot/Commands/CommandInterface.html"><abbr title="Telegram\Bot\Commands\CommandInterface">CommandInterface</abbr></a>|string $command)
+                                            <p>Add a command to the commands list.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_removeCommand">removeCommand</a>($name)
+                                            <p>Remove a command from the list.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+    <a href="../../../Telegram/Bot/Objects/Update.html"><abbr title="Telegram\Bot\Objects\Update">Update</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_handler">handler</a>($message, 
+    <abbr title="Telegram\Bot\Commands\Telegram\Bot\Objects\Update">Update</abbr> $update)
+                                            <p>Handles Inbound Messages and Executes Appropriate Command.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+    array
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_parseCommand">parseCommand</a>($text)
+                                            <p>Parse a Command for a Match.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+    mixed
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_execute">execute</a>($name, $arguments, $message)
+                                            <p>Execute the command.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location">at line 33</div>
+        <code>                    
+    
+    <strong>__construct</strong>(
+    <abbr title="Telegram\Bot\Commands\Telegram\Bot\Api">Api</abbr> $telegram)</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Instantiate Command Bus</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>
+    <abbr title="Telegram\Bot\Commands\Telegram\Bot\Api">Api</abbr></td>
+                <td>$telegram</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+            
+                            <h4>Exceptions</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../Telegram/Bot/Exceptions/TelegramSDKException.html"><abbr title="Telegram\Bot\Exceptions\TelegramSDKException">TelegramSDKException</abbr></a></td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getCommands">
+        <div class="location">at line 43</div>
+        <code>                    
+    array
+    <strong>getCommands</strong>()</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Returns the list of commands.</p>                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>
+    array</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_addCommands">
+        <div class="location">at line 55</div>
+        <code>                    
+    <a href="../../../Telegram/Bot/Commands/CommandBus.html"><abbr title="Telegram\Bot\Commands\CommandBus">CommandBus</abbr></a>
+    <strong>addCommands</strong>(
+    array $commands)</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Add a list of commands.</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>
+    array</td>
+                <td>$commands</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>
+    <a href="../../../Telegram/Bot/Commands/CommandBus.html"><abbr title="Telegram\Bot\Commands\CommandBus">CommandBus</abbr></a></td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_addCommand">
+        <div class="location">at line 73</div>
+        <code>                    
+    <a href="../../../Telegram/Bot/Commands/CommandBus.html"><abbr title="Telegram\Bot\Commands\CommandBus">CommandBus</abbr></a>
+    <strong>addCommand</strong>(
+    <a href="../../../Telegram/Bot/Commands/CommandInterface.html"><abbr title="Telegram\Bot\Commands\CommandInterface">CommandInterface</abbr></a>|string $command)</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Add a command to the commands list.</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>
+    <a href="../../../Telegram/Bot/Commands/CommandInterface.html"><abbr title="Telegram\Bot\Commands\CommandInterface">CommandInterface</abbr></a>|string</td>
+                <td>$command</td>
+                <td>Either an object or full path to the command class.</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>
+    <a href="../../../Telegram/Bot/Commands/CommandBus.html"><abbr title="Telegram\Bot\Commands\CommandBus">CommandBus</abbr></a></td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+                            <h4>Exceptions</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../Telegram/Bot/Exceptions/TelegramSDKException.html"><abbr title="Telegram\Bot\Exceptions\TelegramSDKException">TelegramSDKException</abbr></a></td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_removeCommand">
+        <div class="location">at line 99</div>
+        <code>                    
+    
+    <strong>removeCommand</strong>($name)</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Remove a command from the list.</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td></td>
+                <td>$name</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_handler">
+        <div class="location">at line 114</div>
+        <code>                    
+    <a href="../../../Telegram/Bot/Objects/Update.html"><abbr title="Telegram\Bot\Objects\Update">Update</abbr></a>
+    <strong>handler</strong>($message, 
+    <abbr title="Telegram\Bot\Commands\Telegram\Bot\Objects\Update">Update</abbr> $update)</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Handles Inbound Messages and Executes Appropriate Command.</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td></td>
+                <td>$message</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td>
+    <abbr title="Telegram\Bot\Commands\Telegram\Bot\Objects\Update">Update</abbr></td>
+                <td>$update</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>
+    <a href="../../../Telegram/Bot/Objects/Update.html"><abbr title="Telegram\Bot\Objects\Update">Update</abbr></a></td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+                            <h4>Exceptions</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../Telegram/Bot/Exceptions/TelegramSDKException.html"><abbr title="Telegram\Bot\Exceptions\TelegramSDKException">TelegramSDKException</abbr></a></td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_parseCommand">
+        <div class="location">at line 137</div>
+        <code>                    
+    array
+    <strong>parseCommand</strong>($text)</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Parse a Command for a Match.</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td></td>
+                <td>$text</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>
+    array</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+                            <h4>Exceptions</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a target="_blank" href="http://php.net/InvalidArgumentException"><abbr title="InvalidArgumentException">InvalidArgumentException</abbr></a></td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_execute">
+        <div class="location">at line 157</div>
+        <code>                    
+    mixed
+    <strong>execute</strong>($name, $arguments, $message)</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Execute the command.</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td></td>
+                <td>$name</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$arguments</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$message</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>
+    mixed</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>

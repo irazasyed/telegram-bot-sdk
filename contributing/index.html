@@ -69,12 +69,6 @@
                 
                 
                 
-                    <li >
-                        <a href="../api-docs/">API</a>
-                    </li>
-                
-                
-                
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Usage <b class="caret"></b></a>
                         <ul class="dropdown-menu">
@@ -122,6 +116,12 @@
                 
                     <li >
                         <a href="../upgrade/">Upgrade Guide</a>
+                    </li>
+                
+                
+                
+                    <li >
+                        <a href="../api-docs/">API</a>
                     </li>
                 
                 
@@ -197,23 +197,35 @@
         
             <li><a href="#guidelines">Guidelines</a></li>
         
+            <li><a href="#running-tests">Running Tests</a></li>
+        
     
     </ul>
 </div></div>
                 <div class="col-md-9" role="main">
 
 <h1 id="contributing">Contributing</h1>
-<p>Contributions are <strong>welcome</strong>, and are accepted via pull requests. Please review these guidelines before submitting any pull requests.</p>
+<p>Contributions are <strong>welcome</strong> and will be fully <strong>credited</strong>.</p>
+<p>We accept contributions via Pull Requests on <a href="https://github.com/irazasyed/telegram-bot-sdk">Github</a>. Please review these guidelines before submitting any pull requests.</p>
 <h2 id="guidelines">Guidelines</h2>
 <ul>
 <li>
-<p><strong>Follow Standards</strong> - Please follow the <a href="https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md">PSR-2 Coding Standard</a> and <a href="https://github.com/php-fig/fig-standards/blob/master/bylaws/002-psr-naming-conventions.md">PHP-FIG Naming Conventions</a>.</p>
+<p><strong><a href="https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md">PSR-2 Coding Standard</a></strong> - Follow Standards, <a href="https://github.com/php-fig/fig-standards/blob/master/bylaws/002-psr-naming-conventions.md">PHP-FIG Naming Conventions</a>. The easiest way to apply the conventions is to install <a href="http://pear.php.net/package/PHP_CodeSniffer">PHP Code Sniffer</a>.</p>
+</li>
+<li>
+<p><strong>Add tests!</strong> - Your patch won't be accepted if it doesn't have tests.</p>
 </li>
 <li>
 <p><strong>Document any change in behaviour</strong> - Make sure the <code>CHANGELOG.md</code> and any other relevant documentation are kept up-to-date.</p>
 </li>
 <li>
-<p><strong>Consider our release cycle</strong> - We try to follow <a href="http://semver.org/">SemVer</a>. Randomly breaking public APIs is not an option.</p>
+<p><strong>Consider our release cycle</strong> - We try to follow <a href="http://semver.org/">SemVer v2.0.0</a>. Randomly breaking public APIs is not an option.</p>
+</li>
+<li>
+<p><strong>Create feature branches</strong> - Don't ask us to pull from your master branch.</p>
+</li>
+<li>
+<p><strong>One pull request per feature</strong> - If you want to do more than one thing, send multiple pull requests.</p>
 </li>
 <li>
 <p><strong>Send coherent history</strong> - Make sure each individual commit in your pull request is meaningful. If you had to make multiple intermediate commits while developing, please <a href="http://www.git-scm.com/book/en/v2/Git-Tools-Rewriting-History#Changing-Multiple-Commit-Messages">squash them</a> before submitting.</p>
@@ -222,6 +234,10 @@
 <p><strong>Rebase</strong> - You may also need to <a href="http://git-scm.com/book/en/Git-Branching-Rebasing">rebase</a> to avoid merge conflicts.</p>
 </li>
 </ul>
+<h2 id="running-tests">Running Tests</h2>
+<pre><code class="bash">$ composer test
+</code></pre>
+
 <p><strong>Happy coding</strong>!</p></div>
             
         </div>
@@ -229,7 +245,7 @@
         <footer class="col-md-12">
             <hr>
             
-                <p>Copyright &copy; 2015, <a href="https://github.com/irazasyed">Syed Irfaq R.</a> |  <a href="https://irazasyed.github.io/telegram-bot-sdk/api/">API Docs</a></p>
+                <p>Copyright &copy; 2015-16, <a href="https://github.com/irazasyed">Syed Irfaq R.</a> |  <a href="https://irazasyed.github.io/telegram-bot-sdk/api/">API Docs</a></p>
             
             <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p>
         </footer>

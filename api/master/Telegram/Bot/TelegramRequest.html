@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>Telegram\Bot\TelegramRequest | Telegram Bot SDK API</title>
+
+            <link rel="stylesheet" type="text/css" href="../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../css/sami.css">
+        <script src="../../js/jquery-1.11.1.min.js"></script>
+        <script src="../../js/bootstrap.min.js"></script>
+        <script src="../../js/typeahead.min.js"></script>
+        <script src="../../sami.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    
+    
+    </head>
+
+    <body id="class" data-name="class:Telegram_Bot_TelegramRequest" data-root-path="../../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                    <form action="#" method="GET">
+                <select id="version-switcher" name="version">
+                                            <option value="../../../v1.0.0/index.html">Telegram Bot SDK 1.0</option>
+                                            <option value="../../../v2.0.0/index.html" selected>Telegram Bot SDK 2.0</option>
+                                            <option value="../../../master/index.html">Telegram Bot SDK Dev</option>
+                                    </select>
+            </form>
+                <form id="search-form" action="../../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../index.html">Telegram Bot SDK API</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../classes.html">Classes</a></li>
+                                            <li><a href="../../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../traits.html">Traits</a></li>
+                    <li><a href="../../doc-index.html">Index</a></li>
+                    <li><a href="../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                                                            <li><a href="../../Telegram.html">Telegram</a></li>
+                                        <li><a href="../../Telegram/Bot.html">Bot</a></li>
+    
+                <li>TelegramRequest</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>TelegramRequest</h1>
+    </div>
+
+    <p>    class
+    <strong>TelegramRequest</strong>        (<a href="https://github.com/irazasyed/telegram-bot-sdk/blob/v2.0.0/src/TelegramRequest.php">View source</a>)
+</p>
+
+            <div class="description">
+            <p>Class TelegramRequest.</p>            <p>Builds Telegram Bot API Request Entity.</p>        </div>
+    
+    
+    
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___construct">__construct</a>(
+    string|null $accessToken = null, 
+    string|null $method = null, 
+    string|null $endpoint = null, 
+    array $params = array(), 
+    bool $isAsyncRequest = false, 
+    int $timeOut = 60, 
+    int $connectTimeOut = 10)
+                                            <p>Creates a new Request entity.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+    <a href="../../Telegram/Bot/TelegramRequest.html"><abbr title="Telegram\Bot\TelegramRequest">TelegramRequest</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setAccessToken">setAccessToken</a>(
+    string $accessToken)
+                                            <p>Set the bot access token for this request.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+    string|null
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getAccessToken">getAccessToken</a>()
+                                            <p>Return the bot access token for this request.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_validateAccessToken">validateAccessToken</a>()
+                                            <p>Validate that bot access token exists for this request.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+    <a href="../../Telegram/Bot/TelegramRequest.html"><abbr title="Telegram\Bot\TelegramRequest">TelegramRequest</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setMethod">setMethod</a>(
+    string $method)
+                                            <p>Set the HTTP method for this request.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getMethod">getMethod</a>()
+                                            <p>Return the HTTP method for this request.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_validateMethod">validateMethod</a>()
+                                            <p>Validate that the HTTP method is set.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+    <a href="../../Telegram/Bot/TelegramRequest.html"><abbr title="Telegram\Bot\TelegramRequest">TelegramRequest</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setEndpoint">setEndpoint</a>(
+    string $endpoint)
+                                            <p>Set the endpoint for this request.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getEndpoint">getEndpoint</a>()
+                                            <p>Return the API Endpoint for this request.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+    <a href="../../Telegram/Bot/TelegramRequest.html"><abbr title="Telegram\Bot\TelegramRequest">TelegramRequest</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setParams">setParams</a>(
+    array $params = array())
+                                            <p>Set the params for this request.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+    array
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getParams">getParams</a>()
+                                            <p>Return the params for this request.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+    <a href="../../Telegram/Bot/TelegramRequest.html"><abbr title="Telegram\Bot\TelegramRequest">TelegramRequest</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setHeaders">setHeaders</a>(
+    array $headers)
+                                            <p>Set the headers for this request.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+    array
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getHeaders">getHeaders</a>()
+                                            <p>Return the headers for this request.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+    <a href="../../Telegram/Bot/TelegramRequest.html"><abbr title="Telegram\Bot\TelegramRequest">TelegramRequest</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setAsyncRequest">setAsyncRequest</a>($isAsyncRequest)
+                                            <p>Make this request asynchronous (non-blocking).</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+    bool
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_isAsyncRequest">isAsyncRequest</a>()
+                                            <p>Check if this is an asynchronous request (non-blocking).</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+    array
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getPostParams">getPostParams</a>()
+                                            <p>Only return params on POST requests.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+    array
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getDefaultHeaders">getDefaultHeaders</a>()
+                                            <p>The default headers used with every request.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+    int
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getTimeOut">getTimeOut</a>()
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+    <abbr title="Telegram\Bot\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setTimeOut">setTimeOut</a>(
+    int $timeOut)
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+    int
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getConnectTimeOut">getConnectTimeOut</a>()
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+    <abbr title="Telegram\Bot\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setConnectTimeOut">setConnectTimeOut</a>(
+    int $connectTimeOut)
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location">at line 76</div>
+        <code>                    
+    
+    <strong>__construct</strong>(
+    string|null $accessToken = null, 
+    string|null $method = null, 
+    string|null $endpoint = null, 
+    array $params = array(), 
+    bool $isAsyncRequest = false, 
+    int $timeOut = 60, 
+    int $connectTimeOut = 10)</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Creates a new Request entity.</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>
+    string|null</td>
+                <td>$accessToken</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td>
+    string|null</td>
+                <td>$method</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td>
+    string|null</td>
+                <td>$endpoint</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td>
+    array</td>
+                <td>$params</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td>
+    bool</td>
+                <td>$isAsyncRequest</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td>
+    int</td>
+                <td>$timeOut</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td>
+    int</td>
+                <td>$connectTimeOut</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setAccessToken">
+        <div class="location">at line 101</div>
+        <code>                    
+    <a href="../../Telegram/Bot/TelegramRequest.html"><abbr title="Telegram\Bot\TelegramRequest">TelegramRequest</abbr></a>
+    <strong>setAccessToken</strong>(
+    string $accessToken)</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Set the bot access token for this request.</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>
+    string</td>
+                <td>$accessToken</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>
+    <a href="../../Telegram/Bot/TelegramRequest.html"><abbr title="Telegram\Bot\TelegramRequest">TelegramRequest</abbr></a></td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getAccessToken">
+        <div class="location">at line 113</div>
+        <code>                    
+    string|null
+    <strong>getAccessToken</strong>()</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Return the bot access token for this request.</p>                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>
+    string|null</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_validateAccessToken">
+        <div class="location">at line 123</div>
+        <code>                    
+    
+    <strong>validateAccessToken</strong>()</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Validate that bot access token exists for this request.</p>                                </div>
+                <div class="tags">
+            
+            
+                            <h4>Exceptions</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../Telegram/Bot/Exceptions/TelegramSDKException.html"><abbr title="Telegram\Bot\Exceptions\TelegramSDKException">TelegramSDKException</abbr></a></td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setMethod">
+        <div class="location">at line 138</div>
+        <code>                    
+    <a href="../../Telegram/Bot/TelegramRequest.html"><abbr title="Telegram\Bot\TelegramRequest">TelegramRequest</abbr></a>
+    <strong>setMethod</strong>(
+    string $method)</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Set the HTTP method for this request.</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>
+    string</td>
+                <td>$method</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>
+    <a href="../../Telegram/Bot/TelegramRequest.html"><abbr title="Telegram\Bot\TelegramRequest">TelegramRequest</abbr></a></td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getMethod">
+        <div class="location">at line 150</div>
+        <code>                    
+    string
+    <strong>getMethod</strong>()</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Return the HTTP method for this request.</p>                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>
+    string</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_validateMethod">
+        <div class="location">at line 160</div>
+        <code>                    
+    
+    <strong>validateMethod</strong>()</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Validate that the HTTP method is set.</p>                                </div>
+                <div class="tags">
+            
+            
+                            <h4>Exceptions</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../Telegram/Bot/Exceptions/TelegramSDKException.html"><abbr title="Telegram\Bot\Exceptions\TelegramSDKException">TelegramSDKException</abbr></a></td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setEndpoint">
+        <div class="location">at line 178</div>
+        <code>                    
+    <a href="../../Telegram/Bot/TelegramRequest.html"><abbr title="Telegram\Bot\TelegramRequest">TelegramRequest</abbr></a>
+    <strong>setEndpoint</strong>(
+    string $endpoint)</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Set the endpoint for this request.</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>
+    string</td>
+                <td>$endpoint</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>
+    <a href="../../Telegram/Bot/TelegramRequest.html"><abbr title="Telegram\Bot\TelegramRequest">TelegramRequest</abbr></a></td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getEndpoint">
+        <div class="location">at line 190</div>
+        <code>                    
+    string
+    <strong>getEndpoint</strong>()</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Return the API Endpoint for this request.</p>                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>
+    string</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setParams">
+        <div class="location">at line 202</div>
+        <code>                    
+    <a href="../../Telegram/Bot/TelegramRequest.html"><abbr title="Telegram\Bot\TelegramRequest">TelegramRequest</abbr></a>
+    <strong>setParams</strong>(
+    array $params = array())</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Set the params for this request.</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>
+    array</td>
+                <td>$params</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>
+    <a href="../../Telegram/Bot/TelegramRequest.html"><abbr title="Telegram\Bot\TelegramRequest">TelegramRequest</abbr></a></td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getParams">
+        <div class="location">at line 214</div>
+        <code>                    
+    array
+    <strong>getParams</strong>()</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Return the params for this request.</p>                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>
+    array</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setHeaders">
+        <div class="location">at line 226</div>
+        <code>                    
+    <a href="../../Telegram/Bot/TelegramRequest.html"><abbr title="Telegram\Bot\TelegramRequest">TelegramRequest</abbr></a>
+    <strong>setHeaders</strong>(
+    array $headers)</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Set the headers for this request.</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>
+    array</td>
+                <td>$headers</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>
+    <a href="../../Telegram/Bot/TelegramRequest.html"><abbr title="Telegram\Bot\TelegramRequest">TelegramRequest</abbr></a></td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getHeaders">
+        <div class="location">at line 238</div>
+        <code>                    
+    array
+    <strong>getHeaders</strong>()</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Return the headers for this request.</p>                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>
+    array</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setAsyncRequest">
+        <div class="location">at line 252</div>
+        <code>                    
+    <a href="../../Telegram/Bot/TelegramRequest.html"><abbr title="Telegram\Bot\TelegramRequest">TelegramRequest</abbr></a>
+    <strong>setAsyncRequest</strong>($isAsyncRequest)</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Make this request asynchronous (non-blocking).</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td></td>
+                <td>$isAsyncRequest</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>
+    <a href="../../Telegram/Bot/TelegramRequest.html"><abbr title="Telegram\Bot\TelegramRequest">TelegramRequest</abbr></a></td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_isAsyncRequest">
+        <div class="location">at line 264</div>
+        <code>                    
+    bool
+    <strong>isAsyncRequest</strong>()</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Check if this is an asynchronous request (non-blocking).</p>                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>
+    bool</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getPostParams">
+        <div class="location">at line 274</div>
+        <code>                    
+    array
+    <strong>getPostParams</strong>()</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>Only return params on POST requests.</p>                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>
+    array</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getDefaultHeaders">
+        <div class="location">at line 288</div>
+        <code>                    
+    array
+    <strong>getDefaultHeaders</strong>()</code>
+    </h3>
+    <div class="details">
+                    <div class="method-description">
+                                    <p>The default headers used with every request.</p>                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>
+    array</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getTimeOut">
+        <div class="location">at line 298</div>
+        <code>                    
+    int
+    <strong>getTimeOut</strong>()</code>
+    </h3>
+    <div class="details">
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>
+    int</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setTimeOut">
+        <div class="location">at line 308</div>
+        <code>                    
+    <abbr title="Telegram\Bot\$this">$this</abbr>
+    <strong>setTimeOut</strong>(
+    int $timeOut)</code>
+    </h3>
+    <div class="details">
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>
+    int</td>
+                <td>$timeOut</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>
+    <abbr title="Telegram\Bot\$this">$this</abbr></td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getConnectTimeOut">
+        <div class="location">at line 318</div>
+        <code>                    
+    int
+    <strong>getConnectTimeOut</strong>()</code>
+    </h3>
+    <div class="details">
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>
+    int</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setConnectTimeOut">
+        <div class="location">at line 328</div>
+        <code>                    
+    <abbr title="Telegram\Bot\$this">$this</abbr>
+    <strong>setConnectTimeOut</strong>(
+    int $connectTimeOut)</code>
+    </h3>
+    <div class="details">
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>
+    int</td>
+                <td>$connectTimeOut</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>
+    <abbr title="Telegram\Bot\$this">$this</abbr></td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>

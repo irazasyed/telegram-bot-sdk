@@ -69,12 +69,6 @@
                 
                 
                 
-                    <li >
-                        <a href="../api-docs/">API</a>
-                    </li>
-                
-                
-                
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Usage <b class="caret"></b></a>
                         <ul class="dropdown-menu">
@@ -126,6 +120,12 @@
                 
                 
                 
+                    <li >
+                        <a href="../api-docs/">API</a>
+                    </li>
+                
+                
+                
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">About <b class="caret"></b></a>
                         <ul class="dropdown-menu">
@@ -168,7 +168,7 @@
                         </a>
                     </li>
                     <li >
-                        <a rel="prev" href="../changelog/">
+                        <a rel="prev" href="../api-docs/">
                             Next <i class="fa fa-arrow-right"></i>
                         </a>
                     </li>
@@ -195,6 +195,8 @@
     
         <li class="main active"><a href="#upgrade-guide">Upgrade Guide</a></li>
         
+            <li><a href="#upgrading-to-20-from-1x">Upgrading To 2.0 from 1.x</a></li>
+        
             <li><a href="#upgrading-to-10-from-0x">Upgrading To 1.0 from 0.x</a></li>
         
     
@@ -204,12 +206,54 @@
 
 <h1 id="upgrade-guide">Upgrade Guide</h1>
 <p>Please make sure you are viewing this file on the master branch. Check out the <a href="../changelog/">CHANGELOG</a> for detailed info on whats changed.</p>
-<h2 id="upgrading-to-10-from-0x">Upgrading To 1.0 from 0.x</h2>
+<h2 id="upgrading-to-20-from-1x">Upgrading To 2.0 from 1.x</h2>
 <p>There are some breaking and major changes in this new version. Follow the below instructions to apply the changes.</p>
 <h4 id="upgrading-your-composer-dependency">Upgrading Your Composer Dependency</h4>
 <p>To update the package in composer, fire the following command in your terminal:</p>
-<pre><code>$ composer require irazasyed/telegram-bot-sdk ^1.0
+<pre><code class="sh">$ composer require irazasyed/telegram-bot-sdk ^2.0
 </code></pre>
+
+<h3 id="updating-method-parameters">Updating method parameters</h3>
+<p>Due to rapid amount of changes Telegram have made to their method parameter names and order, this version now requires all main methods to be called with an <em>array of parameters</em> rather than <em>individual parameters</em>.</p>
+<p>The affected methods are:</p>
+<pre><code class="php"> sendMessage()
+ forwardMessage()
+ sendPhoto()
+ sendAudio()
+ sendDocument()
+ sendSticker()
+ sendVideo()
+ sendVoice()
+ sendLocation()
+ sendChatAction()
+ getUserProfilePhotos()
+ getUpdates()
+ setWebhook()
+ getFile()
+ replyKeyboardMarkup()
+ replyKeyboardHide()
+ forceReply()
+</code></pre>
+
+<p>For example, in version 1.0 of the api the <code>sendMessage()</code> method would have been called as follows:</p>
+<pre><code class="php">$response = $telegram-&gt;sendMessage('CHAT_ID', 'Hello World');
+</code></pre>
+
+<p>You must now pass an associative array to the method instead like so:</p>
+<pre><code class="php">$response = $telegram-&gt;sendMessage([
+    'chat_id' =&gt; 'CHAT_ID', 
+    'text' =&gt; 'Hello World'
+]);
+</code></pre>
+
+<p>All methods in the API are heavily documented, follow the official Telegram documentation and should provide easy guidance of required array key names, especially if you use an IDE.</p>
+<h2 id="upgrading-to-10-from-0x">Upgrading To 1.0 from 0.x</h2>
+<p>There are some breaking and major changes in this new version. Follow the below instructions to apply the changes.</p>
+<h4 id="upgrading-your-composer-dependency_1">Upgrading Your Composer Dependency</h4>
+<p>To update the package in composer, fire the following command in your terminal:</p>
+<pre><code class="sh">$ composer require irazasyed/telegram-bot-sdk ^1.0
+</code></pre>
+
 <h4 id="updating-namespace">Updating Namespace</h4>
 <p>In this version, The package's namespace has been renamed from <code>Irazasyed\Telegram</code> to <code>Telegram\Bot</code>. So you need to update the namespace across your project wherever you're injecting any of the classes from the Package.</p>
 <h4 id="initializing-library-for-standalone-usage-only">Initializing Library (For Standalone Usage Only)</h4>
@@ -218,7 +262,7 @@
 </code></pre>
 
 <h4 id="updating-sendaudio-method">Updating <code>sendAudio</code> Method</h4>
-<p>If you're using <code>sendAudio()</code> method anywhere in your project, Make sure you update that as per the new parameters and API change. Refer the <a href="../changelog/">CHANGELOG</a> and API <a href="https://github.com/irazasyed/telegram-bot-sdk/blob/master/src/Api.php#L297-L324">file</a>.</p>
+<p>If you're using <code>sendAudio()</code> method anywhere in your project, Make sure you update that as per the new parameters and API change. Refer the <a href="../changelog/">CHANGELOG</a> and API <a href="https://github.com/irazasyed/telegram-bot-sdk/blob/v1.0.0/src/Api.php#L297-L324">file</a>.</p>
 <h3 id="upgrading-to-10-in-laravel-lumen">Upgrading To 1.0 in Laravel / Lumen</h3>
 <p>Addition to the above instructions, You also need to apply the below instructions to get the package working in your Laravel or Lumen Project.</p>
 <h4 id="update-service-provider">Update Service Provider</h4>
@@ -243,8 +287,9 @@
 
 <h4 id="republish-configuration-file">Republish Configuration File</h4>
 <p>Fire the following command to apply the new changes. <strong>Please note</strong>, The below command will overwrite your current changes to the config file, So take a backup before firing this command:</p>
-<pre><code>php artisan vendor:publish --provider="Telegram\Bot\Laravel\TelegramServiceProvider" --force
+<pre><code class="sh">$ php artisan vendor:publish --provider=&quot;Telegram\Bot\Laravel\TelegramServiceProvider&quot; --force
 </code></pre>
+
 <p>That's all folks, Enjoy! </p>
 <p>Always make sure to update the package in your project to latest version to apply all the bug-fixes, security updates, tweaks and other cool new features.</p></div>
             
@@ -253,7 +298,7 @@
         <footer class="col-md-12">
             <hr>
             
-                <p>Copyright &copy; 2015, <a href="https://github.com/irazasyed">Syed Irfaq R.</a> |  <a href="https://irazasyed.github.io/telegram-bot-sdk/api/">API Docs</a></p>
+                <p>Copyright &copy; 2015-16, <a href="https://github.com/irazasyed">Syed Irfaq R.</a> |  <a href="https://irazasyed.github.io/telegram-bot-sdk/api/">API Docs</a></p>
             
             <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p>
         </footer>

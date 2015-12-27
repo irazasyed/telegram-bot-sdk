@@ -69,12 +69,6 @@
                 
                 
                 
-                    <li >
-                        <a href="api-docs/">API</a>
-                    </li>
-                
-                
-                
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Usage <b class="caret"></b></a>
                         <ul class="dropdown-menu">
@@ -126,6 +120,12 @@
                 
                 
                 
+                    <li >
+                        <a href="api-docs/">API</a>
+                    </li>
+                
+                
+                
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">About <b class="caret"></b></a>
                         <ul class="dropdown-menu">
@@ -168,7 +168,7 @@
                         </a>
                     </li>
                     <li >
-                        <a rel="prev" href="api-docs/">
+                        <a rel="prev" href="usage/initial-setup/">
                             Next <i class="fa fa-arrow-right"></i>
                         </a>
                     </li>
@@ -237,19 +237,22 @@ To learn how to create and set up a bot, please consult the <a href="https://cor
 </ul>
 <h1 id="installation">Installation</h1>
 <p>The recommended way to install the SDK is with <a href="http://getcomposer.org/">Composer</a>. Composer is a dependency management tool for PHP that allows you to declare the dependencies your project needs and installs them into your project.</p>
-<pre><code># Install Composer
+<pre><code class="sh"># Install Composer
 curl -sS https://getcomposer.org/installer | php
 </code></pre>
+
 <p>You can add the SDK as a dependency using the composer.phar CLI:</p>
-<pre><code>php composer.phar require irazasyed/telegram-bot-sdk ^1.0
+<pre><code class="sh">php composer.phar require irazasyed/telegram-bot-sdk ^2.0
 </code></pre>
+
 <p>Or if you already have composer installed globally, then simply execute:</p>
-<pre><code>composer require irazasyed/telegram-bot-sdk ^1.0
+<pre><code class="sh">composer require irazasyed/telegram-bot-sdk ^2.0
 </code></pre>
+
 <p>Alternatively, you can specify the SDK as a dependency in your project's existing composer.json file:</p>
 <pre><code class="json">{
     &quot;require&quot;: {
-      &quot;irazasyed/telegram-bot-sdk&quot;: &quot;^1.0&quot;
+      &quot;irazasyed/telegram-bot-sdk&quot;: &quot;^2.0&quot;
     }
 }
 </code></pre>
@@ -273,11 +276,13 @@ curl -sS https://getcomposer.org/installer | php
 
 <h4 id="step-3-publish-configuration-file">Step 3: Publish Configuration File</h4>
 <p>Open your terminal window and fire the following command to publish config file to your config directory:</p>
-<pre><code>php artisan vendor:publish --provider="Telegram\Bot\Laravel\TelegramServiceProvider"
+<pre><code class="sh">php artisan vendor:publish --provider=&quot;Telegram\Bot\Laravel\TelegramServiceProvider&quot;
 </code></pre>
+
 <p>OR</p>
-<pre><code>php artisan vendor:publish
+<pre><code class="sh">php artisan vendor:publish
 </code></pre>
+
 <p>The former command publishes config file for just this package and the latter publishes vendor config files for other packages too. Depending on what you want to do, you can use any (Doesn't really matter).</p>
 <h1 id="additional-information">Additional information</h1>
 <blockquote>
@@ -296,7 +301,7 @@ So it's a lot easier to work with the array of data. Supports all the methods li
         <footer class="col-md-12">
             <hr>
             
-                <p>Copyright &copy; 2015, <a href="https://github.com/irazasyed">Syed Irfaq R.</a> |  <a href="https://irazasyed.github.io/telegram-bot-sdk/api/">API Docs</a></p>
+                <p>Copyright &copy; 2015-16, <a href="https://github.com/irazasyed">Syed Irfaq R.</a> |  <a href="https://irazasyed.github.io/telegram-bot-sdk/api/">API Docs</a></p>
             
             <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p>
         </footer>
@@ -338,5 +343,5 @@ So it's a lot easier to work with the array of data. Supports all the methods li
 
 <!--
 MkDocs version : 0.14.0
-Build Date UTC : 2015-09-07 22:57:34.771436
+Build Date UTC : 2015-12-27 20:27:22.456679
 -->

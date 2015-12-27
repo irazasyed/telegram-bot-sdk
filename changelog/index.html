@@ -69,12 +69,6 @@
                 
                 
                 
-                    <li >
-                        <a href="../api-docs/">API</a>
-                    </li>
-                
-                
-                
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Usage <b class="caret"></b></a>
                         <ul class="dropdown-menu">
@@ -126,6 +120,12 @@
                 
                 
                 
+                    <li >
+                        <a href="../api-docs/">API</a>
+                    </li>
+                
+                
+                
                     <li class="dropdown active">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">About <b class="caret"></b></a>
                         <ul class="dropdown-menu">
@@ -163,7 +163,7 @@
                 </li>
                 
                     <li >
-                        <a rel="next" href="../upgrade/">
+                        <a rel="next" href="../api-docs/">
                             <i class="fa fa-arrow-left"></i> Previous
                         </a>
                     </li>
@@ -195,7 +195,7 @@
     
         <li class="main active"><a href="#change-log">Change Log</a></li>
         
-            <li><a href="#unreleased">Unreleased</a></li>
+            <li><a href="#200-2015-12-28">2.0.0 - 2015-12-28</a></li>
         
             <li><a href="#100-2015-09-08">1.0.0 - 2015-09-08</a></li>
         
@@ -223,9 +223,58 @@
 <h1 id="change-log">Change Log</h1>
 <p>All notable changes to this project will be documented in this file.
 This project adheres to <a href="http://semver.org/">Semantic Versioning</a>.</p>
-<h2 id="unreleased"><a href="https://github.com/irazasyed/telegram-bot-sdk/compare/v1.0.0...HEAD">Unreleased</a></h2>
-<h2 id="100-2015-09-08"><a href="https://github.com/irazasyed/telegram-bot-sdk/compare/v0.2.6...v1.0.0">1.0.0</a> - 2015-09-08</h2>
+<h2 id="200-2015-12-28"><a href="https://github.com/irazasyed/telegram-bot-sdk/compare/v1.0.0...v2.0.0">2.0.0</a> - 2015-12-28</h2>
 <h3 id="added">Added</h3>
+<ul>
+<li>More doc blocks to the code.</li>
+<li>New <code>getFile()</code> method &amp; File Object - Thanks @jonnywilliamson (<a href="https://github.com/irazasyed/telegram-bot-sdk/pull/39">#39</a>).</li>
+<li>Channel Username Support.</li>
+<li>Dependency Injection in Commands - Thanks @antoniomadonna (<a href="https://github.com/irazasyed/telegram-bot-sdk/pull/53">#53</a>).</li>
+<li>PHPUnit Tests - Thanks @antoniomadonna (<a href="https://github.com/irazasyed/telegram-bot-sdk/pull/58">#58</a>).</li>
+<li>Travis Config.</li>
+<li>PHPUnit 4.8 Version to Support PHP5.5 Testing.</li>
+<li>Git Attributes File.</li>
+<li>Composer Config &amp; Other Options.</li>
+<li>Composer script test to make it easier to run phpunit by firing <code>composer test</code>.</li>
+<li>Nitpick Config.</li>
+<li>New <code>removeCommand()</code> &amp; <code>removeCommands()</code> methods to the API &amp; their Tests - Thanks @jonnywilliamson (<a href="https://github.com/irazasyed/telegram-bot-sdk/pull/66">#66</a>).</li>
+<li>New Remote Files Upload Support - (<a href="https://github.com/irazasyed/telegram-bot-sdk/issues/42">#42</a>).</li>
+<li>Laravel 5.2 Support.</li>
+<li>New Message Object Properties - Thanks @jonnywilliamson (<a href="https://github.com/irazasyed/telegram-bot-sdk/pull/75">#75</a>).</li>
+<li>More PHPUnit Tests &amp; Mocking 'Telegram Response' class - Thanks @jonnywilliamson (<a href="https://github.com/irazasyed/telegram-bot-sdk/pull/76">#76</a>).</li>
+<li>Added ability to change request timeout and connection timeout globally for all Telegram API requests - Thanks @ihoru (<a href="https://github.com/irazasyed/telegram-bot-sdk/pull/81">#81</a>).</li>
+</ul>
+<h3 id="changed">Changed</h3>
+<ul>
+<li>Methods' Params to Array, To support constant changes by Telegram - (<a href="https://github.com/irazasyed/telegram-bot-sdk/issues/54">#54</a>) <strong>[BC]</strong>.</li>
+<li>Revise Doc Blocks.</li>
+<li>Update Commands Class to Reflect Param Changes.</li>
+<li>Update Help Command.</li>
+<li>Refactor Command Magic Method Arguments.</li>
+<li>Refactor Laravel Service Provider to Support DI.</li>
+<li>Message Detecting methods to support Message object too - Thanks @jonnywilliamson (<a href="https://github.com/irazasyed/telegram-bot-sdk/pull/37">#37</a>).</li>
+<li>Switch to POST requests method to make API requests - Thanks @jonnywilliamson (<a href="https://github.com/irazasyed/telegram-bot-sdk/pull/40">#40</a>).</li>
+<li>Update Chat field change to new Chat Object in place of GroupChat Object - Thanks @jonnywilliamson (<a href="https://github.com/irazasyed/telegram-bot-sdk/pull/46">#46</a>).</li>
+<li>Improve <code>mapRelatives</code> to initialize inner properties - Thanks @alexsoft (<a href="https://github.com/irazasyed/telegram-bot-sdk/pull/49">#49</a>).</li>
+<li>Tests Namespace.</li>
+<li>Tests to Autoload in Dev.</li>
+<li>PHPUnit Tests Config.</li>
+<li>Applied Scrutinizer's Best Practises &amp; Other Fixes.</li>
+<li>CS Fixes &amp; Doc Block Updates - Thanks @jonnywilliamson (<a href="https://github.com/irazasyed/telegram-bot-sdk/pull/72">#72</a>).</li>
+<li>Get Updates &amp; Process command enhancements to prevent errors - Thanks @autowp (<a href="https://github.com/irazasyed/telegram-bot-sdk/pull/85">#85</a>) &amp; (<a href="https://github.com/irazasyed/telegram-bot-sdk/pull/88">#88</a>).</li>
+<li>Library Documentation Rewritten for V2 - Thanks @jonnywilliamson (<a href="https://github.com/irazasyed/telegram-bot-sdk/pull/89">#89</a>).</li>
+</ul>
+<h3 id="fixed">Fixed</h3>
+<ul>
+<li><code>ReplyWith</code> Params Bug.</li>
+<li><code>uploadFile</code> Bug Opening Webhook URL.</li>
+</ul>
+<h3 id="removed">Removed</h3>
+<ul>
+<li>Group Chat Object.</li>
+</ul>
+<h2 id="100-2015-09-08"><a href="https://github.com/irazasyed/telegram-bot-sdk/compare/v0.2.6...v1.0.0">1.0.0</a> - 2015-09-08</h2>
+<h3 id="added_1">Added</h3>
 <ul>
 <li>New <code>sendVoice()</code> method as per API Changes - Thanks @jonnywilliamson (<a href="https://github.com/irazasyed/telegram-bot-sdk/pull/19">#19</a>).</li>
 <li>Branch Alias to Composer to install <code>dev-master</code> easily.</li>
@@ -242,7 +291,7 @@ This project adheres to <a href="http://semver.org/">Semantic Versioning</a>.</p
 <li><a href="../upgrade/">Upgrade</a> Guide.</li>
 <li>Methods to Detect and Determine Message/Update Type.</li>
 </ul>
-<h3 id="changed">Changed</h3>
+<h3 id="changed_1">Changed</h3>
 <ul>
 <li><code>uploadFile()</code> method to support loading resource directly - Thanks @rkhitin - (<a href="https://github.com/irazasyed/telegram-bot-sdk/pull/17">#17</a>).</li>
 <li>Added optional <code>performer</code> and <code>title</code> fields to <code>sendAudio()</code> as per official API Changes - Thanks @jonnywilliamson (<a href="https://github.com/irazasyed/telegram-bot-sdk/pull/19">#19</a>) - <strong>[BC]</strong>.</li>
@@ -257,74 +306,74 @@ This project adheres to <a href="http://semver.org/">Semantic Versioning</a>.</p
 <li>Revise README.</li>
 </ul>
 <h2 id="026-2015-08-18"><a href="https://github.com/irazasyed/telegram-bot-sdk/compare/v0.2.5...v0.2.6">0.2.6</a> - 2015-08-18</h2>
-<h3 id="added_1">Added</h3>
+<h3 id="added_2">Added</h3>
 <ul>
 <li>Video Caption Support to <code>sendVideo()</code> method as per Official API Changes - Thanks @jonnywilliamson.</li>
 <li>Duration Support to <code>sendVideo()</code> and <code>sendAudio()</code> methods as per Official API Changes.</li>
 </ul>
-<h3 id="fixed">Fixed</h3>
+<h3 id="fixed_1">Fixed</h3>
 <ul>
 <li>Contact Object Namespace - Thanks @DmitryNek</li>
 <li><code>HTTPClientHandlerInterface</code> Laravel Config Typo.</li>
 </ul>
 <h2 id="025-2015-07-20"><a href="https://github.com/irazasyed/telegram-bot-sdk/compare/v0.2.4...v0.2.5">0.2.5</a> - 2015-07-20</h2>
-<h3 id="fixed_1">Fixed</h3>
+<h3 id="fixed_2">Fixed</h3>
 <ul>
 <li>Custom HTTP Client Handler Not Found - Thanks @codengine.</li>
 </ul>
-<h3 id="removed">Removed</h3>
+<h3 id="removed_1">Removed</h3>
 <ul>
 <li><code>getLastName()</code> example from README.</li>
 </ul>
 <h2 id="024-2015-07-12"><a href="https://github.com/irazasyed/telegram-bot-sdk/compare/v0.2.3...v0.2.4">0.2.4</a> - 2015-07-12</h2>
-<h3 id="added_2">Added</h3>
+<h3 id="added_3">Added</h3>
 <ul>
 <li>Installation Requirements in README.</li>
 </ul>
-<h3 id="changed_1">Changed</h3>
+<h3 id="changed_2">Changed</h3>
 <ul>
 <li>Laravel Service Provider.</li>
 <li>Revise README.</li>
 </ul>
-<h3 id="removed_1">Removed</h3>
+<h3 id="removed_2">Removed</h3>
 <ul>
 <li>Laravel 4 Support.</li>
 </ul>
 <h2 id="023-2015-07-12"><a href="https://github.com/irazasyed/telegram-bot-sdk/compare/v0.2.2...v0.2.3">0.2.3</a> - 2015-07-12</h2>
-<h3 id="added_3">Added</h3>
+<h3 id="added_4">Added</h3>
 <ul>
 <li>Message Object Relatives.</li>
 </ul>
-<h3 id="changed_2">Changed</h3>
+<h3 id="changed_3">Changed</h3>
 <ul>
 <li><code>ReplyMarkupKeyboard</code> Example in README.</li>
 <li>Composer Keywords.</li>
 <li>Profile Links in README.</li>
 </ul>
-<h3 id="fixed_2">Fixed</h3>
+<h3 id="fixed_3">Fixed</h3>
 <ul>
 <li>Invalid resource type issue (<a href="https://github.com/irazasyed/telegram-bot-sdk/issues/6">#6</a>).</li>
 </ul>
-<h3 id="removed_2">Removed</h3>
+<h3 id="removed_3">Removed</h3>
 <ul>
 <li>KeyboardMarkup Class Import Statement.</li>
 </ul>
 <h2 id="022-2015-07-02"><a href="https://github.com/irazasyed/telegram-bot-sdk/compare/v0.2.1...v0.2.2">0.2.2</a> - 2015-07-02</h2>
-<h3 id="fixed_3">Fixed</h3>
+<h3 id="fixed_4">Fixed</h3>
 <ul>
 <li><code>Irazasyed\Telegram\Exceptions\TelegramSDKException</code> not found issue (<a href="https://github.com/irazasyed/telegram-bot-sdk/issues/4">#4</a>).</li>
 </ul>
 <h2 id="021-2015-07-02"><a href="https://github.com/irazasyed/telegram-bot-sdk/compare/v0.2.0...v0.2.1">0.2.1</a> - 2015-07-02</h2>
-<h3 id="added_4">Added</h3>
+<h3 id="added_5">Added</h3>
 <ul>
 <li><code>recentMessage()</code> to Update object class.</li>
 </ul>
-<h3 id="changed_3">Changed</h3>
+<h3 id="changed_4">Changed</h3>
 <ul>
 <li>Make <code>$token</code> param optional in constructor - Thanks @orloffv issue (<a href="https://github.com/irazasyed/telegram-bot-sdk/issues/1">#1</a>).</li>
 </ul>
 <h2 id="020-2015-07-02"><a href="https://github.com/irazasyed/telegram-bot-sdk/compare/v0.1.0...v0.2.0">0.2.0</a> - 2015-07-02</h2>
-<h3 id="added_5">Added</h3>
+<h3 id="added_6">Added</h3>
 <ul>
 <li><code>getWebhookUpdates()</code> method.</li>
 <li>Documentation in README for <code>getWebhookUpdates()</code> method.</li>
@@ -333,7 +382,7 @@ This project adheres to <a href="http://semver.org/">Semantic Versioning</a>.</p
 <li>Banner Image in README.</li>
 <li>Link back to Telegram Bot API Page.</li>
 </ul>
-<h3 id="changed_4">Changed</h3>
+<h3 id="changed_5">Changed</h3>
 <ul>
 <li>Refactor <code>getUpdates()</code> method.</li>
 <li>Project LICENSE.</li>
@@ -349,7 +398,7 @@ This project adheres to <a href="http://semver.org/">Semantic Versioning</a>.</p
         <footer class="col-md-12">
             <hr>
             
-                <p>Copyright &copy; 2015, <a href="https://github.com/irazasyed">Syed Irfaq R.</a> |  <a href="https://irazasyed.github.io/telegram-bot-sdk/api/">API Docs</a></p>
+                <p>Copyright &copy; 2015-16, <a href="https://github.com/irazasyed">Syed Irfaq R.</a> |  <a href="https://irazasyed.github.io/telegram-bot-sdk/api/">API Docs</a></p>
             
             <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p>
         </footer>
