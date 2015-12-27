@@ -2,7 +2,7 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## [2.0.0][unreleased] - (Unreleased)
+## [2.0.0] - 2015-12-28
 ### Added
 - More doc blocks to the code.
 - New `getFile()` method & File Object - Thanks @jonnywilliamson ([#39](https://github.com/irazasyed/telegram-bot-sdk/pull/39)).
@@ -148,7 +148,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## 0.1.0 - 2015-06-29
 - Initial Release.
 
-[unreleased]: https://github.com/irazasyed/telegram-bot-sdk/compare/v1.0.0...HEAD
+[unreleased]: https://github.com/irazasyed/telegram-bot-sdk/compare/v2.0.0...HEAD
+[2.0.0]: https://github.com/irazasyed/telegram-bot-sdk/compare/v1.0.0...v2.0.0
 [1.0.0]: https://github.com/irazasyed/telegram-bot-sdk/compare/v0.2.6...v1.0.0
 [0.2.6]: https://github.com/irazasyed/telegram-bot-sdk/compare/v0.2.5...v0.2.6
 [0.2.5]: https://github.com/irazasyed/telegram-bot-sdk/compare/v0.2.4...v0.2.5
