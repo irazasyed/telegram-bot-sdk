@@ -63,13 +63,13 @@ class TelegramServiceProvider extends ServiceProvider
                 $config->get('telegram.http_client_handler', null)
             );
 
-            // Register Commands
-            $telegram->addCommands($config->get('telegram.commands', []));
-
             // Check if DI needs to be enabled for Commands
-            if ($config->get('telegram.inject_command_dependencies', false)) {
+            if ($config->get('telegram.resolve_command_dependencies', false)) {
                 $telegram->setContainer($app);
             }
+
+            // Register Commands
+            $telegram->addCommands($config->get('telegram.commands', []));
 
             return $telegram;
         });
