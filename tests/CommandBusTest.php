@@ -4,6 +4,7 @@ namespace Telegram\Bot\Tests;
 
 use Prophecy\Argument;
 use Telegram\Bot\Objects\Update;
+use Telegram\Bot\Commands\Command;
 use Telegram\Bot\Tests\Mocks\Mocker;
 use Telegram\Bot\Commands\CommandBus;
 use Telegram\Bot\Tests\Mocks\MockCommand;
@@ -143,4 +144,18 @@ class CommandBusTest extends \PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf(Update::class, $result);
     }
+
+    /** @test */
+    public function it_checks_a_commands_dependencies_will_be_resolved_if_an_ioc_container_has_been_set()
+    {
+        //Make an API with an IOC container
+        $this->commandBus = new CommandBus(Mocker::createApi(true)->reveal());
+        $this->commandBus->addCommand('\Telegram\Bot\Tests\Mocks\MockCommandWithDependency');
+        $allCommands = $this->commandBus->getCommands();
+
+        $this->assertCount(1, $allCommands);
+        $this->assertArrayHasKey('mycommandwithdependency', $allCommands);
+        $this->assertInstanceOf(Command::class, $allCommands['mycommandwithdependency']);
+    }
+
 }

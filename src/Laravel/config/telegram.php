@@ -43,6 +43,20 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Resolve Injected Dependencies in commands [Optional]
+    |--------------------------------------------------------------------------
+    |
+    | Using Laravel's IoC container, we can easily type hint dependencies in
+    | our command's constructor and have them automatically resolved for us.
+    |
+    | Default: true
+    | Possible Values: (Boolean) "true" OR "false"
+    |
+    */
+    'resolve_command_dependencies' => true,
+
+    /*
+    |--------------------------------------------------------------------------
     | Register Telegram Commands [Optional]
     |--------------------------------------------------------------------------
     |

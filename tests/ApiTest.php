@@ -88,6 +88,14 @@ class ApiTest extends \PHPUnit_Framework_TestCase
     }
 
     /** @test */
+    public function it_checks_an_ioc_container_can_be_set()
+    {
+        $this->api->setContainer(Mocker::createContainer()->reveal());
+
+        $this->assertInstanceOf('\Illuminate\Contracts\Container\Container', $this->api->getContainer());
+    }
+    
+    /** @test */
     public function it_checks_an_update_object_is_returned_when_a_command_is_handled()
     {
         $this->api = Mocker::createMessageResponse('/start');

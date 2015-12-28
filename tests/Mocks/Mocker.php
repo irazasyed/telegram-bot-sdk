@@ -17,14 +17,35 @@ class Mocker
     /**
      * Create a mocked API object with a container.
      *
+     * @param bool $withContainer Should the mocked object have a mocked
+     *                            container added to it?
+     *
      * @return \Prophecy\Prophecy\ObjectProphecy
      */
-    public static function createApi()
+    public static function createApi($withContainer = false)
     {
+        if ($withContainer) {
+            $container = Mocker::createContainer();
+            $container->make(Argument::any())->willReturn(new \stdClass());
+        } else {
+            $container = null;
+        }
+
         $api = (new Prophet())->prophesize(Api::class);
-        $api->hasContainer()->willReturn(true);
+        $api->hasContainer()->willReturn($withContainer);
+        $api->getContainer()->willReturn($container);
 
         return $api;
+    }
+
+    /**
+     * Create an IOC container that can be added to the API
+     *
+     * @return \Prophecy\Prophecy\ObjectProphecy
+     */
+    public static function createContainer()
+    {
+        return (new Prophet())->prophesize(\Illuminate\Contracts\Container\Container::class);
     }
 
     /**
