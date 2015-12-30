@@ -186,6 +186,10 @@ return [
     | This will help you prevent from having to register same set of commands,
     | for each bot over and over again and make it easier to maintain them.
     |
+    | Shared commands are not active by default, You need to use the key name to register them,
+    | individually in a group of commands or in bot commands.
+    | Think of this as a central storage, to register, reuse and maintain them across all bots.
+    |
     */
     'shared_commands' => [
         // 'start' => Acme\Project\Commands\StartCommand::class,
