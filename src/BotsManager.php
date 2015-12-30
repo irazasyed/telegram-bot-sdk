@@ -35,7 +35,7 @@ class BotsManager
     /**
      * The active bot instances.
      *
-     * @var array
+     * @var Api[]
      */
     protected $bots = [];
 
@@ -79,7 +79,7 @@ class BotsManager
      *
      * @param string $name
      *
-     * @return object
+     * @return Api
      */
     public function bot($name = null)
     {
@@ -97,7 +97,7 @@ class BotsManager
      *
      * @param string $name
      *
-     * @return object
+     * @return Api
      */
     public function reconnect($name = null)
     {
@@ -158,7 +158,7 @@ class BotsManager
     /**
      * Return all of the created bots.
      *
-     * @return object[]
+     * @return Api[]
      */
     public function getBots()
     {
