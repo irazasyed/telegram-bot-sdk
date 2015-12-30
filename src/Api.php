@@ -4,7 +4,6 @@ namespace Telegram\Bot;
 
 use Illuminate\Contracts\Container\Container;
 use Telegram\Bot\Commands\CommandBus;
-use Telegram\Bot\Commands\CommandInterface;
 use Telegram\Bot\Exceptions\TelegramSDKException;
 use Telegram\Bot\FileUpload\InputFile;
 use Telegram\Bot\HttpClients\GuzzleHttpClient;
@@ -17,6 +16,8 @@ use Telegram\Bot\Objects\UserProfilePhotos;
 
 /**
  * Class Api.
+ *
+ * @mixin Commands\CommandBus
  */
 class Api
 {
@@ -108,6 +109,7 @@ class Api
         }
 
         $this->client = new TelegramClient($httpClientHandler);
+        $this->commandBus = new CommandBus($this);
     }
 
     /**
@@ -191,69 +193,7 @@ class Api
      */
     public function getCommandBus()
     {
-        if (is_null($this->commandBus)) {
-            return $this->commandBus = new CommandBus($this);
-        }
-
         return $this->commandBus;
-    }
-
-    /**
-     * Add Telegram Command to the Command Bus.
-     *
-     * @param CommandInterface|string $command
-     *
-     * @return CommandBus
-     */
-    public function addCommand($command)
-    {
-        return $this->getCommandBus()->addCommand($command);
-    }
-
-    /**
-     * Add Telegram Commands to the Command Bus.
-     *
-     * @param array $commands
-     *
-     * @return CommandBus
-     */
-    public function addCommands(array $commands)
-    {
-        return $this->getCommandBus()->addCommands($commands);
-    }
-
-    /**
-     * Remove Telegram Command to the Command Bus.
-     *
-     * @param string $name
-     *
-     * @return CommandBus
-     */
-    public function removeCommand($name)
-    {
-        return $this->getCommandBus()->removeCommand($name);
-    }
-
-    /**
-     * Remove Telegram Commands from the Command Bus.
-     *
-     * @param array $names
-     *
-     * @return CommandBus
-     */
-    public function removeCommands(array $names)
-    {
-        return $this->getCommandBus()->removeCommands($names);
-    }
-
-    /**
-     * Returns list of available commands.
-     *
-     * @return Commands\Command[]
-     */
-    public function getCommands()
-    {
-        return $this->getCommandBus()->getCommands();
     }
 
     /**
@@ -1049,6 +989,10 @@ class Api
      */
     public function __call($method, $arguments)
     {
+        if (preg_match('/^\w+Commands?/', $method, $matches)) {
+            return call_user_func_array([$this->getCommandBus(), $matches[0]], $arguments);
+        }
+
         $action = substr($method, 0, 3);
         if ($action === 'get') {
             /* @noinspection PhpUndefinedFunctionInspection */
