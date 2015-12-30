@@ -183,7 +183,7 @@ abstract class Command implements CommandInterface
             $methodName = 'send'.$reply_name;
 
             if (!method_exists($this->telegram, $methodName)) {
-                return 'Method Not Found';
+                throw new \BadMethodCallException("Method [$method] does not exist.");
             }
 
             $chat_id = $this->update->getMessage()->getChat()->getId();
@@ -192,6 +192,6 @@ abstract class Command implements CommandInterface
             return call_user_func_array([$this->telegram, $methodName], [$params]);
         }
 
-        return 'Method Not Found';
+        throw new \BadMethodCallException("Method [$method] does not exist.");
     }
 }
