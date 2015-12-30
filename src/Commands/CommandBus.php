@@ -3,8 +3,8 @@
 namespace Telegram\Bot\Commands;
 
 use Telegram\Bot\Api;
-use Telegram\Bot\Exceptions\TelegramSDKException;
 use Telegram\Bot\Objects\Update;
+use Telegram\Bot\Exceptions\TelegramSDKException;
 
 /**
  * Class CommandBus.
@@ -138,29 +138,6 @@ class CommandBus
     }
 
     /**
-     * Handles Inbound Messages and Executes Appropriate Command.
-     *
-     * @param $message
-     * @param $update
-     *
-     * @throws TelegramSDKException
-     *
-     * @return Update
-     */
-    public function handler($message, Update $update)
-    {
-        $match = $this->parseCommand($message);
-        if (!empty($match)) {
-            $command = strtolower($match[1]); //All commands must be lowercase.
-//            $bot = (!empty($match[2])) ? $match[2] : '';
-            $arguments = $match[3];
-            $this->execute($command, $arguments, $update);
-        }
-
-        return $update;
-    }
-
-    /**
      * Parse a Command for a Match.
      *
      * @param $text
@@ -181,6 +158,30 @@ class CommandBus
     }
 
     /**
+     * Handles Inbound Messages and Executes Appropriate Command.
+     *
+     * @param $message
+     * @param $update
+     *
+     * @throws TelegramSDKException
+     *
+     * @return Update
+     */
+    protected function handler($message, Update $update)
+    {
+        $match = $this->parseCommand($message);
+        if (!empty($match)) {
+            $command = strtolower($match[1]); //All commands must be lowercase.
+//            $bot = (!empty($match[2])) ? $match[2] : '';
+            $arguments = $match[3];
+
+            $this->execute($command, $arguments, $update);
+        }
+
+        return $update;
+    }
+
+    /**
      * Execute the command.
      *
      * @param $name
@@ -189,7 +190,7 @@ class CommandBus
      *
      * @return mixed
      */
-    public function execute($name, $arguments, $message)
+    protected function execute($name, $arguments, $message)
     {
         if (array_key_exists($name, $this->commands)) {
             return $this->commands[$name]->make($this->telegram, $arguments, $message);
@@ -235,5 +236,23 @@ class CommandBus
         $classReflector = new \ReflectionClass($commandClass);
 
         return $classReflector->newInstanceArgs($dependencies);
+    }
+
+    /**
+     * Handle calls to missing methods.
+     *
+     * @param  string  $method
+     * @param  array   $parameters
+     * @return mixed
+     *
+     * @throws \BadMethodCallException
+     */
+    public function __call($method, $parameters)
+    {
+        if(method_exists($this, $method)) {
+            return call_user_func_array([$this, $method], $parameters);
+        }
+
+        throw new \BadMethodCallException("Method [$method] does not exist.");
     }
 }
