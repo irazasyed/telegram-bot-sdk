@@ -21,7 +21,7 @@ return [
     | Here are each of the telegram bots config.
     |
     | Supported Params:
-    | - name: Your Telegram Bot's Username.
+    | - username: Your Telegram Bot's Username.
     |         Example: (string) 'BotFather'.
     |
     | - token: Your Telegram Bot's Access Token.
@@ -41,7 +41,7 @@ return [
     */
     'bots' => [
         'common' => [
-            'name'  => 'MyTelegramBot',
+            'username'  => 'MyTelegramBot',
             'token' => env('TELEGRAM_BOT_TOKEN', 'YOUR-BOT-TOKEN'),
             'commands' => [
 //                Acme\Project\Commands\MyTelegramBot\BotCommand::class
