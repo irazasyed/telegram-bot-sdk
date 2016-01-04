@@ -1081,4 +1081,37 @@ class Api
 
         return $this;
     }
+
+    /**
+     * Use this method to send answers to an inline query.
+     *
+     * <code>
+     * $params = [
+     *   'inline_query_id'  => '',
+     *   'results'          => [],
+     *   'cache_time'       => 0,
+     *   'is_personal'      => false,
+     *   'next_offset'      => '',
+     * ];
+     * </code>
+     *
+     * @link https://core.telegram.org/bots/api#answerinlinequery
+     *
+     * @param array     $params
+     *
+     * @var string      $params ['inline_query_id']
+     * @var array       $params ['results']
+     * @var int|null    $params ['cache_time']
+     * @var bool|null   $params ['is_personal']
+     * @var string|null $params ['next_offset']
+     *
+     * @return bool
+     */
+    public function answerInlineQuery(array $params = [])
+    {
+        if (is_array($params['results'])) {
+            $params['results'] = json_encode($params['results']);
+        }
+        return $this->post('answerInlineQuery', $params);
+    }
 }
