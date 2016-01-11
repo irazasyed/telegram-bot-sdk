@@ -50,7 +50,7 @@ See License section for more details.
 
 This project is released under the [BSD 3-Clause](https://github.com/irazasyed/telegram-bot-sdk/blob/master/LICENSE) License.
 
-© 2015 [Syed Irfaq R.](https://github.com/irazasyed), All rights reserved.
+© 2015-16 [Syed Irfaq R.](https://github.com/irazasyed), All rights reserved.
 
 [docs]: https://irazasyed.github.io/telegram-bot-sdk/
 [bot-form]: http://goo.gl/forms/YQhUhxSsyI
