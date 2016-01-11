@@ -5,7 +5,7 @@ namespace Telegram\Bot\Laravel;
 use Telegram\Bot\Api;
 use Telegram\Bot\BotsManager;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\Container\Container as Application;
 use Laravel\Lumen\Application as LumenApplication;
 use Illuminate\Foundation\Application as LaravelApplication;
 
@@ -34,7 +34,7 @@ class TelegramServiceProvider extends ServiceProvider
     /**
      * Setup the config.
      *
-     * @param \Illuminate\Contracts\Foundation\Application $app
+     * @param \Illuminate\Contracts\Container\Container $app
      *
      * @return void
      */
@@ -65,7 +65,7 @@ class TelegramServiceProvider extends ServiceProvider
     /**
      * Register the manager class.
      *
-     * @param \Illuminate\Contracts\Foundation\Application $app
+     * @param \Illuminate\Contracts\Container\Container $app
      *
      * @return void
      */
@@ -83,7 +83,7 @@ class TelegramServiceProvider extends ServiceProvider
     /**
      * Register the bindings.
      *
-     * @param \Illuminate\Contracts\Foundation\Application $app
+     * @param \Illuminate\Contracts\Container\Container $app
      *
      * @return void
      */
