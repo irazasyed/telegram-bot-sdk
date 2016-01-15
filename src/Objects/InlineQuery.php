@@ -6,8 +6,11 @@ namespace Telegram\Bot\Objects;
  * Class InlineQuery.
  *
  *
- * @method int              getMessageId()              Unique message identifier.
- * @method User             getFrom()                   (Optional). Sender, can be empty for messages sent to channels.
+ * @method int          getId()         Unique identifier for this query.
+ * @method User         getFrom()       Sender.
+ * @method string       getQuery()      Text of the query.
+ * @method string       getOffset()     Offset of the results to be returned.
+ * @link https://core.telegram.org/bots/api#inlinequery
  */
 class InlineQuery extends BaseObject
 {

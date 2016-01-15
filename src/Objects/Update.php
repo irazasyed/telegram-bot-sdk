@@ -6,9 +6,11 @@ namespace Telegram\Bot\Objects;
  * Class Update.
  *
  *
- * @method int          getUpdateId()       The update's unique identifier. Update identifiers start from a certain positive number and increase sequentially.
- * @method Message      getMessage()        (Optional). New incoming message of any kind - text, photo, sticker, etc.
- * @method InlineQuery  getInlineQuery()    (Optional). New incoming inline query.
+ * @method int                  getUpdateId()               The update's unique identifier. Update identifiers start from a certain positive number and increase sequentially.
+ * @method Message              getMessage()                (Optional). New incoming message of any kind - text, photo, sticker, etc.
+ * @method InlineQuery          getInlineQuery()            (Optional). New incoming inline query.
+ * @method ChosenInlineResult   getChosenInlineResult()     (Optional). A result of an inline query that was chosen by the user and sent to their chat partner.
+ * @link https://core.telegram.org/bots/api#update
  */
 class Update extends BaseObject
 {
@@ -18,8 +20,9 @@ class Update extends BaseObject
     public function relations()
     {
         return [
-            'message'      => Message::class,
-            'inline_query' => InlineQuery::class,
+            'message'              => Message::class,
+            'inline_query'         => InlineQuery::class,
+            'chosen_inline_result' => ChosenInlineResult::class,
         ];
     }
 
