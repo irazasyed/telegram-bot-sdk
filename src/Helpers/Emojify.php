@@ -14,11 +14,17 @@ class Emojify
     const EMOJI_MAP_FILE = '/../Storage/emoji.json';
 
     /**
-    * The object mapping the emoji to words.
+    * The array mapping words to emoji.
     *
-    * @var object
+    * @var array
     */
     protected $emojiMap;
+    
+    /**
+     * The array mapping emoji back to words.
+     * @var [type]
+     */
+    protected $wordMap;
     
     public function __construct($emojiMapFile = null)
     {

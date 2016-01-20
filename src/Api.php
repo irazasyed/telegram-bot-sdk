@@ -80,7 +80,7 @@ class Api
     
     /**
      * Emojify instance
-     * @var Telegram\Helpers\Emojify
+     * @var \Telegram\Helpers\Emojify
      */
     protected $emojify;
 
