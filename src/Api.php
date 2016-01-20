@@ -13,6 +13,9 @@ use Telegram\Bot\Objects\Message;
 use Telegram\Bot\Objects\Update;
 use Telegram\Bot\Objects\User;
 use Telegram\Bot\Objects\UserProfilePhotos;
+use Telegram\Bot\Helpers\Emojify;
+
+use Telegram\Bot\Api;
 
 /**
  * Class Api.
@@ -74,6 +77,12 @@ class Api
      * @var int
      */
     protected $connectTimeOut = 10;
+    
+    /**
+     * Emojify instance
+     * @var Telegram\Helpers\Emojify
+     */
+    protected $emojify;
 
     /**
      * Instantiates a new Telegram super-class object.
@@ -107,7 +116,7 @@ class Api
         if (isset($async)) {
             $this->setAsyncRequest($async);
         }
-
+        $this->emojify = new Emojify();
         $this->client = new TelegramClient($httpClientHandler);
         $this->commandBus = new CommandBus($this);
     }
@@ -240,6 +249,7 @@ class Api
      */
     public function sendMessage(array $params)
     {
+        $params['text'] = $this->emojify->toEmoji($params['text']);
         $response = $this->post('sendMessage', $params);
 
         return new Message($response->getDecodedBody());
