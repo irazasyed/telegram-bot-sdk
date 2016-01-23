@@ -25,16 +25,16 @@ class Botan
      *
      * @var string
      */
-    protected $template_uri =
-        'https://api.botan.io/track?token=#TOKEN&uid=#UID&name=#NAME&src=php-telegram-bot';
+    protected $template_uri
+        = 'https://api.botan.io/track?token=#TOKEN&uid=#UID&name=#NAME&src=php-telegram-bot';
 
     /**
      * Shortener url
      *
      * @var string Url
      */
-    protected $shortener_uri =
-        'https://api.botan.io/s/?token=#TOKEN&user_ids=#UID&url=#URL';
+    protected $shortener_uri
+        = 'https://api.botan.io/s/?token=#TOKEN&user_ids=#UID&url=#URL';
 
     /**
      * Appmetrica token
@@ -49,7 +49,7 @@ class Botan
      * @param string $token Botan account token.
      * How to get: https://github.com/botanio/sdk#creating-an-account
      */
-    function __construct($token)
+    public function __construct($token)
     {
         if (empty($token) || !is_string($token)) {
             throw new \Exception('Token should be a string', 2);
@@ -112,7 +112,7 @@ class Botan
      *
      * @return int http code
      */
-    function getHTTPResponseCode($headers)
+    protected function getHTTPResponseCode($headers)
     {
         $matches = [];
         $res = preg_match_all(
@@ -166,6 +166,4 @@ class Botan
 
         return $responseData;
     }
-
 }
-

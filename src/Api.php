@@ -1131,7 +1131,8 @@ class Api
      *
      * @return bool
      */
-    public function enableBotanAnalytics($botan_token) {
+    public function enableBotanAnalytics($botan_token)
+    {
         try {
             $this->botan = new Botan($botan_token);
         } catch (\Exception $e) {
@@ -1140,7 +1141,8 @@ class Api
         return true;
     }
 
-    protected function trySendStats($data, $event_name = 'User event') {
+    protected function trySendStats($data, $event_name = 'User event')
+    {
         if ($this->botan) {
             try {
                 $result = $this->botan->track($data, $event_name);
