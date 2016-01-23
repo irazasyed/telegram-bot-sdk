@@ -16,34 +16,57 @@ namespace Telegram\Bot\Helpers;
  *     $botan = new YourProject\Botan($this->token);
  *     $botan->track($messageData, 'Start');
  * }
- *
  */
-
-class Botan {
+class Botan
+{
 
     /**
-     * @var string Tracker url
+     * Tracker url
+     *
+     * @var string
      */
-    protected $template_uri = 'https://api.botan.io/track?token=#TOKEN&uid=#UID&name=#NAME&src=php-telegram-bot';
+    protected $template_uri =
+        'https://api.botan.io/track?token=#TOKEN&uid=#UID&name=#NAME&src=php-telegram-bot';
 
     /**
-     * @var string Url shortener url
+     * Shortener url
+     *
+     * @var string Url
      */
-    protected $shortener_uri = 'https://api.botan.io/s/?token=#TOKEN&user_ids=#UID&url=#URL';
+    protected $shortener_uri =
+        'https://api.botan.io/s/?token=#TOKEN&user_ids=#UID&url=#URL';
 
     /**
+     * Appmetrica token
+     *
      * @var string Yandex AppMetrica application api_key
      */
     protected $token;
 
-    function __construct($token) {
+    /**
+     * Create new botan sender instance
+     *
+     * @param string $token Botan account token.
+     * How to get: https://github.com/botanio/sdk#creating-an-account
+     */
+    function __construct($token)
+    {
         if (empty($token) || !is_string($token)) {
             throw new \Exception('Token should be a string', 2);
         }
         $this->token = $token;
     }
 
-    public function track($message, $event_name = 'Message') {
+    /**
+     * Send event to botan analytics
+     *
+     * @param array  $message    telegram message array
+     * @param string $event_name optional name of event
+     *
+     * @return boolean success
+     */
+    public function track($message, $event_name = 'Message')
+    {
         if (!array_key_exists('from', $message)) {
             throw new \Exception('Wrong message', 1);
         }
@@ -63,7 +86,16 @@ class Botan {
         return true;
     }
 
-    public function shortenUrl($url, $user_id) {
+    /**
+     * Shorten url to aqcuire user data
+     *
+     * @param string $url     original url
+     * @param int    $user_id telegram user id
+     *
+     * @return string new url
+     */
+    public function shortenUrl($url, $user_id)
+    {
         $request_url = str_replace(
             ['#TOKEN', '#UID', '#URL'],
             [$this->token, $user_id, urlencode($url)],
@@ -73,16 +105,38 @@ class Botan {
         return $response === false ? $url : $response;
     }
 
-    function getHTTPResponseCode($headers){
+    /**
+     * Get HTTP code
+     *
+     * @param array $headers response headers
+     *
+     * @return int http code
+     */
+    function getHTTPResponseCode($headers)
+    {
         $matches = [];
-        $res = preg_match_all('/[\w]+\/\d+\.\d+ (\d+) [\w]+/', $headers[0], $matches);
-        if ($res < 1)
+        $res = preg_match_all(
+            '/[\w]+\/\d+\.\d+ (\d+) [\w]+/',
+            $headers[0],
+            $matches
+        );
+        if ($res < 1) {
             throw new \Exception('Incorrect response headers');
+        }
         $code = intval($matches[1][0]);
         return $code;
     }
 
-    protected function request($url, $body) {
+    /**
+     * Request wrapper
+     *
+     * @param string $url  url
+     * @param array  $body request body
+     *
+     * @return array
+     */
+    protected function request($url, $body)
+    {
         $options = [
             'http' => [
                 'header'  => 'Content-Type: application/json',
@@ -93,16 +147,22 @@ class Botan {
 
         $context = stream_context_create($options);
         $response = file_get_contents($url, false, $context);
-        if ($response === false)
+        if ($response === false) {
             throw new \Exception('Error Processing Request', 1);
+        }
 
         $HTTPCode = $this->getHTTPResponseCode($http_response_header);
-        if ($HTTPCode !== 200)
-            throw new \Exception("Bad HTTP responce code: $HTTPCode".print_r($http_response_header, true));
+        if ($HTTPCode !== 200) {
+            throw new \Exception(
+                "Bad HTTP responce code: $HTTPCode"
+                .print_r($http_response_header, true)
+            );
+        }
 
         $responseData = json_decode($response, true);
-        if ($responseData === false)
+        if ($responseData === false) {
             throw new \Exception('JSON decode error');
+        }
 
         return $responseData;
     }
