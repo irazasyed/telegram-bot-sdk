@@ -10,6 +10,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Command Grouping Support.
 - Global Commands Support.
 - `BotsManager`
+- Botan.io analytics integration.
 
 ### Fixed
 - Dependency Injection in Command's Constructors - Thanks @jonnywilliamson ([#91](https://github.com/irazasyed/telegram-bot-sdk/pull/91)).
