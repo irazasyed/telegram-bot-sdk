@@ -3,7 +3,7 @@
 namespace Telegram\Bot;
 
 use Illuminate\Contracts\Config\Repository;
-use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\Container\Container;
 use InvalidArgumentException;
 
 /**
@@ -23,7 +23,7 @@ class BotsManager
     /**
      * The app instance.
      *
-     * @var \Illuminate\Contracts\Foundation\Application
+     * @var \Illuminate\Contracts\Container\Container
      */
     protected $app;
 
@@ -43,9 +43,9 @@ class BotsManager
      * TelegramManager constructor.
      *
      * @param Repository  $config
-     * @param Application $app
+     * @param Container   $app
      */
-    public function __construct(Repository $config, Application $app)
+    public function __construct(Repository $config, Container $app)
     {
         $this->config = $config;
         $this->app = $app;
