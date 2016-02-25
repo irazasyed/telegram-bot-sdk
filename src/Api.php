@@ -220,6 +220,7 @@ class Api
      *   'text'                     => '',
      *   'parse_mode'               => '',
      *   'disable_web_page_preview' => '',
+     *   'disable_notification'     => '',
      *   'reply_to_message_id'      => '',
      *   'reply_markup'             => '',
      * ];
@@ -233,6 +234,7 @@ class Api
      * @var string     $params ['text']
      * @var string     $params ['parse_mode']
      * @var bool       $params ['disable_web_page_preview']
+     * @var bool       $params ['disable_notification']
      * @var int        $params ['reply_to_message_id']
      * @var string     $params ['reply_markup']
      *
@@ -250,9 +252,10 @@ class Api
      *
      * <code>
      * $params = [
-     *   'chat_id'      => '',
-     *   'from_chat_id' => '',
-     *   'message_id'   => '',
+     *   'chat_id'              => '',
+     *   'from_chat_id'         => '',
+     *   'disable_notification' => '',
+     *   'message_id'           => '',
      * ];
      * </code>
      *
@@ -262,6 +265,7 @@ class Api
      *
      * @var int|string $params ['chat_id']
      * @var int        $params ['from_chat_id']
+     * @var bool       $params ['disable_notification']
      * @var int        $params ['message_id']
      *
      * @return Message
@@ -278,11 +282,12 @@ class Api
      *
      * <code>
      * $params = [
-     *   'chat_id'             => '',
-     *   'photo'               => '',
-     *   'caption'             => '',
-     *   'reply_to_message_id' => '',
-     *   'reply_markup'        => '',
+     *   'chat_id'              => '',
+     *   'photo'                => '',
+     *   'caption'              => '',
+     *   'disable_notification' => '',
+     *   'reply_to_message_id'  => '',
+     *   'reply_markup'         => '',
      * ];
      * </code>
      *
@@ -293,6 +298,7 @@ class Api
      * @var int|string $params ['chat_id']
      * @var string     $params ['photo']
      * @var string     $params ['caption']
+     * @var bool       $params ['disable_notification']
      * @var int        $params ['reply_to_message_id']
      * @var string     $params ['reply_markup']
      *
@@ -308,13 +314,14 @@ class Api
      *
      * <code>
      * $params = [
-     *   'chat_id'             => '',
-     *   'audio'               => '',
-     *   'duration'            => '',
-     *   'performer'           => '',
-     *   'title'               => '',
-     *   'reply_to_message_id' => '',
-     *   'reply_markup'        => '',
+     *   'chat_id'              => '',
+     *   'audio'                => '',
+     *   'duration'             => '',
+     *   'performer'            => '',
+     *   'title'                => '',
+     *   'disable_notification' => '',
+     *   'reply_to_message_id'  => '',
+     *   'reply_markup'         => '',
      * ];
      * </code>
      *
@@ -327,6 +334,7 @@ class Api
      * @var int        $params ['duration']
      * @var string     $params ['performer']
      * @var string     $params ['title']
+     * @var bool       $params ['disable_notification']
      * @var int        $params ['reply_to_message_id']
      * @var string     $params ['reply_markup']
      *
@@ -342,10 +350,12 @@ class Api
      *
      * <code>
      * $params = [
-     *   'chat_id'             => '',
-     *   'document'            => '',
-     *   'reply_to_message_id' => '',
-     *   'reply_markup'        => '',
+     *   'chat_id'              => '',
+     *   'document'             => '',
+     *   'caption'              => '',
+     *   'disable_notification' => '',
+     *   'reply_to_message_id'  => '',
+     *   'reply_markup'         => '',
      * ];
      * </code>
      *
@@ -355,6 +365,8 @@ class Api
      *
      * @var int|string $params ['chat_id']
      * @var string     $params ['document']
+     * @var string     $params ['caption']
+     * @var bool       $params ['disable_notification']
      * @var int        $params ['reply_to_message_id']
      * @var string     $params ['reply_markup']
      *
@@ -370,10 +382,11 @@ class Api
      *
      * <code>
      * $params = [
-     *   'chat_id' => '',
-     *   'sticker' => '',
-     *   'reply_to_message_id' => '',
-     *   'reply_markup' => '',
+     *   'chat_id'              => '',
+     *   'sticker'              => '',
+     *   'disable_notification' => '',
+     *   'reply_to_message_id'  => '',
+     *   'reply_markup'         => '',
      * ];
      * </code>
      *
@@ -383,6 +396,7 @@ class Api
      *
      * @var int|string $params ['chat_id']
      * @var string     $params ['sticker']
+     * @var bool       $params ['disable_notification']
      * @var int        $params ['reply_to_message_id']
      * @var string     $params ['reply_markup']
      *
@@ -404,12 +418,15 @@ class Api
      *
      * <code>
      * $params = [
-     *   'chat_id'             => '',
-     *   'video'               => '',
-     *   'duration'            => '',
-     *   'caption'             => '',
-     *   'reply_to_message_id' => '',
-     *   'reply_markup'        => '',
+     *   'chat_id'              => '',
+     *   'video'                => '',
+     *   'duration'             => '',
+     *   'width'                => '',
+     *   'height'               => '',
+     *   'caption'              => '',
+     *   'disable_notification' => '',
+     *   'reply_to_message_id'  => '',
+     *   'reply_markup'         => '',
      * ];
      * </code>
      *
@@ -421,7 +438,10 @@ class Api
      * @var int|string $params ['chat_id']
      * @var string     $params ['video']
      * @var int        $params ['duration']
+     * @var int        $params ['width']
+     * @var int        $params ['height']
      * @var string     $params ['caption']
+     * @var bool       $params ['disable_notification']
      * @var int        $params ['reply_to_message_id']
      * @var string     $params ['reply_markup']
      *
@@ -437,11 +457,12 @@ class Api
      *
      * <code>
      * $params = [
-     *   'chat_id'             => '',
-     *   'voice'               => '',
-     *   'duration'            => '',
-     *   'reply_to_message_id' => '',
-     *   'reply_markup'        => '',
+     *   'chat_id'              => '',
+     *   'voice'                => '',
+     *   'duration'             => '',
+     *   'disable_notification' => '',
+     *   'reply_to_message_id'  => '',
+     *   'reply_markup'         => '',
      * ];
      * </code>
      *
@@ -452,6 +473,7 @@ class Api
      * @var int|string $params ['chat_id']
      * @var string     $params ['voice']
      * @var int        $params ['duration']
+     * @var bool       $params ['disable_notification']
      * @var int        $params ['reply_to_message_id']
      * @var string     $params ['reply_markup']
      *
@@ -467,11 +489,12 @@ class Api
      *
      * <code>
      * $params = [
-     *   'chat_id'             => '',
-     *   'latitude'            => '',
-     *   'longitude'           => '',
-     *   'reply_to_message_id' => '',
-     *   'reply_markup'        => '',
+     *   'chat_id'              => '',
+     *   'latitude'             => '',
+     *   'longitude'            => '',
+     *   'disable_notification' => '',
+     *   'reply_to_message_id'  => '',
+     *   'reply_markup'         => '',
      * ];
      * </code>
      *
@@ -482,6 +505,7 @@ class Api
      * @var int|string $params ['chat_id']
      * @var float      $params ['latitude']
      * @var float      $params ['longitude']
+     * @var bool       $params ['disable_notification']
      * @var int        $params ['reply_to_message_id']
      * @var string     $params ['reply_markup']
      *
