@@ -20,7 +20,7 @@ namespace Telegram\Bot\Objects;
  * @method Sticker          getSticker()                (Optional). Message is a sticker, information about the sticker.
  * @method Video            getVideo()                  (Optional). Message is a video, information about the video.
  * @method Voice            getVoice()                  (Optional). Message is a voice message, information about the file.
- * @method string           getCaption()                (Optional). Caption for the photo or video contact.
+ * @method string           getCaption()                (Optional). Caption for the document, photo or video contact.
  * @method Contact          getContact()                (Optional). Message is a shared contact, information about the contact.
  * @method Location         getLocation()               (Optional). Message is a shared location, information about the location.
  * @method User             getNewChatParticipant()     (Optional). A new member was added to the group, information about them (this member may be the bot itself).
