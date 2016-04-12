@@ -519,6 +519,82 @@ class Api
     }
 
     /**
+     * Send information about a venue.
+     *
+     * <code>
+     * $params = [
+     *   'chat_id'              => '',
+     *   'latitude'             => '',
+     *   'longitude'            => '',
+     *   'title'                => '',
+     *   'address'              => '',
+     *   'foursquare_id'        => '',
+     *   'disable_notification' => '',
+     *   'reply_to_message_id'  => '',
+     *   'reply_markup'         => '',
+     * ];
+     * </code>
+     *
+     * @link https://core.telegram.org/bots/api#sendvenue
+     *
+     * @param array    $params
+     *
+     * @var int|string $params ['chat_id']
+     * @var float      $params ['latitude']
+     * @var float      $params ['longitude']
+     * @var string     $params ['title']
+     * @var string     $params ['address']
+     * @var string     $params ['foursquare_id']
+     * @var bool       $params ['disable_notification']
+     * @var int        $params ['reply_to_message_id']
+     * @var string     $params ['reply_markup']
+     *
+     * @return Message
+     */
+    public function sendVenue(array $params)
+    {
+        $response = $this->post('sendVenue', $params);
+
+        return new Message($response->getDecodedBody());
+    }
+
+    /**
+     * Send phone contacts.
+     *
+     * <code>
+     * $params = [
+     *   'chat_id'              => '',
+     *   'phone_number'         => '',
+     *   'first_name'           => '',
+     *   'last_name'            => '',
+     *   'disable_notification' => '',
+     *   'reply_to_message_id'  => '',
+     *   'reply_markup'         => '',
+     * ];
+     * </code>
+     *
+     * @link https://core.telegram.org/bots/api#sendcontact
+     *
+     * @param array    $params
+     *
+     * @var int|string $params ['chat_id']
+     * @var string     $params ['phone_number']
+     * @var string     $params ['first_name']
+     * @var string     $params ['last_name']
+     * @var bool       $params ['disable_notification']
+     * @var int        $params ['reply_to_message_id']
+     * @var string     $params ['reply_markup']
+     *
+     * @return Message
+     */
+    public function sendContact(array $params)
+    {
+        $response = $this->post('sendContact', $params);
+
+        return new Message($response->getDecodedBody());
+    }
+
+    /**
      * Broadcast a Chat Action.
      *
      * <code>
@@ -613,6 +689,63 @@ class Api
         $response = $this->post('getFile', $params);
 
         return new File($response->getDecodedBody());
+    }
+
+    /**
+     * Kick a user from a group or a supergroup.
+     *
+     * In the case of supergroups, the user will not be able to return to the group on their own using
+     * invite links etc., unless unbanned first.
+     *
+     * The bot must be an administrator in the group for this to work.
+     *
+     * <code>
+     * $params = [
+     *   'chat_id'              => '',
+     *   'user_id'              => '',
+     * ];
+     * </code>
+     *
+     * @link https://core.telegram.org/bots/api#kickchatmember
+     *
+     * @param array    $params
+     *
+     * @var int|string $params ['chat_id']
+     * @var int        $params ['user_id']
+     *
+     * @return TelegramResponse
+     */
+    public function kickChatMember(array $params)
+    {
+        return $this->post('kickChatMember', $params);
+    }
+
+    /**
+     * Unban a previously kicked user in a supergroup.
+     *
+     * The user will not return to the group automatically, but will be able to join via link, etc.
+     *
+     * The bot must be an administrator in the group for this to work.
+     *
+     * <code>
+     * $params = [
+     *   'chat_id'              => '',
+     *   'user_id'              => '',
+     * ];
+     * </code>
+     *
+     * @link https://core.telegram.org/bots/api#unbanchatmember
+     *
+     * @param array    $params
+     *
+     * @var int|string $params ['chat_id']
+     * @var int        $params ['user_id']
+     *
+     * @return TelegramResponse
+     */
+    public function unbanChatMember(array $params)
+    {
+        return $this->post('unbanChatMember', $params);
     }
 
     /**
@@ -872,7 +1005,29 @@ class Api
             $object = $object->getMessage();
         }
 
-        $types = ['audio', 'document', 'photo', 'sticker', 'video', 'voice', 'contact', 'location', 'text'];
+        $types = [
+            'text',
+            'audio',
+            'document',
+            'photo',
+            'sticker',
+            'video',
+            'voice',
+            'contact',
+            'location',
+            'venue',
+            'new_chat_member',
+            'left_chat_member',
+            'new_chat_title',
+            'new_chat_photo',
+            'delete_chat_photo',
+            'group_chat_created',
+            'supergroup_chat_created',
+            'channel_chat_created',
+            'migrate_to_chat_id',
+            'migrate_from_chat_id',
+            'pinned_message',
+        ];
 
         return $object->keys()
             ->intersect($types)
@@ -1136,6 +1291,7 @@ class Api
         if (is_array($params['results'])) {
             $params['results'] = json_encode($params['results']);
         }
+
         return $this->post('answerInlineQuery', $params);
     }
 }
