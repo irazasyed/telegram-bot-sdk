@@ -1006,6 +1006,7 @@ class Api
         }
 
         $types = [
+            'text',
             'audio',
             'document',
             'photo',
@@ -1015,10 +1016,17 @@ class Api
             'contact',
             'location',
             'venue',
-            'text',
             'new_chat_member',
             'left_chat_member',
+            'new_chat_title',
+            'new_chat_photo',
+            'delete_chat_photo',
+            'group_chat_created',
+            'supergroup_chat_created',
+            'channel_chat_created',
             'migrate_to_chat_id',
+            'migrate_from_chat_id',
+            'pinned_message',
         ];
 
         return $object->keys()
