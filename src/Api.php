@@ -1165,7 +1165,7 @@ class Api
      * @param $method
      * @param $arguments
      *
-     * @return bool|TelegramResponse|array
+     * @return bool|TelegramResponse|UnknownObject
      */
     public function __call($method, $arguments)
     {
