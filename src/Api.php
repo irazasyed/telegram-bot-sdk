@@ -749,6 +749,132 @@ class Api
     }
 
     /**
+     * Send answers to callback queries sent from inline keyboards.
+     *
+     * he answer will be displayed to the user as a notification at the top of the chat screen or as an alert.
+     *
+     * <code>
+     * $params = [
+     *   'callback_query_id'  => '',
+     *   'text'               => '',
+     *   'show_alert'         => '',
+     * ];
+     * </code>
+     *
+     * @link https://core.telegram.org/bots/api#answerCallbackQuery
+     *
+     * @param array $params
+     *
+     * @var string  $params ['callback_query_id']
+     * @var string  $params ['text']
+     * @var bool    $params ['show_alert']
+     *
+     * @return TelegramResponse
+     */
+    public function answerCallbackQuery(array $params)
+    {
+        return $this->post('answerCallbackQuery', $params);
+    }
+
+    /**
+     * Edit text messages sent by the bot or via the bot (for inline bots).
+     *
+     * <code>
+     * $params = [
+     *   'chat_id'                  => '',
+     *   'message_id'               => '',
+     *   'inline_message_id'        => '',
+     *   'text'                     => '',
+     *   'parse_mode'               => '',
+     *   'disable_web_page_preview' => '',
+     *   'reply_markup'             => '',
+     * ];
+     * </code>
+     *
+     * @link https://core.telegram.org/bots/api#editMessageText
+     *
+     * @param array $params
+     *
+     * @var int|string $params ['chat_id']
+     * @var int        $params ['message_id']
+     * @var string     $params ['inline_message_id']
+     * @var string     $params ['text']
+     * @var string     $params ['parse_mode']
+     * @var bool       $params ['disable_web_page_preview']
+     * @var string     $params ['reply_markup']
+     *
+     * @return TelegramResponse
+     */
+    public function editMessageText(array $params)
+    {
+        $response = $this->post('editMessageText', $params);
+
+        return new Message($response->getDecodedBody());
+    }
+
+    /**
+     * Edit captions of messages sent by the bot or via the bot (for inline bots).
+     *
+     * <code>
+     * $params = [
+     *   'chat_id'                  => '',
+     *   'message_id'               => '',
+     *   'inline_message_id'        => '',
+     *   'caption'                  => '',
+     *   'reply_markup'             => '',
+     * ];
+     * </code>
+     *
+     * @link https://core.telegram.org/bots/api#editMessageCaption
+     *
+     * @param array $params
+     *
+     * @var int|string $params ['chat_id']
+     * @var int        $params ['message_id']
+     * @var string     $params ['inline_message_id']
+     * @var string     $params ['caption']
+     * @var string     $params ['reply_markup']
+     *
+     * @return TelegramResponse
+     */
+    public function editMessageCaption(array $params)
+    {
+        $response = $this->post('editMessageCaption', $params);
+
+        return new Message($response->getDecodedBody());
+    }
+
+    /**
+     * Edit only the reply markup of messages sent by the bot or via the bot (for inline bots).
+     *
+     * <code>
+     * $params = [
+     *   'chat_id'                  => '',
+     *   'message_id'               => '',
+     *   'inline_message_id'        => '',
+     *   'reply_markup'             => '',
+     * ];
+     * </code>
+     *
+     * @link https://core.telegram.org/bots/api#editMessageReplyMarkup
+     *
+     * @param array $params
+     *
+     * @var int|string $params ['chat_id']
+     * @var int        $params ['message_id']
+     * @var string     $params ['inline_message_id']
+     * @var string     $params ['reply_markup']
+     *
+     * @return TelegramResponse
+     */
+    public function editMessageReplyMarkup(array $params)
+    {
+        $response = $this->post('editMessageReplyMarkup', $params);
+
+        return new Message($response->getDecodedBody());
+    }
+
+    /**
      * Set a Webhook to receive incoming updates via an outgoing webhook.
      *
      * <code>
@@ -1266,11 +1392,13 @@ class Api
      *
      * <code>
      * $params = [
-     *   'inline_query_id'  => '',
-     *   'results'          => [],
-     *   'cache_time'       => 0,
-     *   'is_personal'      => false,
-     *   'next_offset'      => '',
+     *   'inline_query_id'      => '',
+     *   'results'              => [],
+     *   'cache_time'           => 0,
+     *   'is_personal'          => false,
+     *   'next_offset'          => '',
+     *   'switch_pm_text'       => '',
+     *   'switch_pm_parameter'  => '',
      * ];
      * </code>
      *
@@ -1283,6 +1411,8 @@ class Api
      * @var int|null    $params ['cache_time']
      * @var bool|null   $params ['is_personal']
      * @var string|null $params ['next_offset']
+     * @var string|null $params ['switch_pm_text']
+     * @var string|null $params ['switch_pm_parameter']
      *
      * @return bool
      */
