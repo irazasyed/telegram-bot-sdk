@@ -10,6 +10,7 @@ use Telegram\Bot\HttpClients\GuzzleHttpClient;
 use Telegram\Bot\HttpClients\HttpClientInterface;
 use Telegram\Bot\Objects\File;
 use Telegram\Bot\Objects\Message;
+use Telegram\Bot\Objects\UnknownObject;
 use Telegram\Bot\Objects\Update;
 use Telegram\Bot\Objects\User;
 use Telegram\Bot\Objects\UserProfilePhotos;
@@ -1290,7 +1291,7 @@ class Api
      * @param $method
      * @param $arguments
      *
-     * @return bool|TelegramResponse
+     * @return bool|TelegramResponse|UnknownObject
      */
     public function __call($method, $arguments)
     {
@@ -1311,8 +1312,9 @@ class Api
 
             return $response;
         }
+        $response = $this->post($method, $arguments[0]);
 
-        return false;
+        return new UnknownObject($response->getDecodedBody());
     }
 
     /**
