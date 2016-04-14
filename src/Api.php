@@ -4,6 +4,7 @@ namespace Telegram\Bot;
 
 use Illuminate\Contracts\Container\Container;
 use Telegram\Bot\Commands\CommandBus;
+use Telegram\Bot\Helpers\Botan;
 use Telegram\Bot\Exceptions\TelegramSDKException;
 use Telegram\Bot\FileUpload\InputFile;
 use Telegram\Bot\HttpClients\GuzzleHttpClient;
@@ -75,6 +76,13 @@ class Api
      * @var int
      */
     protected $connectTimeOut = 10;
+
+    /**
+     * Instance of analytics sender
+     *
+     * @var Botan
+     */
+    protected $botan = null;
 
     /**
      * Instantiates a new Telegram super-class object.
@@ -966,6 +974,7 @@ class Api
         $data = [];
         if (isset($updates['result'])) {
             foreach ($updates['result'] as $update) {
+                $this->trySendStats($update['message']);
                 $data[] = new Update($update);
             }
         }
@@ -1425,5 +1434,35 @@ class Api
         }
 
         return $this->post('answerInlineQuery', $params);
+    }
+
+    /**
+     * Enable sending incoming events to your botan analytics account
+     *
+     * @var string Botan Analytics token. How to get: https://github.com/botanio/sdk#php
+     *
+     * @return bool
+     */
+    public function enableBotanAnalytics($botan_token)
+    {
+        try {
+            $this->botan = new Botan($botan_token);
+        } catch (\Exception $e) {
+            return false;
+        }
+        return true;
+    }
+
+    protected function trySendStats($data, $event_name = 'User event')
+    {
+        if ($this->botan) {
+            try {
+                $result = $this->botan->track($data, $event_name);
+            } catch (\Exception $e) {
+                return false;
+            }
+            return $result;
+        }
+        return false;
     }
 }
