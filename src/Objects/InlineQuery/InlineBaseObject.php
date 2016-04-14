@@ -28,5 +28,4 @@ abstract class InlineBaseObject extends Collection
 
         throw new BadMethodCallException("Method {$name} does not exist.");
     }
-
 }
