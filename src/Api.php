@@ -795,7 +795,7 @@ class Api
      *
      * @link https://core.telegram.org/bots/api#editMessageText
      *
-     * @param array $params
+     * @param array    $params
      *
      * @var int|string $params ['chat_id']
      * @var int        $params ['message_id']
@@ -829,7 +829,7 @@ class Api
      *
      * @link https://core.telegram.org/bots/api#editMessageCaption
      *
-     * @param array $params
+     * @param array    $params
      *
      * @var int|string $params ['chat_id']
      * @var int        $params ['message_id']
@@ -860,7 +860,7 @@ class Api
      *
      * @link https://core.telegram.org/bots/api#editMessageReplyMarkup
      *
-     * @param array $params
+     * @param array    $params
      *
      * @var int|string $params ['chat_id']
      * @var int        $params ['message_id']
@@ -989,7 +989,7 @@ class Api
      * @deprecated Use Telegram\Bot\Keyboard\Keyboard::make(array $params = []) instead.
      *             To be removed in next major version.
      *
-     * @link https://core.telegram.org/bots/api#replykeyboardmarkup
+     * @link       https://core.telegram.org/bots/api#replykeyboardmarkup
      *
      * @param array $params
      *
@@ -1018,7 +1018,7 @@ class Api
      * @deprecated Use Telegram\Bot\Keyboard\Keyboard::make()->hide(array $params = []) instead.
      *             To be removed in next major version.
      *
-     * @link https://core.telegram.org/bots/api#replykeyboardhide
+     * @link       https://core.telegram.org/bots/api#replykeyboardhide
      *
      * @param array $params
      *
@@ -1045,7 +1045,7 @@ class Api
      * @deprecated Use Telegram\Bot\Keyboard\Keyboard::make()->forceReply(array $params = []) instead.
      *             To be removed in next major version.
      *
-     * @link https://core.telegram.org/bots/api#forcereply
+     * @link       https://core.telegram.org/bots/api#forcereply
      *
      * @param array $params
      *
@@ -1183,7 +1183,7 @@ class Api
      */
     protected function get($endpoint, $params = [])
     {
-        if(in_array('reply_markup', $params)) {
+        if (in_array('reply_markup', $params)) {
             $params['reply_markup'] = json_encode($params['reply_markup']);
         }
 
@@ -1208,7 +1208,7 @@ class Api
         if ($fileUpload) {
             $params = ['multipart' => $params];
         } else {
-            if(in_array('reply_markup', $params)) {
+            if (in_array('reply_markup', $params)) {
                 $params['reply_markup'] = json_encode($params['reply_markup']);
             }
             
