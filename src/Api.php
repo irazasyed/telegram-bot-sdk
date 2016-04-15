@@ -1183,7 +1183,7 @@ class Api
      */
     protected function get($endpoint, $params = [])
     {
-        if (in_array('reply_markup', $params)) {
+        if (array_key_exists('reply_markup', $params)) {
             $params['reply_markup'] = json_encode($params['reply_markup']);
         }
 
@@ -1208,10 +1208,11 @@ class Api
         if ($fileUpload) {
             $params = ['multipart' => $params];
         } else {
-            if (in_array('reply_markup', $params)) {
+
+            if (array_key_exists('reply_markup', $params)) {
                 $params['reply_markup'] = json_encode($params['reply_markup']);
             }
-            
+
             $params = ['form_params' => $params];
         }
 
@@ -1248,7 +1249,7 @@ class Api
             }
 
             $multipart_params[$i]['name'] = $name;
-            $multipart_params[$i]['contents'] = ($name === 'reply_markup') ? json_encode($contents) : $contents;
+            $multipart_params[$i]['contents'] = $contents;
             ++$i;
         }
 
