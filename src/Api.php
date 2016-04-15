@@ -1205,13 +1205,13 @@ class Api
      */
     protected function post($endpoint, array $params = [], $fileUpload = false)
     {
-        if(in_array('reply_markup', $params)) {
-            $params['reply_markup'] = json_encode($params['reply_markup']);
-        }
-
         if ($fileUpload) {
             $params = ['multipart' => $params];
         } else {
+            if(in_array('reply_markup', $params)) {
+                $params['reply_markup'] = json_encode($params['reply_markup']);
+            }
+            
             $params = ['form_params' => $params];
         }
 
