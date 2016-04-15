@@ -1,10 +1,11 @@
 <?php
 namespace Telegram\Bot\Keyboard;
 
+use Telegram\Bot\Helpers\Emojify;
+
 /**
  * Class Button
  *
- * @method $this setText($string)               Text of the button. If none of the optional fields are used, it will be sent to the bot as a message when the button is pressed.
  * @method $this setRequestContact($boolean)    Optional. If True, the user's phone number will be sent as a contact when the button is pressed. Available in private chats only.
  * @method $this setRequestLocation($boolean)   Optional. If True, the user's current location will be sent when the button is pressed. Available in private chats only.
  *
@@ -14,5 +15,17 @@ namespace Telegram\Bot\Keyboard;
  */
 class Button extends Base
 {
+    /**
+     * Button Label Text
+     *
+     * @param string $text
+     *
+     * @return $this
+     */
+    public function setText($text)
+    {
+        $this->items['text'] = Emojify::text($text);
 
+        return $this;
+    }
 }
