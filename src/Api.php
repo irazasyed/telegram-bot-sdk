@@ -1184,7 +1184,7 @@ class Api
     protected function get($endpoint, $params = [])
     {
         if (array_key_exists('reply_markup', $params)) {
-            $params['reply_markup'] = json_encode($params['reply_markup']);
+            $params['reply_markup'] = (string)$params['reply_markup'];
         }
 
         return $this->sendRequest(
@@ -1210,7 +1210,7 @@ class Api
         } else {
 
             if (array_key_exists('reply_markup', $params)) {
-                $params['reply_markup'] = (string) $params['reply_markup'];
+                $params['reply_markup'] = (string)$params['reply_markup'];
             }
 
             $params = ['form_params' => $params];
