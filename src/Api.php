@@ -14,6 +14,7 @@ use Telegram\Bot\Objects\UnknownObject;
 use Telegram\Bot\Objects\Update;
 use Telegram\Bot\Objects\User;
 use Telegram\Bot\Objects\UserProfilePhotos;
+use Telegram\Bot\Keyboard\Keyboard;
 
 /**
  * Class Api.
@@ -985,6 +986,9 @@ class Api
      * ];
      * </code>
      *
+     * @deprecated Use Telegram\Bot\Keyboard\Keyboard::make(array $params = []) instead.
+     *             To be removed in next major version.
+     *
      * @link https://core.telegram.org/bots/api#replykeyboardmarkup
      *
      * @param array $params
@@ -998,7 +1002,7 @@ class Api
      */
     public function replyKeyboardMarkup(array $params)
     {
-        return json_encode($params);
+        return Keyboard::make($params);
     }
 
     /**
@@ -1011,6 +1015,9 @@ class Api
      * ];
      * </code>
      *
+     * @deprecated Use Telegram\Bot\Keyboard\Keyboard::make()->hide(array $params = []) instead.
+     *             To be removed in next major version.
+     *
      * @link https://core.telegram.org/bots/api#replykeyboardhide
      *
      * @param array $params
@@ -1022,7 +1029,7 @@ class Api
      */
     public static function replyKeyboardHide(array $params = [])
     {
-        return json_encode(array_merge(['hide_keyboard' => true, 'selective' => false], $params));
+        return Keyboard::make()->hide($params);
     }
 
     /**
@@ -1035,6 +1042,9 @@ class Api
      * ];
      * </code>
      *
+     * @deprecated Use Telegram\Bot\Keyboard\Keyboard::make()->forceReply(array $params = []) instead.
+     *             To be removed in next major version.
+     *
      * @link https://core.telegram.org/bots/api#forcereply
      *
      * @param array $params
@@ -1046,7 +1056,7 @@ class Api
      */
     public static function forceReply(array $params = [])
     {
-        return json_encode(array_merge(['force_reply' => true, 'selective' => false], $params));
+        return Keyboard::make()->forceReply($params);
     }
 
     /**
@@ -1173,6 +1183,10 @@ class Api
      */
     protected function get($endpoint, $params = [])
     {
+        if(in_array('reply_markup', $params)) {
+            $params['reply_markup'] = json_encode($params['reply_markup']);
+        }
+
         return $this->sendRequest(
             'GET',
             $endpoint,
@@ -1191,6 +1205,10 @@ class Api
      */
     protected function post($endpoint, array $params = [], $fileUpload = false)
     {
+        if(in_array('reply_markup', $params)) {
+            $params['reply_markup'] = json_encode($params['reply_markup']);
+        }
+
         if ($fileUpload) {
             $params = ['multipart' => $params];
         } else {
@@ -1230,7 +1248,7 @@ class Api
             }
 
             $multipart_params[$i]['name'] = $name;
-            $multipart_params[$i]['contents'] = $contents;
+            $multipart_params[$i]['contents'] = ($name === 'reply_markup') ? json_encode($contents) : $contents;
             ++$i;
         }
 
