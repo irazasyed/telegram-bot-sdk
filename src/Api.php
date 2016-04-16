@@ -1119,6 +1119,19 @@ class Api
     }
 
     /**
+     * Helper to Trigger Commands.
+     *
+     * @param string $name Command Name
+     * @param Update $update Update Object
+     *
+     * @return mixed
+     */
+    public function triggerCommand($name, Update $update)
+    {
+        return $this->getCommandBus()->execute($name, $update->getMessage()->getText(), $update);
+    }
+
+    /**
      * Determine if a given type is the message.
      *
      * @param string         $type
