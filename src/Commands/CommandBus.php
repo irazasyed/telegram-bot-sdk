@@ -17,6 +17,11 @@ class CommandBus
     protected $commands = [];
 
     /**
+     * @var Command[] Holds all commands' aliases.
+     */
+    protected $commandAliases = [];
+
+    /**
      * @var Api
      */
     private $telegram;
@@ -95,6 +100,32 @@ class CommandBus
              * @var Command $command
              */
             $this->commands[$command->getName()] = $command;
+
+            $aliases = $command->getAliases();
+
+            if (empty($aliases)) {
+                return $this;
+            }
+
+            foreach ($command->getAliases() as $alias) {
+                if (isset($this->commands[$alias])) {
+                    throw new TelegramSDKException(sprintf(
+                        '[Error] Alias [%s] conflicts with command name of "%s" try with another name or remove this alias from the list.',
+                        $alias,
+                        get_class($command)
+                    ));
+                }
+
+                if (isset($this->commandAliases[$alias])) {
+                    throw new TelegramSDKException(sprintf(
+                        '[Error] Alias [%s] conflicts with another command\'s alias list: "%s", try with another name or remove this alias from the list.',
+                        $alias,
+                        get_class($command)
+                    ));
+                }
+
+                $this->commandAliases[$alias] = $command;
+            }
 
             return $this;
         }
@@ -194,6 +225,8 @@ class CommandBus
     {
         if (array_key_exists($name, $this->commands)) {
             return $this->commands[$name]->make($this->telegram, $arguments, $message);
+        } elseif (array_key_exists($name, $this->commandAliases)) {
+            return $this->commandAliases[$name]->make($this->telegram, $arguments, $message);
         } elseif (array_key_exists('help', $this->commands)) {
             return $this->commands['help']->make($this->telegram, $arguments, $message);
         }
@@ -241,15 +274,16 @@ class CommandBus
     /**
      * Handle calls to missing methods.
      *
-     * @param  string  $method
-     * @param  array   $parameters
+     * @param  string $method
+     * @param  array  $parameters
+     *
      * @return mixed
      *
      * @throws \BadMethodCallException
      */
     public function __call($method, $parameters)
     {
-        if(method_exists($this, $method)) {
+        if (method_exists($this, $method)) {
             return call_user_func_array([$this, $method], $parameters);
         }
 
