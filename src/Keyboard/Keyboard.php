@@ -168,7 +168,7 @@ class Keyboard extends Base
      */
     public function hide(array $params = [])
     {
-        return $this->items = array_merge(['hide_keyboard' => true, 'selective' => false], $params);
+        return $this->merge(array_merge(['hide_keyboard' => true, 'selective' => false], $params));
     }
 
     /**
@@ -192,6 +192,6 @@ class Keyboard extends Base
      */
     public function forceReply(array $params = [])
     {
-        return $this->items = array_merge(['force_reply' => true, 'selective' => false], $params);
+        return $this->merge(array_merge(['force_reply' => true, 'selective' => false], $params));
     }
 }
