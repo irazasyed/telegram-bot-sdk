@@ -23,14 +23,16 @@ class Emojify
     /**
      * The array mapping emoji back to words.
      *
-     * @var [type]
+     * @var array
      */
     protected $wordMap;
 
     /**
      * Emojify constructor.
      *
-     * @param null $emojiMapFile
+     * @param null|string $emojiMapFile
+     *
+     * @throws TelegramEmojiMapFileNotFoundException
      */
     public function __construct($emojiMapFile = null)
     {
