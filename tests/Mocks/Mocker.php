@@ -68,6 +68,7 @@ class Mocker
     public static function createMockCommand($name = 'start')
     {
         $command = (new Prophet())->prophesize(MockCommand::class);
+        $command->getAliases()->willReturn(null);
         $command->getName()->willReturn($name);
         $command->make(Argument::any(), Argument::any(), Argument::any())->willReturn(null);
 
