@@ -82,7 +82,7 @@ class Emojify
      */
     public function toWord($text)
     {
-        return $this->replace($text, $this->wordMap, null);
+        return $this->replace($text, $this->wordMap, true);
     }
 
     /**
@@ -102,18 +102,57 @@ class Emojify
      *
      * @param        $line
      * @param        $replace
-     * @param string $startDelimiter
+     * @param bool   $toWord
+     * @param string $delimiter
      *
      * @return mixed
      */
-    protected function replace($line, $replace, $startDelimiter = ':')
+    protected function replace($line, $replace, $toWord = false, $delimiter = ':')
     {
         uksort($replace, function ($a, $b) {
             return strlen($b) - strlen($a);
         });
 
+
+        if ($toWord) {
+            return $this->emojiToWordReplace($line, $replace, $delimiter);
+        }
+
+        return $this->wordToEmojiReplace($line, $replace, $delimiter);
+    }
+
+    /**
+     * Finds words enclosed by the delimiter and converts them to the
+     * appropriate emoji character.
+     *
+     * @param $line
+     * @param $replace
+     * @param $delimiter
+     *
+     * @return mixed
+     */
+    protected function wordToEmojiReplace($line, $replace, $delimiter)
+    {
         foreach ($replace as $key => $value) {
-            $line = str_replace($startDelimiter.$key, $value, $line);
+            $line = str_replace($delimiter.$key.$delimiter, $value, $line);
+        }
+
+        return $line;
+    }
+
+    /**
+     * Finds emojis and replaces them with text enclosed by the delimiter
+     *
+     * @param $line
+     * @param $replace
+     * @param $delimiter
+     *
+     * @return mixed
+     */
+    protected function emojiToWordReplace($line, $replace, $delimiter)
+    {
+        foreach ($replace as $key => $value) {
+            $line = str_replace($key, $delimiter.$value.$delimiter, $line);
         }
 
         return $line;
