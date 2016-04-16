@@ -318,6 +318,10 @@ class Api
      */
     public function sendPhoto(array $params)
     {
+        if (isset($params['caption'])) {
+            $params['caption'] = $this->emojify->toEmoji($params['caption']);
+        }
+
         return $this->uploadFile('sendPhoto', $params);
     }
 
@@ -386,6 +390,10 @@ class Api
      */
     public function sendDocument(array $params)
     {
+        if (isset($params['caption'])) {
+            $params['caption'] = $this->emojify->toEmoji($params['caption']);
+        }
+
         return $this->uploadFile('sendDocument', $params);
     }
 
@@ -461,6 +469,10 @@ class Api
      */
     public function sendVideo(array $params)
     {
+        if (isset($params['caption'])) {
+            $params['caption'] = $this->emojify->toEmoji($params['caption']);
+        }
+
         return $this->uploadFile('sendVideo', $params);
     }
 
@@ -851,6 +863,9 @@ class Api
      */
     public function editMessageCaption(array $params)
     {
+        if (isset($params['caption'])) {
+            $params['caption'] = $this->emojify->toEmoji($params['caption']);
+        }
         $response = $this->post('editMessageCaption', $params);
 
         return new Message($response->getDecodedBody());
@@ -1121,7 +1136,7 @@ class Api
     /**
      * Helper to Trigger Commands.
      *
-     * @param string $name Command Name
+     * @param string $name   Command Name
      * @param Update $update Update Object
      *
      * @return mixed
