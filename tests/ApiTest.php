@@ -413,20 +413,6 @@ class ApiTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @dataProvider jsonMethods
-     *
-     * @param $methodName
-     */
-    public function it_checks_json_is_returned($methodName)
-    {
-        $params = [];
-        $result = $this->api->$methodName($params);
-
-        $this->assertJson($result);
-    }
-
-    /**
-     * @test
      * @expectedException \Telegram\Bot\Exceptions\TelegramSDKException
      */
     public function it_throws_an_exception_if_setWebhook_url_is_not_a_url()
@@ -491,26 +477,6 @@ class ApiTest extends \PHPUnit_Framework_TestCase
             ],
             [
                 'document',
-            ],
-        ];
-    }
-
-    /**
-     * A list of methods that must return json data.
-     *
-     * @return array
-     */
-    public function jsonMethods()
-    {
-        return [
-            [
-                'replyKeyboardMarkup',
-            ],
-            [
-                'replyKeyboardHide',
-            ],
-            [
-                'forceReply',
             ],
         ];
     }
