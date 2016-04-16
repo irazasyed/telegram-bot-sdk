@@ -22,7 +22,6 @@ use Telegram\Bot\Helpers\Emojify;
  * @method Sticker          getSticker()                (Optional). Message is a sticker, information about the sticker.
  * @method Video            getVideo()                  (Optional). Message is a video, information about the video.
  * @method Voice            getVoice()                  (Optional). Message is a voice message, information about the file.
- * @method string           getCaption()                (Optional). Caption for the document, photo or video contact.
  * @method Contact          getContact()                (Optional). Message is a shared contact, information about the contact.
  * @method Location         getLocation()               (Optional). Message is a shared location, information about the location.
  * @method Venue            getVenue()                  (Optional). Message is a venue, information about the venue.
@@ -76,4 +75,15 @@ class Message extends BaseObject
     {
         return Emojify::translate($this->get('text'));
     }
+
+    /**
+     * (Optional). Caption for the document, photo or video contact.
+     *
+     * @return string
+     */
+    public function getCaption()
+    {
+        return Emojify::translate($this->get('caption'));
+    }
+
 }
