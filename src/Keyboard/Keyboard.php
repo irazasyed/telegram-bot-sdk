@@ -166,9 +166,9 @@ class Keyboard extends Base
      *
      * @return string
      */
-    public function hide(array $params = [])
+    public static function hide(array $params = [])
     {
-        return $this->merge(array_merge(['hide_keyboard' => true, 'selective' => false], $params));
+        return new static(array_merge(['hide_keyboard' => true, 'selective' => false], $params));
     }
 
     /**
@@ -190,8 +190,8 @@ class Keyboard extends Base
      *
      * @return string
      */
-    public function forceReply(array $params = [])
+    public static function forceReply(array $params = [])
     {
-        return $this->merge(array_merge(['force_reply' => true, 'selective' => false], $params));
+        return new static(array_merge(['force_reply' => true, 'selective' => false], $params));
     }
 }
