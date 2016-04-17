@@ -105,6 +105,6 @@ class TelegramServiceProvider extends ServiceProvider
      */
     public function provides()
     {
-        return ['telegram', 'telegram.bot'];
+        return ['telegram', 'telegram.bot', BotsManager::class, Api::class];
     }
 }
