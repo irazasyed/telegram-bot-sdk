@@ -58,21 +58,11 @@ class ApiTest extends \PHPUnit_Framework_TestCase
     }
 
     /** @test */
-    public function it_allows_guzzle_to_be_passed_as_a_string_during_construction_of_api()
+    public function it_checks_the_default_http_client_is_guzzle_if_not_specified()
     {
-        $this->api = new Api('token', false, 'guzzle');
-
         $client = $this->api->getClient()->getHttpClientHandler();
 
         $this->assertInstanceOf(GuzzleHttpClient::class, $client);
-    }
-
-    /** @test
-     * @expectedException InvalidArgumentException
-     */
-    public function it_throws_exception_if_httpClient_is_not_specified_correctly()
-    {
-        $this->api = new Api('token', false, 'test');
     }
 
     /** @test */
@@ -94,7 +84,7 @@ class ApiTest extends \PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf('\Illuminate\Contracts\Container\Container', $this->api->getContainer());
     }
-    
+
     /** @test */
     public function it_checks_an_update_object_is_returned_when_a_command_is_handled()
     {
