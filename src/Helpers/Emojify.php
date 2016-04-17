@@ -7,11 +7,23 @@ use Telegram\Bot\Exceptions\TelegramEmojiMapFileNotFoundException;
 class Emojify
 {
     /**
+     * @var Singleton The reference to *Singleton* instance of this class
+     */
+    private static $instance;
+
+    /**
      * The path to the file containing the emoji map.
      *
      * @var string
      */
-    const EMOJI_MAP_FILE = '/../Storage/emoji.json';
+    const DEFAULT_EMOJI_MAP_FILE = '/../Storage/emoji.json';
+
+    /**
+     * The path to the file containing the emoji map.
+     *
+     * @var string
+     */
+    protected $emojiMapFile;
 
     /**
      * The array mapping words to emoji.
@@ -28,25 +40,43 @@ class Emojify
     protected $wordMap;
 
     /**
-     * Emojify constructor.
-     *
-     * @param null|string $emojiMapFile
+     * Protected Emojify constructor to prevent creating a new instance of the
+     * *Singleton* via the `new` operator from outside of this class.
      *
      * @throws TelegramEmojiMapFileNotFoundException
      */
-    public function __construct($emojiMapFile = null)
+    protected function __construct()
     {
-        if (empty($emojiMapFile)) {
-            $emojiMapFile = __DIR__.self::EMOJI_MAP_FILE;
+        $this->setupEmojiMaps();
+    }
+
+    /**
+     * Returns the *Singleton* instance of this class.
+     *
+     * @return Singleton The *Singleton* instance.
+     */
+    public static function getInstance()
+    {
+        if (null === static::$instance) {
+            static::$instance = new static();
         }
 
-        if (!file_exists($emojiMapFile)) {
-            throw new TelegramEmojiMapFileNotFoundException();
-        }
+        return static::$instance;
+    }
 
-        $emojiMapFileContents = file_get_contents($emojiMapFile);
-        $this->emojiMap = (array)json_decode($emojiMapFileContents);
-        $this->wordMap = array_flip($this->emojiMap);
+    /**
+     * Set File Path to Emoji Map File.
+     *
+     * @param string $emojiMapFile
+     *
+     * @return Emojify
+     */
+    public function setEmojiMapFile($emojiMapFile)
+    {
+        $this->emojiMapFile = $emojiMapFile;
+        $this->setupEmojiMaps();
+
+        return $this;
     }
 
     /**
@@ -70,7 +100,7 @@ class Emojify
      */
     public static function text($text)
     {
-        return (new static)->toEmoji($text);
+        return self::getInstance()->toEmoji($text);
     }
 
     /**
@@ -94,7 +124,7 @@ class Emojify
      */
     public static function translate($text)
     {
-        return (new static)->toWord($text);
+        return self::getInstance()->toWord($text);
     }
 
     /**
@@ -156,5 +186,55 @@ class Emojify
         }
 
         return $line;
+    }
+
+    /**
+     * Get Emoji Map Array.
+     *
+     * @return array
+     * @throws TelegramEmojiMapFileNotFoundException
+     */
+    protected function getEmojiMap()
+    {
+        if (!isset($this->emojiMapFile)) {
+            $this->emojiMapFile = realpath(__DIR__.self::DEFAULT_EMOJI_MAP_FILE);
+        }
+
+        if (!file_exists($this->emojiMapFile)) {
+            throw new TelegramEmojiMapFileNotFoundException();
+        }
+
+        return json_decode(file_get_contents($this->emojiMapFile), true);
+    }
+
+    /**
+     * Setup Emoji Maps.
+     *
+     * @throws TelegramEmojiMapFileNotFoundException
+     */
+    protected function setupEmojiMaps()
+    {
+        $this->emojiMap = $this->getEmojiMap();
+        $this->wordMap = array_flip($this->emojiMap);
+    }
+
+    /**
+     * Private clone method to prevent cloning of the instance of the
+     * *Singleton* instance.
+     *
+     * @return void
+     */
+    private function __clone()
+    {
+    }
+
+    /**
+     * Private unserialize method to prevent unserializing of the *Singleton*
+     * instance.
+     *
+     * @return void
+     */
+    private function __wakeup()
+    {
     }
 }
