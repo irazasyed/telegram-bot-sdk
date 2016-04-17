@@ -78,12 +78,6 @@ class Api
      */
     protected $connectTimeOut = 10;
 
-    /**
-     * Emojify instance
-     *
-     * @var \Telegram\Bot\Helpers\Emojify
-     */
-    protected $emojify;
 
     /**
      * Instantiates a new Telegram super-class object.
@@ -120,7 +114,6 @@ class Api
 
         $this->client = new TelegramClient($httpClientHandler);
         $this->commandBus = new CommandBus($this);
-        $this->emojify = new Emojify();
     }
 
     /**
@@ -253,7 +246,7 @@ class Api
      */
     public function sendMessage(array $params)
     {
-        $params['text'] = $this->emojify->toEmoji($params['text']);
+        $params = $this->emojify($params, 'text');
         $response = $this->post('sendMessage', $params);
 
         return new Message($response->getDecodedBody());
@@ -318,9 +311,7 @@ class Api
      */
     public function sendPhoto(array $params)
     {
-        if (isset($params['caption'])) {
-            $params['caption'] = $this->emojify->toEmoji($params['caption']);
-        }
+        $params = $this->emojify($params, 'caption');
 
         return $this->uploadFile('sendPhoto', $params);
     }
@@ -390,9 +381,7 @@ class Api
      */
     public function sendDocument(array $params)
     {
-        if (isset($params['caption'])) {
-            $params['caption'] = $this->emojify->toEmoji($params['caption']);
-        }
+        $params = $this->emojify($params, 'caption');
 
         return $this->uploadFile('sendDocument', $params);
     }
@@ -469,9 +458,7 @@ class Api
      */
     public function sendVideo(array $params)
     {
-        if (isset($params['caption'])) {
-            $params['caption'] = $this->emojify->toEmoji($params['caption']);
-        }
+        $params = $this->emojify($params, 'caption');
 
         return $this->uploadFile('sendVideo', $params);
     }
@@ -797,6 +784,8 @@ class Api
      */
     public function answerCallbackQuery(array $params)
     {
+        $params = $this->emojify($params, 'text');
+
         return $this->post('answerCallbackQuery', $params);
     }
 
@@ -831,6 +820,7 @@ class Api
      */
     public function editMessageText(array $params)
     {
+        $params = $this->emojify($params, 'text');
         $response = $this->post('editMessageText', $params);
 
         return new Message($response->getDecodedBody());
@@ -863,9 +853,7 @@ class Api
      */
     public function editMessageCaption(array $params)
     {
-        if (isset($params['caption'])) {
-            $params['caption'] = $this->emojify->toEmoji($params['caption']);
-        }
+        $params = $this->emojify($params, 'caption');
         $response = $this->post('editMessageCaption', $params);
 
         return new Message($response->getDecodedBody());
@@ -1482,5 +1470,22 @@ class Api
         }
 
         return $this->post('answerInlineQuery', $params);
+    }
+
+    /**
+     * Emojify Given Property in Params.
+     *
+     * @param array  $params
+     * @param string $property
+     *
+     * @return mixed
+     */
+    protected function emojify(array $params, $property)
+    {
+        if (isset($params[$property])) {
+            $params[$property] = Emojify::text($params[$property]);
+        }
+
+        return $params;
     }
 }
