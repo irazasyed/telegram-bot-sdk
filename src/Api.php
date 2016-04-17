@@ -78,7 +78,6 @@ class Api
      */
     protected $connectTimeOut = 10;
 
-
     /**
      * Instantiates a new Telegram super-class object.
      *
@@ -114,6 +113,18 @@ class Api
 
         $this->client = new TelegramClient($httpClientHandler);
         $this->commandBus = new CommandBus($this);
+    }
+
+    /**
+     * Invoke Bots Manager.
+     *
+     * @param $config
+     *
+     * @return BotsManager
+     */
+    public static function manager($config)
+    {
+        return new BotsManager($config);
     }
 
     /**
