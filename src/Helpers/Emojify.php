@@ -7,7 +7,7 @@ use Telegram\Bot\Exceptions\TelegramEmojiMapFileNotFoundException;
 class Emojify
 {
     /**
-     * @var Singleton The reference to *Singleton* instance of this class
+     * @var Emojify The reference to *Singleton* instance of this class
      */
     private static $instance;
 
@@ -52,8 +52,7 @@ class Emojify
 
     /**
      * Returns the *Singleton* instance of this class.
-     *
-     * @return Singleton The *Singleton* instance.
+     * @return Emojify The *Singleton* instance.
      */
     public static function getInstance()
     {

@@ -2,36 +2,80 @@
 
 namespace Telegram\Bot\Tests;
 
+use ReflectionClass;
 use Telegram\Bot\Helpers\Emojify;
 
 class EmojiSupportTest extends \PHPUnit_Framework_TestCase
 {
-    public function setUp()
-    {
-        $this->emojify = new Emojify();
-    }
 
-    /** @test
-     *  @expectedException \Telegram\Bot\Exceptions\TelegramEmojiMapFileNotFoundException
+    /**
+     * @test
+     * @expectedException \Telegram\Bot\Exceptions\TelegramEmojiMapFileNotFoundException
      **/
-    public function wrong_emoji_map_passed_to_constructor()
+    public function it_throws_exception_when_missing_emoji_map_is_used()
     {
-        new Emojify('wrong_file.json');
+        Emojify::getInstance()->setEmojiMapFile('wrong_file.json');
     }
 
-    /** @test **/
-    public function replace_word_by_emoji()
+    /** @test */
+    public function it_ensures_the_default_emoji_file_is_available()
     {
-        $plainText = 'This works! :smile';
-        $emojiText = $this->emojify->toEmoji($plainText);
+        $emoji = Emojify::getInstance();
+
+        // If we can assert the instant is of the correct type, then no exception
+        // was thrown during it's creation. A valid emoji file is required
+        // during creation.
+        $this->assertInstanceOf(Emojify::class, $emoji);
+    }
+
+    /** @test */
+    public function it_replaces_a_keyword_with_an_emoji()
+    {
+        $plainText = 'This works! :smile:';
+        $emojiText = Emojify::text($plainText);
+
         $this->assertContains('😄', $emojiText);
     }
 
-    /** @test **/
-    public function replace_emoji_by_word()
+    /** @test */
+    public function it_requires_the_keyword_to_be_enclosed_with_a_delimiter()
+    {
+        $plainText = 'This should not work! :smile';
+        $emojiText = Emojify::text($plainText);
+
+        $this->assertNotContains('😄', $emojiText);
+        $this->assertContains(':smile', $emojiText);
+    }
+
+    /** @test * */
+    public function it_replaces_an_emoji_with_its_keyword()
     {
         $plainText = 'This works! 😄';
-        $emojiText = $this->emojify->toWord($plainText);
-        $this->assertContains('smile', $emojiText);
+        $emojiText = Emojify::translate($plainText);
+
+        $this->assertContains(':smile:', $emojiText);
+    }
+
+    /** @test * */
+    public function it_ensures_a_replaced_emoji_is_enclosed_with_a_delimiter()
+    {
+        $plainText = 'This  😄 works!';
+        $emojiText = Emojify::translate($plainText);
+
+        $this->assertContains(':smile:', $emojiText);
+        $this->assertNotContains(' smile ', $emojiText);
+    }
+
+    /**
+     * Reset the Singleton so that previous test doesn't interfere with
+     * the next one.
+     */
+    protected function tearDown()
+    {
+        $reflection = new ReflectionClass(Emojify::class);
+        $property = $reflection->getProperty("instance");
+        $property->setAccessible(true); // instance is gone
+        $property->setValue(null);// now we can modify that :)
+        $property->setAccessible(false); // clean up
     }
 }
