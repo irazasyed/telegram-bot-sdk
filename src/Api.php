@@ -1067,7 +1067,7 @@ class Api
      * ];
      * </code>
      *
-     * @deprecated Use Telegram\Bot\Keyboard\Keyboard::make()->hide(array $params = []) instead.
+     * @deprecated Use Telegram\Bot\Keyboard\Keyboard::hide(array $params = []) instead.
      *             To be removed in next major version.
      *
      * @link       https://core.telegram.org/bots/api#replykeyboardhide
@@ -1081,7 +1081,7 @@ class Api
      */
     public static function replyKeyboardHide(array $params = [])
     {
-        return Keyboard::make()->hide($params);
+        return Keyboard::hide($params);
     }
 
     /**
@@ -1094,7 +1094,7 @@ class Api
      * ];
      * </code>
      *
-     * @deprecated Use Telegram\Bot\Keyboard\Keyboard::make()->forceReply(array $params = []) instead.
+     * @deprecated Use Telegram\Bot\Keyboard\Keyboard::forceReply(array $params = []) instead.
      *             To be removed in next major version.
      *
      * @link       https://core.telegram.org/bots/api#forcereply
@@ -1108,7 +1108,7 @@ class Api
      */
     public static function forceReply(array $params = [])
     {
-        return Keyboard::make()->forceReply($params);
+        return Keyboard::forceReply($params);
     }
 
     /**
