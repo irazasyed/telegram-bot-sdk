@@ -74,7 +74,7 @@ class TelegramServiceProvider extends ServiceProvider
         $app->singleton('telegram', function ($app) {
             $config = $app['config']['telegram'];
 
-            return (new BotsManager($config))->setContainer($app);
+            return (new BotsManager((array)$config))->setContainer($app);
         });
 
         $app->alias('telegram', BotsManager::class);
