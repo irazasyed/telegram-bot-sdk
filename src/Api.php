@@ -79,6 +79,13 @@ class Api
     protected $connectTimeOut = 10;
 
     /**
+     * Use Emojify for text fields in requests.
+     *
+     * @var bool
+     */
+    protected $useEmojify = true;
+
+    /**
      * Instantiates a new Telegram super-class object.
      *
      *
@@ -1483,10 +1490,37 @@ class Api
      */
     protected function emojify(array $params, $property)
     {
+        if (!$this->isUseEmojify()) {
+            return $params;
+        }
         if (isset($params[$property])) {
             $params[$property] = Emojify::text($params[$property]);
         }
 
         return $params;
+    }
+
+    /**
+     * Change the behavior of using Emojify.
+     *
+     * @param bool $useEmojify
+     *
+     * @return Api
+     */
+    public function setUseEmojify($useEmojify)
+    {
+        $this->useEmojify = $useEmojify;
+
+        return $this;
+    }
+
+    /**
+     * Check if Emojify is enabled.
+     *
+     * @return bool
+     */
+    public function isUseEmojify()
+    {
+        return $this->useEmojify;
     }
 }
