@@ -14,6 +14,8 @@ use Telegram\Bot\Objects\UnknownObject;
 use Telegram\Bot\Objects\Update;
 use Telegram\Bot\Objects\User;
 use Telegram\Bot\Objects\UserProfilePhotos;
+use Telegram\Bot\Keyboard\Keyboard;
+use Telegram\Bot\Helpers\Emojify;
 
 /**
  * Class Api.
@@ -80,29 +82,18 @@ class Api
      * Instantiates a new Telegram super-class object.
      *
      *
-     * @param string                     $token               The Telegram Bot API Access Token.
-     * @param bool                       $async               (Optional) Indicates if the request to Telegram
+     * @param string              $token                      The Telegram Bot API Access Token.
+     * @param bool                $async                      (Optional) Indicates if the request to Telegram
      *                                                        will be asynchronous (non-blocking).
-     * @param string|HttpClientInterface $http_client_handler (Optional) Custom HTTP Client Handler.
+     * @param HttpClientInterface $httpClientHandler          (Optional) Custom HTTP Client Handler.
      *
      * @throws TelegramSDKException
      */
-    public function __construct($token = null, $async = false, $http_client_handler = null)
+    public function __construct($token = null, $async = false, $httpClientHandler = null)
     {
         $this->accessToken = isset($token) ? $token : getenv(static::BOT_TOKEN_ENV_NAME);
         if (!$this->accessToken) {
             throw new TelegramSDKException('Required "token" not supplied in config and could not find fallback environment variable "'.static::BOT_TOKEN_ENV_NAME.'"');
-        }
-
-        $httpClientHandler = null;
-        if (isset($http_client_handler)) {
-            if ($http_client_handler instanceof HttpClientInterface) {
-                $httpClientHandler = $http_client_handler;
-            } elseif ($http_client_handler === 'guzzle') {
-                $httpClientHandler = new GuzzleHttpClient();
-            } else {
-                throw new \InvalidArgumentException('The HTTP Client Handler must be set to "guzzle", or be an instance of Telegram\Bot\HttpClients\HttpClientInterface');
-            }
         }
 
         if (isset($async)) {
@@ -111,6 +102,18 @@ class Api
 
         $this->client = new TelegramClient($httpClientHandler);
         $this->commandBus = new CommandBus($this);
+    }
+
+    /**
+     * Invoke Bots Manager.
+     *
+     * @param $config
+     *
+     * @return BotsManager
+     */
+    public static function manager($config)
+    {
+        return new BotsManager($config);
     }
 
     /**
@@ -243,6 +246,7 @@ class Api
      */
     public function sendMessage(array $params)
     {
+        $params = $this->emojify($params, 'text');
         $response = $this->post('sendMessage', $params);
 
         return new Message($response->getDecodedBody());
@@ -307,6 +311,8 @@ class Api
      */
     public function sendPhoto(array $params)
     {
+        $params = $this->emojify($params, 'caption');
+
         return $this->uploadFile('sendPhoto', $params);
     }
 
@@ -375,6 +381,8 @@ class Api
      */
     public function sendDocument(array $params)
     {
+        $params = $this->emojify($params, 'caption');
+
         return $this->uploadFile('sendDocument', $params);
     }
 
@@ -450,6 +458,8 @@ class Api
      */
     public function sendVideo(array $params)
     {
+        $params = $this->emojify($params, 'caption');
+
         return $this->uploadFile('sendVideo', $params);
     }
 
@@ -750,6 +760,174 @@ class Api
     }
 
     /**
+     * Send answers to callback queries sent from inline keyboards.
+     *
+     * he answer will be displayed to the user as a notification at the top of the chat screen or as an alert.
+     *
+     * <code>
+     * $params = [
+     *   'callback_query_id'  => '',
+     *   'text'               => '',
+     *   'show_alert'         => '',
+     * ];
+     * </code>
+     *
+     * @link https://core.telegram.org/bots/api#answerCallbackQuery
+     *
+     * @param array $params
+     *
+     * @var string  $params ['callback_query_id']
+     * @var string  $params ['text']
+     * @var bool    $params ['show_alert']
+     *
+     * @return TelegramResponse
+     */
+    public function answerCallbackQuery(array $params)
+    {
+        $params = $this->emojify($params, 'text');
+
+        return $this->post('answerCallbackQuery', $params);
+    }
+
+    /**
+     * Edit text messages sent by the bot or via the bot (for inline bots).
+     *
+     * <code>
+     * $params = [
+     *   'chat_id'                  => '',
+     *   'message_id'               => '',
+     *   'inline_message_id'        => '',
+     *   'text'                     => '',
+     *   'parse_mode'               => '',
+     *   'disable_web_page_preview' => '',
+     *   'reply_markup'             => '',
+     * ];
+     * </code>
+     *
+     * @link https://core.telegram.org/bots/api#editMessageText
+     *
+     * @param array    $params
+     *
+     * @var int|string $params ['chat_id']
+     * @var int        $params ['message_id']
+     * @var string     $params ['inline_message_id']
+     * @var string     $params ['text']
+     * @var string     $params ['parse_mode']
+     * @var bool       $params ['disable_web_page_preview']
+     * @var string     $params ['reply_markup']
+     *
+     * @return TelegramResponse
+     */
+    public function editMessageText(array $params)
+    {
+        $params = $this->emojify($params, 'text');
+        $response = $this->post('editMessageText', $params);
+
+        return new Message($response->getDecodedBody());
+    }
+
+    /**
+     * Edit captions of messages sent by the bot or via the bot (for inline bots).
+     *
+     * <code>
+     * $params = [
+     *   'chat_id'                  => '',
+     *   'message_id'               => '',
+     *   'inline_message_id'        => '',
+     *   'caption'                  => '',
+     *   'reply_markup'             => '',
+     * ];
+     * </code>
+     *
+     * @link https://core.telegram.org/bots/api#editMessageCaption
+     *
+     * @param array    $params
+     *
+     * @var int|string $params ['chat_id']
+     * @var int        $params ['message_id']
+     * @var string     $params ['inline_message_id']
+     * @var string     $params ['caption']
+     * @var string     $params ['reply_markup']
+     *
+     * @return TelegramResponse
+     */
+    public function editMessageCaption(array $params)
+    {
+        $params = $this->emojify($params, 'caption');
+        $response = $this->post('editMessageCaption', $params);
+
+        return new Message($response->getDecodedBody());
+    }
+
+    /**
+     * Edit only the reply markup of messages sent by the bot or via the bot (for inline bots).
+     *
+     * <code>
+     * $params = [
+     *   'chat_id'                  => '',
+     *   'message_id'               => '',
+     *   'inline_message_id'        => '',
+     *   'reply_markup'             => '',
+     * ];
+     * </code>
+     *
+     * @link https://core.telegram.org/bots/api#editMessageReplyMarkup
+     *
+     * @param array    $params
+     *
+     * @var int|string $params ['chat_id']
+     * @var int        $params ['message_id']
+     * @var string     $params ['inline_message_id']
+     * @var string     $params ['reply_markup']
+     *
+     * @return TelegramResponse
+     */
+    public function editMessageReplyMarkup(array $params)
+    {
+        $response = $this->post('editMessageReplyMarkup', $params);
+
+        return new Message($response->getDecodedBody());
+    }
+
+    /**
+     * Use this method to send answers to an inline query.
+     *
+     * <code>
+     * $params = [
+     *   'inline_query_id'      => '',
+     *   'results'              => [],
+     *   'cache_time'           => 0,
+     *   'is_personal'          => false,
+     *   'next_offset'          => '',
+     *   'switch_pm_text'       => '',
+     *   'switch_pm_parameter'  => '',
+     * ];
+     * </code>
+     *
+     * @link https://core.telegram.org/bots/api#answerinlinequery
+     *
+     * @param array     $params
+     *
+     * @var string      $params ['inline_query_id']
+     * @var array       $params ['results']
+     * @var int|null    $params ['cache_time']
+     * @var bool|null   $params ['is_personal']
+     * @var string|null $params ['next_offset']
+     * @var string|null $params ['switch_pm_text']
+     * @var string|null $params ['switch_pm_parameter']
+     *
+     * @return bool
+     */
+    public function answerInlineQuery(array $params = [])
+    {
+        if (is_array($params['results'])) {
+            $params['results'] = json_encode($params['results']);
+        }
+
+        return $this->post('answerInlineQuery', $params);
+    }
+
+    /**
      * Set a Webhook to receive incoming updates via an outgoing webhook.
      *
      * <code>
@@ -847,6 +1025,7 @@ class Api
         return $data;
     }
 
+
     /**
      * Builds a custom keyboard markup.
      *
@@ -859,7 +1038,10 @@ class Api
      * ];
      * </code>
      *
-     * @link https://core.telegram.org/bots/api#replykeyboardmarkup
+     * @deprecated Use Telegram\Bot\Keyboard\Keyboard::make(array $params = []) instead.
+     *             To be removed in next major version.
+     *
+     * @link       https://core.telegram.org/bots/api#replykeyboardmarkup
      *
      * @param array $params
      *
@@ -872,7 +1054,7 @@ class Api
      */
     public function replyKeyboardMarkup(array $params)
     {
-        return json_encode($params);
+        return Keyboard::make($params);
     }
 
     /**
@@ -885,7 +1067,10 @@ class Api
      * ];
      * </code>
      *
-     * @link https://core.telegram.org/bots/api#replykeyboardhide
+     * @deprecated Use Telegram\Bot\Keyboard\Keyboard::hide(array $params = []) instead.
+     *             To be removed in next major version.
+     *
+     * @link       https://core.telegram.org/bots/api#replykeyboardhide
      *
      * @param array $params
      *
@@ -896,7 +1081,7 @@ class Api
      */
     public static function replyKeyboardHide(array $params = [])
     {
-        return json_encode(array_merge(['hide_keyboard' => true, 'selective' => false], $params));
+        return Keyboard::hide($params);
     }
 
     /**
@@ -909,7 +1094,10 @@ class Api
      * ];
      * </code>
      *
-     * @link https://core.telegram.org/bots/api#forcereply
+     * @deprecated Use Telegram\Bot\Keyboard\Keyboard::forceReply(array $params = []) instead.
+     *             To be removed in next major version.
+     *
+     * @link       https://core.telegram.org/bots/api#forcereply
      *
      * @param array $params
      *
@@ -920,7 +1108,7 @@ class Api
      */
     public static function forceReply(array $params = [])
     {
-        return json_encode(array_merge(['force_reply' => true, 'selective' => false], $params));
+        return Keyboard::forceReply($params);
     }
 
     /**
@@ -970,6 +1158,19 @@ class Api
         if ($message !== null && $message->has('text')) {
             $this->getCommandBus()->handler($message->getText(), $update);
         }
+    }
+
+    /**
+     * Helper to Trigger Commands.
+     *
+     * @param string $name   Command Name
+     * @param Update $update Update Object
+     *
+     * @return mixed
+     */
+    public function triggerCommand($name, Update $update)
+    {
+        return $this->getCommandBus()->execute($name, $update->getMessage()->getText(), $update);
     }
 
     /**
@@ -1047,6 +1248,10 @@ class Api
      */
     protected function get($endpoint, $params = [])
     {
+        if (array_key_exists('reply_markup', $params)) {
+            $params['reply_markup'] = (string)$params['reply_markup'];
+        }
+
         return $this->sendRequest(
             'GET',
             $endpoint,
@@ -1068,6 +1273,11 @@ class Api
         if ($fileUpload) {
             $params = ['multipart' => $params];
         } else {
+
+            if (array_key_exists('reply_markup', $params)) {
+                $params['reply_markup'] = (string)$params['reply_markup'];
+            }
+
             $params = ['form_params' => $params];
         }
 
@@ -1264,36 +1474,19 @@ class Api
     }
 
     /**
-     * Use this method to send answers to an inline query.
+     * Emojify Given Property in Params.
      *
-     * <code>
-     * $params = [
-     *   'inline_query_id'  => '',
-     *   'results'          => [],
-     *   'cache_time'       => 0,
-     *   'is_personal'      => false,
-     *   'next_offset'      => '',
-     * ];
-     * </code>
+     * @param array  $params
+     * @param string $property
      *
-     * @link https://core.telegram.org/bots/api#answerinlinequery
-     *
-     * @param array     $params
-     *
-     * @var string      $params ['inline_query_id']
-     * @var array       $params ['results']
-     * @var int|null    $params ['cache_time']
-     * @var bool|null   $params ['is_personal']
-     * @var string|null $params ['next_offset']
-     *
-     * @return bool
+     * @return mixed
      */
-    public function answerInlineQuery(array $params = [])
+    protected function emojify(array $params, $property)
     {
-        if (is_array($params['results'])) {
-            $params['results'] = json_encode($params['results']);
+        if (isset($params[$property])) {
+            $params[$property] = Emojify::text($params[$property]);
         }
 
-        return $this->post('answerInlineQuery', $params);
+        return $params;
     }
 }

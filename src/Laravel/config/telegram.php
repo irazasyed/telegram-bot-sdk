@@ -49,7 +49,7 @@ return [
         ],
 
 //        'second' => [
-//            'name'  => 'MySecondBot',
+//            'username'  => 'MySecondBot',
 //            'token' => '123456:abc',
 //        ],
     ],

@@ -30,6 +30,14 @@ abstract class Command implements CommandInterface
     protected $name;
 
     /**
+     * Command Aliases
+     * Helpful when you want to trigger command with more than one name.
+     *
+     * @var array
+     */
+    protected $aliases = [];
+
+    /**
      * @var string The Telegram command description.
      */
     protected $description;
@@ -57,6 +65,16 @@ abstract class Command implements CommandInterface
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Get Command Aliases
+     *
+     * @return array
+     */
+    public function getAliases()
+    {
+        return $this->aliases;
     }
 
     /**

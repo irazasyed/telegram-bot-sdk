@@ -2,7 +2,6 @@
 
 namespace Telegram\Bot;
 
-use Illuminate\Contracts\Config\Repository;
 use Illuminate\Contracts\Container\Container;
 use InvalidArgumentException;
 
@@ -16,21 +15,16 @@ class BotsManager
     /**
      * The config instance.
      *
-     * @var \Illuminate\Contracts\Config\Repository
+     * @var array
      */
     protected $config;
 
     /**
-     * The app instance.
+     * The container instance.
      *
      * @var \Illuminate\Contracts\Container\Container
      */
-    protected $app;
-
-    /**
-     * @var string Config Name
-     */
-    protected $configName = 'telegram';
+    protected $container;
 
     /**
      * The active bot instances.
@@ -42,25 +36,37 @@ class BotsManager
     /**
      * TelegramManager constructor.
      *
-     * @param Repository  $config
-     * @param Container   $app
+     * @param array $config
      */
-    public function __construct(Repository $config, Container $app)
+    public function __construct(array $config)
     {
         $this->config = $config;
-        $this->app = $app;
+    }
+
+    /**
+     * Set the IoC Container.
+     *
+     * @param $container Container instance
+     *
+     * @return $this
+     */
+    public function setContainer(Container $container)
+    {
+        $this->container = $container;
+
+        return $this;
     }
 
     /**
      * Get the configuration for a bot.
      *
-     * @param string $name
+     * @param string|null $name
      *
      * @throws \InvalidArgumentException
      *
      * @return array
      */
-    public function getBotConfig($name)
+    public function getBotConfig($name = null)
     {
         $name = $name ?: $this->getDefaultBot();
 
@@ -130,7 +136,7 @@ class BotsManager
      */
     public function getConfig($key, $default = null)
     {
-        return $this->config->get($this->configName.'.'.$key, $default);
+        return array_get($this->config, $key, $default);
     }
 
     /**
@@ -148,11 +154,13 @@ class BotsManager
      *
      * @param string $name
      *
-     * @return void
+     * @return $this
      */
     public function setDefaultBot($name)
     {
-        $this->config->set($this->configName.'.default', $name);
+        array_set($this->config, 'default', $name);
+
+        return $this;
     }
 
     /**
@@ -198,8 +206,8 @@ class BotsManager
         );
 
         // Check if DI needs to be enabled for Commands
-        if ($this->getConfig('resolve_command_dependencies', true)) {
-            $telegram->setContainer($this->app);
+        if ($this->getConfig('resolve_command_dependencies', false) && isset($this->container)) {
+            $telegram->setContainer($this->container);
         }
 
         $commands = $this->parseBotCommands($commands);

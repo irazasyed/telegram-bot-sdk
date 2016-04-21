@@ -2,6 +2,8 @@
 
 namespace Telegram\Bot\Objects;
 
+use Telegram\Bot\Helpers\Emojify;
+
 /**
  * Class Message.
  *
@@ -13,7 +15,6 @@ namespace Telegram\Bot\Objects;
  * @method User             getForwardFrom()            (Optional). For forwarded messages, sender of the original message.
  * @method int              getForwardDate()            (Optional). For forwarded messages, date the original message was sent in Unix time.
  * @method Message          getReplyToMessage()         (Optional). For replies, the original message. Note that the Message object in this field will not contain further reply_to_message fields even if it itself is a reply.
- * @method string           getText()                   (Optional). For text messages, the actual UTF-8 text of the message.
  * @method MessageEntity[]  getEntities()               (Optional). For text messages, special entities like usernames, URLs, bot commands, etc. that appear in the text.
  * @method Audio            getAudio()                  (Optional). Message is an audio file, information about the file.
  * @method Document         getDocument()               (Optional). Message is a general file, information about the file.
@@ -21,7 +22,6 @@ namespace Telegram\Bot\Objects;
  * @method Sticker          getSticker()                (Optional). Message is a sticker, information about the sticker.
  * @method Video            getVideo()                  (Optional). Message is a video, information about the video.
  * @method Voice            getVoice()                  (Optional). Message is a voice message, information about the file.
- * @method string           getCaption()                (Optional). Caption for the document, photo or video contact.
  * @method Contact          getContact()                (Optional). Message is a shared contact, information about the contact.
  * @method Location         getLocation()               (Optional). Message is a shared location, information about the location.
  * @method Venue            getVenue()                  (Optional). Message is a venue, information about the venue.
@@ -65,4 +65,25 @@ class Message extends BaseObject
             'pinned_message'   => Message::class,
         ];
     }
+
+    /**
+     * (Optional). For text messages, the actual UTF-8 text of the message.
+     *
+     * @return string
+     */
+    public function getText()
+    {
+        return Emojify::translate($this->get('text'));
+    }
+
+    /**
+     * (Optional). Caption for the document, photo or video contact.
+     *
+     * @return string
+     */
+    public function getCaption()
+    {
+        return Emojify::translate($this->get('caption'));
+    }
+
 }
