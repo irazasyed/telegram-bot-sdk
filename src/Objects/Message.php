@@ -69,21 +69,27 @@ class Message extends BaseObject
     /**
      * (Optional). For text messages, the actual UTF-8 text of the message.
      *
+     * @param bool $unemojify
+     *
      * @return string
      */
-    public function getText()
+    public function getText($unemojify = true)
     {
-        return Emojify::translate($this->get('text'));
+        $text = $this->get('text');
+        return $unemojify ? Emojify::translate($text) : $text;
     }
 
     /**
      * (Optional). Caption for the document, photo or video contact.
      *
+     * @param bool $unemojify
+     *
      * @return string
      */
-    public function getCaption()
+    public function getCaption($unemojify = true)
     {
-        return Emojify::translate($this->get('caption'));
+        $caption = $this->get('caption');
+        return $unemojify ? Emojify::translate($caption) : $caption;
     }
 
 }
