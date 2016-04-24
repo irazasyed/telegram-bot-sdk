@@ -24,6 +24,6 @@ class Base extends Collection
             return $this;
         }
 
-        parent::__call($method, $args);
+        return parent::__call($method, $args);
     }
 }
