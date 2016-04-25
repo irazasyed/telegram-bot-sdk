@@ -2,8 +2,6 @@
 
 namespace Telegram\Bot\Objects;
 
-use Telegram\Bot\Helpers\Emojify;
-
 /**
  * Class Message.
  *
@@ -73,7 +71,7 @@ class Message extends BaseObject
      */
     public function getText()
     {
-        return Emojify::translate($this->get('text'));
+        return $this->get('text');
     }
 
     /**
@@ -83,7 +81,7 @@ class Message extends BaseObject
      */
     public function getCaption()
     {
-        return Emojify::translate($this->get('caption'));
+        return $this->get('caption');
     }
 
 }

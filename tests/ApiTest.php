@@ -442,14 +442,6 @@ class ApiTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(200, $response->getHttpStatusCode());
     }
 
-    /** @test * */
-    public function it_ensures_ability_to_disable_using_emojify_by_default()
-    {
-        $this->assertTrue($this->api->isUseEmojify());
-        $this->api->setUseEmojify(false);
-        $this->assertNotTrue($this->api->isUseEmojify());
-    }
-
     /**
      * A list of files/attachments types that should be tested.
      *

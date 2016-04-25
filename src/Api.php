@@ -15,7 +15,6 @@ use Telegram\Bot\Objects\Update;
 use Telegram\Bot\Objects\User;
 use Telegram\Bot\Objects\UserProfilePhotos;
 use Telegram\Bot\Keyboard\Keyboard;
-use Telegram\Bot\Helpers\Emojify;
 
 /**
  * Class Api.
@@ -77,13 +76,6 @@ class Api
      * @var int
      */
     protected $connectTimeOut = 10;
-
-    /**
-     * Use Emojify for text fields in requests.
-     *
-     * @var bool
-     */
-    protected $useEmojify = true;
 
     /**
      * Instantiates a new Telegram super-class object.
@@ -253,7 +245,6 @@ class Api
      */
     public function sendMessage(array $params)
     {
-        $params = $this->emojify($params, 'text');
         $response = $this->post('sendMessage', $params);
 
         return new Message($response->getDecodedBody());
@@ -318,8 +309,6 @@ class Api
      */
     public function sendPhoto(array $params)
     {
-        $params = $this->emojify($params, 'caption');
-
         return $this->uploadFile('sendPhoto', $params);
     }
 
@@ -388,8 +377,6 @@ class Api
      */
     public function sendDocument(array $params)
     {
-        $params = $this->emojify($params, 'caption');
-
         return $this->uploadFile('sendDocument', $params);
     }
 
@@ -465,8 +452,6 @@ class Api
      */
     public function sendVideo(array $params)
     {
-        $params = $this->emojify($params, 'caption');
-
         return $this->uploadFile('sendVideo', $params);
     }
 
@@ -791,8 +776,6 @@ class Api
      */
     public function answerCallbackQuery(array $params)
     {
-        $params = $this->emojify($params, 'text');
-
         return $this->post('answerCallbackQuery', $params);
     }
 
@@ -827,7 +810,6 @@ class Api
      */
     public function editMessageText(array $params)
     {
-        $params = $this->emojify($params, 'text');
         $response = $this->post('editMessageText', $params);
 
         return new Message($response->getDecodedBody());
@@ -860,7 +842,6 @@ class Api
      */
     public function editMessageCaption(array $params)
     {
-        $params = $this->emojify($params, 'caption');
         $response = $this->post('editMessageCaption', $params);
 
         return new Message($response->getDecodedBody());
@@ -1478,49 +1459,5 @@ class Api
         $this->connectTimeOut = $connectTimeOut;
 
         return $this;
-    }
-
-    /**
-     * Emojify Given Property in Params.
-     *
-     * @param array  $params
-     * @param string $property
-     *
-     * @return mixed
-     */
-    protected function emojify(array $params, $property)
-    {
-        if (!$this->isUseEmojify()) {
-            return $params;
-        }
-        if (isset($params[$property])) {
-            $params[$property] = Emojify::text($params[$property]);
-        }
-
-        return $params;
-    }
-
-    /**
-     * Change the behavior of using Emojify.
-     *
-     * @param bool $useEmojify
-     *
-     * @return Api
-     */
-    public function setUseEmojify($useEmojify)
-    {
-        $this->useEmojify = $useEmojify;
-
-        return $this;
-    }
-
-    /**
-     * Check if Emojify is enabled.
-     *
-     * @return bool
-     */
-    public function isUseEmojify()
-    {
-        return $this->useEmojify;
     }
 }

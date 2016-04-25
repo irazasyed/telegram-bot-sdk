@@ -37,8 +37,6 @@ return [
     |               Acme\Project\Commands\BotFather\HelloCommand::class,
     |               Acme\Project\Commands\BotFather\ByeCommand::class,
     |             ]
-    | - use_emojify: Ability to disable using Emojify by default.
-    |
     */
     'bots' => [
         'common' => [
@@ -47,7 +45,6 @@ return [
             'commands' => [
 //                Acme\Project\Commands\MyTelegramBot\BotCommand::class
             ],
-            'use_emojify' => env('TELEGRAM_USE_EMOJIFY', true),
         ],
 
 //        'second' => [

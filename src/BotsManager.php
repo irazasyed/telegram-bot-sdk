@@ -198,7 +198,6 @@ class BotsManager
 
         $token = array_get($config, 'token');
         $commands = array_get($config, 'commands', []);
-        $useEmojify = array_get($config, 'use_emojify', true);
 
         $telegram = new Api(
             $token,
@@ -215,11 +214,6 @@ class BotsManager
 
         // Register Commands
         $telegram->addCommands($commands);
-
-        // Use Emojify
-        if (!$useEmojify) {
-            $telegram->setUseEmojify(false);
-        }
 
         return $telegram;
     }
