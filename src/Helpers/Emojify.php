@@ -158,13 +158,9 @@ class Emojify
      */
     protected function wordToEmojiReplace($line, $replace, $delimiter)
     {
-        $pattern = '/' . preg_quote($delimiter, '/') . '([^' . preg_quote($delimiter, '/') .']*)' . preg_quote($delimiter, '/') . '/';
-        $line = preg_replace_callback($pattern, function ($matches) use ($replace) {
-            if (array_key_exists($matches[1], $replace)) {
-                return $replace[$matches[1]];
-            }
-            return $matches[1];
-        }, $line);
+        foreach ($replace as $key => $value) {
+            $line = str_replace($delimiter.$key.$delimiter, $value, $line);
+        }
 
         return $line;
     }
