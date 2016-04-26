@@ -36,7 +36,7 @@ Any issues, feedback, suggestions or questions please use issue tracker [here][l
 
 ## Contributing
 
-Thank you for considering contributing to the project. Please review the [CONTRIBUTING](https://github.com/irazasyed/telegram-bot-sdk/blob/master/docs/contributing.md) guidelines before submitting any pull requests.
+Thank you for considering contributing to the project. Please review the [CONTRIBUTING](https://telegram-bot-sdk.readme.io/docs/contributing) guidelines before submitting any pull requests.
 
 ## Credits
 
