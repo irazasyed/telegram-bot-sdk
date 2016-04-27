@@ -129,7 +129,7 @@ class CommandBusTest extends \PHPUnit_Framework_TestCase
         $command = new MockCommand();
         $this->commandBus->addCommand($command);
 
-        $res = $this->commandBus->execute('mycommand', '', Mocker::createUpdateResponse());
+        $res = $this->commandBus->execute('mycommand', '', Mocker::createUpdateObject()->reveal());
 
         $this->assertEquals('mycommand handled', $res);
     }

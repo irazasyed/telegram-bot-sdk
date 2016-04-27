@@ -2,28 +2,50 @@
 
 namespace Telegram\Bot\Commands;
 
+use Telegram\Bot\Api;
+use Telegram\Bot\Objects\Update;
+
 /**
  * Interface CommandInterface.
  */
 interface CommandInterface
 {
     /**
-     * Process Inbound Command.
+     * Get Command Name.
      *
-     * @param $telegram
-     * @param $arguments
-     * @param $update
+     * The name of the Telegram command.
+     * Ex: help - Whenever the user sends /help, this would be resolved.
      *
-     * @return mixed
+     * @return string
      */
-    public function make($telegram, $arguments, $update);
+    public function getName();
 
     /**
-     * Process the command.
+     * Get Command Aliases
      *
-     * @param $arguments
+     * Helpful when you want to trigger command with more than one name.
+     *
+     * @return array
+     */
+    public function getAliases();
+
+    /**
+     * Get Command Description.
+     *
+     * The Telegram command description.
+     *
+     * @return string
+     */
+    public function getDescription();
+
+    /**
+     * Process Inbound Command.
+     *
+     * @param Api $telegram
+     * @param string $arguments
+     * @param Update $update
      *
      * @return mixed
      */
-    public function handle($arguments);
+    public function make(Api $telegram, $arguments, Update $update);
 }
