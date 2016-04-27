@@ -156,9 +156,9 @@ abstract class Command implements CommandInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function make($telegram, $arguments, $update)
+    public function make(Api $telegram, $arguments, Update $update)
     {
         $this->telegram = $telegram;
         $this->arguments = $arguments;
