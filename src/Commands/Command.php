@@ -2,6 +2,7 @@
 
 namespace Telegram\Bot\Commands;
 
+use Telegram\Bot\Answers\Answerable;
 use Telegram\Bot\Api;
 use Telegram\Bot\Objects\Update;
 
@@ -21,6 +22,8 @@ use Telegram\Bot\Objects\Update;
  */
 abstract class Command implements CommandInterface
 {
+    use Answerable;
+
     /**
      * The name of the Telegram command.
      * Ex: help - Whenever the user sends /help, this would be resolved.
@@ -43,19 +46,9 @@ abstract class Command implements CommandInterface
     protected $description;
 
     /**
-     * @var Api Holds the Super Class Instance.
-     */
-    protected $telegram;
-
-    /**
      * @var string Arguments passed to the command.
      */
     protected $arguments;
-
-    /**
-     * @var Update Holds an Update object.
-     */
-    protected $update;
 
     /**
      * Get Command Name.
@@ -116,26 +109,6 @@ abstract class Command implements CommandInterface
     }
 
     /**
-     * Returns Telegram Instance.
-     *
-     * @return Api
-     */
-    public function getTelegram()
-    {
-        return $this->telegram;
-    }
-
-    /**
-     * Returns Original Update.
-     *
-     * @return Update
-     */
-    public function getUpdate()
-    {
-        return $this->update;
-    }
-
-    /**
      * Get Arguments passed to the command.
      *
      * @return string
@@ -184,32 +157,4 @@ abstract class Command implements CommandInterface
      * {@inheritdoc}
      */
     abstract public function handle($arguments);
-
-    /**
-     * Magic Method to handle all ReplyWith Methods.
-     *
-     * @param $method
-     * @param $arguments
-     *
-     * @return mixed|string
-     */
-    public function __call($method, $arguments)
-    {
-        $action = substr($method, 0, 9);
-        if ($action === 'replyWith') {
-            $reply_name = studly_case(substr($method, 9));
-            $methodName = 'send'.$reply_name;
-
-            if (!method_exists($this->telegram, $methodName)) {
-                throw new \BadMethodCallException("Method [$method] does not exist.");
-            }
-
-            $chat_id = $this->update->getMessage()->getChat()->getId();
-            $params = array_merge(compact('chat_id'), $arguments[0]);
-
-            return call_user_func_array([$this->telegram, $methodName], [$params]);
-        }
-
-        throw new \BadMethodCallException("Method [$method] does not exist.");
-    }
 }
