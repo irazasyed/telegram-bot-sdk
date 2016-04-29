@@ -56,7 +56,7 @@ class AnswerBus
      * Handle calls to missing methods.
      *
      * @param  string $method
-     * @param  array  $parameters
+     * @param  array $parameters
      *
      * @return mixed
      *

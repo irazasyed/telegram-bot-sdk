@@ -19,7 +19,7 @@ interface ConversationInterface
 
     /**
      * Handle Conversation.
-     * 
+     *
      * @return mixed
      */
     public function handle();
