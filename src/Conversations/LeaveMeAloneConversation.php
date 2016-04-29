@@ -16,5 +16,4 @@ class LeaveMeAloneConversation extends Conversation
     {
         $this->replyWithMessage(['text' => 'Leave me alone, please.']);
     }
-
 }
