@@ -962,13 +962,15 @@ class Api
      *
      * @return Update
      */
-    public function getWebhookUpdates()
+    public function getWebhookUpdates($emitUpdateReceivedEvent = true)
     {
         $body = json_decode(file_get_contents('php://input'), true);
 
         $update = new Update($body);
 
-        $this->emitEvent(new UpdateReceivedEvent($update));
+        if ($emitUpdateReceivedEvent) {
+            $this->emitEvent(new UpdateReceivedEvent($update));
+        }
 
         return $update;
     }
@@ -999,14 +1001,14 @@ class Api
      * @link https://core.telegram.org/bots/api#getupdates
      *
      * @param array  $params
-     *
+     * @param bool  $emitUpdateReceivedEvents
      * @var int|null $params ['offset']
      * @var int|null $params ['limit']
      * @var int|null $params ['timeout']
      *
      * @return Update[]
      */
-    public function getUpdates(array $params = [])
+    public function getUpdates(array $params = [], $emitUpdateReceivedEvents = true)
     {
         $response = $this->post('getUpdates', $params);
         $updates = $response->getDecodedBody();
@@ -1016,7 +1018,11 @@ class Api
         if (isset($updates['result'])) {
             foreach ($updates['result'] as $body) {
                 $update = new Update($body);
-                $this->emitEvent(new UpdateReceivedEvent($update));
+
+                if ($emitUpdateReceivedEvents) {
+                    $this->emitEvent(new UpdateReceivedEvent($update));
+                }
+
                 $data[] = $update;
             }
         }
