@@ -2,6 +2,7 @@
 
 namespace Telegram\Bot\Commands;
 
+use Telegram\Bot\Answers\AnswerBus;
 use Telegram\Bot\Api;
 use Telegram\Bot\Objects\Update;
 use Telegram\Bot\Exceptions\TelegramSDKException;
@@ -9,7 +10,7 @@ use Telegram\Bot\Exceptions\TelegramSDKException;
 /**
  * Class CommandBus.
  */
-class CommandBus
+class CommandBus extends AnswerBus
 {
     /**
      * @var Command[] Holds all commands.
@@ -20,11 +21,6 @@ class CommandBus
      * @var Command[] Holds all commands' aliases.
      */
     protected $commandAliases = [];
-
-    /**
-     * @var Api
-     */
-    private $telegram;
 
     /**
      * Instantiate Command Bus.
@@ -86,7 +82,7 @@ class CommandBus
             }
 
             if ($this->telegram->hasContainer()) {
-                $command = $this->buildDependencyInjectedCommand($command);
+                $command = $this->buildDependencyInjectedAnswer($command);
             } else {
                 $command = new $command();
             }
@@ -232,61 +228,5 @@ class CommandBus
         }
 
         return 'Ok';
-    }
-
-    /**
-     * Use PHP Reflection and Laravel Container to instantiate the command with type hinted dependencies.
-     *
-     * @param $commandClass
-     *
-     * @return object
-     */
-    private function buildDependencyInjectedCommand($commandClass)
-    {
-
-        // check if the command has a constructor
-        if (!method_exists($commandClass, '__construct')) {
-            return new $commandClass();
-        }
-
-        // get constructor params
-        $constructorReflector = new \ReflectionMethod($commandClass, '__construct');
-        $params = $constructorReflector->getParameters();
-
-        // if no params are needed proceed with normal instantiation
-        if (empty($params)) {
-            return new $commandClass();
-        }
-
-        // otherwise fetch each dependency out of the container
-        $container = $this->telegram->getContainer();
-        $dependencies = [];
-        foreach ($params as $param) {
-            $dependencies[] = $container->make($param->getClass()->name);
-        }
-
-        // and instantiate the object with dependencies through ReflectionClass
-        $classReflector = new \ReflectionClass($commandClass);
-
-        return $classReflector->newInstanceArgs($dependencies);
-    }
-
-    /**
-     * Handle calls to missing methods.
-     *
-     * @param  string $method
-     * @param  array  $parameters
-     *
-     * @return mixed
-     *
-     * @throws \BadMethodCallException
-     */
-    public function __call($method, $parameters)
-    {
-        if (method_exists($this, $method)) {
-            return call_user_func_array([$this, $method], $parameters);
-        }
-
-        throw new \BadMethodCallException("Method [$method] does not exist.");
     }
 }
