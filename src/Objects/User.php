@@ -2,7 +2,6 @@
 
 namespace Telegram\Bot\Objects;
 
-use bar\baz\source_with_namespace;
 use Doctrine\Common\Cache\FilesystemCache;
 use Doctrine\Common\Cache\SQLite3Cache;
 use Telegram\Bot\Conversations\Conversation;
