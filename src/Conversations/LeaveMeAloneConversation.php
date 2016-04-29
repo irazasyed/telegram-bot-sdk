@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Telegram\Bot\Conversations;
-
 
 /**
  * Class HelloConversation

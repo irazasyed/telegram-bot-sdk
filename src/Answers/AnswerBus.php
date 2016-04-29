@@ -70,7 +70,7 @@ class AnswerBus
 
         throw new \BadMethodCallException("Method [$method] does not exist.");
     }
-    
+
     /**
      * @return Api
      */

@@ -7,7 +7,6 @@ use Telegram\Bot\Answers\Answer;
 use Telegram\Bot\Api;
 use Telegram\Bot\Objects\Update;
 
-
 /**
  * Class Conversation
  */
