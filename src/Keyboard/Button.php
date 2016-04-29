@@ -20,11 +20,13 @@ class Button extends Base
      *
      * @param string $text
      *
+     * @param bool $emojify
+     *
      * @return $this
      */
-    public function setText($text)
+    public function setText($text, $emojify = true)
     {
-        $this->items['text'] = Emojify::text($text);
+        $this->items['text'] = $emojify ? Emojify::text($text) : $text;
 
         return $this;
     }

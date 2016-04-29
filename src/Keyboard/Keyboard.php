@@ -100,6 +100,7 @@ class Keyboard extends Base
      * @link https://core.telegram.org/bots/api#keyboardbutton
      *
      * @param string|array $params
+     * @param bool         $emojify
      *
      * @var string         $params ['text']
      * @var bool           $params ['request_contact']
@@ -107,10 +108,10 @@ class Keyboard extends Base
      *
      * @return mixed
      */
-    public static function button($params = [])
+    public static function button($params = [], $emojify = true)
     {
         if (is_string($params)) {
-            return Emojify::text($params);
+            return $emojify ? Emojify::text($params) : $params;
         }
 
         return Button::make($params);
