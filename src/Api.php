@@ -4,6 +4,8 @@ namespace Telegram\Bot;
 
 use Illuminate\Contracts\Container\Container;
 use Telegram\Bot\Commands\CommandBus;
+use Telegram\Bot\Events\EmitsEvents;
+use Telegram\Bot\Events\UpdateReceivedEvent;
 use Telegram\Bot\Exceptions\TelegramSDKException;
 use Telegram\Bot\FileUpload\InputFile;
 use Telegram\Bot\HttpClients\GuzzleHttpClient;
@@ -23,6 +25,8 @@ use Telegram\Bot\Keyboard\Keyboard;
  */
 class Api
 {
+    use EmitsEvents;
+
     /**
      * @var string Version number of the Telegram Bot PHP SDK.
      */
@@ -962,7 +966,11 @@ class Api
     {
         $body = json_decode(file_get_contents('php://input'), true);
 
-        return new Update($body);
+        $update = new Update($body);
+
+        $this->emitEvent(new UpdateReceivedEvent($update));
+
+        return $update;
     }
 
     /**
@@ -1003,10 +1011,13 @@ class Api
         $response = $this->post('getUpdates', $params);
         $updates = $response->getDecodedBody();
 
+        /** @var Update[] $data */
         $data = [];
         if (isset($updates['result'])) {
-            foreach ($updates['result'] as $update) {
-                $data[] = new Update($update);
+            foreach ($updates['result'] as $body) {
+                $update = new Update($body);
+                $this->emitEvent(new UpdateReceivedEvent($update));
+                $data[] = $update;
             }
         }
 
