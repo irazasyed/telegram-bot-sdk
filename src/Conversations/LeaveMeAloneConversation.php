@@ -4,8 +4,6 @@ namespace Telegram\Bot\Conversations;
 
 /**
  * Class HelloConversation
- * @package Telegram\Bot\Conversations
- * @author Artiom Mocrenco <tjomamokrenko@gmail.com>
  */
 class LeaveMeAloneConversation extends Conversation
 {
