@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Telegram\Bot\Answers;
 
 use Telegram\Bot\Api;

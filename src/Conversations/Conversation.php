@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Telegram\Bot\Conversations;
 
 use Telegram\Bot\Answers\Answerable;
