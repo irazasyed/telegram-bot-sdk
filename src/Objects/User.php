@@ -2,6 +2,7 @@
 
 namespace Telegram\Bot\Objects;
 
+use Doctrine\Common\Cache\Cache;
 use Doctrine\Common\Cache\FilesystemCache;
 use Doctrine\Common\Cache\SQLite3Cache;
 use Telegram\Bot\Conversations\Conversation;
@@ -24,18 +25,18 @@ class User extends BaseObject
     private $currentConversation;
 
     /**
-     * @var SQLite3Cache $cache
+     * @var Cache $cache
      */
     private $cache;
 
     /**
      * @inheritdoc
      */
-    public function __construct($data)
+    public function __construct($data, Cache $cache = null)
     {
         parent::__construct($data);
 
-        $this->cache = new FilesystemCache(__DIR__.'/../Storage/cache');
+        $this->cache = is_null($cache) ? new FilesystemCache(__DIR__.'/../Storage/cache') : $cache;
     }
 
     /**
