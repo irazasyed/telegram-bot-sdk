@@ -3,15 +3,17 @@
 
 namespace Telegram\Bot\Conversations;
 
-use Telegram\Bot\Answers\Answer;
+use Telegram\Bot\Answers\Answerable;
 use Telegram\Bot\Api;
 use Telegram\Bot\Objects\Update;
 
 /**
  * Class Conversation
  */
-abstract class Conversation extends Answer implements ConversationInterface
+abstract class Conversation implements ConversationInterface
 {
+    use Answerable;
+
     /**
      * @inheritdoc
      */

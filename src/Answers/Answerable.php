@@ -18,7 +18,7 @@ use Telegram\Bot\Objects\Update;
  * @method mixed replyWithLocation($use_sendLocation_parameters)     Reply Chat with a Location. You can use all the sendLocation() parameters except chat_id.
  * @method mixed replyWithChatAction($use_sendChatAction_parameters) Reply Chat with a Chat Action. You can use all the sendChatAction() parameters except chat_id.
  */
-abstract class Answer
+trait Answerable
 {
     /**
      * @var Api Holds the Super Class Instance.

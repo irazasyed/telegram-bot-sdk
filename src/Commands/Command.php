@@ -2,15 +2,17 @@
 
 namespace Telegram\Bot\Commands;
 
-use Telegram\Bot\Answers\Answer;
+use Telegram\Bot\Answers\Answerable;
 use Telegram\Bot\Api;
 use Telegram\Bot\Objects\Update;
 
 /**
  * Class Command.
  */
-abstract class Command extends Answer implements CommandInterface
+abstract class Command implements CommandInterface
 {
+    use Answerable;
+
     /**
      * The name of the Telegram command.
      * Ex: help - Whenever the user sends /help, this would be resolved.
