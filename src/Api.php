@@ -4,6 +4,7 @@ namespace Telegram\Bot;
 
 use Illuminate\Contracts\Container\Container;
 use Telegram\Bot\Commands\CommandBus;
+use Telegram\Bot\Conversations\ConversationBus;
 use Telegram\Bot\Exceptions\TelegramSDKException;
 use Telegram\Bot\FileUpload\InputFile;
 use Telegram\Bot\HttpClients\GuzzleHttpClient;
@@ -60,6 +61,11 @@ class Api
     protected $commandBus = null;
 
     /**
+     * @var ConversationBus|null Telegram Command Bus.
+     */
+    protected $conversationBus = null;
+
+    /**
      * @var Container IoC Container
      */
     protected static $container = null;
@@ -109,6 +115,7 @@ class Api
 
         $this->client = new TelegramClient($httpClientHandler);
         $this->commandBus = new CommandBus($this);
+        $this->conversationBus = new ConversationBus($this);
     }
 
     /**
@@ -205,6 +212,14 @@ class Api
     public function getCommandBus()
     {
         return $this->commandBus;
+    }
+
+    /**
+     * @return null|ConversationBus
+     */
+    public function getConversationBus()
+    {
+        return $this->conversationBus;
     }
 
     /**
@@ -1025,7 +1040,19 @@ class Api
         $data = [];
         if (isset($updates['result'])) {
             foreach ($updates['result'] as $update) {
-                $data[] = new Update($update);
+                /** @var Update $d */
+
+                $messageIdUnique = true;
+                foreach ($data as $d) {
+                    // TODO investigate duplicate message_ids (they come with response)
+                    if ($d->getMessage()->getMessageId() === $update['message']['message_id']) {
+                        $messageIdUnique = false;
+                    }
+                }
+
+                if ($messageIdUnique) {
+                    $data[] = new Update($update);
+                }
             }
         }
 
@@ -1153,6 +1180,44 @@ class Api
         return $updates;
     }
 
+
+    /**
+     * Processes Inbound Conversations.
+     *
+     * @param bool $webhook
+     *
+     * @return Update|Update[]
+     */
+    public function conversationsHandler($webhook = false)
+    {
+        if ($webhook) {
+            $update = $this->getWebhookUpdates();
+            $this->processConversation($update);
+
+            return $update;
+        }
+
+        $updates = $this->getUpdates();
+        $highestId = -1;
+
+        foreach ($updates as $update) {
+            $highestId = $update->getUpdateId();
+            $this->processConversation($update);
+        }
+
+        //An update is considered confirmed as soon as getUpdates is called with an offset higher than its update_id.
+        if ($highestId != -1) {
+            $params = [];
+            $params['offset'] = $highestId + 1;
+            $params['limit'] = 1;
+            $this->getUpdates($params);
+        }
+
+        return $updates;
+    }
+    
+    
+
     /**
      * Check update object for a command and process.
      *
@@ -1164,6 +1229,20 @@ class Api
 
         if ($message !== null && $message->has('text')) {
             $this->getCommandBus()->handler($message->getText(), $update);
+        }
+    }
+
+    /**
+     * Check update object for a command and process.
+     *
+     * @param Update $update
+     */
+    public function processConversation(Update $update)
+    {
+        $message = $update->getMessage();
+
+        if ($message !== null && $message->has('text')) {
+            $this->getConversationBus()->handler($message->getText(), $update);
         }
     }
 
