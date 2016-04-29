@@ -2,14 +2,15 @@
 
 namespace Telegram\Bot\Commands;
 
+use Telegram\Bot\Answers\AnswerBus;
 use Telegram\Bot\Api;
-use Telegram\Bot\Objects\Update;
 use Telegram\Bot\Exceptions\TelegramSDKException;
+use Telegram\Bot\Objects\Update;
 
 /**
  * Class CommandBus.
  */
-class CommandBus
+class CommandBus extends AnswerBus
 {
     /**
      * @var Command[] Holds all commands.
@@ -20,11 +21,6 @@ class CommandBus
      * @var Command[] Holds all commands' aliases.
      */
     protected $commandAliases = [];
-
-    /**
-     * @var Api
-     */
-    private $telegram;
 
     /**
      * Instantiate Command Bus.
@@ -86,7 +82,7 @@ class CommandBus
             }
 
             if ($this->telegram->hasContainer()) {
-                $command = $this->buildDependencyInjectedCommand($command);
+                $command = $this->buildDependencyInjectedAnswer($command);
             } else {
                 $command = new $command();
             }
@@ -98,7 +94,7 @@ class CommandBus
              * At this stage we definitely have a proper command to use.
              *
              * @var Command $command
-             */
+      *       */
             $this->commands[$command->getName()] = $command;
 
             $aliases = $command->getAliases();
@@ -139,20 +135,6 @@ class CommandBus
     }
 
     /**
-     * Remove a command from the list.
-     *
-     * @param $name
-     *
-     * @return CommandBus
-     */
-    public function removeCommand($name)
-    {
-        unset($this->commands[$name]);
-
-        return $this;
-    }
-
-    /**
      * Removes a list of commands.
      *
      * @param array $names
@@ -169,23 +151,17 @@ class CommandBus
     }
 
     /**
-     * Parse a Command for a Match.
+     * Remove a command from the list.
      *
-     * @param $text
+     * @param $name
      *
-     * @throws \InvalidArgumentException
-     *
-     * @return array
+     * @return CommandBus
      */
-    public function parseCommand($text)
+    public function removeCommand($name)
     {
-        if (trim($text) === '') {
-            throw new \InvalidArgumentException('Message is empty, Cannot parse for command');
-        }
+        unset($this->commands[$name]);
 
-        preg_match('/^\/([^\s@]+)@?(\S+)?\s?(.*)$/', $text, $matches);
-
-        return $matches;
+        return $this;
     }
 
     /**
@@ -213,6 +189,26 @@ class CommandBus
     }
 
     /**
+     * Parse a Command for a Match.
+     *
+     * @param $text
+     *
+     * @throws \InvalidArgumentException
+     *
+     * @return array
+     */
+    public function parseCommand($text)
+    {
+        if (trim($text) === '') {
+            throw new \InvalidArgumentException('Message is empty, Cannot parse for command');
+        }
+
+        preg_match('/^\/([^\s@]+)@?(\S+)?\s?(.*)$/', $text, $matches);
+
+        return $matches;
+    }
+
+    /**
      * Execute the command.
      *
      * @param $name
@@ -232,61 +228,5 @@ class CommandBus
         }
 
         return 'Ok';
-    }
-
-    /**
-     * Use PHP Reflection and Laravel Container to instantiate the command with type hinted dependencies.
-     *
-     * @param $commandClass
-     *
-     * @return object
-     */
-    private function buildDependencyInjectedCommand($commandClass)
-    {
-
-        // check if the command has a constructor
-        if (!method_exists($commandClass, '__construct')) {
-            return new $commandClass();
-        }
-
-        // get constructor params
-        $constructorReflector = new \ReflectionMethod($commandClass, '__construct');
-        $params = $constructorReflector->getParameters();
-
-        // if no params are needed proceed with normal instantiation
-        if (empty($params)) {
-            return new $commandClass();
-        }
-
-        // otherwise fetch each dependency out of the container
-        $container = $this->telegram->getContainer();
-        $dependencies = [];
-        foreach ($params as $param) {
-            $dependencies[] = $container->make($param->getClass()->name);
-        }
-
-        // and instantiate the object with dependencies through ReflectionClass
-        $classReflector = new \ReflectionClass($commandClass);
-
-        return $classReflector->newInstanceArgs($dependencies);
-    }
-
-    /**
-     * Handle calls to missing methods.
-     *
-     * @param  string $method
-     * @param  array  $parameters
-     *
-     * @return mixed
-     *
-     * @throws \BadMethodCallException
-     */
-    public function __call($method, $parameters)
-    {
-        if (method_exists($this, $method)) {
-            return call_user_func_array([$this, $method], $parameters);
-        }
-
-        throw new \BadMethodCallException("Method [$method] does not exist.");
     }
 }
