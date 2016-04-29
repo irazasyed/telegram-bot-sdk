@@ -16,11 +16,4 @@ interface ConversationInterface
      * @return mixed
      */
     public function make(Api $telegram, Update $update);
-
-    /**
-     * Handle Conversation.
-     *
-     * @return mixed
-     */
-    public function handle();
 }
