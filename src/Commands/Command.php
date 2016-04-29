@@ -50,16 +50,6 @@ abstract class Command implements CommandInterface
     }
 
     /**
-     * Get Command Aliases
-     *
-     * @return array
-     */
-    public function getAliases()
-    {
-        return $this->aliases;
-    }
-
-    /**
      * Set Command Name.
      *
      * @param $name
@@ -71,6 +61,16 @@ abstract class Command implements CommandInterface
         $this->name = $name;
 
         return $this;
+    }
+
+    /**
+     * Get Command Aliases
+     *
+     * @return array
+     */
+    public function getAliases()
+    {
+        return $this->aliases;
     }
 
     /**
@@ -108,16 +108,6 @@ abstract class Command implements CommandInterface
     }
 
     /**
-     * Returns an instance of Command Bus.
-     *
-     * @return CommandBus
-     */
-    public function getCommandBus()
-    {
-        return $this->telegram->getCommandBus();
-    }
-
-    /**
      * @inheritDoc
      */
     public function make(Api $telegram, $arguments, Update $update)
@@ -128,6 +118,11 @@ abstract class Command implements CommandInterface
 
         return $this->handle($arguments);
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    abstract public function handle($arguments);
 
     /**
      * Helper to Trigger other Commands.
@@ -143,7 +138,12 @@ abstract class Command implements CommandInterface
     }
 
     /**
-     * {@inheritdoc}
+     * Returns an instance of Command Bus.
+     *
+     * @return CommandBus
      */
-    abstract public function handle($arguments);
+    public function getCommandBus()
+    {
+        return $this->telegram->getCommandBus();
+    }
 }

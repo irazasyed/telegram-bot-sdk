@@ -135,20 +135,6 @@ class CommandBus extends AnswerBus
     }
 
     /**
-     * Remove a command from the list.
-     *
-     * @param $name
-     *
-     * @return CommandBus
-     */
-    public function removeCommand($name)
-    {
-        unset($this->commands[$name]);
-
-        return $this;
-    }
-
-    /**
      * Removes a list of commands.
      *
      * @param array $names
@@ -165,23 +151,17 @@ class CommandBus extends AnswerBus
     }
 
     /**
-     * Parse a Command for a Match.
+     * Remove a command from the list.
      *
-     * @param $text
+     * @param $name
      *
-     * @throws \InvalidArgumentException
-     *
-     * @return array
+     * @return CommandBus
      */
-    public function parseCommand($text)
+    public function removeCommand($name)
     {
-        if (trim($text) === '') {
-            throw new \InvalidArgumentException('Message is empty, Cannot parse for command');
-        }
+        unset($this->commands[$name]);
 
-        preg_match('/^\/([^\s@]+)@?(\S+)?\s?(.*)$/', $text, $matches);
-
-        return $matches;
+        return $this;
     }
 
     /**
@@ -206,6 +186,26 @@ class CommandBus extends AnswerBus
         }
 
         return $update;
+    }
+
+    /**
+     * Parse a Command for a Match.
+     *
+     * @param $text
+     *
+     * @throws \InvalidArgumentException
+     *
+     * @return array
+     */
+    public function parseCommand($text)
+    {
+        if (trim($text) === '') {
+            throw new \InvalidArgumentException('Message is empty, Cannot parse for command');
+        }
+
+        preg_match('/^\/([^\s@]+)@?(\S+)?\s?(.*)$/', $text, $matches);
+
+        return $matches;
     }
 
     /**

@@ -93,17 +93,6 @@ class ConversationBus extends AnswerBus
     }
 
     /**
-     * @param $name
-     * @return $this
-     */
-    public function removeConversation($name)
-    {
-        unset($this->conversations[$name]);
-
-        return $this;
-    }
-
-    /**
      * @param array $names
      * @return $this
      */
@@ -112,6 +101,17 @@ class ConversationBus extends AnswerBus
         foreach ($names as $name) {
             $this->removeConversation($name);
         }
+
+        return $this;
+    }
+
+    /**
+     * @param $name
+     * @return $this
+     */
+    public function removeConversation($name)
+    {
+        unset($this->conversations[$name]);
 
         return $this;
     }

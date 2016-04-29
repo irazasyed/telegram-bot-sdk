@@ -14,6 +14,32 @@ class AnswerBus
      */
     protected $telegram;
 
+    /**
+     * Handle calls to missing methods.
+     *
+     * @param  string $method
+     * @param  array $parameters
+     *
+     * @return mixed
+     *
+     * @throws \BadMethodCallException
+     */
+    public function __call($method, $parameters)
+    {
+        if (method_exists($this, $method)) {
+            return call_user_func_array([$this, $method], $parameters);
+        }
+
+        throw new \BadMethodCallException("Method [$method] does not exist.");
+    }
+
+    /**
+     * @return Api
+     */
+    public function getTelegram()
+    {
+        return $this->telegram;
+    }
 
     /**
      * Use PHP Reflection and Laravel Container to instantiate the command with type hinted dependencies.
@@ -49,32 +75,5 @@ class AnswerBus
         $classReflector = new \ReflectionClass($answerClass);
 
         return $classReflector->newInstanceArgs($dependencies);
-    }
-
-    /**
-     * Handle calls to missing methods.
-     *
-     * @param  string $method
-     * @param  array $parameters
-     *
-     * @return mixed
-     *
-     * @throws \BadMethodCallException
-     */
-    public function __call($method, $parameters)
-    {
-        if (method_exists($this, $method)) {
-            return call_user_func_array([$this, $method], $parameters);
-        }
-
-        throw new \BadMethodCallException("Method [$method] does not exist.");
-    }
-
-    /**
-     * @return Api
-     */
-    public function getTelegram()
-    {
-        return $this->telegram;
     }
 }
