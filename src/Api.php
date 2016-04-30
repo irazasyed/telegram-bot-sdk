@@ -4,9 +4,10 @@ namespace Telegram\Bot;
 
 use Illuminate\Contracts\Container\Container;
 use Telegram\Bot\Commands\CommandBus;
+use Telegram\Bot\Events\EmitsEvents;
+use Telegram\Bot\Events\UpdateWasReceived;
 use Telegram\Bot\Exceptions\TelegramSDKException;
 use Telegram\Bot\FileUpload\InputFile;
-use Telegram\Bot\HttpClients\GuzzleHttpClient;
 use Telegram\Bot\HttpClients\HttpClientInterface;
 use Telegram\Bot\Objects\File;
 use Telegram\Bot\Objects\Message;
@@ -23,6 +24,8 @@ use Telegram\Bot\Keyboard\Keyboard;
  */
 class Api
 {
+    use EmitsEvents;
+
     /**
      * @var string Version number of the Telegram Bot PHP SDK.
      */
@@ -958,11 +961,17 @@ class Api
      *
      * @return Update
      */
-    public function getWebhookUpdates()
+    public function getWebhookUpdates($emitUpdateWasReceivedEvent = true)
     {
         $body = json_decode(file_get_contents('php://input'), true);
 
-        return new Update($body);
+        $update = new Update($body);
+
+        if ($emitUpdateWasReceivedEvent) {
+            $this->emitEvent(new UpdateWasReceived($update));
+        }
+
+        return $update;
     }
 
     /**
@@ -991,22 +1000,29 @@ class Api
      * @link https://core.telegram.org/bots/api#getupdates
      *
      * @param array  $params
-     *
+     * @param bool  $emitUpdateWasReceivedEvents
      * @var int|null $params ['offset']
      * @var int|null $params ['limit']
      * @var int|null $params ['timeout']
      *
      * @return Update[]
      */
-    public function getUpdates(array $params = [])
+    public function getUpdates(array $params = [], $emitUpdateWasReceivedEvents = true)
     {
         $response = $this->post('getUpdates', $params);
         $updates = $response->getDecodedBody();
 
+        /** @var Update[] $data */
         $data = [];
         if (isset($updates['result'])) {
-            foreach ($updates['result'] as $update) {
-                $data[] = new Update($update);
+            foreach ($updates['result'] as $body) {
+                $update = new Update($body);
+
+                if ($emitUpdateWasReceivedEvents) {
+                    $this->emitEvent(new UpdateWasReceived($update));
+                }
+
+                $data[] = $update;
             }
         }
 
