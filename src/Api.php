@@ -968,7 +968,7 @@ class Api
         $update = new Update($body);
 
         if ($emitUpdateWasReceivedEvent) {
-            $this->emitEvent(new UpdateWasReceived($update));
+            $this->emitEvent(new UpdateWasReceived($update, $this));
         }
 
         return $update;
@@ -1019,7 +1019,7 @@ class Api
                 $update = new Update($body);
 
                 if ($emitUpdateWasReceivedEvents) {
-                    $this->emitEvent(new UpdateWasReceived($update));
+                    $this->emitEvent(new UpdateWasReceived($update, $this));
                 }
 
                 $data[] = $update;
