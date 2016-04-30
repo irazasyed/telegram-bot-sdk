@@ -5,7 +5,7 @@ namespace Telegram\Bot;
 use Illuminate\Contracts\Container\Container;
 use Telegram\Bot\Commands\CommandBus;
 use Telegram\Bot\Events\EmitsEvents;
-use Telegram\Bot\Events\UpdateWasReceivedEvent;
+use Telegram\Bot\Events\UpdateWasReceived;
 use Telegram\Bot\Exceptions\TelegramSDKException;
 use Telegram\Bot\FileUpload\InputFile;
 use Telegram\Bot\HttpClients\HttpClientInterface;
@@ -968,7 +968,7 @@ class Api
         $update = new Update($body);
 
         if ($emitUpdateWasReceivedEvent) {
-            $this->emitEvent(new UpdateWasReceivedEvent($update));
+            $this->emitEvent(new UpdateWasReceived($update));
         }
 
         return $update;
@@ -1019,7 +1019,7 @@ class Api
                 $update = new Update($body);
 
                 if ($emitUpdateWasReceivedEvents) {
-                    $this->emitEvent(new UpdateWasReceivedEvent($update));
+                    $this->emitEvent(new UpdateWasReceived($update));
                 }
 
                 $data[] = $update;

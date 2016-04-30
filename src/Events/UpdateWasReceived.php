@@ -5,7 +5,7 @@ namespace Telegram\Bot\Events;
 use League\Event\AbstractEvent;
 use Telegram\Bot\Objects\Update;
 
-class UpdateWasReceivedEvent extends AbstractEvent
+class UpdateWasReceived extends AbstractEvent
 {
     /**
      * @var Update
@@ -13,7 +13,7 @@ class UpdateWasReceivedEvent extends AbstractEvent
     private $update;
 
     /**
-     * UpdateWasReceivedEvent constructor.
+     * UpdateWasReceived constructor.
      * @param Update $update
      */
     public function __construct(Update $update)
