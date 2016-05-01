@@ -1182,12 +1182,12 @@ class Api
      *
      * @deprecated Call method isType directly on Message object
      *             To be removed in next major version.
-     * 
+     *
      * @param string         $type
      * @param Update|Message $object
      *
      * @throws \InvalidArgumentException
-     * 
+     *
      * @return bool
      */
     public function isMessageType($type, $object)
@@ -1197,7 +1197,7 @@ class Api
         }
         
         if ($object instanceof Update) {
-            if($object->has('message')){
+            if ($object->has('message')) {
                 $object = $object->getMessage();
             }else{
                 throw new \InvalidArgumentException('The object must be or contain a message');
@@ -1209,26 +1209,26 @@ class Api
 
     /**
      * Detect Message Type Based on Update or Message Object.
-     * 
+     *
      * @deprecated Call method detectType directly on Message object
      *             To be removed in next major version.
      *
      * @param Update|Message $object
-     * 
+     *
      * @throws \InvalidArgumentException
      *
      * @return string|null
      */
     public function detectMessageType($object)
     {
-        if($object === null){
+        if ($object === null) {
             return null;
         }
         
         if ($object instanceof Update) {
-            if($object->has('message')){
+            if ($object->has('message')) {
                 $object = $object->getMessage();
-            }else{
+            } else {
                 throw new \InvalidArgumentException('The object must be or contain a message');
             }
         }

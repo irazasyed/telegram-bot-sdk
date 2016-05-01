@@ -42,7 +42,6 @@ class Update extends BaseObject
     /**
      * Determine if the update is of given type
      *
-     * 
      * @param string         $type
      *
      * @return bool
@@ -52,9 +51,9 @@ class Update extends BaseObject
         if ($this->has(strtolower($type))) {
             return true;
         }
-
+    
         return $this->detectType() === $type;
-    }    
+    }
     
     /**
      * Detect type based on properties.

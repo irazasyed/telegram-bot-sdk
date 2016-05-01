@@ -87,7 +87,6 @@ class Message extends BaseObject
     /**
      * Determine if the message is of given type
      *
-     * 
      * @param string         $type
      *
      * @return bool
