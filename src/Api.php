@@ -1192,7 +1192,7 @@ class Api
      */
     public function isMessageType($type, $object)
     {
-        if($object === null){
+        if ($object === null) {
             return null;
         }
         
