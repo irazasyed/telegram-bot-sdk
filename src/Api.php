@@ -1180,64 +1180,60 @@ class Api
     /**
      * Determine if a given type is the message.
      *
+     * @deprecated Call method isType directly on Message object
+     *             To be removed in next major version.
+     * 
      * @param string         $type
      * @param Update|Message $object
      *
+     * @throws \InvalidArgumentException
+     * 
      * @return bool
      */
     public function isMessageType($type, $object)
     {
+        if($object === null){
+            return null;
+        }
+        
         if ($object instanceof Update) {
-            $object = $object->getMessage();
+            if($object->has('message')){
+                $object = $object->getMessage();
+            }else{
+                throw new \InvalidArgumentException('The object must be or contain a message');
+            }
         }
-
-        if ($object->has(strtolower($type))) {
-            return true;
-        }
-
-        return $this->detectMessageType($object) === $type;
+        
+        return $object->isType($type);
     }
 
     /**
      * Detect Message Type Based on Update or Message Object.
+     * 
+     * @deprecated Call method detectType directly on Message object
+     *             To be removed in next major version.
      *
      * @param Update|Message $object
+     * 
+     * @throws \InvalidArgumentException
      *
      * @return string|null
      */
     public function detectMessageType($object)
     {
+        if($object === null){
+            return null;
+        }
+        
         if ($object instanceof Update) {
-            $object = $object->getMessage();
+            if($object->has('message')){
+                $object = $object->getMessage();
+            }else{
+                throw new \InvalidArgumentException('The object must be or contain a message');
+            }
         }
 
-        $types = [
-            'text',
-            'audio',
-            'document',
-            'photo',
-            'sticker',
-            'video',
-            'voice',
-            'contact',
-            'location',
-            'venue',
-            'new_chat_member',
-            'left_chat_member',
-            'new_chat_title',
-            'new_chat_photo',
-            'delete_chat_photo',
-            'group_chat_created',
-            'supergroup_chat_created',
-            'channel_chat_created',
-            'migrate_to_chat_id',
-            'migrate_from_chat_id',
-            'pinned_message',
-        ];
-
-        return $object->keys()
-            ->intersect($types)
-            ->pop();
+        return $object->detectType();
     }
 
     /**

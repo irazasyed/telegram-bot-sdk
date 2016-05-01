@@ -38,4 +38,40 @@ class Update extends BaseObject
     {
         return new static($this->last());
     }
+    
+    /**
+     * Determine if the update is of given type
+     *
+     * 
+     * @param string         $type
+     *
+     * @return bool
+     */
+    public function isType($type)
+    {
+        if ($this->has(strtolower($type))) {
+            return true;
+        }
+
+        return $this->detectType() === $type;
+    }    
+    
+    /**
+     * Detect type based on properties.
+     *
+     * @return string|null
+     */
+    public function detectType()
+    {
+        $types = [
+            'message',
+            'inline_query',
+            'chosen_inline_result',
+            'callback_query',
+        ];
+
+        return $this->keys()
+            ->intersect($types)
+            ->pop();
+    }
 }
