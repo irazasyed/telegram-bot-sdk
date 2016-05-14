@@ -1,6 +1,6 @@
 <?php
 
-namespace Telegram\Bot;
+namespace Telegram\Bot\Bots;
 
 use Illuminate\Contracts\Container\Container;
 use InvalidArgumentException;
