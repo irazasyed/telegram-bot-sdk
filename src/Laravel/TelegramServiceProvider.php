@@ -3,7 +3,7 @@
 namespace Telegram\Bot\Laravel;
 
 use Telegram\Bot\Api;
-use Telegram\Bot\BotsManager;
+use Telegram\Bot\Bots\BotsManager;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Contracts\Container\Container as Application;
 use Laravel\Lumen\Application as LumenApplication;

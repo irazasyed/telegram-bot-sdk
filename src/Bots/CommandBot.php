@@ -62,6 +62,13 @@ class CommandBot extends Bot
     {
         return $this->getCommandBus()->execute($name, $update->getMessage()->getText(), $update);
     }
+    
+    public function __call($method, $arguments)
+    {
+        if (preg_match('/^\w+Commands?/', $method, $matches)) {
+            return call_user_func_array([$this->getCommandBus(), $matches[0]], $arguments);
+        }
+    }
 }
     
     
