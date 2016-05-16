@@ -48,10 +48,11 @@ class Bot{
         }        
         $this->processUpdates($updates);
         
-        $highestUpdateId = $updates->last()->getUpdateId();
+        $highestUpdateId = $updates[count($updates) - 1]->getUpdateId();
         if ($highestUpdateId != -1) {
             $this->api->confirmUpdate($highestUpdateId);
         }
+        return $updates;
     }
     
     function processUpdates($updates){
@@ -62,6 +63,19 @@ class Bot{
     
     function addUpdateListener($listener){
         $this->getEventEmitter()->addListener(UpdateWasReceived::class, $listener);
+    }
+    
+    /**
+     * Magically pass methods to the api.
+     *
+     * @param string $method
+     * @param array  $parameters
+     *
+     * @return mixed
+     */
+    public function __call($method, $parameters)
+    {
+        return call_user_func_array([$this->getApi(), $method], $parameters);
     }
     
 }

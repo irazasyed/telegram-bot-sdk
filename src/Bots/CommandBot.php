@@ -68,6 +68,8 @@ class CommandBot extends Bot
         if (preg_match('/^\w+Commands?/', $method, $matches)) {
             return call_user_func_array([$this->getCommandBus(), $matches[0]], $arguments);
         }
+        
+        return parent::__call($method, $arguments);
     }
 }
     
