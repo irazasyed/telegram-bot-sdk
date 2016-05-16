@@ -45,20 +45,22 @@ class Bot{
             $updates = $this->api->getWebhookUpdates();
         }else{
             $updates = $this->api->getUpdates($params);
-        }        
-        $this->processUpdates($updates);
+        }
         
-        $highestUpdateId = $updates[count($updates) - 1]->getUpdateId();
-        if ($highestUpdateId != -1) {
-            $this->api->confirmUpdate($highestUpdateId);
+        $highestId = -1;
+        foreach ($updates as $update){            
+            $this->processUpdate($update);
+            $highestId = $update->getUpdateId();
+        }
+        
+        if ($highestId != -1) {
+            $this->api->confirmUpdate($highestId);
         }
         return $updates;
     }
     
-    function processUpdates($updates){
-        foreach ($updates as $update){
-            $this->emitEvent(new UpdateWasReceived($update, $this));
-        }
+    function processUpdate($update){        
+        $this->emitEvent(new UpdateWasReceived($update, $this));
     }
     
     function addUpdateListener($listener){
