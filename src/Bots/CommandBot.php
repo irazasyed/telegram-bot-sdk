@@ -19,7 +19,7 @@ class CommandBot extends Bot
     public function __construct($name = null, $api = null)
     {
         parent::__construct($name, $api);
-        $this->commandBus = new CommandBus($this->getApi());
+        $this->commandBus = new CommandBus($this);
         
         $this->addUpdateListener(function(UpdateWasReceived $event){
             $this->processCommand($event->getUpdate());

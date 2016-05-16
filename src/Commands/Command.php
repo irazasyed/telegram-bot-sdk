@@ -3,7 +3,7 @@
 namespace Telegram\Bot\Commands;
 
 use Telegram\Bot\Answers\Answerable;
-use Telegram\Bot\Api;
+use Telegram\Bot\Bots\Bot;
 use Telegram\Bot\Objects\Update;
 
 /**
@@ -125,15 +125,15 @@ abstract class Command implements CommandInterface
      */
     public function getCommandBus()
     {
-        return $this->telegram->getCommandBus();
+        return $this->getBot()->getCommandBus();
     }
 
     /**
      * @inheritDoc
      */
-    public function make(Api $telegram, $arguments, Update $update)
+    public function make(Bot $bot, $arguments, Update $update)
     {
-        $this->telegram = $telegram;
+        $this->bot = $bot;
         $this->arguments = $arguments;
         $this->update = $update;
 

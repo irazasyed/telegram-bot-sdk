@@ -2,6 +2,7 @@
 
 namespace Telegram\Bot\Answers;
 
+use Telegram\Bot\Bots\Bot;
 use Telegram\Bot\Api;
 
 /**
@@ -10,9 +11,9 @@ use Telegram\Bot\Api;
 abstract class AnswerBus
 {
     /**
-     * @var Api
+     * @var Bot
      */
-    protected $telegram;
+    protected $bot;
 
     /**
      * Handle calls to missing methods.
@@ -38,7 +39,15 @@ abstract class AnswerBus
      */
     public function getTelegram()
     {
-        return $this->telegram;
+        return $this->getBot()->getApi();
+    }
+    
+    /**
+     * @return Bot
+     */
+    public function getBot()
+    {
+        return $this->bot;
     }
 
     /**

@@ -4,6 +4,7 @@ namespace Telegram\Bot\Answers;
 
 use Telegram\Bot\Api;
 use Telegram\Bot\Objects\Update;
+use Telegram\Bot\Bots\Bot;
 
 /**
  * Class Answer
@@ -21,9 +22,9 @@ use Telegram\Bot\Objects\Update;
 trait Answerable
 {
     /**
-     * @var Api Holds the Super Class Instance.
+     * @var Bot Holds the bot instance
      */
-    protected $telegram;
+    protected $bot;
 
     /**
      * @var Update Holds an Update object.
@@ -45,17 +46,17 @@ trait Answerable
             $reply_name = studly_case(substr($method, 9));
             $methodName = 'send' . $reply_name;
 
-            if (!method_exists($this->telegram, $methodName)) {
+            if (!method_exists($this->getTelegram(), $methodName)) {
                 throw new \BadMethodCallException("Method [$method] does not exist.");
             }
 
             $chat_id = $this->update->getMessage()->getChat()->getId();
             $params = array_merge(compact('chat_id'), $arguments[0]);
 
-            return call_user_func_array([$this->telegram, $methodName], [$params]);
+            return call_user_func_array([$this->getTelegram(), $methodName], [$params]);
         }
 
-        throw new \BadMethodCallException("Method [$method] does not exist.");
+        return call_user_func_array([$this->getBot(), $method], $parameters);
     }
 
     /**
@@ -63,7 +64,7 @@ trait Answerable
      */
     public function getTelegram()
     {
-        return $this->telegram;
+        return $this->getBot()->getApi();
     }
 
     /**
@@ -72,5 +73,13 @@ trait Answerable
     public function getUpdate()
     {
         return $this->update;
+    }
+    
+    /**
+     * @return Bot
+     */
+    public function getBot()
+    {
+        return $this->bot;
     }
 }
