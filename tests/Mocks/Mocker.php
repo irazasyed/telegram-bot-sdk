@@ -173,4 +173,11 @@ class Mocker
 
         return new Api('token', false, $client);
     }
+    
+    /**
+     * Creates an Api object with mock http clinet
+     */
+    static function createMockedEndpoint(){
+        return self::setTelegramResponse("");
+    }
 }

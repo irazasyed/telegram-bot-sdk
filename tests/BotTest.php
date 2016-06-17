@@ -4,8 +4,9 @@ namespace Telegram\Bot\Tests;
 
 use PHPUnit_Framework_TestCase;
 use Telegram\Bot\Bots\Bot;
-use Telegram\Bot\Tests\Mocks\Mocker;
 use Telegram\Bot\Events\UpdateWasReceived;
+use Telegram\Bot\Objects\Update;
+use Telegram\Bot\Tests\Mocks\Mocker;
 
 class BotTest extends PHPUnit_Framework_TestCase
 {
@@ -34,9 +35,17 @@ class BotTest extends PHPUnit_Framework_TestCase
         $this->bot->addUpdateListener(function ($event) use (&$emittedEvent) {
             $emittedEvent = $event;
         });
-        $this->bot->processUpdates([Mocker::createUpdateObject()->reveal()]);
+        $this->bot->processUpdate(Mocker::createUpdateObject()->reveal());
         
         $this->assertInstanceOf(UpdateWasReceived::class, $emittedEvent);
         
+    }
+    
+    /** @test */
+    public function it_checks_an_update_object_is_returned_when_an_update_is_handled()
+    {
+        $this->bot = new Bot('testbot', Mocker::createMessageResponse('/start'));        
+        $updates = $this->bot->checkForUpdates();
+        $this->assertInstanceOf(Update::class, $updates[0]);
     }
 }

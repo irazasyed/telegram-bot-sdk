@@ -72,12 +72,6 @@ class ApiTest extends \PHPUnit_Framework_TestCase
     }
 
     /** @test */
-    public function it_checks_the_commandBus_is_returned()
-    {
-        $this->assertInstanceOf(CommandBus::class, $this->api->getCommandBus());
-    }
-
-    /** @test */
     public function it_checks_an_ioc_container_can_be_set()
     {
         $this->api->setContainer(Mocker::createContainer()->reveal());
@@ -86,35 +80,15 @@ class ApiTest extends \PHPUnit_Framework_TestCase
     }
 
     /** @test */
-    public function it_checks_an_update_object_is_returned_when_a_command_is_handled()
-    {
-        $this->api = Mocker::createMessageResponse('/start');
-        $updates = $this->api->commandsHandler();
-        $this->assertInstanceOf(Update::class, $updates[0]);
-    }
-
-    /** @test */
-    public function it_checks_the_correct_command_is_handled()
-    {
-        $this->api = Mocker::createMessageResponse('/mycommand');
-        $command = Mocker::createMockCommand('mycommand');
-        $command2 = Mocker::createMockCommand('mycommand2');
-
-        $this->api->addCommands([$command->reveal(), $command2->reveal()]);
-
-        $this->api->commandsHandler();
-
-        $command->make(Argument::any(), Argument::any(), Argument::any())->shouldHaveBeenCalled();
-        $command2->make(Argument::any(), Argument::any(), Argument::any())->shouldNotHaveBeenCalled();
-    }
-
-    /** @test */
     public function it_checks_the_lastResponse_property_gets_populated_after_a_request()
     {
+        $this->api = Mocker::createMockedEndpoint();
+        
         $this->assertEmpty($this->api->getLastResponse());
 
-        $this->api = Mocker::createMessageResponse('/start');
-        $this->api->commandsHandler();
+        //$this->api = Mocker::createMessageResponse('/start');
+        $this->api->getMe();
+        //$this->api->commandsHandler();
 
         $lastResponse = $this->api->getLastResponse();
         $this->assertNotEmpty($lastResponse);

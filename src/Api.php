@@ -1081,7 +1081,7 @@ class Api
         return Keyboard::forceReply($params);
     }
     
-    public function confirmUpdate($highestUpdateId){        
+    public function confirmUpdate($highestUpdateId) {
         $params = [];
         $params['offset'] = $highestUpdateId + 1;
         $params['limit'] = 1;
@@ -1110,7 +1110,7 @@ class Api
         if ($object instanceof Update) {
             if ($object->has('message')) {
                 $object = $object->getMessage();
-            }else{
+            } else {
                 throw new \InvalidArgumentException('The object must be or contain a message');
             }
         }
