@@ -1081,7 +1081,8 @@ class Api
         return Keyboard::forceReply($params);
     }
     
-    public function confirmUpdate($highestUpdateId) {
+    public function confirmUpdate($highestUpdateId)
+    {
         $params = [];
         $params['offset'] = $highestUpdateId + 1;
         $params['limit'] = 1;
@@ -1184,7 +1185,6 @@ class Api
         if ($fileUpload) {
             $params = ['multipart' => $params];
         } else {
-
             if (array_key_exists('reply_markup', $params)) {
                 $params['reply_markup'] = (string)$params['reply_markup'];
             }

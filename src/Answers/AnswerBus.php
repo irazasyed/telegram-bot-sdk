@@ -74,7 +74,7 @@ abstract class AnswerBus
         }
 
         // otherwise fetch each dependency out of the container
-        $container = $this->telegram->getContainer();
+        $container = $this->getTelegram()->getContainer();
         $dependencies = [];
         foreach ($params as $param) {
             $dependencies[] = $container->make($param->getClass()->name);

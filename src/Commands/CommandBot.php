@@ -1,7 +1,8 @@
 <?php
 
-namespace Telegram\Commands;
+namespace Telegram\Bot\Commands;
 
+use Telegram\Bot\Bots\Bot;
 use Telegram\Bot\Commands\CommandBus;
 use Telegram\Bot\Events\UpdateWasReceived;
 use Telegram\Bot\Objects\Update;
@@ -18,8 +19,8 @@ class CommandBot extends Bot
      * Creates new Command Bot
      *
      * @param string $name (Optional)
-     * @param Api $api (Optional) 
-     */    
+     * @param Api $api (Optional)
+     */
     public function __construct($name = null, $api = null)
     {
         parent::__construct($name, $api);
@@ -69,10 +70,10 @@ class CommandBot extends Bot
     
     /**
      * Magic method to call command related method directly on the CommandBus
-     * 
+     *
      * @param $method
      * @param $arguments
-     * @return 
+     * @return
      */
     public function __call($method, $arguments)
     {

@@ -3,7 +3,6 @@
 namespace Telegram\Bot\Tests;
 
 use Telegram\Bot\Api;
-use Prophecy\Argument;
 use InvalidArgumentException;
 use Telegram\Bot\Objects\File;
 use Telegram\Bot\Objects\User;

@@ -13,18 +13,18 @@ class Bot
     use EmitsEvents;
     
     /**
-     * @var Api Telegram Api 
+     * @var Api Telegram Api
      */
     protected $api = null;
     
     /**
-     * @var string Name of the bot 
+     * @var string Name of the bot
      */
     protected $name = null;
     
     /**
      * Creates new bot instance and corresponding Api if not given.
-     * 
+     *
      * @param string $name (Optional) Bot name
      * @param Api $api (Optional) Custom Api
      */
@@ -42,7 +42,7 @@ class Bot
     }
     
     /**
-     * @return Api 
+     * @return Api
      */
     public function getApi()
     {
@@ -50,7 +50,7 @@ class Bot
     }
     
     /**
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -67,7 +67,7 @@ class Bot
     
     /**
      * Checks for pending telegram updates. If available, they get read, processed, confirmed and returned.
-     * 
+     *
      * @param boolean $webhook Signals to read update from webhook.
      * @param array $params See Api->getUpdates()
      * @return Update[]
@@ -94,9 +94,9 @@ class Bot
     
     /**
      * Process the Update. Here, emit a corresponding UpdateWasReceived Event.
-     * 
+     *
      * @param type $update
-     */    
+     */
     public function processUpdate($update)
     {
         $this->emitEvent(new UpdateWasReceived($update, $this));
@@ -104,7 +104,7 @@ class Bot
     
     /**
      * Adds a listener to be notified if an update was received.
-     * 
+     *
      * @param ListenerInterface|callable $listener
      */
     public function addUpdateListener($listener)

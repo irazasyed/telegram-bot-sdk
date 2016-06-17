@@ -11,6 +11,7 @@ use GuzzleHttp\Psr7\Response;
 use Telegram\Bot\Objects\Update;
 use GuzzleHttp\Handler\MockHandler;
 use Telegram\Bot\HttpClients\GuzzleHttpClient;
+use Telegram\Bot\Commands\CommandBot;
 
 class Mocker
 {
@@ -36,6 +37,19 @@ class Mocker
         $api->getContainer()->willReturn($container);
 
         return $api;
+    }
+    
+    /**
+     * Create a mocked bot
+     *
+     * @return \Prophecy\Prophecy\ObjectProphecy
+     */
+    public static function createBot($withContainer = false)
+    {
+        $bot = (new Prophet())->prophesize(CommandBot::class);
+        $bot->getApi()->willReturn(Mocker::createApi($withContainer));        
+        
+        return $bot;
     }
 
     /**

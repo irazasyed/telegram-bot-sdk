@@ -3,9 +3,10 @@
 namespace Telegram\Bot\Tests;
 
 use PHPUnit_Framework_TestCase;
-use Telegram\Commands\CommandBot;
-use Telegram\CommandBus;
+use Telegram\Bot\Commands\CommandBot;
+use Telegram\Bot\Commands\CommandBus;
 use Telegram\Bot\Tests\Mocks\Mocker;
+use Prophecy\Argument;
 
 class CommandBotTest extends PHPUnit_Framework_TestCase
 {
@@ -32,9 +33,9 @@ class CommandBotTest extends PHPUnit_Framework_TestCase
         $command = Mocker::createMockCommand('mycommand');
         $command2 = Mocker::createMockCommand('mycommand2');
 
-        $this->api->addCommands([$command->reveal(), $command2->reveal()]);
-
-        $this->api->commandsHandler();
+        $bot = new CommandBot('apibot', $this->api);
+        $bot->addCommands([$command->reveal(), $command2->reveal()]);
+        $bot->checkForUpdates();
 
         $command->make(Argument::any(), Argument::any(), Argument::any())->shouldHaveBeenCalled();
         $command2->make(Argument::any(), Argument::any(), Argument::any())->shouldNotHaveBeenCalled();

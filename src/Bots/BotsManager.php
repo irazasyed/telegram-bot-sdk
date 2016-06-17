@@ -201,13 +201,12 @@ class BotsManager
         $token = array_get($config, 'token');
         $commands = array_get($config, 'commands', []);
 
-        $bot = new CommandBot($name,
-                new Api(
-                    $token,
-                    $this->getConfig('async_requests', false),
-                    $this->getConfig('http_client_handler', null)
-                )
+        $api = new Api(
+            $token,
+            $this->getConfig('async_requests', false),
+            $this->getConfig('http_client_handler', null)
         );
+        $bot = new CommandBot($name, $api);
 
         // Check if DI needs to be enabled for Commands
         if ($this->getConfig('resolve_command_dependencies', false) && isset($this->container)) {
