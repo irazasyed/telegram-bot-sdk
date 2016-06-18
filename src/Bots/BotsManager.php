@@ -5,7 +5,7 @@ namespace Telegram\Bot\Bots;
 use Illuminate\Contracts\Container\Container;
 use InvalidArgumentException;
 use Telegram\Bot\Api;
-use Telegram\Commands\CommandBot;
+use Telegram\Bot\Commands\CommandBot;
 
 /**
  * Class BotsManager
