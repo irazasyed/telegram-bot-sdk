@@ -131,7 +131,7 @@ abstract class Command implements CommandInterface
     /**
      * @inheritDoc
      */
-    public function make(Bot $bot, $arguments, Update $update)
+    public function make(CommandBot $bot, $arguments, Update $update)
     {
         $this->bot = $bot;
         $this->arguments = $arguments;
