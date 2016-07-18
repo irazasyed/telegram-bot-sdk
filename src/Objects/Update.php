@@ -73,4 +73,23 @@ class Update extends BaseObject
             ->intersect($types)
             ->pop();
     }
+    
+    /**
+     * Get message object (if exists)
+     *
+     * @return null|Chat
+     */
+    public function getChat()
+    {
+        switch($this->detectType())
+        {
+            case 'message':
+                return $this->getMessage()->getChat();
+            case 'callback_query':
+                return $this->getCallbackQuery()->getMessage()->getChat();
+            default:
+                // nothing to return
+                return null;
+        }
+    }
 }
