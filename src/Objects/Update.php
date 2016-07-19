@@ -81,7 +81,7 @@ class Update extends BaseObject
      */
     public function getChat()
     {
-        switch($this->detectType())
+        switch ($this->detectType())
         {
             case 'message':
                 return $this->getMessage()->getChat();
