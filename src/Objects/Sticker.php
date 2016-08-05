@@ -10,6 +10,7 @@ namespace Telegram\Bot\Objects;
  * @method int          getWidth()      Sticker width.
  * @method int          getHeight()     Sticker height.
  * @method PhotoSize    getThumb()      (Optional). Sticker thumbnail in .webp or .jpg format.
+ * @method string       getEmoji()      (Optional). Emoji associated with the sticker
  * @method int          getFileSize()   (Optional). File size.
  */
 class Sticker extends BaseObject

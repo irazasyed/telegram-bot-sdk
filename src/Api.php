@@ -9,6 +9,8 @@ use Telegram\Bot\Events\UpdateWasReceived;
 use Telegram\Bot\Exceptions\TelegramSDKException;
 use Telegram\Bot\FileUpload\InputFile;
 use Telegram\Bot\HttpClients\HttpClientInterface;
+use Telegram\Bot\Objects\Chat;
+use Telegram\Bot\Objects\ChatMember;
 use Telegram\Bot\Objects\File;
 use Telegram\Bot\Objects\Message;
 use Telegram\Bot\Objects\UnknownObject;
@@ -780,6 +782,73 @@ class Api
     public function answerCallbackQuery(array $params)
     {
         return $this->post('answerCallbackQuery', $params);
+    }
+
+    /**
+     * Get up to date information about the chat (current name of the user for one-on-one conversations,
+     * current username of a user, group or channel,
+     *
+     * <code>
+     * $params = [
+     *   'chat_id'  => '',
+     * ];
+     * </code>
+     *
+     * @link https://core.telegram.org/bots/api#getchat
+     *
+     * @param array $params
+     *
+     * @var string|int  $params ['chat_id'] Unique identifier for the target chat or username of the target supergroup or channel (in the format @channelusername)
+     *
+     * @return Chat
+     */
+    public function getChat(array $params)
+    {
+        return $this->post('getChat', $params);
+    }
+
+    /**
+     * Get a list of administrators in a chat.
+     *
+     * <code>
+     * $params = [
+     *   'chat_id'  => '',
+     * ];
+     * </code>
+     *
+     * @link https://core.telegram.org/bots/api#getchatadministrators
+     *
+     * @param array $params
+     *
+     * @var string|int  $params ['chat_id'] Unique identifier for the target chat or username of the target supergroup or channel (in the format @channelusername);
+     *
+     * @return ChatMember[]
+     */
+    public function getChatAdministrators(array $params)
+    {
+        return $this->post('getChatAdministrators', $params);
+    }
+
+    /**
+     * Get the number of members in a chat
+     *
+     * <code>
+     * $params = [
+     *   'chat_id'  => '',
+     * ];
+     * </code>
+     *
+     * @link https://core.telegram.org/bots/api#getchatmemberscount
+     *
+     * @param array $params
+     *
+     * @var string|int  $params ['chat_id'] Unique identifier for the target chat or username of the target supergroup or channel (in the format @channelusername)
+     *
+     * @return int
+     */
+    public function getChatMembersCount(array $params)
+    {
+        return $this->post('getChatMembersCount', $params);
     }
 
     /**
