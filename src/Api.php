@@ -1472,4 +1472,32 @@ class Api
 
         return $this;
     }
+    
+    /**
+     * Answer Callback Query.
+     *
+     * <code>
+     * $params = [
+     *   'callback_query_id'        => '',
+     *   'text'                     => '',
+     *   'show_alert'               => '',
+     * ];
+     * </code>
+     *
+     * @link https://core.telegram.org/bots/api#answercallbackquery
+     *
+     * @param array    $params
+     *
+     * @var string     $params ['callback_query_id']
+     * @var string     $params ['text']
+     * @var boolean    $params ['parse_mode']
+     *
+     * @return Message
+     */
+    public function answerCallbackQuery(array $params)
+    {
+        $response = $this->post('answerCallbackQuery', $params);
+
+        return new Message($response->getDecodedBody());
+    }
 }
