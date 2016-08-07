@@ -1186,25 +1186,13 @@ class Api
      * @param string         $type
      * @param Update|Message $object
      *
-     * @throws \InvalidArgumentException
+     * @throws \ErrorException
      *
      * @return bool
      */
     public function isMessageType($type, $object)
     {
-        if ($object === null) {
-            return null;
-        }
-        
-        if ($object instanceof Update) {
-            if ($object->has('message')) {
-                $object = $object->getMessage();
-            }else{
-                throw new \InvalidArgumentException('The object must be or contain a message');
-            }
-        }
-        
-        return $object->isType($type);
+        trigger_error('This method has been deprecated. Use isType() on the Message object instead.', E_USER_DEPRECATED);
     }
 
     /**
@@ -1215,25 +1203,13 @@ class Api
      *
      * @param Update|Message $object
      *
-     * @throws \InvalidArgumentException
+     * @throws \ErrorException
      *
      * @return string|null
      */
     public function detectMessageType($object)
     {
-        if ($object === null) {
-            return null;
-        }
-        
-        if ($object instanceof Update) {
-            if ($object->has('message')) {
-                $object = $object->getMessage();
-            } else {
-                throw new \InvalidArgumentException('The object must be or contain a message');
-            }
-        }
-
-        return $object->detectType();
+        trigger_error('This method has been deprecated. Use detectType() on the Message object instead.', E_USER_DEPRECATED);
     }
 
     /**
