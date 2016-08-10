@@ -13,6 +13,7 @@ namespace Telegram\Bot\Objects;
  * @method User             getForwardFrom()            (Optional). For forwarded messages, sender of the original message.
  * @method int              getForwardDate()            (Optional). For forwarded messages, date the original message was sent in Unix time.
  * @method Message          getReplyToMessage()         (Optional). For replies, the original message. Note that the Message object in this field will not contain further reply_to_message fields even if it itself is a reply.
+ * @method int              getEditDate()               (Optional). Date the message was last edited in Unix time.
  * @method MessageEntity[]  getEntities()               (Optional). For text messages, special entities like usernames, URLs, bot commands, etc. that appear in the text.
  * @method Audio            getAudio()                  (Optional). Message is an audio file, information about the file.
  * @method Document         getDocument()               (Optional). Message is a general file, information about the file.
@@ -46,6 +47,7 @@ class Message extends BaseObject
             'from'             => User::class,
             'chat'             => Chat::class,
             'forward_from'     => User::class,
+            'forward_from_chat'=> User::class,
             'reply_to_message' => self::class,
             'entities'         => MessageEntity::class,
             'audio'            => Audio::class,
