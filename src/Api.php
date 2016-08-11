@@ -210,6 +210,8 @@ class Api
      *
      * @link https://core.telegram.org/bots/api#getme
      *
+     * @throws TelegramSDKException
+     *
      * @return User
      */
     public function getMe()
@@ -246,6 +248,8 @@ class Api
      * @var int        $params ['reply_to_message_id']
      * @var string     $params ['reply_markup']
      *
+     * @throws TelegramSDKException
+     *
      * @return Message
      */
     public function sendMessage(array $params)
@@ -275,6 +279,8 @@ class Api
      * @var int        $params ['from_chat_id']
      * @var bool       $params ['disable_notification']
      * @var int        $params ['message_id']
+     *
+     * @throws TelegramSDKException
      *
      * @return Message
      */
@@ -310,11 +316,15 @@ class Api
      * @var int        $params ['reply_to_message_id']
      * @var string     $params ['reply_markup']
      *
+     * @throws TelegramSDKException
+     *
      * @return Message
      */
     public function sendPhoto(array $params)
     {
-        return $this->uploadFile('sendPhoto', $params);
+        $response = $this->uploadFile('sendPhoto', $params);
+
+        return new Message($response->getDecodedBody());
     }
 
     /**
@@ -346,11 +356,15 @@ class Api
      * @var int        $params ['reply_to_message_id']
      * @var string     $params ['reply_markup']
      *
+     * @throws TelegramSDKException
+     *
      * @return Message
      */
     public function sendAudio(array $params)
     {
-        return $this->uploadFile('sendAudio', $params);
+        $response = $this->uploadFile('sendAudio', $params);
+
+        return new Message($response->getDecodedBody());
     }
 
     /**
@@ -378,11 +392,15 @@ class Api
      * @var int        $params ['reply_to_message_id']
      * @var string     $params ['reply_markup']
      *
+     * @throws TelegramSDKException
+     *
      * @return Message
      */
     public function sendDocument(array $params)
     {
-        return $this->uploadFile('sendDocument', $params);
+        $response = $this->uploadFile('sendDocument', $params);
+
+        return new Message($response->getDecodedBody());
     }
 
     /**
@@ -418,7 +436,9 @@ class Api
             throw new TelegramSDKException('Invalid Sticker Provided. Supported Format: Webp');
         }
 
-        return $this->uploadFile('sendSticker', $params);
+        $response = $this->uploadFile('sendSticker', $params);
+
+        return new Message($response->getDecodedBody());
     }
 
     /**
@@ -453,11 +473,15 @@ class Api
      * @var int        $params ['reply_to_message_id']
      * @var string     $params ['reply_markup']
      *
+     * @throws TelegramSDKException
+     *
      * @return Message
      */
     public function sendVideo(array $params)
     {
-        return $this->uploadFile('sendVideo', $params);
+        $response = $this->uploadFile('sendVideo', $params);
+
+        return new Message($response->getDecodedBody());
     }
 
     /**
@@ -485,11 +509,15 @@ class Api
      * @var int        $params ['reply_to_message_id']
      * @var string     $params ['reply_markup']
      *
+     * @throws TelegramSDKException
+     *
      * @return Message
      */
     public function sendVoice(array $params)
     {
-        return $this->uploadFile('sendVoice', $params);
+        $response = $this->uploadFile('sendVoice', $params);
+
+        return new Message($response->getDecodedBody());
     }
 
     /**
@@ -516,6 +544,8 @@ class Api
      * @var bool       $params ['disable_notification']
      * @var int        $params ['reply_to_message_id']
      * @var string     $params ['reply_markup']
+     *
+     * @throws TelegramSDKException
      *
      * @return Message
      */
@@ -557,6 +587,8 @@ class Api
      * @var int        $params ['reply_to_message_id']
      * @var string     $params ['reply_markup']
      *
+     * @throws TelegramSDKException
+     *
      * @return Message
      */
     public function sendVenue(array $params)
@@ -593,6 +625,8 @@ class Api
      * @var int        $params ['reply_to_message_id']
      * @var string     $params ['reply_markup']
      *
+     * @throws TelegramSDKException
+     *
      * @return Message
      */
     public function sendContact(array $params)
@@ -621,7 +655,7 @@ class Api
      *
      * @throws TelegramSDKException
      *
-     * @return TelegramResponse
+     * @return bool
      */
     public function sendChatAction(array $params)
     {
@@ -637,7 +671,9 @@ class Api
         ];
 
         if (isset($params['action']) && in_array($params['action'], $validActions)) {
-            return $this->post('sendChatAction', $params);
+            $this->post('sendChatAction', $params);
+
+            return true;
         }
 
         throw new TelegramSDKException('Invalid Action! Accepted value: '.implode(', ', $validActions));
@@ -661,6 +697,8 @@ class Api
      * @var int     $params ['user_id']
      * @var int     $params ['offset']
      * @var int     $params ['limit']
+     *
+     * @throws TelegramSDKException
      *
      * @return UserProfilePhotos
      */
@@ -689,6 +727,8 @@ class Api
      * @param array $params
      *
      * @var string  $params ['file_id']
+     *
+     * @throws TelegramSDKException
      *
      * @return File
      */
@@ -721,11 +761,15 @@ class Api
      * @var int|string $params ['chat_id']
      * @var int        $params ['user_id']
      *
-     * @return TelegramResponse
+     * @throws TelegramSDKException
+     *
+     * @return bool
      */
     public function kickChatMember(array $params)
     {
-        return $this->post('kickChatMember', $params);
+        $this->post('kickChatMember', $params);
+
+        return true;
     }
 
     /**
@@ -749,11 +793,126 @@ class Api
      * @var int|string $params ['chat_id']
      * @var int        $params ['user_id']
      *
-     * @return TelegramResponse
+     * @throws TelegramSDKException
+     *
+     * @return bool
      */
     public function unbanChatMember(array $params)
     {
-        return $this->post('unbanChatMember', $params);
+        $this->post('unbanChatMember', $params);
+
+        return true;
+    }
+
+    /**
+     * Get up to date information about the chat (current name of the user for one-on-one conversations,
+     * current username of a user, group or channel,
+     *
+     * <code>
+     * $params = [
+     *   'chat_id'  => '',
+     * ];
+     * </code>
+     *
+     * @link https://core.telegram.org/bots/api#getchat
+     *
+     * @param array $params
+     *
+     * @var string|int  $params ['chat_id'] Unique identifier for the target chat or username of the target supergroup or channel (in the format @channelusername)
+     *
+     * @throws TelegramSDKException
+     *
+     * @return Chat
+     */
+    public function getChat(array $params)
+    {
+        $response = $this->post('getChat', $params);
+
+        return new Chat($response->getDecodedBody());
+    }
+
+    /**
+     * Get a list of administrators in a chat.
+     *
+     * <code>
+     * $params = [
+     *   'chat_id'  => '',
+     * ];
+     * </code>
+     *
+     * @link https://core.telegram.org/bots/api#getchatadministrators
+     *
+     * @param array $params
+     *
+     * @var string|int  $params ['chat_id'] Unique identifier for the target chat or username of the target supergroup or channel (in the format @channelusername);
+     *
+     * @throws TelegramSDKException
+     *
+     * @return ChatMember[]
+     */
+    public function getChatAdministrators(array $params)
+    {
+        $response = $this->post('getChatAdministrators', $params);
+
+        return collect($response->getResult())
+            ->map(function ($admin) {
+                return new ChatMember($admin);
+            })
+            ->all();
+    }
+
+    /**
+     * Get the number of members in a chat
+     *
+     * <code>
+     * $params = [
+     *   'chat_id'  => '',
+     * ];
+     * </code>
+     *
+     * @link https://core.telegram.org/bots/api#getchatmemberscount
+     *
+     * @param array $params
+     *
+     * @var string|int  $params ['chat_id'] Unique identifier for the target chat or username of the target supergroup or channel (in the format @channelusername)
+     *
+     * @throws TelegramSDKException
+     *
+     * @return int
+     */
+    public function getChatMembersCount(array $params)
+    {
+        $response = $this->post('getChatMembersCount', $params);
+
+        return $response->getResult();
+    }
+
+    /**
+     * Get information about a member of a chat.
+     *
+     * <code>
+     * $params = [
+     *   'chat_id'  => '',
+     *   'user_id'  => '',
+     * ];
+     * </code>
+     *
+     * @link https://core.telegram.org/bots/api#getchatmember
+     *
+     * @param array $params
+     *
+     * @var string|int  $params ['chat_id'] Unique identifier for the target chat or username of the target supergroup or channel (in the format @channelusername)
+     * @var int         $params ['user_id'] Unique identifier of the target user.
+     *
+     * @throws TelegramSDKException
+     *
+     * @return ChatMember
+     */
+    public function getChatMember(array $params)
+    {
+        $response = $this->post('getChatMember', $params);
+
+        return new ChatMember($response->getDecodedBody());
     }
 
     /**
@@ -777,79 +936,17 @@ class Api
      * @var string  $params ['text']
      * @var bool    $params ['show_alert']
      *
-     * @return TelegramResponse
+     * @throws TelegramSDKException
+     *
+     * @return bool
      */
     public function answerCallbackQuery(array $params)
     {
-        return $this->post('answerCallbackQuery', $params);
+        $this->post('answerCallbackQuery', $params);
+
+        return true;
     }
 
-    /**
-     * Get up to date information about the chat (current name of the user for one-on-one conversations,
-     * current username of a user, group or channel,
-     *
-     * <code>
-     * $params = [
-     *   'chat_id'  => '',
-     * ];
-     * </code>
-     *
-     * @link https://core.telegram.org/bots/api#getchat
-     *
-     * @param array $params
-     *
-     * @var string|int  $params ['chat_id'] Unique identifier for the target chat or username of the target supergroup or channel (in the format @channelusername)
-     *
-     * @return Chat
-     */
-    public function getChat(array $params)
-    {
-        return $this->post('getChat', $params);
-    }
-
-    /**
-     * Get a list of administrators in a chat.
-     *
-     * <code>
-     * $params = [
-     *   'chat_id'  => '',
-     * ];
-     * </code>
-     *
-     * @link https://core.telegram.org/bots/api#getchatadministrators
-     *
-     * @param array $params
-     *
-     * @var string|int  $params ['chat_id'] Unique identifier for the target chat or username of the target supergroup or channel (in the format @channelusername);
-     *
-     * @return ChatMember[]
-     */
-    public function getChatAdministrators(array $params)
-    {
-        return $this->post('getChatAdministrators', $params);
-    }
-
-    /**
-     * Get the number of members in a chat
-     *
-     * <code>
-     * $params = [
-     *   'chat_id'  => '',
-     * ];
-     * </code>
-     *
-     * @link https://core.telegram.org/bots/api#getchatmemberscount
-     *
-     * @param array $params
-     *
-     * @var string|int  $params ['chat_id'] Unique identifier for the target chat or username of the target supergroup or channel (in the format @channelusername)
-     *
-     * @return int
-     */
-    public function getChatMembersCount(array $params)
-    {
-        return $this->post('getChatMembersCount', $params);
-    }
 
     /**
      * Edit text messages sent by the bot or via the bot (for inline bots).
@@ -878,7 +975,9 @@ class Api
      * @var bool       $params ['disable_web_page_preview']
      * @var string     $params ['reply_markup']
      *
-     * @return TelegramResponse
+     * @throws TelegramSDKException
+     *
+     * @return Message|bool
      */
     public function editMessageText(array $params)
     {
@@ -910,7 +1009,9 @@ class Api
      * @var string     $params ['caption']
      * @var string     $params ['reply_markup']
      *
-     * @return TelegramResponse
+     * @throws TelegramSDKException
+     *
+     * @return Message|bool
      */
     public function editMessageCaption(array $params)
     {
@@ -940,7 +1041,9 @@ class Api
      * @var string     $params ['inline_message_id']
      * @var string     $params ['reply_markup']
      *
-     * @return TelegramResponse
+     * @throws TelegramSDKException
+     *
+     * @return Message|bool
      */
     public function editMessageReplyMarkup(array $params)
     {
@@ -976,6 +1079,8 @@ class Api
      * @var string|null $params ['switch_pm_text']
      * @var string|null $params ['switch_pm_parameter']
      *
+     * @throws TelegramSDKException
+     *
      * @return bool
      */
     public function answerInlineQuery(array $params = [])
@@ -984,7 +1089,9 @@ class Api
             $params['results'] = json_encode($params['results']);
         }
 
-        return $this->post('answerInlineQuery', $params);
+        $this->post('answerInlineQuery', $params);
+
+        return true;
     }
 
     /**
@@ -1046,6 +1153,8 @@ class Api
     /**
      * Removes the outgoing webhook (if any).
      *
+     * @throws TelegramSDKException
+     *
      * @return TelegramResponse
      */
     public function removeWebhook()
@@ -1073,6 +1182,8 @@ class Api
      * @var int|null $params ['offset']
      * @var int|null $params ['limit']
      * @var int|null $params ['timeout']
+     *
+     * @throws TelegramSDKException
      *
      * @return Update[]
      */
@@ -1366,7 +1477,7 @@ class Api
      *
      * @throws TelegramSDKException
      *
-     * @return Message
+     * @return TelegramResponse
      */
     protected function uploadFile($endpoint, array $params = [])
     {
@@ -1387,9 +1498,7 @@ class Api
             ++$i;
         }
 
-        $response = $this->post($endpoint, $multipart_params, true);
-
-        return new Message($response->getDecodedBody());
+        return $this->post($endpoint, $multipart_params, true);
     }
 
     /**
@@ -1443,6 +1552,8 @@ class Api
      *
      * @param $method
      * @param $arguments
+     *
+     * @throws TelegramSDKException
      *
      * @return bool|TelegramResponse|UnknownObject
      */
