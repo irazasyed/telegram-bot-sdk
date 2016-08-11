@@ -2,8 +2,8 @@
 
 namespace Telegram\Bot\Commands;
 
-use Telegram\Bot\Api;
 use Telegram\Bot\Objects\Update;
+use Telegram\Bot\Commands\CommandBot;
 
 /**
  * Interface CommandInterface.
@@ -41,11 +41,11 @@ interface CommandInterface
     /**
      * Process Inbound Command.
      *
-     * @param Api $telegram
+     * @param CommandBot $bot
      * @param string $arguments
      * @param Update $update
      *
      * @return mixed
      */
-    public function make(Api $telegram, $arguments, Update $update);
+    public function make(CommandBot $bot, $arguments, Update $update);
 }

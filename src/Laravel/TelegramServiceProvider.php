@@ -2,8 +2,8 @@
 
 namespace Telegram\Bot\Laravel;
 
-use Telegram\Bot\Api;
-use Telegram\Bot\BotsManager;
+use Telegram\Bot\Bots\Bot;
+use Telegram\Bot\Bots\BotsManager;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Contracts\Container\Container as Application;
 use Laravel\Lumen\Application as LumenApplication;
@@ -95,7 +95,7 @@ class TelegramServiceProvider extends ServiceProvider
             return $manager->bot();
         });
 
-        $app->alias('telegram.bot', Api::class);
+        $app->alias('telegram.bot', Bot::class);
     }
 
     /**
@@ -105,6 +105,6 @@ class TelegramServiceProvider extends ServiceProvider
      */
     public function provides()
     {
-        return ['telegram', 'telegram.bot', BotsManager::class, Api::class];
+        return ['telegram', 'telegram.bot', BotsManager::class, Bot::class];
     }
 }

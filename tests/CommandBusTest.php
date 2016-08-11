@@ -19,7 +19,7 @@ class CommandBusTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->commandBus = new CommandBus(Mocker::createApi()->reveal());
+        $this->commandBus = new CommandBus(Mocker::createBot()->reveal());
     }
 
     /** @test */
@@ -148,8 +148,8 @@ class CommandBusTest extends \PHPUnit_Framework_TestCase
     /** @test */
     public function it_checks_a_commands_dependencies_will_be_resolved_if_an_ioc_container_has_been_set()
     {
-        //Make an API with an IOC container
-        $this->commandBus = new CommandBus(Mocker::createApi(true)->reveal());
+        //Make an bot with an IOC container
+        $this->commandBus = new CommandBus(Mocker::createBot(true)->reveal());
         $this->commandBus->addCommand('\Telegram\Bot\Tests\Mocks\MockCommandWithDependency');
         $allCommands = $this->commandBus->getCommands();
 

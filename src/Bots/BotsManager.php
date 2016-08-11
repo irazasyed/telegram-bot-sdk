@@ -1,9 +1,11 @@
 <?php
 
-namespace Telegram\Bot;
+namespace Telegram\Bot\Bots;
 
 use Illuminate\Contracts\Container\Container;
 use InvalidArgumentException;
+use Telegram\Bot\Api;
+use Telegram\Bot\Commands\CommandBot;
 
 /**
  * Class BotsManager
@@ -29,7 +31,7 @@ class BotsManager
     /**
      * The active bot instances.
      *
-     * @var Api[]
+     * @var Bot[]
      */
     protected $bots = [];
 
@@ -85,7 +87,7 @@ class BotsManager
      *
      * @param string $name
      *
-     * @return Api
+     * @return Bot
      */
     public function bot($name = null)
     {
@@ -103,7 +105,7 @@ class BotsManager
      *
      * @param string $name
      *
-     * @return Api
+     * @return Bot
      */
     public function reconnect($name = null)
     {
@@ -166,7 +168,7 @@ class BotsManager
     /**
      * Return all of the created bots.
      *
-     * @return Api[]
+     * @return Bot[]
      */
     public function getBots()
     {
@@ -190,7 +192,7 @@ class BotsManager
      *
      * @param string $name
      *
-     * @return Api
+     * @return Bot
      */
     protected function makeBot($name)
     {
@@ -199,23 +201,24 @@ class BotsManager
         $token = array_get($config, 'token');
         $commands = array_get($config, 'commands', []);
 
-        $telegram = new Api(
+        $api = new Api(
             $token,
             $this->getConfig('async_requests', false),
             $this->getConfig('http_client_handler', null)
         );
+        $bot = new CommandBot($name, $api);
 
         // Check if DI needs to be enabled for Commands
         if ($this->getConfig('resolve_command_dependencies', false) && isset($this->container)) {
-            $telegram->setContainer($this->container);
+            $bot->getApi()->setContainer($this->container);
         }
 
         $commands = $this->parseBotCommands($commands);
 
         // Register Commands
-        $telegram->addCommands($commands);
+        $bot->addCommands($commands);
 
-        return $telegram;
+        return $bot;
     }
 
     /**

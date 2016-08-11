@@ -3,9 +3,6 @@
 namespace Telegram\Bot;
 
 use Illuminate\Contracts\Container\Container;
-use Telegram\Bot\Commands\CommandBus;
-use Telegram\Bot\Events\EmitsEvents;
-use Telegram\Bot\Events\UpdateWasReceived;
 use Telegram\Bot\Exceptions\TelegramSDKException;
 use Telegram\Bot\FileUpload\InputFile;
 use Telegram\Bot\HttpClients\HttpClientInterface;
@@ -26,8 +23,6 @@ use Telegram\Bot\Keyboard\Keyboard;
  */
 class Api
 {
-    use EmitsEvents;
-
     /**
      * @var string Version number of the Telegram Bot PHP SDK.
      */
@@ -57,11 +52,6 @@ class Api
      * @var bool Indicates if the request to Telegram will be asynchronous (non-blocking).
      */
     protected $isAsyncRequest = false;
-
-    /**
-     * @var CommandBus|null Telegram Command Bus.
-     */
-    protected $commandBus = null;
 
     /**
      * @var Container IoC Container
@@ -105,7 +95,6 @@ class Api
         }
 
         $this->client = new TelegramClient($httpClientHandler);
-        $this->commandBus = new CommandBus($this);
     }
 
     /**
@@ -192,16 +181,6 @@ class Api
     public function isAsyncRequest()
     {
         return $this->isAsyncRequest;
-    }
-
-    /**
-     * Returns SDK's Command Bus.
-     *
-     * @return CommandBus
-     */
-    public function getCommandBus()
-    {
-        return $this->commandBus;
     }
 
     /**
@@ -1030,17 +1009,11 @@ class Api
      *
      * @return Update
      */
-    public function getWebhookUpdates($emitUpdateWasReceivedEvent = true)
+    public function getWebhookUpdates()
     {
         $body = json_decode(file_get_contents('php://input'), true);
 
-        $update = new Update($body);
-
-        if ($emitUpdateWasReceivedEvent) {
-            $this->emitEvent(new UpdateWasReceived($update, $this));
-        }
-
-        return $update;
+        return new Update($body);
     }
 
     /**
@@ -1069,14 +1042,13 @@ class Api
      * @link https://core.telegram.org/bots/api#getupdates
      *
      * @param array  $params
-     * @param bool  $emitUpdateWasReceivedEvents
      * @var int|null $params ['offset']
      * @var int|null $params ['limit']
      * @var int|null $params ['timeout']
      *
      * @return Update[]
      */
-    public function getUpdates(array $params = [], $emitUpdateWasReceivedEvents = true)
+    public function getUpdates(array $params = [])
     {
         $response = $this->post('getUpdates', $params);
         $updates = $response->getDecodedBody();
@@ -1085,13 +1057,7 @@ class Api
         $data = [];
         if (isset($updates['result'])) {
             foreach ($updates['result'] as $body) {
-                $update = new Update($body);
-
-                if ($emitUpdateWasReceivedEvents) {
-                    $this->emitEvent(new UpdateWasReceived($update, $this));
-                }
-
-                $data[] = $update;
+                $data[] = new Update($body);
             }
         }
 
@@ -1183,67 +1149,13 @@ class Api
     {
         return Keyboard::forceReply($params);
     }
-
-    /**
-     * Processes Inbound Commands.
-     *
-     * @param bool $webhook
-     *
-     * @return Update|Update[]
-     */
-    public function commandsHandler($webhook = false)
+    
+    public function confirmUpdate($highestUpdateId)
     {
-        if ($webhook) {
-            $update = $this->getWebhookUpdates();
-            $this->processCommand($update);
-
-            return $update;
-        }
-
-        $updates = $this->getUpdates();
-        $highestId = -1;
-
-        foreach ($updates as $update) {
-            $highestId = $update->getUpdateId();
-            $this->processCommand($update);
-        }
-
-        //An update is considered confirmed as soon as getUpdates is called with an offset higher than its update_id.
-        if ($highestId != -1) {
-            $params = [];
-            $params['offset'] = $highestId + 1;
-            $params['limit'] = 1;
-            $this->getUpdates($params);
-        }
-
-        return $updates;
-    }
-
-    /**
-     * Check update object for a command and process.
-     *
-     * @param Update $update
-     */
-    public function processCommand(Update $update)
-    {
-        $message = $update->getMessage();
-
-        if ($message !== null && $message->has('text')) {
-            $this->getCommandBus()->handler($message->getText(), $update);
-        }
-    }
-
-    /**
-     * Helper to Trigger Commands.
-     *
-     * @param string $name   Command Name
-     * @param Update $update Update Object
-     *
-     * @return mixed
-     */
-    public function triggerCommand($name, Update $update)
-    {
-        return $this->getCommandBus()->execute($name, $update->getMessage()->getText(), $update);
+        $params = [];
+        $params['offset'] = $highestUpdateId + 1;
+        $params['limit'] = 1;
+        $this->getUpdates($params);
     }
 
     /**
@@ -1268,7 +1180,7 @@ class Api
         if ($object instanceof Update) {
             if ($object->has('message')) {
                 $object = $object->getMessage();
-            }else{
+            } else {
                 throw new \InvalidArgumentException('The object must be or contain a message');
             }
         }
@@ -1342,7 +1254,6 @@ class Api
         if ($fileUpload) {
             $params = ['multipart' => $params];
         } else {
-
             if (array_key_exists('reply_markup', $params)) {
                 $params['reply_markup'] = (string)$params['reply_markup'];
             }
@@ -1448,10 +1359,6 @@ class Api
      */
     public function __call($method, $arguments)
     {
-        if (preg_match('/^\w+Commands?/', $method, $matches)) {
-            return call_user_func_array([$this->getCommandBus(), $matches[0]], $arguments);
-        }
-
         $action = substr($method, 0, 3);
         if ($action === 'get') {
             /* @noinspection PhpUndefinedFunctionInspection */

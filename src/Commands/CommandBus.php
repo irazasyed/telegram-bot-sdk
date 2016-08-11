@@ -3,7 +3,7 @@
 namespace Telegram\Bot\Commands;
 
 use Telegram\Bot\Answers\AnswerBus;
-use Telegram\Bot\Api;
+use Telegram\Bot\Bots\Bot;
 use Telegram\Bot\Objects\Update;
 use Telegram\Bot\Exceptions\TelegramSDKException;
 
@@ -25,13 +25,13 @@ class CommandBus extends AnswerBus
     /**
      * Instantiate Command Bus.
      *
-     * @param Api $telegram
+     * @param Bot $bot
      *
      * @throws TelegramSDKException
      */
-    public function __construct(Api $telegram)
+    public function __construct(Bot $bot)
     {
-        $this->telegram = $telegram;
+        $this->bot = $bot;
     }
 
     /**
@@ -81,7 +81,7 @@ class CommandBus extends AnswerBus
                 );
             }
 
-            if ($this->telegram->hasContainer()) {
+            if ($this->getTelegram()->hasContainer()) {
                 $command = $this->buildDependencyInjectedAnswer($command);
             } else {
                 $command = new $command();
@@ -89,7 +89,6 @@ class CommandBus extends AnswerBus
         }
 
         if ($command instanceof CommandInterface) {
-
             /*
              * At this stage we definitely have a proper command to use.
              *
@@ -220,11 +219,11 @@ class CommandBus extends AnswerBus
     protected function execute($name, $arguments, $message)
     {
         if (array_key_exists($name, $this->commands)) {
-            return $this->commands[$name]->make($this->telegram, $arguments, $message);
+            return $this->commands[$name]->make($this->getBot(), $arguments, $message);
         } elseif (array_key_exists($name, $this->commandAliases)) {
-            return $this->commandAliases[$name]->make($this->telegram, $arguments, $message);
+            return $this->commandAliases[$name]->make($this->getBot(), $arguments, $message);
         } elseif (array_key_exists('help', $this->commands)) {
-            return $this->commands['help']->make($this->telegram, $arguments, $message);
+            return $this->commands['help']->make($this->getBot(), $arguments, $message);
         }
 
         return 'Ok';
