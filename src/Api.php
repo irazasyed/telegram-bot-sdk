@@ -1187,16 +1187,16 @@ class Api
      *
      * @return Update[]
      */
-    public function getUpdates(array $params = [], $shouldEmit = true)
+    public function getUpdates(array $params = [], $shouldEmitEvents = true)
     {
         $response = $this->post('getUpdates', $params);
 
         return collect($response->getResult())
-            ->map(function ($data) use ($shouldEmit) {
+            ->map(function ($data) use ($shouldEmitEvents) {
 
                 $update = new Update($data);
 
-                if ($shouldEmit) {
+                if ($shouldEmitEvents) {
                     $this->emitEvent(new UpdateWasReceived($update, $this));
                 }
 
