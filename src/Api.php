@@ -1187,26 +1187,22 @@ class Api
      *
      * @return Update[]
      */
-    public function getUpdates(array $params = [], $emitUpdateWasReceivedEvents = true)
+    public function getUpdates(array $params = [], $shouldEmitEvents = true)
     {
         $response = $this->post('getUpdates', $params);
-        $updates = $response->getDecodedBody();
 
-        /** @var Update[] $data */
-        $data = [];
-        if (isset($updates['result'])) {
-            foreach ($updates['result'] as $body) {
-                $update = new Update($body);
+        return collect($response->getResult())
+            ->map(function ($data) use ($shouldEmitEvents) {
 
-                if ($emitUpdateWasReceivedEvents) {
+                $update = new Update($data);
+
+                if ($shouldEmitEvents) {
                     $this->emitEvent(new UpdateWasReceived($update, $this));
                 }
 
-                $data[] = $update;
-            }
-        }
-
-        return $data;
+                return $update;
+            })
+            ->all();
     }
 
 
@@ -1324,7 +1320,7 @@ class Api
             $params = [];
             $params['offset'] = $highestId + 1;
             $params['limit'] = 1;
-            $this->getUpdates($params);
+            $this->markUpdateAsRead($params);
         }
 
         return $updates;
@@ -1457,22 +1453,25 @@ class Api
      */
     protected function uploadFile($endpoint, array $params = [])
     {
-        $i = 0;
-        $multipart_params = [];
-        foreach ($params as $name => $contents) {
-            if (is_null($contents)) {
-                continue;
-            }
+        $multipart_params = collect($params)
+            ->reject(function ($value) {
+                return is_null($value);
+            })
+            ->map(function ($contents, $name) {
 
-            if (!is_resource($contents) && $name !== 'url') {
-                $validUrl = filter_var($contents, FILTER_VALIDATE_URL);
-                $contents = (is_file($contents) || $validUrl) ? (new InputFile($contents))->open() : (string)$contents;
-            }
+                if (!is_resource($contents) && $name !== 'url') {
+                    $validUrl = filter_var($contents, FILTER_VALIDATE_URL);
+                    $contents = (is_file($contents) || $validUrl) ? (new InputFile($contents))->open() : (string)$contents;
+                }
 
-            $multipart_params[$i]['name'] = $name;
-            $multipart_params[$i]['contents'] = $contents;
-            ++$i;
-        }
+                return [
+                    'name'     => $name,
+                    'contents' => $contents,
+                ];
+            })
+            //Reset the keys on the collection
+            ->values()
+            ->all();
 
         return $this->post($endpoint, $multipart_params, true);
     }
@@ -1627,5 +1626,15 @@ class Api
         $this->connectTimeOut = $connectTimeOut;
 
         return $this;
+    }
+
+    /**
+     * An alias for getUpdates that helps readability.
+     *
+     * @param $params
+     */
+    protected function markUpdateAsRead($params)
+    {
+        return $this->getUpdates($params);
     }
 }
