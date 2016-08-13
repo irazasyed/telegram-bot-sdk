@@ -153,7 +153,7 @@ class TelegramResponse
      */
     public function getResult()
     {
-        return $this->getDecodedBody()['result'];
+        return $this->decodedBody['result'];
     }
 
     /**
