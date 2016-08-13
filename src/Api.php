@@ -1299,7 +1299,7 @@ class Api
      * @var bool    $params ['force_reply']
      * @var bool    $params ['selective']
      *
-     * @return string
+     * @return Keyboard
      */
     public static function forceReply(array $params = [])
     {
@@ -1379,7 +1379,6 @@ class Api
      *
      * @throws \ErrorException
      *
-     * @return bool
      */
     public function isMessageType($type, $object)
     {
@@ -1474,9 +1473,8 @@ class Api
             })
             ->map(function ($contents, $name) {
 
-                if (!is_resource($contents) && $name !== 'url') {
-                    $validUrl = filter_var($contents, FILTER_VALIDATE_URL);
-                    $contents = (is_file($contents) || $validUrl) ? (new InputFile($contents))->open() : (string)$contents;
+                if (!is_resource($contents) && $this->isValidFileOrUrl($name, $contents)) {
+                    $contents = (new InputFile($contents))->open();
                 }
 
                 return [
@@ -1653,5 +1651,36 @@ class Api
     protected function markUpdateAsRead($params)
     {
         return $this->getUpdates($params, false);
+    }
+
+    /**
+     * Determines if the string passed to be uploaded is a valid
+     * file on the local file system, or a valid remote URL.
+     *
+     * @param string $name
+     * @param string $contents
+     *
+     * @return bool
+     */
+    protected function isValidFileOrUrl($name, $contents)
+    {
+        //Don't try to open a url as an actual file when using this method to setWebhook.
+        if ($name == 'url') {
+            return false;
+        }
+
+        //If a certificate name is passed, we must check for the file existing on the local server,
+        // otherwise telegram ignores the fact it wasn't sent and no error is thrown.
+        if ($name == 'certificate') {
+            return true;
+        }
+
+        //Is the content a valid file name.
+        if (is_readable($contents)) {
+            return true;
+        }
+
+        //Is the content a valid URL
+        return filter_var($contents, FILTER_VALIDATE_URL);
     }
 }
