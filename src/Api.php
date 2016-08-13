@@ -1178,7 +1178,7 @@ class Api
      * @link https://core.telegram.org/bots/api#getupdates
      *
      * @param array  $params
-     * @param bool  $emitUpdateWasReceivedEvents
+     * @param bool   $shouldEmitEvents
      * @var int|null $params ['offset']
      * @var int|null $params ['limit']
      * @var int|null $params ['timeout']
