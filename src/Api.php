@@ -1551,8 +1551,7 @@ class Api
             return call_user_func_array([$this->getCommandBus(), $matches[0]], $arguments);
         }
 
-        $action = substr($method, 0, 3);
-        if ($action === 'get') {
+        if (starts_with($method, 'get')) {
             /* @noinspection PhpUndefinedFunctionInspection */
             $class_name = studly_case(substr($method, 3));
             $class = 'Telegram\Bot\Objects\\'.$class_name;
