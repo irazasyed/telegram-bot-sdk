@@ -1130,24 +1130,39 @@ class Api
     }
 
     /**
-     * Returns webhook updates sent by Telegram.
+     * Returns a webhook update sent by Telegram.
      * Works only if you set a webhook.
      *
      * @see setWebhook
      *
      * @return Update
      */
-    public function getWebhookUpdates($emitUpdateWasReceivedEvent = true)
+    public function getWebhookUpdate($shouldEmitEvent = true)
     {
         $body = json_decode(file_get_contents('php://input'), true);
 
         $update = new Update($body);
 
-        if ($emitUpdateWasReceivedEvent) {
+        if ($shouldEmitEvent) {
             $this->emitEvent(new UpdateWasReceived($update, $this));
         }
 
         return $update;
+    }
+
+    /**
+     * Alias for getWebhookUpdate
+     *
+     * @deprecated Call method getWebhookUpdate (note lack of letter s at end)
+     *             To be removed in next major version.
+     *
+     * @param bool $shouldEmitEvent
+     *
+     * @return Update
+     */
+    public function getWebhookUpdates($shouldEmitEvent = true)
+    {
+        return $this->getWebhookUpdate($shouldEmitEvent);
     }
 
     /**
