@@ -20,6 +20,13 @@ abstract class BaseObject extends Collection
     }
 
     /**
+     * Property relations.
+     *
+     * @return array
+     */
+    abstract public function relations();
+
+    /**
      * Magically access collection data.
      *
      * @param $property
@@ -47,6 +54,11 @@ abstract class BaseObject extends Collection
         }
 
         $value = $this->items[$property];
+
+        $relations = $this->relations();
+        if (isset($relations[$property])) {
+            return new $relations[$property]($value);
+        }
 
         $class = 'Telegram\Bot\Objects\\'.studly_case($property);
 
