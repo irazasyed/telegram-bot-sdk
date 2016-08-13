@@ -1632,9 +1632,11 @@ class Api
      * An alias for getUpdates that helps readability.
      *
      * @param $params
+     *
+     * @return Objects\Update[]
      */
     protected function markUpdateAsRead($params)
     {
-        return $this->getUpdates($params);
+        return $this->getUpdates($params, false);
     }
 }
