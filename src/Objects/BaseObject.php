@@ -57,17 +57,17 @@ abstract class BaseObject extends Collection
 
         $relations = $this->relations();
         if (isset($relations[$property])) {
-            return new $relations[$property]($value);
+            return $relations[$property]::make($value);
         }
 
         $class = 'Telegram\Bot\Objects\\'.studly_case($property);
 
         if (class_exists($class)) {
-            return new $class($value);
+            return $class::make($value);
         }
 
         if (is_array($value)) {
-            return new Object($value);
+            return Object::make($value);
         }
 
         return $value;
