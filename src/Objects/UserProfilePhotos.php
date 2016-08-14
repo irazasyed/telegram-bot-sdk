@@ -6,8 +6,8 @@ namespace Telegram\Bot\Objects;
  * Class UserProfilePhotos.
  *
  *
- * @method int          getTotalCount()     Total number of profile pictures the target user has.
- * @method PhotoSize[]  getPhotos()         Requested profile pictures (in up to 4 sizes each).
+ * @property int          $totalCount     Total number of profile pictures the target user has.
+ * @property PhotoSize[]  $photos         Requested profile pictures (in up to 4 sizes each).
  */
 class UserProfilePhotos extends BaseObject
 {
