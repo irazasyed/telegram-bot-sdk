@@ -3,7 +3,7 @@
 namespace Telegram\Bot\FileUpload;
 
 use GuzzleHttp\Psr7;
-use Telegram\Bot\Exceptions\TelegramSDKException;
+use Telegram\Bot\Exceptions\CouldNotUploadInputFile;
 
 /**
  * Class InputFile.
@@ -19,9 +19,6 @@ class InputFile
     /** @var resource The stream pointing to the file. */
     protected $stream;
 
-    /** @var bool Is Resource. */
-    protected $is_resource = false;
-
     /**
      * Create a new InputFile entity from local file.
      *
@@ -36,46 +33,18 @@ class InputFile
     }
 
     /**
-     * Create a new InputFile entity from remote url.
-     *
-     * @param string $url
-     * @param string $filename
-     *
-     * @return mixed
-     */
-    public static function createFromRemote($url, $filename)
-    {
-        return new static($url, $filename);
-    }
-
-    /**
-     * Create a new InputFile entity from resource.
-     *
-     * @param resource $resource
-     * @param string   $filename
-     *
-     * @return static
-     */
-    public static function createFromResource($resource, $filename)
-    {
-        return new static($resource, $filename, true);
-    }
-
-    /**
      * Creates a new InputFile entity.
      *
      * @param string $filePath
      * @param null   $filename
-     * @param bool   $is_resource
      *
      * @internal param string $type
      *
      */
-    public function __construct($filePath, $filename = null, $is_resource = false)
+    public function __construct($filePath, $filename = null)
     {
         $this->path = $filePath;
         $this->filename = $filename;
-        $this->is_resource = $is_resource;
     }
 
     /**
@@ -92,19 +61,10 @@ class InputFile
      * Return the name of the file.
      *
      * @return string
-     * @throws TelegramSDKException
      */
     public function getFileName()
     {
-        if ($this->isFileResource() || $this->isFileRemote()) {
-            if (!isset($this->filename)) {
-                throw new TelegramSDKException('Filename Not Set. Remote or Resource file uploads require a filename.');
-            }
-
-            return $this->filename;
-        }
-
-        return basename($this->path);
+        return $this->filename ?: basename($this->path);
     }
 
     /**
@@ -133,35 +93,42 @@ class InputFile
     {
         $this->open();
 
-        if (!$this->stream) {
-            throw new TelegramSDKException("Failed to create InputFile entity. Unable to open resource: {$this->path}.");
-        }
-
         return $this->stream;
     }
 
     /**
      * Opens file stream.
      *
-     * @throws TelegramSDKException
-     *
-     * @return resource
+     * @return $this
+     * @throws CouldNotUploadInputFile
      */
     protected function open()
     {
-        if ($this->isFileResource()) {
-            $this->stream = Psr7\stream_for($this->path);
-
-            return $this;
+        if (!$this->isFileLocal() && !isset($this->filename)) {
+            throw CouldNotUploadInputFile::filenameNotProvided($this->path);
         }
 
-        if (!$this->isFileRemote() && !$this->isFileLocal()) {
-            throw new TelegramSDKException("Failed to create InputFile entity. Unable to open resource: {$this->path}.");
+        if ($this->isInvalidResourceProvided()) {
+            throw CouldNotUploadInputFile::couldNotOpenResource($this->path);
         }
 
-        $this->stream = Psr7\try_fopen($this->path, 'r');
+        if ($this->isFileLocal()) {
+            $this->path = Psr7\try_fopen($this->path, 'r');
+        }
+
+        $this->stream = Psr7\stream_for($this->path);
 
         return $this;
+    }
+
+    /**
+     * Check if provided resource is invalid.
+     *
+     * @return bool
+     */
+    protected function isInvalidResourceProvided()
+    {
+        return !$this->isFileResource() && !$this->isFileLocal() && !$this->isFileRemote();
     }
 
     /**
@@ -191,6 +158,6 @@ class InputFile
      */
     protected function isFileResource()
     {
-        return is_resource($this->path) || $this->is_resource;
+        return is_resource($this->path);
     }
 }

@@ -6,6 +6,7 @@ use Illuminate\Contracts\Container\Container;
 use Telegram\Bot\Commands\CommandBus;
 use Telegram\Bot\Events\EmitsEvents;
 use Telegram\Bot\Events\UpdateWasReceived;
+use Telegram\Bot\Exceptions\CouldNotUploadInputFile;
 use Telegram\Bot\Exceptions\TelegramSDKException;
 use Telegram\Bot\FileUpload\InputFile;
 use Telegram\Bot\HttpClients\HttpClientInterface;
@@ -816,9 +817,9 @@ class Api
      *
      * @link https://core.telegram.org/bots/api#getchat
      *
-     * @param array $params
+     * @param array    $params
      *
-     * @var string|int  $params ['chat_id'] Unique identifier for the target chat or username of the target supergroup or channel (in the format @channelusername)
+     * @var string|int $params ['chat_id'] Unique identifier for the target chat or username of the target supergroup or channel (in the format @channelusername)
      *
      * @throws TelegramSDKException
      *
@@ -842,9 +843,9 @@ class Api
      *
      * @link https://core.telegram.org/bots/api#getchatadministrators
      *
-     * @param array $params
+     * @param array    $params
      *
-     * @var string|int  $params ['chat_id'] Unique identifier for the target chat or username of the target supergroup or channel (in the format @channelusername);
+     * @var string|int $params ['chat_id'] Unique identifier for the target chat or username of the target supergroup or channel (in the format @channelusername);
      *
      * @throws TelegramSDKException
      *
@@ -872,9 +873,9 @@ class Api
      *
      * @link https://core.telegram.org/bots/api#getchatmemberscount
      *
-     * @param array $params
+     * @param array    $params
      *
-     * @var string|int  $params ['chat_id'] Unique identifier for the target chat or username of the target supergroup or channel (in the format @channelusername)
+     * @var string|int $params ['chat_id'] Unique identifier for the target chat or username of the target supergroup or channel (in the format @channelusername)
      *
      * @throws TelegramSDKException
      *
@@ -899,10 +900,10 @@ class Api
      *
      * @link https://core.telegram.org/bots/api#getchatmember
      *
-     * @param array $params
+     * @param array    $params
      *
-     * @var string|int  $params ['chat_id'] Unique identifier for the target chat or username of the target supergroup or channel (in the format @channelusername)
-     * @var int         $params ['user_id'] Unique identifier of the target user.
+     * @var string|int $params ['chat_id'] Unique identifier for the target chat or username of the target supergroup or channel (in the format @channelusername)
+     * @var int        $params ['user_id'] Unique identifier of the target user.
      *
      * @throws TelegramSDKException
      *
@@ -1196,6 +1197,7 @@ class Api
      *
      * @param array  $params
      * @param bool   $shouldEmitEvents
+     *
      * @var int|null $params ['offset']
      * @var int|null $params ['limit']
      * @var int|null $params ['timeout']
@@ -1384,7 +1386,8 @@ class Api
      */
     public function isMessageType($type, $object)
     {
-        trigger_error('This method has been deprecated. Use isType() on the Message object instead.', E_USER_DEPRECATED);
+        trigger_error('This method has been deprecated. Use isType() on the Message object instead.',
+            E_USER_DEPRECATED);
     }
 
     /**
@@ -1401,7 +1404,8 @@ class Api
      */
     public function detectMessageType($object)
     {
-        trigger_error('This method has been deprecated. Use detectType() on the Message object instead.', E_USER_DEPRECATED);
+        trigger_error('This method has been deprecated. Use detectType() on the Message object instead.',
+            E_USER_DEPRECATED);
     }
 
     /**
@@ -1474,15 +1478,22 @@ class Api
                 return is_null($value);
             })
             ->map(function ($contents, $name) {
-
-                if (!is_resource($contents) && $this->isValidFileOrUrl($name, $contents)) {
-                    $contents = (new InputFile($contents))->open();
+                if (is_resource($contents)) {
+                    throw CouldNotUploadInputFile::resourceShouldBeInputEntity($name);
                 }
 
-                return [
-                    'name'     => $name,
-                    'contents' => $contents,
-                ];
+                if (!$contents instanceof InputFile && $this->isValidFileOrUrl($name, $contents)) {
+                    $contents = InputFile::create($contents);
+                }
+
+                if ($contents instanceof InputFile) {
+                    $filename = $contents->getFileName();
+                    $contents = $contents->getContents();
+
+                    return compact('name', 'contents', 'filename');
+                }
+
+                return compact('name', 'contents');
             })
             //Reset the keys on the collection
             ->values()
