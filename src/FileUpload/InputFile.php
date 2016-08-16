@@ -22,8 +22,8 @@ class InputFile
     /**
      * Create a new InputFile entity from local file.
      *
-     * @param string $filePath
-     * @param null   $filename
+     * @param string      $filePath
+     * @param string|null $filename
      *
      * @return static
      */
@@ -35,11 +35,8 @@ class InputFile
     /**
      * Creates a new InputFile entity.
      *
-     * @param string $filePath
-     * @param null   $filename
-     *
-     * @internal param string $type
-     *
+     * @param string      $filePath
+     * @param string|null $filename
      */
     public function __construct($filePath, $filename = null)
     {
