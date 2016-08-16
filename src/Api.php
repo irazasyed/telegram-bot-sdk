@@ -1135,6 +1135,8 @@ class Api
      *
      * @see setWebhook
      *
+     * @param bool $shouldEmitEvent
+     *
      * @return Update
      */
     public function getWebhookUpdate($shouldEmitEvent = true)
