@@ -1478,22 +1478,12 @@ class Api
                 return is_null($value);
             })
             ->map(function ($contents, $name) {
+
                 if (is_resource($contents)) {
                     throw CouldNotUploadInputFile::resourceShouldBeInputFileEntity($name);
                 }
 
-                if (!$contents instanceof InputFile && $this->isValidFileOrUrl($name, $contents)) {
-                    $contents = InputFile::create($contents);
-                }
-
-                if ($contents instanceof InputFile) {
-                    $filename = $contents->getFilename();
-                    $contents = $contents->getContents();
-
-                    return compact('name', 'contents', 'filename');
-                }
-
-                return compact('name', 'contents');
+                return $this->generateMultipartData($contents, $name);
             })
             //Reset the keys on the collection
             ->values()
@@ -1532,11 +1522,8 @@ class Api
      *
      * @return TelegramRequest
      */
-    protected function request(
-        $method,
-        $endpoint,
-        array $params = []
-    ) {
+    protected function request($method, $endpoint, array $params = [])
+    {
         return new TelegramRequest(
             $this->getAccessToken(),
             $method,
@@ -1666,15 +1653,39 @@ class Api
     }
 
     /**
+     * Generates the multipart data required when sending files to telegram.
+     *
+     * @param mixed  $contents
+     * @param string $name
+     *
+     * @return array
+     */
+    protected function generateMultipartData($contents, $name)
+    {
+        if (!$contents instanceof InputFile && $this->isValidFileOrUrl($contents, $name)) {
+            $contents = InputFile::create($contents);
+        }
+
+        if ($contents instanceof InputFile) {
+            $filename = $contents->getFilename();
+            $contents = $contents->getContents();
+
+            return compact('name', 'contents', 'filename');
+        }
+
+        return compact('name', 'contents');
+    }
+
+    /**
      * Determines if the string passed to be uploaded is a valid
      * file on the local file system, or a valid remote URL.
      *
-     * @param string $name
      * @param string $contents
+     * @param string $name
      *
      * @return bool
      */
-    protected function isValidFileOrUrl($name, $contents)
+    protected function isValidFileOrUrl($contents, $name)
     {
         //Don't try to open a url as an actual file when using this method to setWebhook.
         if ($name == 'url') {
