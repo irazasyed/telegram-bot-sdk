@@ -3,6 +3,8 @@
 namespace Telegram\Bot\FileUpload;
 
 use GuzzleHttp\Psr7;
+use GuzzleHttp\Psr7\LazyOpenStream;
+use Psr\Http\Message\StreamInterface;
 use Telegram\Bot\Exceptions\CouldNotUploadInputFile;
 
 /**
@@ -10,151 +12,206 @@ use Telegram\Bot\Exceptions\CouldNotUploadInputFile;
  */
 class InputFile
 {
-    /** @var string The path to the file on the system. */
-    protected $path;
+    /** @var string|resource|StreamInterface The path to the file on the system or remote / resource. */
+    protected $file;
 
-    /** @var string The filename. */
+    /** @var string|null The filename. */
     protected $filename;
 
-    /** @var resource The stream pointing to the file. */
-    protected $stream;
+    /** @var string|resource|StreamInterface The contents of the file. */
+    protected $contents;
 
     /**
-     * Create a new InputFile entity from local file.
+     * Create a new InputFile entity.
      *
-     * @param string      $filePath
-     * @param string|null $filename
+     * @param string|resource|StreamInterface|null $file
+     * @param string|null                          $filename
      *
      * @return static
      */
-    public static function create($filePath, $filename = null)
+    public static function create($file = null, $filename = null)
     {
-        return new static($filePath, $filename);
+        return new static($file, $filename);
+    }
+
+    /**
+     * Create a file on-fly using the provided contents and filename.
+     *
+     * @param string $contents
+     * @param string $filename
+     *
+     * @return mixed
+     */
+    public static function createFromContents($contents, $filename)
+    {
+        return (new static(null, $filename))->setContents($contents);
     }
 
     /**
      * Creates a new InputFile entity.
      *
-     * @param string      $filePath
-     * @param string|null $filename
+     * @param string|resource|StreamInterface|null $file
+     * @param string|null                          $filename
      */
-    public function __construct($filePath, $filename = null)
+    public function __construct($file = null, $filename = null)
     {
-        $this->path = $filePath;
+        $this->file = $file;
         $this->filename = $filename;
     }
 
     /**
-     * Return the file path.
+     * Return the file.
      *
-     * @return string
+     * @return string|resource|StreamInterface|null
      */
-    public function getFilePath()
+    public function getFile()
     {
-        return $this->path;
+        return $this->file;
+    }
+
+    /**
+     * Set File.
+     *
+     * @param string|resource|StreamInterface|null $file
+     *
+     * @return $this
+     */
+    public function setFile($file)
+    {
+        $this->file = $file;
+
+        return $this;
     }
 
     /**
      * Return the name of the file.
      *
      * @return string
+     * @throws CouldNotUploadInputFile
      */
-    public function getFileName()
+    public function getFilename()
     {
-        return $this->filename ?: basename($this->path);
+        if (($this->isFileResourceOrStream() || $this->isFileRemote()) && !isset($this->filename)) {
+            throw CouldNotUploadInputFile::filenameNotProvided($this->file);
+        }
+
+        return $this->filename ?: basename($this->file);
     }
 
     /**
      * Set a filename.
      *
-     * Used with resources.
-     *
      * @param $filename
      *
      * @return $this
+     * @throws InvalidArgumentException
      */
     public function setFilename($filename)
     {
+        if (false === $this->isStringOrNull($filename)) {
+            throw new \InvalidArgumentException(
+                'Filename must be a string or null'
+            );
+        }
+
         $this->filename = $filename;
 
         return $this;
     }
 
     /**
-     * Get file resource contents.
+     * Get contents.
      *
-     * @return resource
-     * @throws TelegramSDKException
+     * @return InputFile
      */
     public function getContents()
     {
-        $this->open();
-
-        return $this->stream;
+        return $this->contents ?: $this->open();
     }
 
     /**
-     * Opens file stream.
+     * Set contents of the file.
+     *
+     * @param string $contents
      *
      * @return $this
-     * @throws CouldNotUploadInputFile
      */
-    protected function open()
+    public function setContents($contents)
     {
-        if (!$this->isFileLocal() && !isset($this->filename)) {
-            throw CouldNotUploadInputFile::filenameNotProvided($this->path);
-        }
-
-        if ($this->isInvalidResourceProvided()) {
-            throw CouldNotUploadInputFile::couldNotOpenResource($this->path);
-        }
-
-        if ($this->isFileLocal()) {
-            $this->path = Psr7\try_fopen($this->path, 'r');
-        }
-
-        $this->stream = Psr7\stream_for($this->path);
+        $this->contents = $contents;
 
         return $this;
     }
 
     /**
-     * Check if provided resource is invalid.
+     * Opens remote & local file.
      *
-     * @return bool
+     * @return StreamInterface|resource|string
+     * @throws CouldNotUploadInputFile
      */
-    protected function isInvalidResourceProvided()
+    protected function open()
     {
-        return !$this->isFileResource() && !$this->isFileLocal() && !$this->isFileRemote();
+        if ($this->isFileRemote() || $this->isFileLocalAndExists()) {
+            return $this->contents = new LazyOpenStream($this->file, 'r');
+        }
+
+        return $this->contents = $this->file;
     }
 
     /**
-     * Returns true if the path to the file is readable (local).
+     * Determine if given param is a string or null.
      *
-     * @return bool
+     * @param mixed $param
+     *
+     * @return bool true if it's a string or null, false otherwise.
      */
-    protected function isFileLocal()
+    protected function isStringOrNull($param)
     {
-        return is_readable($this->path);
+        return in_array(gettype($param), ['string', 'NULL']);
     }
 
     /**
-     * Returns true if the path to the file is remote.
+     * Determine if it's a remote file.
      *
-     * @return bool
+     * @return bool true if it's a valid URL, false otherwise.
      */
     protected function isFileRemote()
     {
-        return preg_match('/^(https?|ftp):\/\/.*/', $this->path) === 1;
+        return is_string($this->file) && preg_match('/^(https?|ftp):\/\/.*/', $this->file) === 1;
     }
 
     /**
-     * Returns true if the given data is a resource or is set as resource.
+     * Determine if it's a resource file.
      *
-     * @return bool
+     * @return bool true if it's a resource file or an instance of
+     *              \Psr\Http\Message\StreamInterface, false otherwise.
      */
-    protected function isFileResource()
+    protected function isFileResourceOrStream()
     {
-        return is_resource($this->path);
+        return is_resource($this->file) || $this->file instanceof StreamInterface;
+    }
+
+    /**
+     * Determine if it's a local file and exists.
+     *
+     * @return bool true if the file exists and readable, false if it's not a
+     *              local file. Throws exception if the file doesn't exist or
+     *              is not readable otherwise.
+     *
+     * @throws CouldNotUploadInputFile
+     */
+    protected function isFileLocalAndExists()
+    {
+        $file = @is_readable($this->file);
+
+        if (is_null($file)) {
+            return false;
+        }
+
+        if ($file) {
+            return true;
+        }
+
+        throw CouldNotUploadInputFile::fileDoesNotExistOrNotReadable($this->file);
     }
 }
