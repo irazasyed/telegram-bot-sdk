@@ -298,7 +298,7 @@ class Api
      * <code>
      * $params = [
      *   'chat_id'              => '',
-     *   'photo'                => '',
+     *   'photo'                => InputFile::create($resourceOrFile, $filename),
      *   'caption'              => '',
      *   'disable_notification' => '',
      *   'reply_to_message_id'  => '',
@@ -310,12 +310,12 @@ class Api
      *
      * @param array    $params
      *
-     * @var int|string $params ['chat_id']
-     * @var string     $params ['photo']
-     * @var string     $params ['caption']
-     * @var bool       $params ['disable_notification']
-     * @var int        $params ['reply_to_message_id']
-     * @var string     $params ['reply_markup']
+     * @var int|string       $params ['chat_id']
+     * @var InputFile|string $params ['photo']
+     * @var string           $params ['caption']
+     * @var bool             $params ['disable_notification']
+     * @var int              $params ['reply_to_message_id']
+     * @var string           $params ['reply_markup']
      *
      * @throws TelegramSDKException
      *
@@ -334,7 +334,7 @@ class Api
      * <code>
      * $params = [
      *   'chat_id'              => '',
-     *   'audio'                => '',
+     *   'audio'                => InputFile::create($resourceOrFile, $filename),
      *   'duration'             => '',
      *   'performer'            => '',
      *   'title'                => '',
@@ -348,14 +348,14 @@ class Api
      *
      * @param array    $params
      *
-     * @var int|string $params ['chat_id']
-     * @var string     $params ['audio']
-     * @var int        $params ['duration']
-     * @var string     $params ['performer']
-     * @var string     $params ['title']
-     * @var bool       $params ['disable_notification']
-     * @var int        $params ['reply_to_message_id']
-     * @var string     $params ['reply_markup']
+     * @var int|string       $params ['chat_id']
+     * @var InputFile|string $params ['audio']
+     * @var int              $params ['duration']
+     * @var string           $params ['performer']
+     * @var string           $params ['title']
+     * @var bool             $params ['disable_notification']
+     * @var int              $params ['reply_to_message_id']
+     * @var string           $params ['reply_markup']
      *
      * @throws TelegramSDKException
      *
@@ -374,7 +374,7 @@ class Api
      * <code>
      * $params = [
      *   'chat_id'              => '',
-     *   'document'             => '',
+     *   'document'             => InputFile::create($resourceOrFile, $filename),
      *   'caption'              => '',
      *   'disable_notification' => '',
      *   'reply_to_message_id'  => '',
@@ -386,12 +386,12 @@ class Api
      *
      * @param array    $params
      *
-     * @var int|string $params ['chat_id']
-     * @var string     $params ['document']
-     * @var string     $params ['caption']
-     * @var bool       $params ['disable_notification']
-     * @var int        $params ['reply_to_message_id']
-     * @var string     $params ['reply_markup']
+     * @var int|string       $params ['chat_id']
+     * @var InputFile|string $params ['document']
+     * @var string           $params ['caption']
+     * @var bool             $params ['disable_notification']
+     * @var int              $params ['reply_to_message_id']
+     * @var string           $params ['reply_markup']
      *
      * @throws TelegramSDKException
      *
@@ -410,7 +410,7 @@ class Api
      * <code>
      * $params = [
      *   'chat_id'              => '',
-     *   'sticker'              => '',
+     *   'sticker'              => InputFile::create($resourceOrFile, $filename),
      *   'disable_notification' => '',
      *   'reply_to_message_id'  => '',
      *   'reply_markup'         => '',
@@ -421,11 +421,11 @@ class Api
      *
      * @param array    $params
      *
-     * @var int|string $params ['chat_id']
-     * @var string     $params ['sticker']
-     * @var bool       $params ['disable_notification']
-     * @var int        $params ['reply_to_message_id']
-     * @var string     $params ['reply_markup']
+     * @var int|string       $params ['chat_id']
+     * @var InputFile|string $params ['sticker']
+     * @var bool             $params ['disable_notification']
+     * @var int              $params ['reply_to_message_id']
+     * @var string           $params ['reply_markup']
      *
      * @throws TelegramSDKException
      *
@@ -448,7 +448,7 @@ class Api
      * <code>
      * $params = [
      *   'chat_id'              => '',
-     *   'video'                => '',
+     *   'video'                => InputFile::create($resourceOrFile, $filename),
      *   'duration'             => '',
      *   'width'                => '',
      *   'height'               => '',
@@ -464,15 +464,15 @@ class Api
      *
      * @param array    $params
      *
-     * @var int|string $params ['chat_id']
-     * @var string     $params ['video']
-     * @var int        $params ['duration']
-     * @var int        $params ['width']
-     * @var int        $params ['height']
-     * @var string     $params ['caption']
-     * @var bool       $params ['disable_notification']
-     * @var int        $params ['reply_to_message_id']
-     * @var string     $params ['reply_markup']
+     * @var int|string       $params ['chat_id']
+     * @var InputFile|string $params ['video']
+     * @var int              $params ['duration']
+     * @var int              $params ['width']
+     * @var int              $params ['height']
+     * @var string           $params ['caption']
+     * @var bool             $params ['disable_notification']
+     * @var int              $params ['reply_to_message_id']
+     * @var string           $params ['reply_markup']
      *
      * @throws TelegramSDKException
      *
@@ -491,7 +491,7 @@ class Api
      * <code>
      * $params = [
      *   'chat_id'              => '',
-     *   'voice'                => '',
+     *   'voice'                => InputFile::create($resourceOrFile, $filename),
      *   'duration'             => '',
      *   'disable_notification' => '',
      *   'reply_to_message_id'  => '',
@@ -503,12 +503,12 @@ class Api
      *
      * @param array    $params
      *
-     * @var int|string $params ['chat_id']
-     * @var string     $params ['voice']
-     * @var int        $params ['duration']
-     * @var bool       $params ['disable_notification']
-     * @var int        $params ['reply_to_message_id']
-     * @var string     $params ['reply_markup']
+     * @var int|string       $params ['chat_id']
+     * @var InputFile|string $params ['voice']
+     * @var int              $params ['duration']
+     * @var bool             $params ['disable_notification']
+     * @var int              $params ['reply_to_message_id']
+     * @var string           $params ['reply_markup']
      *
      * @throws TelegramSDKException
      *
@@ -1478,22 +1478,12 @@ class Api
                 return is_null($value);
             })
             ->map(function ($contents, $name) {
+
                 if (is_resource($contents)) {
                     throw CouldNotUploadInputFile::resourceShouldBeInputFileEntity($name);
                 }
 
-                if (!$contents instanceof InputFile && $this->isValidFileOrUrl($name, $contents)) {
-                    $contents = InputFile::create($contents);
-                }
-
-                if ($contents instanceof InputFile) {
-                    $filename = $contents->getFilename();
-                    $contents = $contents->getContents();
-
-                    return compact('name', 'contents', 'filename');
-                }
-
-                return compact('name', 'contents');
+                return $this->generateMultipartData($contents, $name);
             })
             //Reset the keys on the collection
             ->values()
@@ -1532,11 +1522,8 @@ class Api
      *
      * @return TelegramRequest
      */
-    protected function request(
-        $method,
-        $endpoint,
-        array $params = []
-    ) {
+    protected function request($method, $endpoint, array $params = [])
+    {
         return new TelegramRequest(
             $this->getAccessToken(),
             $method,
@@ -1666,15 +1653,39 @@ class Api
     }
 
     /**
+     * Generates the multipart data required when sending files to telegram.
+     *
+     * @param mixed  $contents
+     * @param string $name
+     *
+     * @return array
+     */
+    protected function generateMultipartData($contents, $name)
+    {
+        if (!$contents instanceof InputFile && $this->isValidFileOrUrl($contents, $name)) {
+            $contents = InputFile::create($contents);
+        }
+
+        if ($contents instanceof InputFile) {
+            $filename = $contents->getFilename();
+            $contents = $contents->getContents();
+
+            return compact('name', 'contents', 'filename');
+        }
+
+        return compact('name', 'contents');
+    }
+
+    /**
      * Determines if the string passed to be uploaded is a valid
      * file on the local file system, or a valid remote URL.
      *
-     * @param string $name
      * @param string $contents
+     * @param string $name
      *
      * @return bool
      */
-    protected function isValidFileOrUrl($name, $contents)
+    protected function isValidFileOrUrl($contents, $name)
     {
         //Don't try to open a url as an actual file when using this method to setWebhook.
         if ($name == 'url') {
