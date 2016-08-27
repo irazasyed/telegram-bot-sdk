@@ -27,9 +27,9 @@ trait Singleton
      * Protected constructor to prevent creating a new instance of the
      * Singleton via the `new` operator from outside of this class.
      */
-//    protected function __construct()
-//    {
-//    }
+    protected function __construct()
+    {
+    }
 
     /**
      * Private clone method to prevent cloning of the instance of the

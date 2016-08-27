@@ -3,15 +3,12 @@
 namespace Telegram\Bot\Answers;
 
 use Telegram\Bot\Api;
-use Telegram\Bot\Traits\Singleton;
 
 /**
  * Class AnswerBus
  */
 abstract class AnswerBus
 {
-    use Singleton;
-
     /**
      * @var Api
      */
