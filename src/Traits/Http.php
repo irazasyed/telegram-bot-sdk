@@ -17,62 +17,53 @@ trait Http
 {
     use Validator;
 
-    /**
-     * @var string Telegram Bot API Access Token.
-     */
+    /** @var string Telegram Bot API Access Token. */
     protected $accessToken = null;
 
-    /**
-     * @var TelegramClient The Telegram client service.
-     */
-    protected $client;
+    /** @var TelegramClient The Telegram client service. */
+    protected static $client = null;
 
-    /**
-     * @var bool Indicates if the request to Telegram will be asynchronous (non-blocking).
-     */
+    /** @var HttpClientInterface|null Http Client Handler */
+    protected $httpClientHandler = null;
+
+    /** @var bool Indicates if the request to Telegram will be asynchronous (non-blocking). */
     protected $isAsyncRequest = false;
 
-    /**
-     * Timeout of the request in seconds.
-     *
-     * @var int
-     */
+    /** @var int Timeout of the request in seconds. */
     protected $timeOut = 60;
 
-    /**
-     * Connection timeout of the request in seconds.
-     *
-     * @var int
-     */
+    /** @var int Connection timeout of the request in seconds. */
     protected $connectTimeOut = 10;
 
-    /**
-     * @var TelegramResponse|null Stores the last request made to Telegram Bot API.
-     */
+    /** @var TelegramResponse|null Stores the last request made to Telegram Bot API. */
     protected $lastResponse;
+
+    /**
+     * Set Http Client Handler.
+     *
+     * @param HttpClientInterface $httpClientHandler
+     *
+     * @return $this
+     */
+    public function setHttpClientHandler(HttpClientInterface $httpClientHandler)
+    {
+        $this->httpClientHandler = $httpClientHandler;
+
+        return $this;
+    }
 
     /**
      * Returns the TelegramClient service.
      *
      * @return TelegramClient
      */
-    public function getClient()
+    protected function getClient()
     {
-        return $this->client;
-    }
+        if (static::$client === null) {
+            static::$client = new TelegramClient($this->httpClientHandler);
+        }
 
-    /**
-     * Set Http Client.
-     *
-     * @param HttpClientInterface $httpClient
-     *
-     * @return $this
-     */
-    public function setClient(HttpClientInterface $httpClient)
-    {
-        $this->client = $httpClient;
-
-        return $this;
+        return static::$client;
     }
 
     /**
@@ -376,7 +367,7 @@ trait Http
     ) {
         $request = $this->request($method, $endpoint, $params);
 
-        return $this->lastResponse = $this->client->sendRequest($request);
+        return $this->lastResponse = $this->getClient()->sendRequest($request);
     }
 
     /**

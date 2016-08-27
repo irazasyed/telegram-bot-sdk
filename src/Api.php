@@ -66,7 +66,7 @@ class Api
             $this->setAsyncRequest($async);
         }
 
-        $this->client = new TelegramClient($httpClientHandler);
+        $this->httpClientHandler = $httpClientHandler;
         $this->commandBus = new CommandBus($this);
     }
 
