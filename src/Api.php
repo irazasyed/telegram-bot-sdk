@@ -1058,7 +1058,7 @@ class Api
      *
      * @param $params
      *
-     * @return Objects\Update[]
+     * @return Update[]
      */
     protected function markUpdateAsRead($params)
     {
@@ -1157,8 +1157,8 @@ class Api
      * @deprecated Call method isType directly on Message object
      *             To be removed in next major version.
      *
-     * @param string         $type
-     * @param Update|Message $object
+     * @param string                 $type
+     * @param Update|Objects\Message $object
      *
      * @throws \ErrorException
      *
@@ -1175,7 +1175,7 @@ class Api
      * @deprecated Call method detectType directly on Message object
      *             To be removed in next major version.
      *
-     * @param Update|Message $object
+     * @param Update|Objects\Message $object
      *
      * @throws \ErrorException
      *
@@ -1188,25 +1188,23 @@ class Api
     }
 
     /**
-     * Magic method to process any "get" requests.
+     * Magic method to process any dynamic method calls.
      *
      * @param $method
      * @param $arguments
      *
-     * @throws TelegramSDKException
-     *
-     * @return bool|TelegramResponse|UnknownObject
+     * @return mixed|UnknownObject
      */
     public function __call($method, $arguments)
     {
-        if(method_exists($this, $method)) {
+        if (method_exists($this, $method)) {
             return call_user_func_array([$this, $method], $arguments);
         }
 
         if (preg_match('/^\w+Commands?/', $method, $matches)) {
             return call_user_func_array([$this->getCommandBus(), $matches[0]], $arguments);
         }
-        
+
         $response = $this->post($method, $arguments[0]);
 
         return new UnknownObject($response->getDecodedBody());
