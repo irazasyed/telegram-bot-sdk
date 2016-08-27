@@ -5,19 +5,23 @@ namespace Telegram\Bot\Events;
 use League\Event\Emitter;
 use League\Event\EventInterface;
 
+/**
+ * EmitsEvents
+ */
 trait EmitsEvents
 {
-    /**
-     * @var Emitter
-     */
-    private $eventEmitter;
+    /** @var Emitter */
+    protected $eventEmitter;
 
     /**
+     * Emit an event.
+     *
      * @param EventInterface|string $event
+     *
      * @throws \InvalidArgumentException
-     * @return bool true if emitted, false otherwise
+     * @return bool true if emitted, false otherwise.
      */
-    private function emitEvent($event)
+    protected function emitEvent($event)
     {
         if (is_null($this->eventEmitter)) {
             return false;
@@ -33,7 +37,10 @@ trait EmitsEvents
     }
 
     /**
+     * Emit events in batch.
+     *
      * @param EventInterface[]|string[] $events
+     *
      * @throws \InvalidArgumentException
      * @return bool true if all emitted, false otherwise
      */
@@ -55,6 +62,8 @@ trait EmitsEvents
     }
 
     /**
+     * Returns an event emitter.
+     *
      * @return Emitter
      */
     public function getEventEmitter()
@@ -63,6 +72,8 @@ trait EmitsEvents
     }
 
     /**
+     * Set an event emitter.
+     *
      * @param Emitter $eventEmitter
      */
     public function setEventEmitter($eventEmitter)
