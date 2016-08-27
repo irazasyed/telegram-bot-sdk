@@ -24,14 +24,7 @@ class Api
 {
     use EmitsEvents, Http, CommandsHandler, HasContainer;
 
-    /**
-     * @var string Version number of the Telegram Bot PHP SDK.
-     */
-    const VERSION = '3.0.0';
-
-    /**
-     * @var string The name of the environment variable that contains the Telegram Bot API Access Token.
-     */
+    /** @var string The name of the environment variable that contains the Telegram Bot API Access Token. */
     const BOT_TOKEN_ENV_NAME = 'TELEGRAM_BOT_TOKEN';
 
     /**
@@ -47,7 +40,7 @@ class Api
      */
     public function __construct($token = null, $async = false, $httpClientHandler = null)
     {
-        $this->accessToken = isset($token) ? $token : getenv(static::BOT_TOKEN_ENV_NAME);
+        $this->accessToken = $token ?: getenv(static::BOT_TOKEN_ENV_NAME);
         if (!$this->accessToken) {
             throw TelegramSDKException::tokenNotProvided(static::BOT_TOKEN_ENV_NAME);
         }
