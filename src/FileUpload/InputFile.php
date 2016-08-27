@@ -104,7 +104,7 @@ class InputFile
      * @param $filename
      *
      * @return $this
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     public function setFilename($filename)
     {
