@@ -38,10 +38,10 @@ class Api
      * Instantiates a new Telegram super-class object.
      *
      *
-     * @param string              $token                      The Telegram Bot API Access Token.
-     * @param bool                $async                      (Optional) Indicates if the request to Telegram
+     * @param string                   $token                 The Telegram Bot API Access Token.
+     * @param bool                     $async                 (Optional) Indicates if the request to Telegram
      *                                                        will be asynchronous (non-blocking).
-     * @param HttpClientInterface $httpClientHandler          (Optional) Custom HTTP Client Handler.
+     * @param HttpClientInterface|null $httpClientHandler     (Optional) Custom HTTP Client Handler.
      *
      * @throws TelegramSDKException
      */
@@ -49,13 +49,10 @@ class Api
     {
         $this->accessToken = isset($token) ? $token : getenv(static::BOT_TOKEN_ENV_NAME);
         if (!$this->accessToken) {
-            throw new TelegramSDKException('Required "token" not supplied in config and could not find fallback environment variable "'.static::BOT_TOKEN_ENV_NAME.'"');
+            throw TelegramSDKException::tokenNotProvided(static::BOT_TOKEN_ENV_NAME);
         }
 
-        if (isset($async)) {
-            $this->setAsyncRequest($async);
-        }
-
+        $this->setAsyncRequest($async);
         $this->httpClientHandler = $httpClientHandler;
     }
 
