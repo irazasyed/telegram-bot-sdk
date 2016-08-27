@@ -10,15 +10,11 @@ use Telegram\Bot\Exceptions\CouldNotUploadInputFile;
 use Telegram\Bot\Exceptions\TelegramSDKException;
 use Telegram\Bot\FileUpload\InputFile;
 use Telegram\Bot\HttpClients\HttpClientInterface;
-use Telegram\Bot\Objects\Chat;
 use Telegram\Bot\Objects\ChatMember;
-use Telegram\Bot\Objects\File;
-use Telegram\Bot\Objects\Message;
 use Telegram\Bot\Objects\UnknownObject;
 use Telegram\Bot\Objects\Update;
-use Telegram\Bot\Objects\User;
-use Telegram\Bot\Objects\UserProfilePhotos;
 use Telegram\Bot\Keyboard\Keyboard;
+use Telegram\Bot\Traits\Validator;
 
 /**
  * Class Api.
@@ -27,7 +23,7 @@ use Telegram\Bot\Keyboard\Keyboard;
  */
 class Api
 {
-    use EmitsEvents;
+    use EmitsEvents, Validator;
 
     /**
      * @var string Version number of the Telegram Bot PHP SDK.
@@ -213,13 +209,11 @@ class Api
      *
      * @throws TelegramSDKException
      *
-     * @return User
+     * @return \Telegram\Bot\Objects\User
      */
     public function getMe()
     {
-        $response = $this->post('getMe');
-
-        return new User($response->getDecodedBody());
+        return $this->getWithReturnType('getMe', [], 'User');
     }
 
     /**
@@ -251,13 +245,11 @@ class Api
      *
      * @throws TelegramSDKException
      *
-     * @return Message
+     * @return \Telegram\Bot\Objects\Message
      */
     public function sendMessage(array $params)
     {
-        $response = $this->post('sendMessage', $params);
-
-        return new Message($response->getDecodedBody());
+        return $this->postWithReturnType('sendMessage', $params, 'Message');
     }
 
     /**
@@ -283,13 +275,11 @@ class Api
      *
      * @throws TelegramSDKException
      *
-     * @return Message
+     * @return \Telegram\Bot\Objects\Message
      */
     public function forwardMessage(array $params)
     {
-        $response = $this->post('forwardMessage', $params);
-
-        return new Message($response->getDecodedBody());
+        return $this->postWithReturnType('forwardMessage', $params, 'Message');
     }
 
     /**
@@ -308,7 +298,7 @@ class Api
      *
      * @link https://core.telegram.org/bots/api#sendphoto
      *
-     * @param array    $params
+     * @param array          $params
      *
      * @var int|string       $params ['chat_id']
      * @var InputFile|string $params ['photo']
@@ -319,13 +309,11 @@ class Api
      *
      * @throws TelegramSDKException
      *
-     * @return Message
+     * @return \Telegram\Bot\Objects\Message
      */
     public function sendPhoto(array $params)
     {
-        $response = $this->uploadFile('sendPhoto', $params);
-
-        return new Message($response->getDecodedBody());
+        return $this->uploadWithReturnType('sendPhoto', $params, 'photo', 'Message');
     }
 
     /**
@@ -346,7 +334,7 @@ class Api
      *
      * @link https://core.telegram.org/bots/api#sendaudio
      *
-     * @param array    $params
+     * @param array          $params
      *
      * @var int|string       $params ['chat_id']
      * @var InputFile|string $params ['audio']
@@ -359,13 +347,11 @@ class Api
      *
      * @throws TelegramSDKException
      *
-     * @return Message
+     * @return \Telegram\Bot\Objects\Message
      */
     public function sendAudio(array $params)
     {
-        $response = $this->uploadFile('sendAudio', $params);
-
-        return new Message($response->getDecodedBody());
+        return $this->uploadWithReturnType('sendAudio', $params, 'audio', 'Message');
     }
 
     /**
@@ -384,7 +370,7 @@ class Api
      *
      * @link https://core.telegram.org/bots/api#senddocument
      *
-     * @param array    $params
+     * @param array          $params
      *
      * @var int|string       $params ['chat_id']
      * @var InputFile|string $params ['document']
@@ -395,13 +381,11 @@ class Api
      *
      * @throws TelegramSDKException
      *
-     * @return Message
+     * @return \Telegram\Bot\Objects\Message
      */
     public function sendDocument(array $params)
     {
-        $response = $this->uploadFile('sendDocument', $params);
-
-        return new Message($response->getDecodedBody());
+        return $this->uploadWithReturnType('sendDocument', $params, 'document', 'Message');
     }
 
     /**
@@ -419,7 +403,7 @@ class Api
      *
      * @link https://core.telegram.org/bots/api#sendsticker
      *
-     * @param array    $params
+     * @param array          $params
      *
      * @var int|string       $params ['chat_id']
      * @var InputFile|string $params ['sticker']
@@ -429,7 +413,7 @@ class Api
      *
      * @throws TelegramSDKException
      *
-     * @return Message
+     * @return \Telegram\Bot\Objects\Message
      */
     public function sendSticker(array $params)
     {
@@ -437,9 +421,7 @@ class Api
             throw new TelegramSDKException('Invalid Sticker Provided. Supported Format: Webp');
         }
 
-        $response = $this->uploadFile('sendSticker', $params);
-
-        return new Message($response->getDecodedBody());
+        return $this->uploadWithReturnType('sendSticker', $params, 'sticker', 'Message');
     }
 
     /**
@@ -462,7 +444,7 @@ class Api
      * @see  sendDocument
      * @link https://core.telegram.org/bots/api#sendvideo
      *
-     * @param array    $params
+     * @param array          $params
      *
      * @var int|string       $params ['chat_id']
      * @var InputFile|string $params ['video']
@@ -476,13 +458,11 @@ class Api
      *
      * @throws TelegramSDKException
      *
-     * @return Message
+     * @return \Telegram\Bot\Objects\Message
      */
     public function sendVideo(array $params)
     {
-        $response = $this->uploadFile('sendVideo', $params);
-
-        return new Message($response->getDecodedBody());
+        return $this->uploadWithReturnType('sendVideo', $params, 'video', 'Message');
     }
 
     /**
@@ -501,7 +481,7 @@ class Api
      *
      * @link https://core.telegram.org/bots/api#sendaudio
      *
-     * @param array    $params
+     * @param array          $params
      *
      * @var int|string       $params ['chat_id']
      * @var InputFile|string $params ['voice']
@@ -512,13 +492,11 @@ class Api
      *
      * @throws TelegramSDKException
      *
-     * @return Message
+     * @return \Telegram\Bot\Objects\Message
      */
     public function sendVoice(array $params)
     {
-        $response = $this->uploadFile('sendVoice', $params);
-
-        return new Message($response->getDecodedBody());
+        return $this->uploadWithReturnType('sendVoice', $params, 'voice', 'Message');
     }
 
     /**
@@ -548,13 +526,11 @@ class Api
      *
      * @throws TelegramSDKException
      *
-     * @return Message
+     * @return \Telegram\Bot\Objects\Message
      */
     public function sendLocation(array $params)
     {
-        $response = $this->post('sendLocation', $params);
-
-        return new Message($response->getDecodedBody());
+        return $this->postWithReturnType('sendLocation', $params, 'Message');
     }
 
     /**
@@ -590,13 +566,11 @@ class Api
      *
      * @throws TelegramSDKException
      *
-     * @return Message
+     * @return \Telegram\Bot\Objects\Message
      */
     public function sendVenue(array $params)
     {
-        $response = $this->post('sendVenue', $params);
-
-        return new Message($response->getDecodedBody());
+        return $this->postWithReturnType('sendVenue', $params, 'Message');
     }
 
     /**
@@ -628,13 +602,11 @@ class Api
      *
      * @throws TelegramSDKException
      *
-     * @return Message
+     * @return \Telegram\Bot\Objects\Message
      */
     public function sendContact(array $params)
     {
-        $response = $this->post('sendContact', $params);
-
-        return new Message($response->getDecodedBody());
+        return $this->postWithReturnType('sendContact', $params, 'Message');
     }
 
     /**
@@ -701,13 +673,11 @@ class Api
      *
      * @throws TelegramSDKException
      *
-     * @return UserProfilePhotos
+     * @return \Telegram\Bot\Objects\UserProfilePhotos
      */
     public function getUserProfilePhotos(array $params)
     {
-        $response = $this->post('getUserProfilePhotos', $params);
-
-        return new UserProfilePhotos($response->getDecodedBody());
+        return $this->getWithReturnType('getUserProfilePhotos', $params, 'UserProfilePhotos');
     }
 
     /**
@@ -731,13 +701,11 @@ class Api
      *
      * @throws TelegramSDKException
      *
-     * @return File
+     * @return \Telegram\Bot\Objects\File
      */
     public function getFile(array $params)
     {
-        $response = $this->post('getFile', $params);
-
-        return new File($response->getDecodedBody());
+        return $this->getWithReturnType('getFile', $params, 'File');
     }
 
     /**
@@ -768,7 +736,7 @@ class Api
      */
     public function kickChatMember(array $params)
     {
-        $this->post('kickChatMember', $params);
+        $this->get('kickChatMember', $params);
 
         return true;
     }
@@ -800,7 +768,7 @@ class Api
      */
     public function unbanChatMember(array $params)
     {
-        $this->post('unbanChatMember', $params);
+        $this->get('unbanChatMember', $params);
 
         return true;
     }
@@ -819,17 +787,16 @@ class Api
      *
      * @param array    $params
      *
-     * @var string|int $params ['chat_id'] Unique identifier for the target chat or username of the target supergroup or channel (in the format @channelusername)
+     * @var string|int $params ['chat_id'] Unique identifier for the target chat or username of the target supergroup
+     *      or channel (in the format @channelusername)
      *
      * @throws TelegramSDKException
      *
-     * @return Chat
+     * @return \Telegram\Bot\Objects\Chat
      */
     public function getChat(array $params)
     {
-        $response = $this->post('getChat', $params);
-
-        return new Chat($response->getDecodedBody());
+        return $this->getWithReturnType('getChat', $params, 'Chat');
     }
 
     /**
@@ -845,7 +812,8 @@ class Api
      *
      * @param array    $params
      *
-     * @var string|int $params ['chat_id'] Unique identifier for the target chat or username of the target supergroup or channel (in the format @channelusername);
+     * @var string|int $params ['chat_id'] Unique identifier for the target chat or username of the target supergroup
+     *      or channel (in the format @channelusername);
      *
      * @throws TelegramSDKException
      *
@@ -853,7 +821,7 @@ class Api
      */
     public function getChatAdministrators(array $params)
     {
-        $response = $this->post('getChatAdministrators', $params);
+        $response = $this->get('getChatAdministrators', $params);
 
         return collect($response->getResult())
             ->map(function ($admin) {
@@ -875,7 +843,8 @@ class Api
      *
      * @param array    $params
      *
-     * @var string|int $params ['chat_id'] Unique identifier for the target chat or username of the target supergroup or channel (in the format @channelusername)
+     * @var string|int $params ['chat_id'] Unique identifier for the target chat or username of the target supergroup
+     *      or channel (in the format @channelusername)
      *
      * @throws TelegramSDKException
      *
@@ -883,7 +852,7 @@ class Api
      */
     public function getChatMembersCount(array $params)
     {
-        $response = $this->post('getChatMembersCount', $params);
+        $response = $this->get('getChatMembersCount', $params);
 
         return $response->getResult();
     }
@@ -902,7 +871,8 @@ class Api
      *
      * @param array    $params
      *
-     * @var string|int $params ['chat_id'] Unique identifier for the target chat or username of the target supergroup or channel (in the format @channelusername)
+     * @var string|int $params ['chat_id'] Unique identifier for the target chat or username of the target supergroup
+     *      or channel (in the format @channelusername)
      * @var int        $params ['user_id'] Unique identifier of the target user.
      *
      * @throws TelegramSDKException
@@ -911,9 +881,7 @@ class Api
      */
     public function getChatMember(array $params)
     {
-        $response = $this->post('getChatMember', $params);
-
-        return new ChatMember($response->getDecodedBody());
+        return $this->getWithReturnType('getChatMember', $params, 'ChatMember');
     }
 
     /**
@@ -978,13 +946,11 @@ class Api
      *
      * @throws TelegramSDKException
      *
-     * @return Message|bool
+     * @return \Telegram\Bot\Objects\Message|bool
      */
     public function editMessageText(array $params)
     {
-        $response = $this->post('editMessageText', $params);
-
-        return new Message($response->getDecodedBody());
+        return $this->postWithReturnType('editMessageText', $params, 'Message');
     }
 
     /**
@@ -1012,13 +978,11 @@ class Api
      *
      * @throws TelegramSDKException
      *
-     * @return Message|bool
+     * @return \Telegram\Bot\Objects\Message|bool
      */
     public function editMessageCaption(array $params)
     {
-        $response = $this->post('editMessageCaption', $params);
-
-        return new Message($response->getDecodedBody());
+        return $this->postWithReturnType('editMessageCaption', $params, 'Message');
     }
 
     /**
@@ -1044,13 +1008,11 @@ class Api
      *
      * @throws TelegramSDKException
      *
-     * @return Message|bool
+     * @return \Telegram\Bot\Objects\Message|bool
      */
     public function editMessageReplyMarkup(array $params)
     {
-        $response = $this->post('editMessageReplyMarkup', $params);
-
-        return new Message($response->getDecodedBody());
+        return $this->postWithReturnType('editMessageReplyMarkup', $params, 'Message');
     }
 
     /**
@@ -1127,7 +1089,7 @@ class Api
             throw new TelegramSDKException('Invalid URL, should be a HTTPS url.');
         }
 
-        return $this->uploadFile('setWebhook', $params);
+        return $this->uploadFile('setWebhook', $params, 'certificate');
     }
 
     /**
@@ -1418,7 +1380,7 @@ class Api
      *
      * @return TelegramResponse
      */
-    protected function get($endpoint, $params = [])
+    protected function get($endpoint, array $params = [])
     {
         if (array_key_exists('reply_markup', $params)) {
             $params['reply_markup'] = (string)$params['reply_markup'];
@@ -1466,30 +1428,105 @@ class Api
      *
      * @param string $endpoint
      * @param array  $params
-     *
-     * @throws TelegramSDKException
+     * @param string $inputFileField
      *
      * @return TelegramResponse
+     * @throws CouldNotUploadInputFile
      */
-    protected function uploadFile($endpoint, array $params = [])
+    protected function uploadFile($endpoint, array $params, $inputFileField)
     {
-        $multipart_params = collect($params)
+        if ($this->hasFileId($inputFileField, $params)) {
+            return $this->post($endpoint, $params);
+        }
+
+        return $this->post($endpoint, $this->prepareMultipartParams($params, $inputFileField), true);
+    }
+
+    /**
+     * Prepare Multipart Params for File Upload.
+     *
+     * @param array $params
+     * @param       $inputFileField
+     *
+     * @return array
+     * @throws CouldNotUploadInputFile
+     */
+    protected function prepareMultipartParams(array $params, $inputFileField)
+    {
+        $inputFile = $params[$inputFileField];
+
+
+        if (is_resource($inputFile)) {
+            throw CouldNotUploadInputFile::resourceShouldBeInputFileEntity($inputFileField);
+        }
+
+        if (is_string($inputFile)) {
+            $params[$inputFileField] = InputFile::create($inputFile);
+        }
+
+        return collect($params)
             ->reject(function ($value) {
                 return is_null($value);
             })
             ->map(function ($contents, $name) {
-
-                if (is_resource($contents)) {
-                    throw CouldNotUploadInputFile::resourceShouldBeInputFileEntity($name);
-                }
-
                 return $this->generateMultipartData($contents, $name);
             })
-            //Reset the keys on the collection
             ->values()
             ->all();
+    }
 
-        return $this->post($endpoint, $multipart_params, true);
+    /**
+     * Sends a GET request to Telegram Bot API and returns with appropriate object.
+     *
+     * @param string $endpoint
+     * @param array  $params
+     * @param        $returnObject
+     *
+     * @return mixed
+     */
+    protected function getWithReturnType($endpoint, array $params = [], $returnObject)
+    {
+        $response = $this->get($endpoint, $params);
+        $object = 'Telegram\Bot\Objects\\'.$returnObject;
+
+        return new $object($response->getDecodedBody());
+    }
+
+    /**
+     * Sends a POST request to Telegram Bot API and returns with appropriate object.
+     *
+     * @param string $endpoint
+     * @param array  $params
+     * @param        $returnObject
+     *
+     * @return mixed
+     */
+    protected function postWithReturnType($endpoint, array $params, $returnObject)
+    {
+        $response = $this->post($endpoint, $params);
+        $object = 'Telegram\Bot\Objects\\'.$returnObject;
+
+        return new $object($response->getDecodedBody());
+    }
+
+    /**
+     * Sends a multipart/form-data request to Telegram Bot API and returns with appropriate object.
+     * Used primarily for file uploads.
+     *
+     * @param       $endpoint
+     * @param array $params
+     * @param       $inputFileField
+     * @param       $returnObject
+     *
+     * @return mixed
+     * @throws CouldNotUploadInputFile
+     */
+    protected function uploadWithReturnType($endpoint, array $params, $inputFileField, $returnObject)
+    {
+        $response = $this->uploadFile($endpoint, $params, $inputFileField);
+        $object = 'Telegram\Bot\Objects\\'.$returnObject;
+
+        return new $object($response->getDecodedBody());
     }
 
     /**
@@ -1662,11 +1699,7 @@ class Api
      */
     protected function generateMultipartData($contents, $name)
     {
-        if (!$contents instanceof InputFile && $this->isValidFileOrUrl($contents, $name)) {
-            $contents = InputFile::create($contents);
-        }
-
-        if ($contents instanceof InputFile) {
+        if ($this->isInputFile($contents)) {
             $filename = $contents->getFilename();
             $contents = $contents->getContents();
 
@@ -1674,36 +1707,5 @@ class Api
         }
 
         return compact('name', 'contents');
-    }
-
-    /**
-     * Determines if the string passed to be uploaded is a valid
-     * file on the local file system, or a valid remote URL.
-     *
-     * @param string $contents
-     * @param string $name
-     *
-     * @return bool
-     */
-    protected function isValidFileOrUrl($contents, $name)
-    {
-        //Don't try to open a url as an actual file when using this method to setWebhook.
-        if ($name == 'url') {
-            return false;
-        }
-
-        //If a certificate name is passed, we must check for the file existing on the local server,
-        // otherwise telegram ignores the fact it wasn't sent and no error is thrown.
-        if ($name == 'certificate') {
-            return true;
-        }
-
-        //Is the content a valid file name.
-        if (is_readable($contents)) {
-            return true;
-        }
-
-        //Is the content a valid URL
-        return filter_var($contents, FILTER_VALIDATE_URL);
     }
 }
