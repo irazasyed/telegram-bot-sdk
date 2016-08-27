@@ -5,7 +5,7 @@ namespace Telegram\Bot\Traits;
 use Telegram\Bot\FileUpload\InputFile;
 
 /**
- * Class Validator
+ * Validator
  */
 trait Validator
 {

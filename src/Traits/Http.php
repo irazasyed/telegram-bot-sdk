@@ -11,7 +11,7 @@ use Telegram\Bot\TelegramRequest;
 use Telegram\Bot\TelegramResponse;
 
 /**
- * Class Http
+ * Http
  */
 trait Http
 {
