@@ -2,17 +2,14 @@
 
 namespace Telegram\Bot\Answers;
 
-use Telegram\Bot\Api;
+use Telegram\Bot\Traits\Telegram;
 
 /**
  * Class AnswerBus
  */
 abstract class AnswerBus
 {
-    /**
-     * @var Api
-     */
-    protected $telegram;
+    use Telegram;
 
     /**
      * Handle calls to missing methods.
@@ -31,28 +28,6 @@ abstract class AnswerBus
         }
 
         throw new \BadMethodCallException("Method [$method] does not exist.");
-    }
-
-    /**
-     * @return Api
-     */
-    public function getTelegram()
-    {
-        return $this->telegram;
-    }
-
-    /**
-     * Set Telegram.
-     *
-     * @param Api $telegram
-     *
-     * @return $this
-     */
-    public function setTelegram(Api $telegram)
-    {
-        $this->telegram = $telegram;
-
-        return $this;
     }
 
     /**
