@@ -956,6 +956,10 @@ class Api
             throw new TelegramSDKException('Invalid URL, should be a HTTPS url.');
         }
 
+        if (!isset($params['certificate']) || !is_readable($params['certificate'])) {
+            $params['certificate'] = null;
+        }
+
         return $this->uploadFile('setWebhook', $params, 'certificate');
     }
 
