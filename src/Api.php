@@ -2,8 +2,6 @@
 
 namespace Telegram\Bot;
 
-use Illuminate\Contracts\Container\Container;
-use Telegram\Bot\Commands\CommandBus;
 use Telegram\Bot\Events\EmitsEvents;
 use Telegram\Bot\Events\UpdateWasReceived;
 use Telegram\Bot\Exceptions\TelegramSDKException;
@@ -14,6 +12,8 @@ use Telegram\Bot\Objects\UnknownObject;
 use Telegram\Bot\Objects\Update;
 use Telegram\Bot\Keyboard\Keyboard;
 use Telegram\Bot\Traits\Http;
+use Telegram\Bot\Traits\CommandsHandler;
+use Telegram\Bot\Traits\HasContainer;
 
 /**
  * Class Api.
@@ -22,7 +22,7 @@ use Telegram\Bot\Traits\Http;
  */
 class Api
 {
-    use EmitsEvents, Http;
+    use EmitsEvents, Http, CommandsHandler, HasContainer;
 
     /**
      * @var string Version number of the Telegram Bot PHP SDK.
@@ -33,16 +33,6 @@ class Api
      * @var string The name of the environment variable that contains the Telegram Bot API Access Token.
      */
     const BOT_TOKEN_ENV_NAME = 'TELEGRAM_BOT_TOKEN';
-
-    /**
-     * @var CommandBus|null Telegram Command Bus.
-     */
-    protected $commandBus = null;
-
-    /**
-     * @var Container IoC Container
-     */
-    protected static $container = null;
 
     /**
      * Instantiates a new Telegram super-class object.
@@ -67,7 +57,6 @@ class Api
         }
 
         $this->httpClientHandler = $httpClientHandler;
-        $this->commandBus = new CommandBus($this);
     }
 
     /**
@@ -80,16 +69,6 @@ class Api
     public static function manager($config)
     {
         return new BotsManager($config);
-    }
-
-    /**
-     * Returns SDK's Command Bus.
-     *
-     * @return CommandBus
-     */
-    public function getCommandBus()
-    {
-        return $this->commandBus;
     }
 
     /**
@@ -1176,68 +1155,6 @@ class Api
     }
 
     /**
-     * Processes Inbound Commands.
-     *
-     * @param bool $webhook
-     *
-     * @return Update|Update[]
-     */
-    public function commandsHandler($webhook = false)
-    {
-        if ($webhook) {
-            $update = $this->getWebhookUpdate();
-            $this->processCommand($update);
-
-            return $update;
-        }
-
-        $updates = $this->getUpdates();
-        $highestId = -1;
-
-        foreach ($updates as $update) {
-            $highestId = $update->updateId;
-            $this->processCommand($update);
-        }
-
-        //An update is considered confirmed as soon as getUpdates is called with an offset higher than its update_id.
-        if ($highestId != -1) {
-            $params = [];
-            $params['offset'] = $highestId + 1;
-            $params['limit'] = 1;
-            $this->markUpdateAsRead($params);
-        }
-
-        return $updates;
-    }
-
-    /**
-     * Check update object for a command and process.
-     *
-     * @param Update $update
-     */
-    public function processCommand(Update $update)
-    {
-        $message = $update->message;
-
-        if ($message !== null && $message->has('text')) {
-            $this->getCommandBus()->handler($message->text, $update);
-        }
-    }
-
-    /**
-     * Helper to Trigger Commands.
-     *
-     * @param string $name   Command Name
-     * @param Update $update Update Object
-     *
-     * @return mixed
-     */
-    public function triggerCommand($name, Update $update)
-    {
-        return $this->getCommandBus()->execute($name, $update->message->text, $update);
-    }
-
-    /**
      * Determine if a given type is the message.
      *
      * @deprecated Call method isType directly on Message object
@@ -1304,37 +1221,5 @@ class Api
         $response = $this->post($method, $arguments[0]);
 
         return new UnknownObject($response->getDecodedBody());
-    }
-
-    /**
-     * Set the IoC Container.
-     *
-     * @param $container Container instance
-     *
-     * @return void
-     */
-    public static function setContainer(Container $container)
-    {
-        self::$container = $container;
-    }
-
-    /**
-     * Get the IoC Container.
-     *
-     * @return Container
-     */
-    public function getContainer()
-    {
-        return self::$container;
-    }
-
-    /**
-     * Check if IoC Container has been set.
-     *
-     * @return boolean
-     */
-    public function hasContainer()
-    {
-        return self::$container !== null;
     }
 }

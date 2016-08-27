@@ -3,12 +3,15 @@
 namespace Telegram\Bot\Answers;
 
 use Telegram\Bot\Api;
+use Telegram\Bot\Traits\Singleton;
 
 /**
  * Class AnswerBus
  */
 abstract class AnswerBus
 {
+    use Singleton;
+
     /**
      * @var Api
      */
@@ -39,6 +42,20 @@ abstract class AnswerBus
     public function getTelegram()
     {
         return $this->telegram;
+    }
+
+    /**
+     * Set Telegram.
+     *
+     * @param Api $telegram
+     *
+     * @return $this
+     */
+    public function setTelegram(Api $telegram)
+    {
+        $this->telegram = $telegram;
+
+        return $this;
     }
 
     /**
