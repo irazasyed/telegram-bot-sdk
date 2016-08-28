@@ -24,6 +24,9 @@ class Api
 {
     use EmitsEvents, Http, CommandsHandler, HasContainer;
 
+    /** @var string Version number of the Telegram Bot PHP SDK. */
+    const VERSION = '3.0.0';
+
     /** @var string The name of the environment variable that contains the Telegram Bot API Access Token. */
     const BOT_TOKEN_ENV_NAME = 'TELEGRAM_BOT_TOKEN';
 
