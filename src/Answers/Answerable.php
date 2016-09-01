@@ -49,7 +49,13 @@ trait Answerable
                 throw new \BadMethodCallException("Method [$method] does not exist.");
             }
 
-            $chat_id = $this->update->getMessage()->getChat()->getId();
+            if (null === $chat = $this->update->getChat())
+            {
+                throw new \BadMethodCallException("No chat available for reply with [$method].");
+            }
+
+            $chat_id = $chat->getId();
+
             $params = array_merge(compact('chat_id'), $arguments[0]);
 
             return call_user_func_array([$this->telegram, $methodName], [$params]);
