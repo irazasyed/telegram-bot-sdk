@@ -179,7 +179,7 @@ class CommandBus extends AnswerBus
             throw new \InvalidArgumentException('Message is empty, Cannot parse for command');
         }
 
-        preg_match('/^\/([^\s@]+)@?(\S+)?\s?(.*)$/', $text, $matches);
+        preg_match('/^\/([^\s@]+)@?(\S+)?\s?(.*)$/s', $text, $matches);
 
         return $matches;
     }
