@@ -40,6 +40,10 @@ class SetWebhook extends Method
         if (parse_url($this->payload['url'], PHP_URL_SCHEME) !== 'https') {
             throw new TelegramSDKException('Invalid URL, should be a HTTPS url.');
         }
+
+        if (!isset($this->payload['certificate']) || !is_readable($this->payload['certificate'])) {
+            $this->payload['certificate'] = null;
+        }
     }
 
     /** {@inheritdoc} */
