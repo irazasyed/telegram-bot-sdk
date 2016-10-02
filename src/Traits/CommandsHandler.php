@@ -20,6 +20,16 @@ trait CommandsHandler
     }
 
     /**
+     * Get all registered commands.
+     *
+     * @return mixed
+     */
+    public function getCommands()
+    {
+        return $this->getCommandBus()->getCommands();
+    }
+
+    /**
      * Processes Inbound Commands.
      *
      * @param bool $webhook
@@ -45,13 +55,24 @@ trait CommandsHandler
 
         //An update is considered confirmed as soon as getUpdates is called with an offset higher than its update_id.
         if ($highestId != -1) {
-            $params = [];
-            $params['offset'] = $highestId + 1;
-            $params['limit'] = 1;
-            $this->markUpdateAsRead($params);
+            $this->markUpdateAsRead($highestId);
         }
 
         return $updates;
+    }
+
+    /**
+     * An alias for getUpdates that helps readability.
+     *
+     * @return Update[]
+     */
+    protected function markUpdateAsRead($highestId)
+    {
+        return $this->getUpdates()
+            ->shouldEmitEvents(false)
+            ->offset($highestId + 1)
+            ->limit(1)
+            ->getResult();
     }
 
     /**
@@ -61,11 +82,7 @@ trait CommandsHandler
      */
     public function processCommand(Update $update)
     {
-        $message = $update->message;
-
-        if ($message !== null && $message->has('text')) {
-            $this->getCommandBus()->handler($message->text, $update);
-        }
+        $this->getCommandBus()->handler($this->getMessageText($update), $update);
     }
 
     /**
@@ -78,6 +95,24 @@ trait CommandsHandler
      */
     public function triggerCommand($name, Update $update)
     {
-        return $this->getCommandBus()->execute($name, $update->message->text, $update);
+        return $this->getCommandBus()->execute($name, $this->getMessageText($update), $update);
+    }
+
+    /**
+     * Get Message Text from Update.
+     *
+     * @param Update $update
+     *
+     * @return mixed|null
+     */
+    protected function getMessageText(Update $update)
+    {
+        $message = $update->getMessage();
+
+        if ($message !== null && $message->has('text')) {
+            return $message->text;
+        }
+
+        return null;
     }
 }

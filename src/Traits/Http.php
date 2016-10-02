@@ -59,6 +59,8 @@ trait Http
      */
     protected function getClient()
     {
+        static::$client;
+
         if (static::$client === null) {
             static::$client = new TelegramClient($this->httpClientHandler);
         }
@@ -293,60 +295,6 @@ trait Http
         }
 
         return compact('name', 'contents');
-    }
-
-    /**
-     * Sends a GET request to Telegram Bot API and returns with appropriate object.
-     *
-     * @param string $endpoint
-     * @param array  $params
-     * @param        $returnObject
-     *
-     * @return mixed
-     */
-    protected function getWithReturnType($endpoint, array $params = [], $returnObject)
-    {
-        $response = $this->get($endpoint, $params);
-        $object = 'Telegram\Bot\Objects\\'.$returnObject;
-
-        return new $object($response->getDecodedBody());
-    }
-
-    /**
-     * Sends a POST request to Telegram Bot API and returns with appropriate object.
-     *
-     * @param string $endpoint
-     * @param array  $params
-     * @param        $returnObject
-     *
-     * @return mixed
-     */
-    protected function postWithReturnType($endpoint, array $params, $returnObject)
-    {
-        $response = $this->post($endpoint, $params);
-        $object = 'Telegram\Bot\Objects\\'.$returnObject;
-
-        return new $object($response->getDecodedBody());
-    }
-
-    /**
-     * Sends a multipart/form-data request to Telegram Bot API and returns with appropriate object.
-     * Used primarily for file uploads.
-     *
-     * @param       $endpoint
-     * @param array $params
-     * @param       $inputFileField
-     * @param       $returnObject
-     *
-     * @return mixed
-     * @throws CouldNotUploadInputFile
-     */
-    protected function uploadWithReturnType($endpoint, array $params, $inputFileField, $returnObject)
-    {
-        $response = $this->uploadFile($endpoint, $params, $inputFileField);
-        $object = 'Telegram\Bot\Objects\\'.$returnObject;
-
-        return new $object($response->getDecodedBody());
     }
 
     /**

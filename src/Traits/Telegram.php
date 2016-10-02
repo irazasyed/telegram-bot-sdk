@@ -35,5 +35,4 @@ trait Telegram
 
         return $this;
     }
-
 }

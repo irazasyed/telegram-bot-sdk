@@ -6,9 +6,6 @@ namespace Telegram\Bot\Traits;
  */
 trait Singleton
 {
-    /** @var null The reference to singleton instance of this class. */
-    private static $instance = null;
-
     /**
      * Returns the singleton instance of this class.
      *
@@ -16,11 +13,12 @@ trait Singleton
      */
     public static function Instance()
     {
-        if (null === static::$instance) {
-            static::$instance = new static();
+        static $instance;
+        if (null === $instance) {
+            $instance = new static();
         }
 
-        return static::$instance;
+        return $instance;
     }
 
     /**
