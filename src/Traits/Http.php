@@ -21,7 +21,7 @@ trait Http
     protected $accessToken = null;
 
     /** @var TelegramClient The Telegram client service. */
-    protected static $client = null;
+    protected $client = null;
 
     /** @var HttpClientInterface|null Http Client Handler */
     protected $httpClientHandler = null;
@@ -59,13 +59,11 @@ trait Http
      */
     protected function getClient()
     {
-        static::$client;
-
-        if (static::$client === null) {
-            static::$client = new TelegramClient($this->httpClientHandler);
+        if ($this->client === null) {
+            $this->client = new TelegramClient($this->httpClientHandler);
         }
 
-        return static::$client;
+        return $this->client;
     }
 
     /**
