@@ -12,25 +12,13 @@ use InvalidArgumentException;
  */
 class BotsManager
 {
-    /**
-     * The config instance.
-     *
-     * @var array
-     */
+    /** @var array The config instance. */
     protected $config;
 
-    /**
-     * The container instance.
-     *
-     * @var \Illuminate\Contracts\Container\Container
-     */
+    /** @var Container The container instance. */
     protected $container;
 
-    /**
-     * The active bot instances.
-     *
-     * @var Api[]
-     */
+    /** @var Api[] The active bot instances. */
     protected $bots = [];
 
     /**
