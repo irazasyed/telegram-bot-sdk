@@ -10,6 +10,7 @@ namespace Telegram\Bot\Objects\InlineQuery;
  *   'id'                         => '',
  *   'voice_url'                  => '',
  *   'title'                      => '',
+ *   'caption'                    => '',
  *   'voice_duration'             => '',
  *   'reply_markup'               => '',
  *   'input_message_content'      => '',
@@ -21,6 +22,7 @@ namespace Telegram\Bot\Objects\InlineQuery;
  * @method $this setId($string)                     Unique identifier for this result, 1-64 bytes
  * @method $this setVoiceUrl($string)               A valid URL for the voice recording
  * @method $this setTitle($string)                  Recording title
+ * @method $this setCaption($string)                Optional. Caption, 0-200 characters
  * @method $this setVoiceDuration($int)             Optional. Recording duration in seconds
  * @method $this setReplyMarkup($object)            Optional. Inline keyboard attached to the message
  * @method $this setInputMessageContent($object)    Optional. Content of the message to be sent instead of the photo

@@ -13,6 +13,7 @@ namespace Telegram\Bot\Methods;
  *   'callback_query_id'  => '',
  *   'text'               => '',
  *   'show_alert'         => '',
+ *   'url'                => '',
  * ];
  * </code>
  *
@@ -21,6 +22,7 @@ namespace Telegram\Bot\Methods;
  * @method AnswerCallbackQuery callbackQueryId($callbackQueryId) string
  * @method AnswerCallbackQuery text($text) string
  * @method AnswerCallbackQuery showAlert($showAlert) bool
+ * @method AnswerCallbackQuery url($url) string
  *
  * @method bool getResult($dumpAndDie = false)
  * @method bool go($dumpAndDie = false) Alias for getResult().

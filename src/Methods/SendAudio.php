@@ -13,6 +13,7 @@ use Telegram\Bot\FileUpload\InputFile;
  * $params = [
  *   'chat_id'              => '',
  *   'audio'                => InputFile::create($resourceOrFile, $filename),
+ *   'caption'              => '',
  *   'duration'             => '',
  *   'performer'            => '',
  *   'title'                => '',
@@ -26,6 +27,7 @@ use Telegram\Bot\FileUpload\InputFile;
  *
  * @method SendAudio chatId($chatId) int|string
  * @method SendAudio audio(InputFile $audio) InputFile
+ * @method SendAudio caption($caption) string
  * @method SendAudio duration($duration) int
  * @method SendAudio performer($performer) string
  * @method SendAudio title($title) string

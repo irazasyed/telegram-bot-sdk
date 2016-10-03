@@ -4,6 +4,9 @@ namespace Telegram\Bot\Objects\InlineQuery;
 use BadMethodCallException;
 use Illuminate\Support\Collection;
 
+/**
+ * Class InlineBaseObject
+ */
 abstract class InlineBaseObject extends Collection
 {
 

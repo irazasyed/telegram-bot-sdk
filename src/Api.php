@@ -23,6 +23,7 @@ use Telegram\Bot\Methods\Factory as MethodsFactory;
  *         polling.
  * @method Methods\SetWebhook setWebhook(array $params = []) Set a Webhook to receive incoming updates via an outgoing
  *         webhook.
+ * @method Methods\GetWebhookInfo getWebhookInfo() Use this method to get current webhook status.
  *
  * # Available Methods
  * @method Methods\GetMe getMe() A simple method for testing your bot's auth token. Returns basic information about the
@@ -66,6 +67,12 @@ use Telegram\Bot\Methods\Factory as MethodsFactory;
  * @method Methods\AnswerInlineQuery answerInlineQuery(array $params = []) Use this method to send answers to an inline
  *         query.
  *
+ * # Games
+ * @method Methods\SendGame sendGame(array $params = []) Use this method to send a game.
+ * @method Methods\SetGameScore setGameScore(array $params = []) Use this method to set the score of the specified user
+ *         in a game.
+ * @method Methods\GetGameHighScores getGameHighScores(array $params = []) Use this method to get data for high score
+ *         tables.
  */
 class Api
 {
@@ -76,6 +83,9 @@ class Api
 
     /** @var string The name of the environment variable that contains the Telegram Bot API Access Token. */
     const BOT_TOKEN_ENV_NAME = 'TELEGRAM_BOT_TOKEN';
+
+    /** @var MethodsFactory Holds methods factory instance */
+    protected $methodsFactory = null;
 
     /**
      * Instantiates a new Telegram super-class object.
@@ -118,7 +128,11 @@ class Api
      */
     public function methodsFactory()
     {
-        return new MethodsFactory($this);
+        if ($this->methodsFactory === null) {
+            $this->methodsFactory = new MethodsFactory($this);
+        }
+
+        return $this->methodsFactory;
     }
 
     /**

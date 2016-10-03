@@ -10,6 +10,7 @@ namespace Telegram\Bot\Objects\InlineQuery;
  *   'id'                         => '',
  *   'audio_url'                  => '',
  *   'title'                      => '',
+ *   'caption'                    => '',
  *   'performer'                  => '',
  *   'audio_duration'             => '',
  *   'reply_markup'               => '',
@@ -22,6 +23,7 @@ namespace Telegram\Bot\Objects\InlineQuery;
  * @method $this setId($string)                     Unique identifier for this result, 1-64 bytes
  * @method $this setAudioUrl($string)               A valid URL for the audio file
  * @method $this setTitle($string)                  Title
+ * @method $this setCaption($string)                Optional. Caption, 0-200 characters
  * @method $this setPerformer($string)              Optional. Performer
  * @method $this setAudioDuration($int)             Optional. Audio duration in seconds
  * @method $this setReplyMarkup($object)            Optional. Inline keyboard attached to the message
@@ -29,6 +31,7 @@ namespace Telegram\Bot\Objects\InlineQuery;
  */
 class InlineQueryResultAudio extends InlineBaseObject
 {
+    /** {@inheritdoc} */
     public function __construct($params = [])
     {
         parent::__construct($params);
