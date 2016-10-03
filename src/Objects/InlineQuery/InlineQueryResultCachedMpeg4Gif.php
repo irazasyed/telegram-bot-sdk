@@ -28,10 +28,5 @@ namespace Telegram\Bot\Objects\InlineQuery;
 
 class InlineQueryResultCachedMpeg4Gif extends InlineBaseObject
 {
-    /** {@inheritdoc} */
-    public function __construct($params = [])
-    {
-        parent::__construct($params);
-        $this->put('type', 'mpeg4_gif');
-    }
+    protected $type = 'mpeg4_gif';
 }

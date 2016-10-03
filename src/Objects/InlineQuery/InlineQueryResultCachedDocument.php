@@ -29,10 +29,5 @@ namespace Telegram\Bot\Objects\InlineQuery;
  */
 class InlineQueryResultCachedDocument extends InlineBaseObject
 {
-    /** {@inheritdoc} */
-    public function __construct($params = [])
-    {
-        parent::__construct($params);
-        $this->put('type', 'document');
-    }
+    protected $type = 'document';
 }

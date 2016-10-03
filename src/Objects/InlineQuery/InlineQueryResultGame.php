@@ -21,10 +21,5 @@ namespace Telegram\Bot\Objects\InlineQuery;
  */
 class InlineQueryResultGame extends InlineBaseObject
 {
-    /** {@inheritdoc} */
-    public function __construct($params = [])
-    {
-        parent::__construct($params);
-        $this->put('type', 'game');
-    }
+    protected $type = 'game';
 }

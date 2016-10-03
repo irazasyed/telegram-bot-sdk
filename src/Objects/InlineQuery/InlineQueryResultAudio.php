@@ -31,10 +31,5 @@ namespace Telegram\Bot\Objects\InlineQuery;
  */
 class InlineQueryResultAudio extends InlineBaseObject
 {
-    /** {@inheritdoc} */
-    public function __construct($params = [])
-    {
-        parent::__construct($params);
-        $this->put('type', 'audio');
-    }
+    protected $type = 'audio';
 }
