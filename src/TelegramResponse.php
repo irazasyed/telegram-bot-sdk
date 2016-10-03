@@ -62,6 +62,45 @@ class TelegramResponse
     }
 
     /**
+     * Converts raw API response to proper decoded response.
+     */
+    public function decodeBody()
+    {
+        $this->decodedBody = json_decode($this->body, true);
+
+        if ($this->decodedBody === null) {
+            $this->decodedBody = [];
+            parse_str($this->body, $this->decodedBody);
+        }
+
+        if (!is_array($this->decodedBody)) {
+            $this->decodedBody = [];
+        }
+
+        if ($this->isError()) {
+            $this->makeException();
+        }
+    }
+
+    /**
+     * Checks if response is an error.
+     *
+     * @return bool
+     */
+    public function isError()
+    {
+        return isset($this->decodedBody['ok']) && ($this->decodedBody['ok'] === false);
+    }
+
+    /**
+     * Instantiates an exception to be thrown later.
+     */
+    public function makeException()
+    {
+        $this->thrownException = TelegramResponseException::create($this);
+    }
+
+    /**
      * Return the original request that returned this response.
      *
      * @return TelegramRequest
@@ -143,16 +182,6 @@ class TelegramResponse
     }
 
     /**
-     * Checks if response is an error.
-     *
-     * @return bool
-     */
-    public function isError()
-    {
-        return isset($this->decodedBody['ok']) && ($this->decodedBody['ok'] === false);
-    }
-
-    /**
      * Throws the exception.
      *
      * @throws TelegramSDKException
@@ -163,14 +192,6 @@ class TelegramResponse
     }
 
     /**
-     * Instantiates an exception to be thrown later.
-     */
-    public function makeException()
-    {
-        $this->thrownException = TelegramResponseException::create($this);
-    }
-
-    /**
      * Returns the exception that was thrown for this request.
      *
      * @return TelegramSDKException
@@ -178,26 +199,5 @@ class TelegramResponse
     public function getThrownException()
     {
         return $this->thrownException;
-    }
-
-    /**
-     * Converts raw API response to proper decoded response.
-     */
-    public function decodeBody()
-    {
-        $this->decodedBody = json_decode($this->body, true);
-
-        if ($this->decodedBody === null) {
-            $this->decodedBody = [];
-            parse_str($this->body, $this->decodedBody);
-        }
-
-        if (!is_array($this->decodedBody)) {
-            $this->decodedBody = [];
-        }
-
-        if ($this->isError()) {
-            $this->makeException();
-        }
     }
 }
