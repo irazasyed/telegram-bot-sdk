@@ -21,7 +21,8 @@ class Factory
     /** @var Method Holds method object instance */
     protected $method;
 
-    private $response;
+    /** @var TelegramResponse Holds Telegram API Response */
+    protected $response;
 
     /**
      * Factory constructor.
