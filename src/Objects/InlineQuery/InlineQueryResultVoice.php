@@ -29,6 +29,11 @@ namespace Telegram\Bot\Objects\InlineQuery;
  */
 class InlineQueryResultVoice extends InlineBaseObject
 {
+    /**
+     * InlineQueryResultVoice constructor.
+     *
+     * @param array $params
+     */
     public function __construct($params = [])
     {
         parent::__construct($params);

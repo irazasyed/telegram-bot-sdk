@@ -15,6 +15,9 @@ use Telegram\Bot\Tests\Mocks\Mocker;
 use Telegram\Bot\Commands\CommandBus;
 use Telegram\Bot\HttpClients\GuzzleHttpClient;
 
+/**
+ * Class ApiTest
+ */
 class ApiTest extends \PHPUnit_Framework_TestCase
 {
     /**

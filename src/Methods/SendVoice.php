@@ -2,7 +2,6 @@
 namespace Telegram\Bot\Methods;
 
 use Telegram\Bot\Objects\Message;
-use Telegram\Bot\FileUpload\InputFile;
 
 /**
  * Class SendVoice

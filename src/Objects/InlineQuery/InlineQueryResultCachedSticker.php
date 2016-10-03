@@ -23,6 +23,11 @@ namespace Telegram\Bot\Objects\InlineQuery;
  */
 class InlineQueryResultCachedSticker extends InlineBaseObject
 {
+    /**
+     * InlineQueryResultCachedSticker constructor.
+     *
+     * @param array $params
+     */
     public function __construct($params = [])
     {
         parent::__construct($params);

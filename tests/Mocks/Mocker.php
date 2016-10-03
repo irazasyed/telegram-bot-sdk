@@ -2,16 +2,20 @@
 
 namespace Telegram\Bot\Tests\Mocks;
 
-use Telegram\Bot\Api;
-use Prophecy\Prophet;
-use Prophecy\Argument;
 use GuzzleHttp\Client;
+use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
-use Telegram\Bot\Objects\Update;
-use GuzzleHttp\Handler\MockHandler;
+use Illuminate\Contracts\Container\Container;
+use Prophecy\Argument;
+use Prophecy\Prophet;
+use Telegram\Bot\Api;
 use Telegram\Bot\HttpClients\GuzzleHttpClient;
+use Telegram\Bot\Objects\Update;
 
+/**
+ * Class Mocker
+ */
 class Mocker
 {
     /**
@@ -45,7 +49,7 @@ class Mocker
      */
     public static function createContainer()
     {
-        return (new Prophet())->prophesize(\Illuminate\Contracts\Container\Container::class);
+        return (new Prophet())->prophesize(Container::class);
     }
 
     /**
@@ -73,6 +77,20 @@ class Mocker
         $command->make(Argument::any(), Argument::any(), Argument::any())->willReturn(null);
 
         return $command;
+    }
+
+    /**
+     * A shortcut to create an Update Response object with a message.
+     * This makes writing tests that require a message Response a
+     * little bit easier.
+     *
+     * @param $message
+     *
+     * @return Api
+     */
+    public static function createMessageResponse($message)
+    {
+        return self::createUpdateResponse(['text' => $message]);
     }
 
     /**
@@ -118,41 +136,6 @@ class Mocker
     }
 
     /**
-     * A shortcut to create an Update Response object with a message.
-     * This makes writing tests that require a message Response a
-     * little bit easier.
-     *
-     * @param $message
-     *
-     * @return Api
-     */
-    public static function createMessageResponse($message)
-    {
-        return self::createUpdateResponse(['text' => $message]);
-    }
-
-
-    /**
-     * This creates a raw api response to simulate what Telegram replies
-     * with.
-     *
-     * @param array $apiResponseFields
-     * @param bool  $ok
-     *
-     * @return Api
-     */
-    public static function createApiResponse(array $apiResponseFields, $ok = true)
-    {
-        $response = [
-            'ok'          => $ok,
-            'description' => '',
-            'result'      => $apiResponseFields,
-        ];
-
-        return self::setTelegramResponse($response);
-    }
-
-    /**
      * Recreates the Api object, using a mock http client, with predefined
      * responses containing the provided $body.
      *
@@ -172,5 +155,25 @@ class Mocker
         $client = new GuzzleHttpClient(new Client(['handler' => $handler]));
 
         return new Api('token', false, $client);
+    }
+
+    /**
+     * This creates a raw api response to simulate what Telegram replies
+     * with.
+     *
+     * @param array $apiResponseFields
+     * @param bool  $ok
+     *
+     * @return Api
+     */
+    public static function createApiResponse(array $apiResponseFields, $ok = true)
+    {
+        $response = [
+            'ok'          => $ok,
+            'description' => '',
+            'result'      => $apiResponseFields,
+        ];
+
+        return self::setTelegramResponse($response);
     }
 }

@@ -4,6 +4,9 @@ namespace Telegram\Bot\Helpers;
 
 use Telegram\Bot\Exceptions\TelegramEmojiMapFileNotFoundException;
 
+/**
+ * Class Emojify
+ */
 class Emojify
 {
     /**

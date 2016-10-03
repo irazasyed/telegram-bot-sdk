@@ -33,6 +33,23 @@ class TelegramResponseException extends TelegramSDKException
     }
 
     /**
+     * Checks isset and returns that or a default value.
+     *
+     * @param string $key
+     * @param mixed  $default
+     *
+     * @return mixed
+     */
+    protected function get($key, $default = null)
+    {
+        if (isset($this->responseData[$key])) {
+            return $this->responseData[$key];
+        }
+
+        return $default;
+    }
+
+    /**
      * A factory for creating the appropriate exception based on the response from Telegram.
      *
      * @param TelegramResponse $response The response that threw the exception.
@@ -52,23 +69,6 @@ class TelegramResponseException extends TelegramSDKException
 
         // Others
         return new static($response, new TelegramOtherException($message, $code));
-    }
-
-    /**
-     * Checks isset and returns that or a default value.
-     *
-     * @param string $key
-     * @param mixed  $default
-     *
-     * @return mixed
-     */
-    private function get($key, $default = null)
-    {
-        if (isset($this->responseData[$key])) {
-            return $this->responseData[$key];
-        }
-
-        return $default;
     }
 
     /**

@@ -3,6 +3,9 @@ namespace Telegram\Bot\Keyboard;
 
 use Illuminate\Support\Collection;
 
+/**
+ * Class Base
+ */
 class Base extends Collection
 {
     /**

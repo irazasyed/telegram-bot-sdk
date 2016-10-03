@@ -64,7 +64,9 @@ trait CommandsHandler
     /**
      * An alias for getUpdates that helps readability.
      *
-     * @return Update[]
+     * @param $highestId
+     *
+     * @return \Telegram\Bot\Objects\Update[]
      */
     protected function markUpdateAsRead($highestId)
     {
