@@ -7,11 +7,11 @@ use Telegram\Bot\Events\UpdateWasReceived;
 use Telegram\Bot\Exceptions\TelegramSDKException;
 use Telegram\Bot\HttpClients\HttpClientInterface;
 use Telegram\Bot\Keyboard\Keyboard;
+use Telegram\Bot\Methods\Factory as MethodsFactory;
 use Telegram\Bot\Objects\Update;
-use Telegram\Bot\Traits\Http;
 use Telegram\Bot\Traits\CommandsHandler;
 use Telegram\Bot\Traits\HasContainer;
-use Telegram\Bot\Methods\Factory as MethodsFactory;
+use Telegram\Bot\Traits\Http;
 
 /**
  * Class Api.
@@ -122,117 +122,6 @@ class Api
     }
 
     /**
-     * Methods Factory
-     *
-     * @return MethodsFactory
-     */
-    public function methodsFactory()
-    {
-        if ($this->methodsFactory === null) {
-            $this->methodsFactory = new MethodsFactory($this);
-        }
-
-        return $this->methodsFactory;
-    }
-
-    /**
-     * Call an API Method using Methods Factory.
-     *
-     * @param       $method
-     * @param array $params
-     *
-     * @return MethodsFactory
-     * @throws TelegramSDKException
-     */
-    protected function callMethod($method, array $params = [])
-    {
-        return $this->methodsFactory()->create($method, $params);
-    }
-
-    /**
-     * Returns a webhook update sent by Telegram.
-     * Works only if you set a webhook.
-     *
-     * @see setWebhook
-     *
-     * @param bool $shouldEmitEvent
-     *
-     * @return Update
-     */
-    public function getWebhookUpdate($shouldEmitEvent = true)
-    {
-        $body = json_decode(file_get_contents('php://input'), true);
-
-        $update = new Update($body);
-
-        if ($shouldEmitEvent) {
-            $this->emitEvent(new UpdateWasReceived($update, $this));
-        }
-
-        return $update;
-    }
-
-    /**
-     * Alias for getWebhookUpdate
-     *
-     * @deprecated Call method getWebhookUpdate (note lack of letter s at end)
-     *             To be removed in next major version.
-     *
-     * @param bool $shouldEmitEvent
-     *
-     * @return Update
-     */
-    public function getWebhookUpdates($shouldEmitEvent = true)
-    {
-        return $this->getWebhookUpdate($shouldEmitEvent);
-    }
-
-    /**
-     * Removes the outgoing webhook (if any).
-     *
-     * @throws TelegramSDKException
-     *
-     * @return TelegramResponse
-     */
-    public function removeWebhook()
-    {
-        $url = '';
-
-        return $this->post('setWebhook', compact('url'));
-    }
-
-    /**
-     * Builds a custom keyboard markup.
-     *
-     * <code>
-     * $params = [
-     *   'keyboard'          => '',
-     *   'resize_keyboard'   => '',
-     *   'one_time_keyboard' => '',
-     *   'selective'         => '',
-     * ];
-     * </code>
-     *
-     * @deprecated Use Telegram\Bot\Keyboard\Keyboard::make(array $params = []) instead.
-     *             To be removed in next major version.
-     *
-     * @link       https://core.telegram.org/bots/api#replykeyboardmarkup
-     *
-     * @param array $params
-     *
-     * @var array   $params ['keyboard']
-     * @var bool    $params ['resize_keyboard']
-     * @var bool    $params ['one_time_keyboard']
-     * @var bool    $params ['selective']
-     *
-     * @return string
-     */
-    public function replyKeyboardMarkup(array $params)
-    {
-        return Keyboard::make($params);
-    }
-
-    /**
      * Hide the current custom keyboard and display the default letter-keyboard.
      *
      * <code>
@@ -284,6 +173,89 @@ class Api
     public static function forceReply(array $params = [])
     {
         return Keyboard::forceReply($params);
+    }
+
+    /**
+     * Alias for getWebhookUpdate
+     *
+     * @deprecated Call method getWebhookUpdate (note lack of letter s at end)
+     *             To be removed in next major version.
+     *
+     * @param bool $shouldEmitEvent
+     *
+     * @return Update
+     */
+    public function getWebhookUpdates($shouldEmitEvent = true)
+    {
+        return $this->getWebhookUpdate($shouldEmitEvent);
+    }
+
+    /**
+     * Returns a webhook update sent by Telegram.
+     * Works only if you set a webhook.
+     *
+     * @see setWebhook
+     *
+     * @param bool $shouldEmitEvent
+     *
+     * @return Update
+     */
+    public function getWebhookUpdate($shouldEmitEvent = true)
+    {
+        $body = json_decode(file_get_contents('php://input'), true);
+
+        $update = new Update($body);
+
+        if ($shouldEmitEvent) {
+            $this->emitEvent(new UpdateWasReceived($update, $this));
+        }
+
+        return $update;
+    }
+
+    /**
+     * Removes the outgoing webhook (if any).
+     *
+     * @throws TelegramSDKException
+     *
+     * @return TelegramResponse
+     */
+    public function removeWebhook()
+    {
+        $url = '';
+
+        return $this->post('setWebhook', compact('url'));
+    }
+
+    /**
+     * Builds a custom keyboard markup.
+     *
+     * <code>
+     * $params = [
+     *   'keyboard'          => '',
+     *   'resize_keyboard'   => '',
+     *   'one_time_keyboard' => '',
+     *   'selective'         => '',
+     * ];
+     * </code>
+     *
+     * @deprecated Use Telegram\Bot\Keyboard\Keyboard::make(array $params = []) instead.
+     *             To be removed in next major version.
+     *
+     * @link       https://core.telegram.org/bots/api#replykeyboardmarkup
+     *
+     * @param array $params
+     *
+     * @var array   $params ['keyboard']
+     * @var bool    $params ['resize_keyboard']
+     * @var bool    $params ['one_time_keyboard']
+     * @var bool    $params ['selective']
+     *
+     * @return string
+     */
+    public function replyKeyboardMarkup(array $params)
+    {
+        return Keyboard::make($params);
     }
 
     /**
@@ -343,5 +315,33 @@ class Api
         $params = $arguments ? $arguments[0] : [];
 
         return $this->callMethod($method, $params);
+    }
+
+    /**
+     * Call an API Method using Methods Factory.
+     *
+     * @param       $method
+     * @param array $params
+     *
+     * @return MethodsFactory
+     * @throws TelegramSDKException
+     */
+    protected function callMethod($method, array $params = [])
+    {
+        return $this->methodsFactory()->create($method, $params);
+    }
+
+    /**
+     * Methods Factory
+     *
+     * @return MethodsFactory
+     */
+    protected function methodsFactory()
+    {
+        if ($this->methodsFactory === null) {
+            $this->methodsFactory = new MethodsFactory($this);
+        }
+
+        return $this->methodsFactory;
     }
 }
