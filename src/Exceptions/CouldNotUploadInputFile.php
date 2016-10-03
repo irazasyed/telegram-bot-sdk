@@ -7,11 +7,21 @@ namespace Telegram\Bot\Exceptions;
  */
 class CouldNotUploadInputFile extends TelegramSDKException
 {
+    /**
+     * @param $file
+     *
+     * @return static
+     */
     public static function fileDoesNotExistOrNotReadable($file)
     {
         return new static("File: `{$file}` does not exist or is not readable!");
     }
 
+    /**
+     * @param $path
+     *
+     * @return static
+     */
     public static function filenameNotProvided($path)
     {
         $file = is_string($path) ? $path : "the resource that you're trying to upload";
@@ -22,11 +32,21 @@ class CouldNotUploadInputFile extends TelegramSDKException
         );
     }
 
+    /**
+     * @param $path
+     *
+     * @return static
+     */
     public static function couldNotOpenResource($path)
     {
         return new static("Failed to create InputFile entity. Unable to open resource: {$path}.");
     }
 
+    /**
+     * @param $property
+     *
+     * @return static
+     */
     public static function resourceShouldBeInputFileEntity($property)
     {
         return new static("Resource file should be uploaded using `Telegram\Bot\FileUpload\InputFile::create(\$resourceOrRemoteUrl, \$filename)` for `{$property}` property.");

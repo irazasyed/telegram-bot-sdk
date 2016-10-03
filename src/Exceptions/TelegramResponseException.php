@@ -9,14 +9,10 @@ use Telegram\Bot\TelegramResponse;
  */
 class TelegramResponseException extends TelegramSDKException
 {
-    /**
-     * @var TelegramResponse The response that threw the exception.
-     */
+    /** @var TelegramResponse The response that threw the exception. */
     protected $response;
 
-    /**
-     * @var array Decoded response.
-     */
+    /** @var array Decoded response. */
     protected $responseData;
 
     /**

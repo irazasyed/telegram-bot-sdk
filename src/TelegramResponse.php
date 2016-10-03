@@ -14,39 +14,25 @@ use Telegram\Bot\Exceptions\TelegramSDKException;
  */
 class TelegramResponse
 {
-    /**
-     * @var null|int The HTTP status code response from API.
-     */
+    /** @var null|int The HTTP status code response from API. */
     protected $httpStatusCode;
 
-    /**
-     * @var array The headers returned from API request.
-     */
+    /** @var array The headers returned from API request. */
     protected $headers;
 
-    /**
-     * @var string The raw body of the response from API request.
-     */
+    /** @var string The raw body of the response from API request. */
     protected $body;
 
-    /**
-     * @var array The decoded body of the API response.
-     */
+    /** @var array The decoded body of the API response. */
     protected $decodedBody = [];
 
-    /**
-     * @var string API Endpoint used to make the request.
-     */
+    /** @var string API Endpoint used to make the request. */
     protected $endPoint;
 
-    /**
-     * @var TelegramRequest The original request that returned this response.
-     */
+    /** @var TelegramRequest The original request that returned this response. */
     protected $request;
 
-    /**
-     * @var TelegramSDKException The exception thrown by this request.
-     */
+    /** @var TelegramSDKException The exception thrown by this request. */
     protected $thrownException;
 
     /**
