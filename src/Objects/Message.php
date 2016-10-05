@@ -13,6 +13,7 @@ namespace Telegram\Bot\Objects;
  * @property int              $forwardDate            (Optional). For forwarded messages, date the original message was sent in Unix time.
  * @property Message          $replyToMessage         (Optional). For replies, the original message. Note that the Message object in this field will not contain further reply_to_message fields even if it itself is a reply.
  * @property int              $editDate               (Optional). Date the message was last edited in Unix time.
+ * @property string           $text                   (Optional). For text messages, the actual UTF-8 text of the message, 0-4096 characters.
  * @property MessageEntity[]  $entities               (Optional). For text messages, special entities like usernames, URLs, bot commands, etc. that appear in the text.
  * @property Audio            $audio                  (Optional). Message is an audio file, information about the file.
  * @property Document         $document               (Optional). Message is a general file, information about the file.
