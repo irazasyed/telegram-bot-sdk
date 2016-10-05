@@ -17,7 +17,7 @@ namespace Telegram\Bot\Objects;
  * @property MessageEntity[]  $entities               (Optional). For text messages, special entities like usernames, URLs, bot commands, etc. that appear in the text.
  * @property Audio            $audio                  (Optional). Message is an audio file, information about the file.
  * @property Document         $document               (Optional). Message is a general file, information about the file.
- * @property Game             $game                   (Optional). Message is a general file, information about the file.
+ * @property Game             $game                   (Optional). Message is a game, information about the game.
  * @property PhotoSize[]      $photo                  (Optional). Message is a photo, available sizes of the photo.
  * @property Sticker          $sticker                (Optional). Message is a sticker, information about the sticker.
  * @property Video            $video                  (Optional). Message is a video, information about the video.
