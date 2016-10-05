@@ -17,14 +17,7 @@ use Telegram\Bot\Events\UpdateWasReceived;
  * ];
  * </code>
  *
- * @link https://core.telegram.org/bots/api#getupdates
- *
- * @param array  $params
- * @param bool   $shouldEmitEvents
- *
- * @var int|null $params ['offset']
- * @var int|null $params ['limit']
- * @var int|null $params ['timeout']
+ * @see https://core.telegram.org/bots/api#getupdates Documentation for getUpdates.
  *
  * @method GetUpdates offset($offset = null) int|null
  * @method GetUpdates limit($limit = null) int|null
