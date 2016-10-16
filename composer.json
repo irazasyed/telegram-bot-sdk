@@ -15,7 +15,7 @@
   "require": {
     "php": ">=5.5.0",
     "guzzlehttp/guzzle": "~6.0",
-    "illuminate/support": "~5.0",
+    "illuminate/support": "~5.3",
     "league/event": "^2.1"
   },
   "require-dev": {
