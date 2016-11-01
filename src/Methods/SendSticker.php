@@ -30,7 +30,6 @@ use Telegram\Bot\FileUpload\InputFile;
  * @method SendSticker replyMarkup($replyMarkup) string
  *
  * @method Message getResult($dumpAndDie = false)
- * @method Message go($dumpAndDie = false) Alias for getResult().
  */
 class SendSticker extends Method
 {

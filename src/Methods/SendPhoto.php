@@ -31,7 +31,6 @@ use Telegram\Bot\FileUpload\InputFile;
  * @method SendPhoto replyMarkup($replyMarkup) string
  *
  * @method Message getResult($dumpAndDie = false)
- * @method Message go($dumpAndDie = false) Alias for getResult().
  */
 class SendPhoto extends Method
 {

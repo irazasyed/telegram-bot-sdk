@@ -13,7 +13,6 @@ use Telegram\Bot\Objects\WebhookInfo;
  * @link https://core.telegram.org/bots/api#getwebhookinfo
  *
  * @method WebhookInfo getResult($dumpAndDie = false)
- * @method WebhookInfo go($dumpAndDie = false) Alias for getResult().
  */
 class GetWebhookInfo extends Method
 {

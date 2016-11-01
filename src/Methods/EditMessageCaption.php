@@ -28,7 +28,6 @@ use Telegram\Bot\Objects\Message;
  * @method EditMessageCaption replyMarkup($replyMarkup) string
  *
  * @method Message|bool getResult($dumpAndDie = false)
- * @method Message|bool go($dumpAndDie = false) Alias for getResult().
  */
 class EditMessageCaption extends Method
 {

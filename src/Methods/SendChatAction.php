@@ -21,7 +21,6 @@ use Telegram\Bot\Exceptions\TelegramSDKException;
  * @method SendChatAction action($action) string
  *
  * @method bool getResult($dumpAndDie = false)
- * @method bool go($dumpAndDie = false) Alias for getResult().
  */
 class SendChatAction extends Method
 {

@@ -23,7 +23,6 @@ use Telegram\Bot\Objects\UserProfilePhotos;
  * @method GetUserProfilePhotos limit($limit) int
  *
  * @method UserProfilePhotos getResult($dumpAndDie = false)
- * @method UserProfilePhotos go($dumpAndDie = false) Alias for getResult().
  */
 class GetUserProfilePhotos extends Method
 {

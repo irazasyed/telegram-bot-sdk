@@ -32,7 +32,6 @@ use Telegram\Bot\Objects\Message;
  * @method EditMessageText replyMarkup($replyMarkup) string
  *
  * @method Message|bool getResult($dumpAndDie = false)
- * @method Message|bool go($dumpAndDie = false) Alias for getResult().
  */
 class EditMessageText extends Method
 {

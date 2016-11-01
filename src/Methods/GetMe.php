@@ -12,7 +12,6 @@ use Telegram\Bot\Objects\User;
  * @link https://core.telegram.org/bots/api#getme
  *
  * @method User getResult($dumpAndDie = false)
- * @method User go($dumpAndDie = false) Alias for getResult().
  */
 class GetMe extends Method
 {

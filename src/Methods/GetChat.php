@@ -21,7 +21,6 @@ use Telegram\Bot\Objects\Chat;
  *         target supergroup or channel (in the format @channelusername);
  *
  * @method Chat getResult($dumpAndDie = false)
- * @method Chat go($dumpAndDie = false) Alias for getResult().
  */
 class GetChat extends Method
 {

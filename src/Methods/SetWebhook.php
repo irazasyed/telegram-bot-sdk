@@ -23,7 +23,6 @@ use Telegram\Bot\FileUpload\InputFile;
  *         certificate in use can be checked.
  *
  * @method bool getResult($dumpAndDie = false)
- * @method bool go($dumpAndDie = false) Alias for getResult().
  */
 class SetWebhook extends Method
 {

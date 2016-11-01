@@ -29,7 +29,6 @@ namespace Telegram\Bot\Methods;
  * @method AnswerInlineQuery switchPmParameter($switchPmParameter = null) string|null
  *
  * @method bool getResult($dumpAndDie = false)
- * @method bool go($dumpAndDie = false) Alias for getResult().
  */
 class AnswerInlineQuery extends Method
 {

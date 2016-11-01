@@ -24,7 +24,6 @@ use Telegram\Bot\Events\UpdateWasReceived;
  * @method GetUpdates timeout($timeout = null) int|null
  *
  * @method Update[] getResult($dumpAndDie = false)
- * @method Update[] go($dumpAndDie = false) Alias for getResult().
  */
 class GetUpdates extends Method
 {

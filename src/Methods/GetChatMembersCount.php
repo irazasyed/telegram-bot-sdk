@@ -18,7 +18,6 @@ namespace Telegram\Bot\Methods;
  *         target supergroup or channel (in the format @channelusername);
  *
  * @method int getResult($dumpAndDie = false)
- * @method int go($dumpAndDie = false) Alias for getResult().
  */
 class GetChatMembersCount extends Method
 {

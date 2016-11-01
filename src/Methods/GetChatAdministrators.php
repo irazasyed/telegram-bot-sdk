@@ -20,7 +20,6 @@ use Telegram\Bot\Objects\ChatMember;
  *      or channel (in the format @channelusername);
  *
  * @method ChatMember[] getResult($dumpAndDie = false)
- * @method ChatMember[] go($dumpAndDie = false) Alias for getResult().
  */
 class GetChatAdministrators extends Method
 {

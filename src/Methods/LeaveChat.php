@@ -18,7 +18,6 @@ namespace Telegram\Bot\Methods;
  *         target supergroup or channel (in the format @channelusername);
  *
  * @method bool getResult($dumpAndDie = false)
- * @method bool go($dumpAndDie = false) Alias for getResult().
  */
 class LeaveChat extends Method
 {

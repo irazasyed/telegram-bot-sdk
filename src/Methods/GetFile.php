@@ -23,7 +23,6 @@ use Telegram\Bot\Objects\File;
  * @method GetFile fileId($fileId) string
  *
  * @method File getResult($dumpAndDie = false)
- * @method File go($dumpAndDie = false) Alias for getResult().
  */
 class GetFile extends Method
 {

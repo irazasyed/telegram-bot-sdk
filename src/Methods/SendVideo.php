@@ -37,7 +37,6 @@ use Telegram\Bot\FileUpload\InputFile;
  * @method SendVideo replyMarkup($replyMarkup) string
  *
  * @method Message getResult($dumpAndDie = false)
- * @method Message go($dumpAndDie = false) Alias for getResult().
  */
 class SendVideo extends Method
 {

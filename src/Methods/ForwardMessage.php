@@ -25,7 +25,6 @@ use Telegram\Bot\Objects\Message;
  * @method ForwardMessage messageId($messageId) int
  *
  * @method Message getResult($dumpAndDie = false)
- * @method Message go($dumpAndDie = false) Alias for getResult().
  */
 class ForwardMessage extends Method
 {

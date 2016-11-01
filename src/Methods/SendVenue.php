@@ -35,7 +35,6 @@ use Telegram\Bot\Objects\Message;
  * @method SendVenue replyMarkup($replyMarkup) string
  *
  * @method Message getResult($dumpAndDie = false)
- * @method Message go($dumpAndDie = false) Alias for getResult().
  */
 class SendVenue extends Method
 {

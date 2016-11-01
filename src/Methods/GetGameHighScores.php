@@ -27,7 +27,6 @@ use Telegram\Bot\Objects\GameHighScore;
  * @method GetGameHighScores inlineMessageId($inlineMessageId) string
  *
  * @method GameHighScore[] getResult($dumpAndDie = false)
- * @method GameHighScore[] go($dumpAndDie = false) Alias for getResult().
  */
 class GetGameHighScores extends Method
 {

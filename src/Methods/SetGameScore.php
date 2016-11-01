@@ -31,7 +31,6 @@ use Telegram\Bot\Objects\Message;
  * @method SetGameScore editMessage($editMessage) bool
  *
  * @method Message getResult($dumpAndDie = false)
- * @method Message go($dumpAndDie = false) Alias for getResult().
  */
 class SetGameScore extends Method
 {

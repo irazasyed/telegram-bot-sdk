@@ -27,7 +27,6 @@ use Telegram\Bot\Objects\Message;
  * @method SendGame replyMarkup($replyMarkup) string
  *
  * @method Message getResult($dumpAndDie = false)
- * @method Message go($dumpAndDie = false) Alias for getResult().
  */
 class SendGame extends Method
 {

@@ -23,7 +23,6 @@ use Telegram\Bot\Objects\ChatMember;
  * @method GetChatMember userId($userId) int Unique identifier of the target user.
  *
  * @method ChatMember getResult($dumpAndDie = false)
- * @method ChatMember go($dumpAndDie = false) Alias for getResult().
  */
 class GetChatMember extends Method
 {

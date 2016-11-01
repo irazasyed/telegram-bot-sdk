@@ -23,7 +23,6 @@ namespace Telegram\Bot\Methods;
  * @method UnbanChatMember userId($chatId) int
  *
  * @method bool getResult($dumpAndDie = false)
- * @method bool go($dumpAndDie = false) Alias for getResult().
  */
 class UnbanChatMember extends Method
 {

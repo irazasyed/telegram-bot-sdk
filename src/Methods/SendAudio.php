@@ -36,7 +36,6 @@ use Telegram\Bot\FileUpload\InputFile;
  * @method SendAudio replyMarkup($replyMarkup) string
  *
  * @method Message getResult($dumpAndDie = false)
- * @method Message go($dumpAndDie = false) Alias for getResult().
  */
 class SendAudio extends Method
 {
