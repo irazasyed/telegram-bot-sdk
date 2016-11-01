@@ -15,9 +15,6 @@ class Factory
 {
     use Telegram;
 
-    /** @var mixed Holds Result with Return Type */
-    protected $result;
-
     /** @var Method Holds method object instance */
     protected $method;
 
@@ -96,10 +93,6 @@ class Factory
      */
     protected function call()
     {
-        if ($this->result) {
-            return $this->result;
-        }
-
         /** Invoke before call hook */
         $this->method->beforeCallHook();
 
@@ -115,10 +108,10 @@ class Factory
         $returns = $this->method->returns();
 
         if (is_string($returns) && class_exists($returns)) {
-            return $this->result = new $returns($this->response->getDecodedBody());
+            return new $returns($this->response->getDecodedBody());
         }
 
-        return $this->result = $returns;
+        return $returns;
     }
 
     /**
