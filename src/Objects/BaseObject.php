@@ -60,6 +60,7 @@ abstract class BaseObject extends Collection
             return $relations[$property]::make($value);
         }
 
+        /** @var BaseObject $class */
         $class = 'Telegram\Bot\Objects\\'.studly_case($property);
 
         if (class_exists($class)) {
@@ -67,7 +68,7 @@ abstract class BaseObject extends Collection
         }
 
         if (is_array($value)) {
-            return Object::make($value);
+            return TelegramObject::make($value);
         }
 
         return $value;
