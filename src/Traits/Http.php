@@ -327,14 +327,14 @@ trait Http
      */
     protected function request($method, $endpoint, array $params = [])
     {
-        return new TelegramRequest(
+        return (new TelegramRequest(
             $this->getAccessToken(),
             $method,
             $endpoint,
             $params,
-            $this->isAsyncRequest(),
-            $this->getTimeOut(),
-            $this->getConnectTimeOut()
-        );
+            $this->isAsyncRequest()
+        ))
+        ->setTimeOut($this->getTimeOut())
+        ->setConnectTimeOut($this->getConnectTimeOut());
     }
 }
