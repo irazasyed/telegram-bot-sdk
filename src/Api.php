@@ -738,7 +738,29 @@ class Api
 
         return new File($response->getDecodedBody());
     }
-
+    
+    /**
+	 *  Bot to leave a group, supergroup or channel.
+	 *
+	 * <code>
+	 * $params = [
+	 *   'chat_id'              => '',
+	 * ];
+	 * </code>
+	 *
+	 * @link  https://core.telegram.org/bots/api/#leavechat
+	 *
+	 * @param array    $params
+	 *
+	 * @var int|string $params ['chat_id']
+	 *
+	 * @return TelegramResponse
+	 */
+	public function leaveChat(array $params)
+	{
+		return $this->post('leaveChat', $params);
+	}
+    
     /**
      * Kick a user from a group or a supergroup.
      *
