@@ -14,6 +14,7 @@ namespace Telegram\Bot\Methods;
  *   'text'               => '',
  *   'show_alert'         => '',
  *   'url'                => '',
+ *   'cache_time'         => '',
  * ];
  * </code>
  *
@@ -23,6 +24,7 @@ namespace Telegram\Bot\Methods;
  * @method AnswerCallbackQuery text($text) string
  * @method AnswerCallbackQuery showAlert($showAlert) bool
  * @method AnswerCallbackQuery url($url) string
+ * @method AnswerCallbackQuery cacheTime($cacheTime) int
  *
  * @method bool getResult($dumpAndDie = false)
  */

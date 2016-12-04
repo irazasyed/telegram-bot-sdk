@@ -10,6 +10,8 @@ namespace Telegram\Bot\Objects;
  * @property int              $date                   Date the message was sent in Unix time.
  * @property Chat             $chat                   Conversation the message belongs to.
  * @property User             $forwardFrom            (Optional). For forwarded messages, sender of the original message.
+ * @property Chat             $forwardFromChat        (Optional). For messages forwarded from a channel, information about the original channel.
+ * @property int              forwardFromMessageId    (Optional). For forwarded channel posts, identifier of the original message in the channel.
  * @property int              $forwardDate            (Optional). For forwarded messages, date the original message was sent in Unix time.
  * @property Message          $replyToMessage         (Optional). For replies, the original message. Note that the Message object in this field will not contain further reply_to_message fields even if it itself is a reply.
  * @property int              $editDate               (Optional). Date the message was last edited in Unix time.
@@ -22,6 +24,7 @@ namespace Telegram\Bot\Objects;
  * @property Sticker          $sticker                (Optional). Message is a sticker, information about the sticker.
  * @property Video            $video                  (Optional). Message is a video, information about the video.
  * @property Voice            $voice                  (Optional). Message is a voice message, information about the file.
+ * @property string           $caption                (Optional). Caption for the document, photo or video, 0-200 characters.
  * @property Contact          $contact                (Optional). Message is a shared contact, information about the contact.
  * @property Location         $location               (Optional). Message is a shared location, information about the location.
  * @property Venue            $venue                  (Optional). Message is a venue, information about the venue.
@@ -48,7 +51,7 @@ class Message extends BaseObject
             'from'             => User::class,
             'chat'             => Chat::class,
             'forward_from'     => User::class,
-            'forward_from_chat'=> User::class,
+            'forward_from_chat'=> Chat::class,
             'reply_to_message' => self::class,
             'entities'         => MessageEntity::class,
             'audio'            => Audio::class,

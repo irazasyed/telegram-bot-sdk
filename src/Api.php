@@ -23,6 +23,7 @@ use Telegram\Bot\Traits\Http;
  *         polling.
  * @method Methods\SetWebhook setWebhook(array $params = []) Set a Webhook to receive incoming updates via an outgoing
  *         webhook.
+ * @method Methods\DeleteWebhook deleteWebhook(array $params = []) Remove webhook integration.
  * @method Methods\GetWebhookInfo getWebhookInfo() Use this method to get current webhook status.
  *
  * # Available Methods

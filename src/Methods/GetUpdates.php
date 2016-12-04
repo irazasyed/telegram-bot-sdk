@@ -11,9 +11,10 @@ use Telegram\Bot\Events\UpdateWasReceived;
  *
  * <code>
  * $params = [
- *   'offset'  => '',
- *   'limit'   => '',
- *   'timeout' => '',
+ *   'offset'          => '',
+ *   'limit'           => '',
+ *   'timeout'         => '',
+ *   'allowed_updates' => [],
  * ];
  * </code>
  *
@@ -22,6 +23,7 @@ use Telegram\Bot\Events\UpdateWasReceived;
  * @method GetUpdates offset($offset = null) int|null
  * @method GetUpdates limit($limit = null) int|null
  * @method GetUpdates timeout($timeout = null) int|null
+ * @method GetUpdates allowedUpdates($allowedUpdates = null) array|null
  *
  * @method Update[] getResult($dumpAndDie = false)
  */
