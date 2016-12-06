@@ -166,7 +166,7 @@ class Keyboard extends Base
      */
     public static function hide(array $params = [])
     {
-        return new static(array_merge(['hide_keyboard' => true, 'selective' => false], $params));
+        return new static(array_merge(['remove_keyboard' => true, 'selective' => false], $params));
     }
 
     /**

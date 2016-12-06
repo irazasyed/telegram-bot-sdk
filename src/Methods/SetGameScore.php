@@ -12,12 +12,13 @@ use Telegram\Bot\Objects\Message;
  *
  * <code>
  * $params = [
- *   'user_id'           => '',
- *   'score'             => '',
- *   'chat_id'           => '',
- *   'message_id'        => '',
- *   'inline_message_id' => '',
- *   'edit_message'      => '',
+ *   'user_id'              => '',
+ *   'score'                => '',
+ *   'force'                => '',
+ *   'disable_edit_message' => '',
+ *   'chat_id'              => '',
+ *   'message_id'           => '',
+ *   'inline_message_id'    => '',
  * ];
  * </code>
  *
@@ -25,10 +26,11 @@ use Telegram\Bot\Objects\Message;
  *
  * @method SetGameScore userId($userId) int
  * @method SetGameScore score($score) int
+ * @method SetGameScore force($force) bool
+ * @method SetGameScore disableEditMessage($disableEditMessage) bool
  * @method SetGameScore chatId($chatId) int|string
  * @method SetGameScore messageId($messageId) int
  * @method SetGameScore inlineMessageId($inlineMessageId) string
- * @method SetGameScore editMessage($editMessage) bool
  *
  * @method Message getResult($dumpAndDie = false)
  */
