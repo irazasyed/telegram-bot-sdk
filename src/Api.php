@@ -260,6 +260,42 @@ class Api
     }
 
     /**
+     * Edit Message Text.
+     *
+     * <code>
+     * $params = [
+     *   'chat_id'                  => '',
+     *   'message_id'               => '',
+     *   'inline_message_id'        => '',
+     *   'text'                     => '',
+     *   'parse_mode'               => '',
+     *   'disable_web_page_preview' => '',
+     *   'reply_markup'             => '',
+     * ];
+     * </code>
+     *
+     * @link https://core.telegram.org/bots/api#editmessagetext
+     *
+     * @param array    $params
+     *
+     * @var int|string $params ['chat_id']
+     * @var int        $params ['message_id']
+     * @var int        $params ['inline_message_id']
+     * @var string     $params ['text']
+     * @var string     $params ['parse_mode']
+     * @var bool       $params ['disable_web_page_preview']
+     * @var string     $params ['reply_markup']
+     *
+     * @return Message
+     */
+    public function editMessageText(array $params)
+    {
+        $response = $this->post('editMessageText', $params);
+
+        return new Message($response->getDecodedBody());
+    }
+    
+    /**
      * Forward messages of any kind.
      *
      * <code>
