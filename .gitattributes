@@ -6,7 +6,6 @@
 /.nitpick.json      export-ignore
 /ruleset.xml        export-ignore
 /phpunit.xml.dist   export-ignore
-/README.md          export-ignore
 /build              export-ignore
 /docs               export-ignore
 /tests              export-ignore
