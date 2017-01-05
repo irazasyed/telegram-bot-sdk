@@ -2,9 +2,11 @@
 
 namespace Telegram\Bot\Laravel;
 
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Support\ServiceProvider;
 use Telegram\Bot\Api;
+use Illuminate\Support\ServiceProvider;
+use Illuminate\Contracts\Container\Container as Application;
+use Laravel\Lumen\Application as LumenApplication;
+use Illuminate\Foundation\Application as LaravelApplication;
 
 /**
  * Class TelegramServiceProvider.
@@ -30,21 +32,35 @@ class TelegramServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->publishes([
-            $this->config_filepath => config_path('telegram.php'),
-        ]);
+        $this->setupConfig($this->app);
     }
+    
+    /**
+     * Setup the config.
+     *
+     * @param \Illuminate\Contracts\Container\Container $app
+     *
+     * @return void
+     */
+    protected function setupConfig(Application $app)
+    {
+        $source = __DIR__.'/config/telegram.php';
 
+        if ($app instanceof LaravelApplication && $app->runningInConsole()) {
+            $this->publishes([$source => config_path('telegram.php')]);
+        } elseif ($app instanceof LumenApplication) {
+            $app->configure('telegram');
+        }
+
+        $this->mergeConfigFrom($source, 'telegram');
+    }
+    
     /**
      * Register the service provider.
      */
     public function register()
     {
         $this->registerTelegram($this->app);
-
-        $this->config_filepath = __DIR__.'/config/telegram.php';
-
-        $this->mergeConfigFrom($this->config_filepath, 'telegram');
     }
 
     /**
