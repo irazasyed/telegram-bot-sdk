@@ -259,6 +259,13 @@ class Api
         return new Message($response->getDecodedBody());
     }
 
+    public function editMessageText(array $params)
+    {
+        $response = $this->post('editMessageText', $params);
+
+        return new Message($response->getDecodedBody());
+    }
+
     /**
      * Forward messages of any kind.
      *
