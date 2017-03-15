@@ -1,0 +1,11 @@
+ 
+
+--include("Telegram.php"); $bot_id = "342089630:AAGKF-h4PUqaLmb8iNZc39b0O739Q8qa0Eg"; $telegram = new Telegram($bot_id); ?> 
+
+توکن خود را وارد کرده
+
+$req = $telegram->getUpdates(); for ($i = 0; $i < $telegram-> UpdateCount(); $i++) {     $telegram->serveUpdate($i);     $text = $telegram->Text();     $chat_id = $telegram->ChatID(); 
+
+شما باید بعد از هر پیام که به ربات خود می آید صفحه ای که در آن کد های شما هست اجرا شود
+
+if ($text == "/start") {         $reply = "درحال کارکردن";         $content = array('chat_id' => $chat_id, 'text' => $reply);         $telegram->sendMessage($content);     }     if ($text == "/test") {         if ($telegram->messageFromGroup()) {             $reply = "ارسال پیام در گروه";         } else {             $reply = "دکمه ها فعال شدند";         }         // ساخت منو در تلگرام         $option = array( array("عضویت در سایت ما", "گروه طراحی سایت کوهستان"), array("تست 1", "تست 2") );         // کیبورد         $keyb = $telegram->buildKeyBoard($option);         $content = array('chat_id' => $chat_id, 'reply_markup' => $keyb, 'text' => $reply);         $telegram->sendMessage($content);     }     if ($text == "/mountanweb") {         $reply = "گروه طراحی سایت کوهستان";         // ارسال ری پلی         $content = array('chat_id' => $chat_id, 'text' => $reply);         $telegram->sendMessage($content);     } }
