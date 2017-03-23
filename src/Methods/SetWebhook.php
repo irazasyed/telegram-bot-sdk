@@ -3,6 +3,7 @@ namespace Telegram\Bot\Methods;
 
 use Telegram\Bot\Exceptions\TelegramSDKException;
 use Telegram\Bot\FileUpload\InputFile;
+use Telegram\Bot\TelegramResponse;
 
 /**
  * Class SetWebhook
@@ -31,7 +32,7 @@ use Telegram\Bot\FileUpload\InputFile;
  *                                                          Specify an empty list to receive all updates regardless of type (default).
  *                                                          If not specified, the previous setting will be used.
  *
- * @method bool getResult($dumpAndDie = false)
+ * @method TelegramResponse getResult($dumpAndDie = false)
  */
 class SetWebhook extends Method
 {

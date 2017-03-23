@@ -45,7 +45,7 @@ trait CommandsHandler
             return $update;
         }
 
-        $updates = $this->getUpdates();
+        $updates = $this->getUpdates()->getResult();
         $highestId = -1;
 
         foreach ($updates as $update) {
