@@ -199,6 +199,10 @@ class CommandBus extends AnswerBus
      */
     protected function handler($message, Update $update)
     {
+        if($message === null) {
+            return $update;
+        }
+
         $match = $this->parseCommand($message);
         if (!empty($match)) {
             $command = strtolower($match[1]); // All commands must be lowercase.

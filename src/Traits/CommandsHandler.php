@@ -84,7 +84,13 @@ trait CommandsHandler
      */
     public function processCommand(Update $update)
     {
-        $this->getCommandBus()->handler($this->getMessageText($update), $update);
+        $message = $update->getMessage();
+
+        if($message !== null && $message->has('entities')) {
+            if($message->entities[0]['type'] == 'bot_command') {
+                $this->getCommandBus()->handler($this->getMessageText($update), $update);
+            }
+        }
     }
 
     /**
