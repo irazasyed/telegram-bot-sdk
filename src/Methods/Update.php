@@ -39,7 +39,7 @@ trait Update
      */
     public function getUpdates(array $params = [], $shouldEmitEvents = true)
     {
-        $response = $this->post('getUpdates', $params);
+        $response = $this->get('getUpdates', $params);
 
         return collect($response->getResult())
             ->map(function ($data) use ($shouldEmitEvents) {
@@ -87,7 +87,7 @@ trait Update
             throw new TelegramSDKException('Invalid URL, should be a HTTPS url.');
         }
 
-        return $this->uploadFile('setWebhook', $params);
+        return $this->uploadFile('setWebhook', $params, 'certificate');
     }
 
     /**
@@ -136,6 +136,8 @@ trait Update
      * Works only if you set a webhook.
      *
      * @see setWebhook
+     *
+     * @param bool $shouldEmitEvent
      *
      * @return UpdateObject
      */
