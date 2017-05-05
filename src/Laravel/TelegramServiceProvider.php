@@ -14,18 +14,10 @@ use Illuminate\Foundation\Application as LaravelApplication;
  */
 class TelegramServiceProvider extends ServiceProvider
 {
-    /**
-     * Indicates if loading of the provider is deferred.
-     *
-     * @var bool
-     */
+    /** @var bool Indicates if loading of the provider is deferred. */
     protected $defer = true;
 
-    /**
-     * Boot the service provider.
-     *
-     * @return void
-     */
+    /** Boot the service provider. */
     public function boot()
     {
         $this->setupConfig($this->app);
@@ -35,12 +27,10 @@ class TelegramServiceProvider extends ServiceProvider
      * Setup the config.
      *
      * @param \Illuminate\Contracts\Container\Container $app
-     *
-     * @return void
      */
     protected function setupConfig(Application $app)
     {
-        $source = __DIR__.'/config/telegram.php';
+        $source = __DIR__ . '/config/telegram.php';
 
         if ($app instanceof LaravelApplication && $app->runningInConsole()) {
             $this->publishes([$source => config_path('telegram.php')]);
@@ -53,8 +43,6 @@ class TelegramServiceProvider extends ServiceProvider
 
     /**
      * Register the service provider.
-     *
-     * @return void
      */
     public function register()
     {
@@ -66,8 +54,6 @@ class TelegramServiceProvider extends ServiceProvider
      * Register the manager class.
      *
      * @param \Illuminate\Contracts\Container\Container $app
-     *
-     * @return void
      */
     protected function registerManager(Application $app)
     {
@@ -84,8 +70,6 @@ class TelegramServiceProvider extends ServiceProvider
      * Register the bindings.
      *
      * @param \Illuminate\Contracts\Container\Container $app
-     *
-     * @return void
      */
     protected function registerBindings(Application $app)
     {
@@ -103,7 +87,7 @@ class TelegramServiceProvider extends ServiceProvider
      *
      * @return array
      */
-    public function provides()
+    public function provides(): array
     {
         return ['telegram', 'telegram.bot', BotsManager::class, Api::class];
     }

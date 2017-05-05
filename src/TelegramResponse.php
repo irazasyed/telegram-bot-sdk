@@ -87,7 +87,7 @@ class TelegramResponse
      *
      * @return bool
      */
-    public function isError()
+    public function isError(): bool
     {
         return isset($this->decodedBody['ok']) && ($this->decodedBody['ok'] === false);
     }
@@ -105,7 +105,7 @@ class TelegramResponse
      *
      * @return TelegramRequest
      */
-    public function getRequest()
+    public function getRequest(): TelegramRequest
     {
         return $this->request;
     }
@@ -126,7 +126,7 @@ class TelegramResponse
      *
      * @return string
      */
-    public function getEndpoint()
+    public function getEndpoint(): string
     {
         return $this->endPoint;
     }
@@ -146,7 +146,7 @@ class TelegramResponse
      *
      * @return array
      */
-    public function getHeaders()
+    public function getHeaders(): array
     {
         return $this->headers;
     }
@@ -156,7 +156,7 @@ class TelegramResponse
      *
      * @return string
      */
-    public function getBody()
+    public function getBody(): string
     {
         return $this->body;
     }
@@ -166,7 +166,7 @@ class TelegramResponse
      *
      * @return array
      */
-    public function getDecodedBody()
+    public function getDecodedBody(): array
     {
         return $this->decodedBody;
     }
@@ -186,7 +186,7 @@ class TelegramResponse
      *
      * @throws TelegramSDKException
      */
-    public function throwException()
+    public function throwException(): TelegramSDKException
     {
         throw $this->thrownException;
     }
@@ -196,7 +196,7 @@ class TelegramResponse
      *
      * @return TelegramSDKException
      */
-    public function getThrownException()
+    public function getThrownException(): TelegramSDKException
     {
         return $this->thrownException;
     }

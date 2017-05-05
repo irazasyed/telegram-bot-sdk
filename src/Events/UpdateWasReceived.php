@@ -11,14 +11,10 @@ use Telegram\Bot\Objects\Update;
  */
 class UpdateWasReceived extends AbstractEvent
 {
-    /**
-     * @var Update
-     */
+    /** @var Update */
     private $update;
 
-    /**
-     * @var Api
-     */
+    /** @var Api */
     private $telegram;
 
     /**
@@ -36,7 +32,7 @@ class UpdateWasReceived extends AbstractEvent
     /**
      * @return Update
      */
-    public function getUpdate()
+    public function getUpdate(): Update
     {
         return $this->update;
     }
@@ -44,7 +40,7 @@ class UpdateWasReceived extends AbstractEvent
     /**
      * @return Api
      */
-    public function getTelegram()
+    public function getTelegram(): Api
     {
         return $this->telegram;
     }

@@ -18,7 +18,7 @@ interface CommandInterface
      *
      * @return string
      */
-    public function getName();
+    public function getName(): string;
 
     /**
      * Get Command Aliases
@@ -27,7 +27,7 @@ interface CommandInterface
      *
      * @return array
      */
-    public function getAliases();
+    public function getAliases(): array;
 
     /**
      * Get Command Description.
@@ -36,12 +36,12 @@ interface CommandInterface
      *
      * @return string
      */
-    public function getDescription();
+    public function getDescription(): string;
 
     /**
      * Process Inbound Command.
      *
-     * @param Api $telegram
+     * @param Api    $telegram
      * @param string $arguments
      * @param Update $update
      *

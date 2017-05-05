@@ -10,9 +10,9 @@ class CouldNotUploadInputFile extends TelegramSDKException
     /**
      * @param $file
      *
-     * @return static
+     * @return CouldNotUploadInputFile
      */
-    public static function fileDoesNotExistOrNotReadable($file)
+    public static function fileDoesNotExistOrNotReadable($file): CouldNotUploadInputFile
     {
         return new static("File: `{$file}` does not exist or is not readable!");
     }
@@ -20,14 +20,14 @@ class CouldNotUploadInputFile extends TelegramSDKException
     /**
      * @param $path
      *
-     * @return static
+     * @return CouldNotUploadInputFile
      */
-    public static function filenameNotProvided($path)
+    public static function filenameNotProvided($path): CouldNotUploadInputFile
     {
         $file = is_string($path) ? $path : "the resource that you're trying to upload";
 
         return new static(
-            "Filename not provided for {$file}. ".
+            "Filename not provided for {$file}. " .
             'Remote or Resource file uploads require a filename. Refer Docs for more information.'
         );
     }
@@ -35,9 +35,9 @@ class CouldNotUploadInputFile extends TelegramSDKException
     /**
      * @param $path
      *
-     * @return static
+     * @return CouldNotUploadInputFile
      */
-    public static function couldNotOpenResource($path)
+    public static function couldNotOpenResource($path): CouldNotUploadInputFile
     {
         return new static("Failed to create InputFile entity. Unable to open resource: {$path}.");
     }
@@ -45,9 +45,9 @@ class CouldNotUploadInputFile extends TelegramSDKException
     /**
      * @param $property
      *
-     * @return static
+     * @return CouldNotUploadInputFile
      */
-    public static function resourceShouldBeInputFileEntity($property)
+    public static function resourceShouldBeInputFileEntity($property): CouldNotUploadInputFile
     {
         return new static("Resource file should be uploaded using `Telegram\Bot\FileUpload\InputFile::create(\$resourceOrRemoteUrl, \$filename)` for `{$property}` property.");
     }

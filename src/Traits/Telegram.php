@@ -17,7 +17,7 @@ trait Telegram
      *
      * @return Api
      */
-    public function getTelegram()
+    public function getTelegram(): Api
     {
         return $this->telegram;
     }

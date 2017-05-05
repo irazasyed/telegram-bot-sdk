@@ -21,7 +21,7 @@ trait EmitsEvents
      * @throws \InvalidArgumentException
      * @return bool true if emitted, false otherwise.
      */
-    protected function emitEvent($event)
+    protected function emitEvent($event): bool
     {
         if (is_null($this->eventEmitter)) {
             return false;
@@ -44,7 +44,7 @@ trait EmitsEvents
      * @throws \InvalidArgumentException
      * @return bool true if all emitted, false otherwise
      */
-    private function emitBatchOfEvents(array $events)
+    private function emitBatchOfEvents(array $events): bool
     {
         if (is_null($this->eventEmitter)) {
             return false;
@@ -66,7 +66,7 @@ trait EmitsEvents
      *
      * @return Emitter
      */
-    public function getEventEmitter()
+    public function getEventEmitter(): Emitter
     {
         return $this->eventEmitter;
     }
@@ -75,9 +75,13 @@ trait EmitsEvents
      * Set an event emitter.
      *
      * @param Emitter $eventEmitter
+     *
+     * @return $this
      */
     public function setEventEmitter($eventEmitter)
     {
         $this->eventEmitter = $eventEmitter;
+
+        return $this;
     }
 }

@@ -41,7 +41,7 @@ trait Message
      *
      * @return MessageObject
      */
-    public function sendMessage(array $params)
+    public function sendMessage(array $params): MessageObject
     {
         $response = $this->post('sendMessage', $params);
 
@@ -73,7 +73,7 @@ trait Message
      *
      * @return MessageObject
      */
-    public function forwardMessage(array $params)
+    public function forwardMessage(array $params): MessageObject
     {
         $response = $this->post('forwardMessage', $params);
 
@@ -109,7 +109,7 @@ trait Message
      *
      * @return MessageObject
      */
-    public function sendPhoto(array $params)
+    public function sendPhoto(array $params): MessageObject
     {
         $response = $this->uploadFile('sendPhoto', $params, 'photo');
 
@@ -151,7 +151,7 @@ trait Message
      *
      * @return MessageObject
      */
-    public function sendAudio(array $params)
+    public function sendAudio(array $params): MessageObject
     {
         $response = $this->uploadFile('sendAudio', $params, 'audio');
 
@@ -187,7 +187,7 @@ trait Message
      *
      * @return MessageObject
      */
-    public function sendDocument(array $params)
+    public function sendDocument(array $params): MessageObject
     {
         $response = $this->uploadFile('sendDocument', $params, 'document');
 
@@ -221,9 +221,9 @@ trait Message
      *
      * @return MessageObject
      */
-    public function sendSticker(array $params)
+    public function sendSticker(array $params): MessageObject
     {
-        if (is_file($params['sticker']) && ( pathinfo($params['sticker'], PATHINFO_EXTENSION) !== 'webp' )) {
+        if (is_file($params['sticker']) && (pathinfo($params['sticker'], PATHINFO_EXTENSION) !== 'webp')) {
             throw new TelegramSDKException('Invalid Sticker Provided. Supported Format: Webp');
         }
 
@@ -268,7 +268,7 @@ trait Message
      *
      * @return MessageObject
      */
-    public function sendVideo(array $params)
+    public function sendVideo(array $params): MessageObject
     {
         $response = $this->uploadFile('sendVideo', $params, 'video');
 
@@ -306,7 +306,7 @@ trait Message
      *
      * @return MessageObject
      */
-    public function sendVoice(array $params)
+    public function sendVoice(array $params): MessageObject
     {
         $response = $this->uploadFile('sendVoice', $params, 'voice');
 
@@ -342,7 +342,7 @@ trait Message
      *
      * @return MessageObject
      */
-    public function sendLocation(array $params)
+    public function sendLocation(array $params): MessageObject
     {
         $response = $this->post('sendLocation', $params);
 
@@ -384,7 +384,7 @@ trait Message
      *
      * @return MessageObject
      */
-    public function sendVenue(array $params)
+    public function sendVenue(array $params): MessageObject
     {
         $response = $this->post('sendVenue', $params);
 
@@ -422,7 +422,7 @@ trait Message
      *
      * @return MessageObject
      */
-    public function sendContact(array $params)
+    public function sendContact(array $params): MessageObject
     {
         $response = $this->post('sendContact', $params);
 
@@ -450,7 +450,7 @@ trait Message
      *
      * @return bool
      */
-    public function sendChatAction(array $params)
+    public function sendChatAction(array $params): bool
     {
         $validActions = [
             'typing',

@@ -31,7 +31,7 @@ interface HttpClientInterface
      *
      * @return int
      */
-    public function getTimeOut();
+    public function getTimeOut(): int;
 
     /**
      * Set Timeout.
@@ -47,7 +47,7 @@ interface HttpClientInterface
      *
      * @return int
      */
-    public function getConnectTimeOut();
+    public function getConnectTimeOut(): int;
 
     /**
      * Set Connection Timeout.

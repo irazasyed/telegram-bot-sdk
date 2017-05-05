@@ -17,7 +17,7 @@ trait Validator
      *
      * @return bool
      */
-    protected function hasFileId($param, array $params)
+    protected function hasFileId($param, array $params): bool
     {
         return array_key_exists($param, $params) && $this->isFileId($params[$param]);
     }
@@ -29,7 +29,7 @@ trait Validator
      *
      * @return bool
      */
-    protected function isInputFile($contents)
+    protected function isInputFile($contents): bool
     {
         return $contents instanceof InputFile;
     }
@@ -41,7 +41,7 @@ trait Validator
      *
      * @return bool
      */
-    protected function isFileId($value)
+    protected function isFileId($value): bool
     {
         if (!is_string($value)) {
             return false;

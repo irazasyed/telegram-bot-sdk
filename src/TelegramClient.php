@@ -26,7 +26,7 @@ class TelegramClient
      */
     public function __construct(HttpClientInterface $httpClientHandler = null)
     {
-        $this->httpClientHandler = $httpClientHandler ?: new GuzzleHttpClient();
+        $this->httpClientHandler = $httpClientHandler ?? new GuzzleHttpClient();
     }
 
     /**
@@ -43,10 +43,14 @@ class TelegramClient
      * Sets the HTTP client handler.
      *
      * @param HttpClientInterface $httpClientHandler
+     *
+     * @return TelegramClient
      */
-    public function setHttpClientHandler(HttpClientInterface $httpClientHandler)
+    public function setHttpClientHandler(HttpClientInterface $httpClientHandler): TelegramClient
     {
         $this->httpClientHandler = $httpClientHandler;
+
+        return $this;
     }
 
     /**
@@ -58,7 +62,7 @@ class TelegramClient
      *
      * @return TelegramResponse
      */
-    public function sendRequest(TelegramRequest $request)
+    public function sendRequest(TelegramRequest $request): TelegramResponse
     {
         list($url, $method, $headers, $isAsyncRequest) = $this->prepareRequest($request);
 
@@ -95,9 +99,9 @@ class TelegramClient
      *
      * @return array
      */
-    public function prepareRequest(TelegramRequest $request)
+    public function prepareRequest(TelegramRequest $request): array
     {
-        $url = $this->getBaseBotUrl().$request->getAccessToken().'/'.$request->getEndpoint();
+        $url = $this->getBaseBotUrl() . $request->getAccessToken() . '/' . $request->getEndpoint();
 
         return [
             $url,
@@ -112,7 +116,7 @@ class TelegramClient
      *
      * @return string
      */
-    public function getBaseBotUrl()
+    public function getBaseBotUrl(): string
     {
         return static::BASE_BOT_URL;
     }
@@ -125,7 +129,7 @@ class TelegramClient
      *
      * @return TelegramResponse
      */
-    protected function getResponse(TelegramRequest $request, $response)
+    protected function getResponse(TelegramRequest $request, $response): TelegramResponse
     {
         return new TelegramResponse($request, $response);
     }

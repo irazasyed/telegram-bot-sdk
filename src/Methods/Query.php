@@ -38,7 +38,7 @@ trait Query
      *
      * @return bool
      */
-    public function answerCallbackQuery(array $params)
+    public function answerCallbackQuery(array $params): bool
     {
         $this->post('answerCallbackQuery', $params);
 
@@ -78,7 +78,7 @@ trait Query
      *
      * @return bool
      */
-    public function answerInlineQuery(array $params)
+    public function answerInlineQuery(array $params): bool
     {
         $this->post('answerInlineQuery', $params);
 

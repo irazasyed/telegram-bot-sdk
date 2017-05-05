@@ -1,7 +1,7 @@
 <?php
+
 namespace Telegram\Bot\Objects\InlineQuery;
 
-use BadMethodCallException;
 use Illuminate\Support\Collection;
 
 /**
@@ -40,6 +40,6 @@ abstract class InlineBaseObject extends Collection
             return $this;
         }
 
-        throw new BadMethodCallException("Method {$name} does not exist.");
+        throw new \BadMethodCallException("Method {$name} does not exist.");
     }
 }

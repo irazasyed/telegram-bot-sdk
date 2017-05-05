@@ -1,4 +1,5 @@
 <?php
+
 namespace Telegram\Bot\Keyboard;
 
 /**
@@ -23,17 +24,16 @@ namespace Telegram\Bot\Keyboard;
  * ];
  * </code>
  *
- * @method $this setResizeKeyboard($boolean)     Optional. Requests clients to resize the keyboard vertically for optimal fit.
- * @method $this setOneTimeKeyboard($boolean)    Optional. Requests clients to hide the keyboard as soon as it's been used.
- * @method $this setSelective($boolean)          Optional. Use this parameter if you want to show the keyboard to specific users only.
+ * @method $this setResizeKeyboard($boolean)     Optional. Requests clients to resize the keyboard vertically for
+ *         optimal fit.
+ * @method $this setOneTimeKeyboard($boolean)    Optional. Requests clients to hide the keyboard as soon as it's been
+ *         used.
+ * @method $this setSelective($boolean)          Optional. Use this parameter if you want to show the keyboard to
+ *         specific users only.
  */
 class Keyboard extends Base
 {
-    /**
-     * Make an Inline Keyboard
-     *
-     * @var bool
-     */
+    /** @var bool Make an Inline Keyboard */
     protected $inline = false;
 
     /**
@@ -41,9 +41,9 @@ class Keyboard extends Base
      *
      * @link https://core.telegram.org/bots/api#inlinekeyboardmarkup
      *
-     * @return $this
+     * @return Keyboard
      */
-    public function inline()
+    public function inline(): Keyboard
     {
         $this->inline = true;
 
@@ -55,7 +55,7 @@ class Keyboard extends Base
      *
      * @return bool
      */
-    public function isInlineKeyboard()
+    public function isInlineKeyboard(): bool
     {
         return $this->inline;
     }
@@ -63,9 +63,9 @@ class Keyboard extends Base
     /**
      * Create a new row in keyboard to add buttons.
      *
-     * @return $this
+     * @return Keyboard
      */
-    public function row()
+    public function row(): Keyboard
     {
         $property = 'keyboard';
         if ($this->isInlineKeyboard()) {
@@ -105,7 +105,7 @@ class Keyboard extends Base
      *
      * @return mixed
      */
-    public static function button($params = [])
+    public static function button($params = []): string
     {
         if (is_string($params)) {
             return $params;
@@ -140,7 +140,7 @@ class Keyboard extends Base
      *
      * @return string
      */
-    public static function inlineButton($params = [])
+    public static function inlineButton($params = []): string
     {
         return self::button($params);
     }
@@ -164,7 +164,7 @@ class Keyboard extends Base
      *
      * @return string
      */
-    public static function hide(array $params = [])
+    public static function hide(array $params = []): string
     {
         return new static(array_merge(['remove_keyboard' => true, 'selective' => false], $params));
     }
@@ -188,7 +188,7 @@ class Keyboard extends Base
      *
      * @return string
      */
-    public static function forceReply(array $params = [])
+    public static function forceReply(array $params = []): string
     {
         return new static(array_merge(['force_reply' => true, 'selective' => false], $params));
     }

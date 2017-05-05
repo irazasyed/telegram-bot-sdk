@@ -27,9 +27,9 @@ class InputFile
      * @param string|resource|StreamInterface|null $file
      * @param string|null                          $filename
      *
-     * @return static
+     * @return InputFile
      */
-    public static function create($file = null, $filename = null)
+    public static function create($file = null, $filename = null): InputFile
     {
         return new static($file, $filename);
     }
@@ -74,9 +74,9 @@ class InputFile
      *
      * @param string|resource|StreamInterface|null $file
      *
-     * @return $this
+     * @return InputFile
      */
-    public function setFile($file)
+    public function setFile($file): InputFile
     {
         $this->file = $file;
 
@@ -89,13 +89,13 @@ class InputFile
      * @return string
      * @throws CouldNotUploadInputFile
      */
-    public function getFilename()
+    public function getFilename(): string
     {
         if (($this->isFileResourceOrStream() || $this->isFileRemote()) && !isset($this->filename)) {
             throw CouldNotUploadInputFile::filenameNotProvided($this->file);
         }
 
-        return $this->filename ?: basename($this->file);
+        return $this->filename ?? basename($this->file);
     }
 
     /**
@@ -103,10 +103,10 @@ class InputFile
      *
      * @param $filename
      *
-     * @return $this
+     * @return InputFile
      * @throws \InvalidArgumentException
      */
-    public function setFilename($filename)
+    public function setFilename($filename): InputFile
     {
         if (false === $this->isStringOrNull($filename)) {
             throw new \InvalidArgumentException(
@@ -122,11 +122,11 @@ class InputFile
     /**
      * Get contents.
      *
-     * @return InputFile
+     * @return StreamInterface|resource|string
      */
     public function getContents()
     {
-        return $this->contents ?: $this->open();
+        return $this->contents ?? $this->open();
     }
 
     /**
@@ -134,9 +134,9 @@ class InputFile
      *
      * @param string $contents
      *
-     * @return $this
+     * @return InputFile
      */
-    public function setContents($contents)
+    public function setContents($contents): InputFile
     {
         $this->contents = $contents;
 
@@ -165,7 +165,7 @@ class InputFile
      *
      * @return bool true if it's a string or null, false otherwise.
      */
-    protected function isStringOrNull($param)
+    protected function isStringOrNull($param): bool
     {
         return in_array(gettype($param), ['string', 'NULL']);
     }
@@ -175,7 +175,7 @@ class InputFile
      *
      * @return bool true if it's a valid URL, false otherwise.
      */
-    protected function isFileRemote()
+    protected function isFileRemote(): bool
     {
         return is_string($this->file) && preg_match('/^(https?|ftp):\/\/.*/', $this->file) === 1;
     }
@@ -186,7 +186,7 @@ class InputFile
      * @return bool true if it's a resource file or an instance of
      *              \Psr\Http\Message\StreamInterface, false otherwise.
      */
-    protected function isFileResourceOrStream()
+    protected function isFileResourceOrStream(): bool
     {
         return is_resource($this->file) || $this->file instanceof StreamInterface;
     }
@@ -200,7 +200,7 @@ class InputFile
      *
      * @throws CouldNotUploadInputFile
      */
-    protected function isFileLocalAndExists()
+    protected function isFileLocalAndExists(): bool
     {
         $file = @is_readable($this->file);
 

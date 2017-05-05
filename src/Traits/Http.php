@@ -57,7 +57,7 @@ trait Http
      *
      * @return TelegramClient
      */
-    protected function getClient()
+    protected function getClient(): TelegramClient
     {
         if ($this->client === null) {
             $this->client = new TelegramClient($this->httpClientHandler);
@@ -71,7 +71,7 @@ trait Http
      *
      * @return TelegramResponse
      */
-    public function getLastResponse()
+    public function getLastResponse(): TelegramResponse
     {
         return $this->lastResponse;
     }
@@ -81,7 +81,7 @@ trait Http
      *
      * @return string
      */
-    public function getAccessToken()
+    public function getAccessToken(): string
     {
         return $this->accessToken;
     }
@@ -111,7 +111,7 @@ trait Http
      *
      * @return bool
      */
-    public function isAsyncRequest()
+    public function isAsyncRequest(): bool
     {
         return $this->isAsyncRequest;
     }
@@ -133,7 +133,7 @@ trait Http
     /**
      * @return int
      */
-    public function getTimeOut()
+    public function getTimeOut(): int
     {
         return $this->timeOut;
     }
@@ -153,7 +153,7 @@ trait Http
     /**
      * @return int
      */
-    public function getConnectTimeOut()
+    public function getConnectTimeOut(): int
     {
         return $this->connectTimeOut;
     }
@@ -180,7 +180,7 @@ trait Http
      *
      * @return TelegramResponse
      */
-    protected function get($endpoint, array $params = [])
+    protected function get($endpoint, array $params = []): TelegramResponse
     {
         if (array_key_exists('reply_markup', $params)) {
             $params['reply_markup'] = (string)$params['reply_markup'];
@@ -202,7 +202,7 @@ trait Http
      *
      * @return TelegramResponse
      */
-    protected function post($endpoint, array $params = [], $fileUpload = false)
+    protected function post($endpoint, array $params = [], $fileUpload = false): TelegramResponse
     {
         if ($fileUpload) {
             $params = ['multipart' => $params];
@@ -230,10 +230,10 @@ trait Http
      * @param array  $params
      * @param string $inputFileField
      *
-     * @return TelegramResponse
      * @throws CouldNotUploadInputFile
+     * @return TelegramResponse
      */
-    protected function uploadFile($endpoint, array $params, $inputFileField)
+    protected function uploadFile($endpoint, array $params, $inputFileField): TelegramResponse
     {
         if ($this->hasFileId($inputFileField, $params)) {
             return $this->post($endpoint, $params);
@@ -248,10 +248,10 @@ trait Http
      * @param array $params
      * @param       $inputFileField
      *
-     * @return array
      * @throws CouldNotUploadInputFile
+     * @return array
      */
-    protected function prepareMultipartParams(array $params, $inputFileField)
+    protected function prepareMultipartParams(array $params, $inputFileField): array
     {
         $inputFile = $params[$inputFileField];
 
@@ -283,7 +283,7 @@ trait Http
      *
      * @return array
      */
-    protected function generateMultipartData($contents, $name)
+    protected function generateMultipartData($contents, $name): array
     {
         if ($this->isInputFile($contents)) {
             $filename = $contents->getFilename();
@@ -306,11 +306,8 @@ trait Http
      *
      * @return TelegramResponse
      */
-    protected function sendRequest(
-        $method,
-        $endpoint,
-        array $params = []
-    ) {
+    protected function sendRequest($method, $endpoint, array $params = []): TelegramResponse
+    {
         $request = $this->request($method, $endpoint, $params);
 
         return $this->lastResponse = $this->getClient()->sendRequest($request);
@@ -325,7 +322,7 @@ trait Http
      *
      * @return TelegramRequest
      */
-    protected function request($method, $endpoint, array $params = [])
+    protected function request($method, $endpoint, array $params = []): TelegramRequest
     {
         return (new TelegramRequest(
             $this->getAccessToken(),
@@ -334,7 +331,7 @@ trait Http
             $params,
             $this->isAsyncRequest()
         ))
-        ->setTimeOut($this->getTimeOut())
-        ->setConnectTimeOut($this->getConnectTimeOut());
+            ->setTimeOut($this->getTimeOut())
+            ->setConnectTimeOut($this->getConnectTimeOut());
     }
 }

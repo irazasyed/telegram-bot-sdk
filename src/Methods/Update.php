@@ -37,7 +37,7 @@ trait Update
      *
      * @return UpdateObject[]
      */
-    public function getUpdates(array $params = [], $shouldEmitEvents = true)
+    public function getUpdates(array $params = [], $shouldEmitEvents = true): array
     {
         $response = $this->get('getUpdates', $params);
 
@@ -77,7 +77,7 @@ trait Update
      *
      * @return TelegramResponse
      */
-    public function setWebhook(array $params)
+    public function setWebhook(array $params): TelegramResponse
     {
         if (filter_var($params['url'], FILTER_VALIDATE_URL) === false) {
             throw new TelegramSDKException('Invalid URL Provided');
@@ -97,7 +97,7 @@ trait Update
      *
      * @return TelegramResponse
      */
-    public function deleteWebhook()
+    public function deleteWebhook(): TelegramResponse
     {
         return $this->get('deleteWebhook');
     }
@@ -109,7 +109,7 @@ trait Update
      *
      * @return WebhookInfo
      */
-    public function getWebhookInfo()
+    public function getWebhookInfo(): WebhookInfo
     {
         $response = $this->get('getWebhookInfo');
 
@@ -126,7 +126,7 @@ trait Update
      *
      * @return UpdateObject
      */
-    public function getWebhookUpdates($shouldEmitEvent = true)
+    public function getWebhookUpdates($shouldEmitEvent = true): UpdateObject
     {
         return $this->getWebhookUpdate($shouldEmitEvent);
     }
@@ -141,7 +141,7 @@ trait Update
      *
      * @return UpdateObject
      */
-    public function getWebhookUpdate($shouldEmitEvent = true)
+    public function getWebhookUpdate($shouldEmitEvent = true): UpdateObject
     {
         $body = json_decode(file_get_contents('php://input'), true);
 
@@ -161,7 +161,7 @@ trait Update
      *
      * @return TelegramResponse
      */
-    public function removeWebhook()
+    public function removeWebhook(): TelegramResponse
     {
         return $this->deleteWebhook();
     }

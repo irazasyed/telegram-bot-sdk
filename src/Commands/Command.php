@@ -10,15 +10,24 @@ use Telegram\Bot\Objects\Update;
  * Class Command.
  *
  *
- * @method mixed replyWithMessage($use_sendMessage_parameters)       Reply Chat with a message. You can use all the sendMessage() parameters except chat_id.
- * @method mixed replyWithPhoto($use_sendPhoto_parameters)           Reply Chat with a Photo. You can use all the sendPhoto() parameters except chat_id.
- * @method mixed replyWithAudio($use_sendAudio_parameters)           Reply Chat with an Audio message. You can use all the sendAudio() parameters except chat_id.
- * @method mixed replyWithVideo($use_sendVideo_parameters)           Reply Chat with a Video. You can use all the sendVideo() parameters except chat_id.
- * @method mixed replyWithVoice($use_sendVoice_parameters)           Reply Chat with a Voice message. You can use all the sendVoice() parameters except chat_id.
- * @method mixed replyWithDocument($use_sendDocument_parameters)     Reply Chat with a Document. You can use all the sendDocument() parameters except chat_id.
- * @method mixed replyWithSticker($use_sendSticker_parameters)       Reply Chat with a Sticker. You can use all the sendSticker() parameters except chat_id.
- * @method mixed replyWithLocation($use_sendLocation_parameters)     Reply Chat with a Location. You can use all the sendLocation() parameters except chat_id.
- * @method mixed replyWithChatAction($use_sendChatAction_parameters) Reply Chat with a Chat Action. You can use all the sendChatAction() parameters except chat_id.
+ * @method mixed replyWithMessage($use_sendMessage_parameters)       Reply Chat with a message. You can use all the
+ *         sendMessage() parameters except chat_id.
+ * @method mixed replyWithPhoto($use_sendPhoto_parameters)           Reply Chat with a Photo. You can use all the
+ *         sendPhoto() parameters except chat_id.
+ * @method mixed replyWithAudio($use_sendAudio_parameters)           Reply Chat with an Audio message. You can use all
+ *         the sendAudio() parameters except chat_id.
+ * @method mixed replyWithVideo($use_sendVideo_parameters)           Reply Chat with a Video. You can use all the
+ *         sendVideo() parameters except chat_id.
+ * @method mixed replyWithVoice($use_sendVoice_parameters)           Reply Chat with a Voice message. You can use all
+ *         the sendVoice() parameters except chat_id.
+ * @method mixed replyWithDocument($use_sendDocument_parameters)     Reply Chat with a Document. You can use all the
+ *         sendDocument() parameters except chat_id.
+ * @method mixed replyWithSticker($use_sendSticker_parameters)       Reply Chat with a Sticker. You can use all the
+ *         sendSticker() parameters except chat_id.
+ * @method mixed replyWithLocation($use_sendLocation_parameters)     Reply Chat with a Location. You can use all the
+ *         sendLocation() parameters except chat_id.
+ * @method mixed replyWithChatAction($use_sendChatAction_parameters) Reply Chat with a Chat Action. You can use all the
+ *         sendChatAction() parameters except chat_id.
  */
 abstract class Command implements CommandInterface
 {
@@ -32,22 +41,13 @@ abstract class Command implements CommandInterface
      */
     protected $name;
 
-    /**
-     * Command Aliases
-     * Helpful when you want to trigger command with more than one name.
-     *
-     * @var array
-     */
+    /** @var array Command Aliases - Helpful when you want to trigger command with more than one name. */
     protected $aliases = [];
 
-    /**
-     * @var string The Telegram command description.
-     */
+    /** @var string The Telegram command description. */
     protected $description;
 
-    /**
-     * @var string Arguments passed to the command.
-     */
+    /** @var string Arguments passed to the command. */
     protected $arguments;
 
     /**
@@ -55,19 +55,9 @@ abstract class Command implements CommandInterface
      *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
-    }
-
-    /**
-     * Get Command Aliases
-     *
-     * @return array
-     */
-    public function getAliases()
-    {
-        return $this->aliases;
     }
 
     /**
@@ -77,7 +67,7 @@ abstract class Command implements CommandInterface
      *
      * @return Command
      */
-    public function setName($name)
+    public function setName($name): Command
     {
         $this->name = $name;
 
@@ -85,11 +75,21 @@ abstract class Command implements CommandInterface
     }
 
     /**
+     * Get Command Aliases
+     *
+     * @return array
+     */
+    public function getAliases(): array
+    {
+        return $this->aliases;
+    }
+
+    /**
      * Get Command Description.
      *
      * @return string
      */
-    public function getDescription()
+    public function getDescription(): string
     {
         return $this->description;
     }
@@ -101,7 +101,7 @@ abstract class Command implements CommandInterface
      *
      * @return Command
      */
-    public function setDescription($description)
+    public function setDescription($description): Command
     {
         $this->description = $description;
 
@@ -113,19 +113,9 @@ abstract class Command implements CommandInterface
      *
      * @return string
      */
-    public function getArguments()
+    public function getArguments(): string
     {
         return $this->arguments;
-    }
-
-    /**
-     * Returns an instance of Command Bus.
-     *
-     * @return CommandBus
-     */
-    public function getCommandBus()
-    {
-        return $this->telegram->getCommandBus();
     }
 
     /**
@@ -141,6 +131,11 @@ abstract class Command implements CommandInterface
     }
 
     /**
+     * {@inheritdoc}
+     */
+    abstract public function handle($arguments);
+
+    /**
      * Helper to Trigger other Commands.
      *
      * @param      $command
@@ -150,11 +145,16 @@ abstract class Command implements CommandInterface
      */
     protected function triggerCommand($command, $arguments = null)
     {
-        return $this->getCommandBus()->execute($command, $arguments ?: $this->arguments, $this->update);
+        return $this->getCommandBus()->execute($command, $arguments ?? $this->arguments, $this->update);
     }
 
     /**
-     * {@inheritdoc}
+     * Returns an instance of Command Bus.
+     *
+     * @return CommandBus
      */
-    abstract public function handle($arguments);
+    public function getCommandBus(): CommandBus
+    {
+        return $this->telegram->getCommandBus();
+    }
 }

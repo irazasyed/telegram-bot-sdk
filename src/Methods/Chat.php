@@ -41,7 +41,7 @@ trait Chat
      *
      * @return bool
      */
-    public function kickChatMember(array $params)
+    public function kickChatMember(array $params): bool
     {
         $this->get('kickChatMember', $params);
 
@@ -68,7 +68,7 @@ trait Chat
      *
      * @return bool
      */
-    public function leaveChat(array $params)
+    public function leaveChat(array $params): bool
     {
         $this->get('leaveChat', $params);
 
@@ -100,7 +100,7 @@ trait Chat
      *
      * @return bool
      */
-    public function unbanChatMember(array $params)
+    public function unbanChatMember(array $params): bool
     {
         $this->get('unbanChatMember', $params);
 
@@ -128,7 +128,7 @@ trait Chat
      *
      * @return ChatObject
      */
-    public function getChat(array $params)
+    public function getChat(array $params): ChatObject
     {
         $response = $this->get('getChat', $params);
 
@@ -155,7 +155,7 @@ trait Chat
      *
      * @return ChatMember[]
      */
-    public function getChatAdministrators(array $params)
+    public function getChatAdministrators(array $params): array
     {
         $response = $this->get('getChatAdministrators', $params);
 
@@ -186,7 +186,7 @@ trait Chat
      *
      * @return int
      */
-    public function getChatMembersCount(array $params)
+    public function getChatMembersCount(array $params): int
     {
         $response = $this->get('getChatMembersCount', $params);
 
@@ -215,7 +215,7 @@ trait Chat
      *
      * @return ChatMember
      */
-    public function getChatMember(array $params)
+    public function getChatMember(array $params): ChatMember
     {
         $response = $this->get('getChatMember', $params);
 

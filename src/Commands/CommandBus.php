@@ -42,7 +42,7 @@ class CommandBus extends AnswerBus
      *
      * @return array
      */
-    public function getCommands()
+    public function getCommands(): array
     {
         return $this->commands;
     }
@@ -54,7 +54,7 @@ class CommandBus extends AnswerBus
      *
      * @return CommandBus
      */
-    public function addCommands(array $commands)
+    public function addCommands(array $commands): CommandBus
     {
         foreach ($commands as $command) {
             $this->addCommand($command);
@@ -72,7 +72,7 @@ class CommandBus extends AnswerBus
      *
      * @return CommandBus
      */
-    public function addCommand($command)
+    public function addCommand($command): CommandBus
     {
         if (!is_object($command)) {
             if (!class_exists($command)) {
@@ -144,7 +144,7 @@ class CommandBus extends AnswerBus
      *
      * @return CommandBus
      */
-    public function removeCommand($name)
+    public function removeCommand($name): CommandBus
     {
         unset($this->commands[$name]);
 
@@ -158,7 +158,7 @@ class CommandBus extends AnswerBus
      *
      * @return CommandBus
      */
-    public function removeCommands(array $names)
+    public function removeCommands(array $names): CommandBus
     {
         foreach ($names as $name) {
             $this->removeCommand($name);
@@ -176,7 +176,7 @@ class CommandBus extends AnswerBus
      *
      * @return array
      */
-    public function parseCommand($text)
+    public function parseCommand($text): array
     {
         if (trim($text) === '') {
             throw new \InvalidArgumentException('Message is empty, Cannot parse for command');
@@ -197,9 +197,9 @@ class CommandBus extends AnswerBus
      *
      * @return Update
      */
-    protected function handler($message, Update $update)
+    protected function handler($message, Update $update): Update
     {
-        if($message === null) {
+        if ($message === null) {
             return $update;
         }
 

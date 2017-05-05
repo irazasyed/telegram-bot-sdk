@@ -35,7 +35,7 @@ class GuzzleHttpClient implements HttpClientInterface
      */
     public function __construct(ClientInterface $client = null)
     {
-        $this->client = $client ?: new Client();
+        $this->client = $client ?? new Client;
     }
 
     /**
@@ -53,7 +53,7 @@ class GuzzleHttpClient implements HttpClientInterface
      *
      * @return GuzzleHttpClient
      */
-    public function setClient(ClientInterface $client)
+    public function setClient(ClientInterface $client): GuzzleHttpClient
     {
         $this->client = $client;
 
@@ -70,7 +70,7 @@ class GuzzleHttpClient implements HttpClientInterface
         array $options = [],
         $isAsyncRequest = false
     ) {
-        $body = isset($options['body']) ? $options['body'] : null;
+        $body = $options['body'] ?? null;
         $options = $this->getOptions($headers, $body, $options, $isAsyncRequest);
 
         try {
@@ -107,7 +107,7 @@ class GuzzleHttpClient implements HttpClientInterface
         $body,
         $options,
         $isAsyncRequest = false
-    ) {
+    ): array {
         $default_options = [
             RequestOptions::HEADERS         => $headers,
             RequestOptions::BODY            => $body,
@@ -122,7 +122,7 @@ class GuzzleHttpClient implements HttpClientInterface
     /**
      * @inheritdoc
      */
-    public function getTimeOut()
+    public function getTimeOut(): int
     {
         return $this->timeOut;
     }
@@ -130,7 +130,7 @@ class GuzzleHttpClient implements HttpClientInterface
     /**
      * @inheritdoc
      */
-    public function setTimeOut($timeOut)
+    public function setTimeOut($timeOut): GuzzleHttpClient
     {
         $this->timeOut = $timeOut;
 
@@ -140,7 +140,7 @@ class GuzzleHttpClient implements HttpClientInterface
     /**
      * @inheritdoc
      */
-    public function getConnectTimeOut()
+    public function getConnectTimeOut(): int
     {
         return $this->connectTimeOut;
     }
@@ -148,7 +148,7 @@ class GuzzleHttpClient implements HttpClientInterface
     /**
      * @inheritdoc
      */
-    public function setConnectTimeOut($connectTimeOut)
+    public function setConnectTimeOut($connectTimeOut): GuzzleHttpClient
     {
         $this->connectTimeOut = $connectTimeOut;
 
@@ -158,9 +158,9 @@ class GuzzleHttpClient implements HttpClientInterface
     /**
      * Gets HTTP client for internal class use.
      *
-     * @return Client|ClientInterface
+     * @return Client
      */
-    private function getClient()
+    private function getClient(): Client
     {
         return $this->client;
     }

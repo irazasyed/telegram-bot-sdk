@@ -1,4 +1,5 @@
 <?php
+
 namespace Telegram\Bot\Keyboard;
 
 /**
@@ -29,9 +30,9 @@ class Button extends Base
      *
      * @param string $text
      *
-     * @return $this
+     * @return Button
      */
-    public function setText($text)
+    public function setText($text): Button
     {
         $this->items['text'] = $text;
 

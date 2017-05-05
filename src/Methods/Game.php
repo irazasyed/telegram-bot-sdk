@@ -39,7 +39,7 @@ trait Game
      *
      * @return Message
      */
-    public function sendGame(array $params)
+    public function sendGame(array $params): Message
     {
         $response = $this->post('sendGame', $params);
 
@@ -77,7 +77,7 @@ trait Game
      *
      * @return Message
      */
-    public function setGameScore(array $params)
+    public function setGameScore(array $params): Message
     {
         $response = $this->post('setGameScore', $params);
 
@@ -107,9 +107,9 @@ trait Game
      *
      * @throws TelegramSDKException
      *
-     * @return Message
+     * @return GameHighScore[]
      */
-    public function getGameHighScores(array $params)
+    public function getGameHighScores(array $params): array
     {
         $response = $this->get('getGameHighScores', $params);
 

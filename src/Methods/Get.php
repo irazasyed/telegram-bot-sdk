@@ -22,7 +22,7 @@ trait Get
      *
      * @return User
      */
-    public function getMe()
+    public function getMe(): User
     {
         $response = $this->get('getMe');
 
@@ -52,7 +52,7 @@ trait Get
      *
      * @return UserProfilePhotos
      */
-    public function getUserProfilePhotos(array $params)
+    public function getUserProfilePhotos(array $params): UserProfilePhotos
     {
         $response = $this->get('getUserProfilePhotos', $params);
 
@@ -82,7 +82,7 @@ trait Get
      *
      * @return File
      */
-    public function getFile(array $params)
+    public function getFile(array $params): File
     {
         $response = $this->get('getFile', $params);
 

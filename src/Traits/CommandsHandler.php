@@ -1,4 +1,5 @@
 <?php
+
 namespace Telegram\Bot\Traits;
 
 use Telegram\Bot\Commands\CommandBus;
@@ -22,9 +23,9 @@ trait CommandsHandler
     /**
      * Get all registered commands.
      *
-     * @return mixed
+     * @return array
      */
-    public function getCommands()
+    public function getCommands(): array
     {
         return $this->getCommandBus()->getCommands();
     }
@@ -45,7 +46,7 @@ trait CommandsHandler
             return $update;
         }
 
-        $updates = $this->getUpdates()->getResult();
+        $updates = $this->getUpdates();
         $highestId = -1;
 
         foreach ($updates as $update) {
@@ -66,15 +67,15 @@ trait CommandsHandler
      *
      * @param $highestId
      *
-     * @return \Telegram\Bot\Objects\Update[]
+     * @return Update[]
      */
-    protected function markUpdateAsRead($highestId)
+    protected function markUpdateAsRead($highestId): array
     {
-        return $this->getUpdates()
-            ->shouldEmitEvents(false)
-            ->offset($highestId + 1)
-            ->limit(1)
-            ->getResult();
+        $params = [];
+        $params['offset'] = $highestId + 1;
+        $params['limit'] = 1;
+
+        return $this->getUpdates($params, false);
     }
 
     /**
@@ -86,8 +87,8 @@ trait CommandsHandler
     {
         $message = $update->getMessage();
 
-        if($message !== null && $message->has('entities')) {
-            if($message->entities[0]['type'] == 'bot_command') {
+        if ($message !== null && $message->has('entities')) {
+            if ($message->entities[0]['type'] == 'bot_command') {
                 $this->getCommandBus()->handler($this->getMessageText($update), $update);
             }
         }

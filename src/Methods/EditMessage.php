@@ -25,7 +25,7 @@ trait EditMessage
      * ];
      * </code>
      *
-     * @link https://core.telegram.org/bots/api#editMessageText
+     * @link https://core.telegram.org/bots/api#editmessagetext
      *
      * @param array    $params
      *
@@ -61,7 +61,7 @@ trait EditMessage
      * ];
      * </code>
      *
-     * @link https://core.telegram.org/bots/api#editMessageCaption
+     * @link https://core.telegram.org/bots/api#editmessagecaption
      *
      * @param array    $params
      *
@@ -94,7 +94,7 @@ trait EditMessage
      * ];
      * </code>
      *
-     * @link https://core.telegram.org/bots/api#editMessageReplyMarkup
+     * @link https://core.telegram.org/bots/api#editmessagereplymarkup
      *
      * @param array    $params
      *

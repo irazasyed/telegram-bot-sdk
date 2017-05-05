@@ -42,11 +42,7 @@ class TelegramResponseException extends TelegramSDKException
      */
     protected function get($key, $default = null)
     {
-        if (isset($this->responseData[$key])) {
-            return $this->responseData[$key];
-        }
-
-        return $default;
+        return $this->responseData[$key] ?? $default;
     }
 
     /**
@@ -56,7 +52,7 @@ class TelegramResponseException extends TelegramSDKException
      *
      * @return TelegramResponseException
      */
-    public static function create(TelegramResponse $response)
+    public static function create(TelegramResponse $response): TelegramResponseException
     {
         $data = $response->getDecodedBody();
 
@@ -64,7 +60,7 @@ class TelegramResponseException extends TelegramSDKException
         $message = null;
         if (isset($data['ok'], $data['error_code']) && $data['ok'] === false) {
             $code = $data['error_code'];
-            $message = isset($data['description']) ? $data['description'] : 'Unknown error from API.';
+            $message = $data['description'] ?? 'Unknown error from API.';
         }
 
         // Others
@@ -86,7 +82,7 @@ class TelegramResponseException extends TelegramSDKException
      *
      * @return string
      */
-    public function getErrorType()
+    public function getErrorType(): string
     {
         return $this->get('type', '');
     }
@@ -96,7 +92,7 @@ class TelegramResponseException extends TelegramSDKException
      *
      * @return string
      */
-    public function getRawResponse()
+    public function getRawResponse(): string
     {
         return $this->response->getBody();
     }
@@ -106,7 +102,7 @@ class TelegramResponseException extends TelegramSDKException
      *
      * @return array
      */
-    public function getResponseData()
+    public function getResponseData(): array
     {
         return $this->responseData;
     }
@@ -116,7 +112,7 @@ class TelegramResponseException extends TelegramSDKException
      *
      * @return TelegramResponse
      */
-    public function getResponse()
+    public function getResponse(): TelegramResponse
     {
         return $this->response;
     }
