@@ -64,7 +64,7 @@ class TelegramClient
      */
     public function sendRequest(TelegramRequest $request): TelegramResponse
     {
-        list($url, $method, $headers, $isAsyncRequest) = $this->prepareRequest($request);
+        [$url, $method, $headers, $isAsyncRequest] = $this->prepareRequest($request);
 
         if ($method === 'POST') {
             $options = $request->getPostParams();

@@ -67,11 +67,8 @@ class Keyboard extends Base
      */
     public function row(): Keyboard
     {
-        $property = 'keyboard';
-        if ($this->isInlineKeyboard()) {
-            $property = 'inline_keyboard';
-        }
 
+        $property = $this->isInlineKeyboard() ? 'inline_keyboard' : 'keyboard';
         $this->items[$property][] = func_get_args();
 
         return $this;
@@ -186,7 +183,7 @@ class Keyboard extends Base
      * @var bool    $params ['force_reply']
      * @var bool    $params ['selective']
      *
-     * @return string
+     * @return Keyboard
      */
     public static function forceReply(array $params = []): string
     {

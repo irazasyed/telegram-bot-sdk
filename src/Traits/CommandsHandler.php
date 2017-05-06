@@ -2,8 +2,8 @@
 
 namespace Telegram\Bot\Traits;
 
-use Telegram\Bot\Commands\CommandBus;
 use Telegram\Bot\Objects\Update;
+use Telegram\Bot\Commands\CommandBus;
 
 /**
  * CommandsHandler
@@ -13,9 +13,9 @@ trait CommandsHandler
     /**
      * Return Command Bus.
      *
-     * @return $this
+     * @return CommandBus
      */
-    protected function getCommandBus()
+    protected function getCommandBus(): CommandBus
     {
         return CommandBus::Instance()->setTelegram($this);
     }
@@ -37,15 +37,31 @@ trait CommandsHandler
      *
      * @return Update|Update[]
      */
-    public function commandsHandler($webhook = false)
+    public function commandsHandler(bool $webhook = false)
     {
-        if ($webhook) {
-            $update = $this->getWebhookUpdate();
-            $this->processCommand($update);
+        return $webhook ? $this->useWebHook() : $this->useGetUpdates();
+    }
 
-            return $update;
-        }
+    /**
+     * Process the update object for a command from your webhook.
+     *
+     * @return Update
+     */
+    protected function useWebHook(): Update
+    {
+        $update = $this->getWebhookUpdate();
+        $this->processCommand($update);
 
+        return $update;
+    }
+
+    /**
+     * Process the update object for a command using the getUpdates method.
+     *
+     * @return Update[]
+     */
+    protected function useGetUpdates(): array
+    {
         $updates = $this->getUpdates();
         $highestId = -1;
 
@@ -54,7 +70,7 @@ trait CommandsHandler
             $this->processCommand($update);
         }
 
-        //An update is considered confirmed as soon as getUpdates is called with an offset higher than its update_id.
+        //An update is considered confirmed as soon as getUpdates is called with an offset higher than it's update_id.
         if ($highestId != -1) {
             $this->markUpdateAsRead($highestId);
         }
@@ -63,7 +79,7 @@ trait CommandsHandler
     }
 
     /**
-     * An alias for getUpdates that helps readability.
+     * Mark updates as read.
      *
      * @param $highestId
      *

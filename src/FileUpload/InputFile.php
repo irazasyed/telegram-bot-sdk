@@ -175,7 +175,7 @@ class InputFile
      *
      * @return bool true if it's a valid URL, false otherwise.
      */
-    protected function isFileRemote(): bool
+    public function isFileRemote(): bool
     {
         return is_string($this->file) && preg_match('/^(https?|ftp):\/\/.*/', $this->file) === 1;
     }

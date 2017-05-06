@@ -2,6 +2,7 @@
 
 namespace Telegram\Bot\Methods;
 
+use Telegram\Bot\Traits\Validator;
 use Telegram\Bot\FileUpload\InputFile;
 use Telegram\Bot\Exceptions\TelegramSDKException;
 use Telegram\Bot\Objects\Message as MessageObject;
@@ -86,7 +87,7 @@ trait Message
     }
 
     /**
-     * Send Photos.
+     * Send Photo.
      *
      * <code>
      * $params = [
@@ -236,14 +237,11 @@ trait Message
      */
     public function sendSticker(array $params): MessageObject
     {
-        if (is_file($params['sticker']) && (pathinfo($params['sticker'], PATHINFO_EXTENSION) !== 'webp')) {
-            throw new TelegramSDKException('Invalid Sticker Provided. Supported Format: Webp');
-        }
-
         $response = $this->uploadFile('sendSticker', $params, 'sticker');
 
         return new MessageObject($response->getDecodedBody());
     }
+
 
     /**
      * Send Video File, Telegram clients support mp4 videos (other formats may be sent as Document).

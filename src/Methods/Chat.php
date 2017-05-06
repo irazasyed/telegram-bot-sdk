@@ -45,9 +45,7 @@ trait Chat
      */
     public function kickChatMember(array $params): bool
     {
-        $this->get('kickChatMember', $params);
-
-        return true;
+        return (bool)$this->get('kickChatMember', $params)->getResult();
     }
 
     /**
@@ -73,9 +71,7 @@ trait Chat
      */
     public function leaveChat(array $params): bool
     {
-        $this->get('leaveChat', $params);
-
-        return true;
+        return $this->get('leaveChat', $params)->getResult();
     }
 
     /**
@@ -107,9 +103,7 @@ trait Chat
      */
     public function unbanChatMember(array $params): bool
     {
-        $this->get('unbanChatMember', $params);
-
-        return true;
+        return (bool)$this->get('unbanChatMember', $params)->getResult();
     }
 
     /**

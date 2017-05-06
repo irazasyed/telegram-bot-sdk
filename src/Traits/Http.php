@@ -91,19 +91,13 @@ trait Http
      *
      * @param string $accessToken The bot access token to save.
      *
-     * @throws \InvalidArgumentException
-     *
      * @return $this
      */
-    public function setAccessToken($accessToken)
+    public function setAccessToken(string $accessToken)
     {
-        if (is_string($accessToken)) {
             $this->accessToken = $accessToken;
 
             return $this;
-        }
-
-        throw new \InvalidArgumentException('The Telegram bot access token must be of type "string"');
     }
 
     /**
@@ -123,7 +117,7 @@ trait Http
      *
      * @return $this
      */
-    public function setAsyncRequest($isAsyncRequest)
+    public function setAsyncRequest(bool $isAsyncRequest)
     {
         $this->isAsyncRequest = $isAsyncRequest;
 
@@ -143,7 +137,7 @@ trait Http
      *
      * @return $this
      */
-    public function setTimeOut($timeOut)
+    public function setTimeOut(int $timeOut)
     {
         $this->timeOut = $timeOut;
 
@@ -163,7 +157,7 @@ trait Http
      *
      * @return $this
      */
-    public function setConnectTimeOut($connectTimeOut)
+    public function setConnectTimeOut(int $connectTimeOut)
     {
         $this->connectTimeOut = $connectTimeOut;
 
@@ -180,7 +174,7 @@ trait Http
      *
      * @return TelegramResponse
      */
-    protected function get($endpoint, array $params = []): TelegramResponse
+    protected function get(string $endpoint, array $params = []): TelegramResponse
     {
         if (isset($params['reply_markup'])) {
             $params['reply_markup'] = (string)$params['reply_markup'];
@@ -202,7 +196,7 @@ trait Http
      *
      * @return TelegramResponse
      */
-    protected function post($endpoint, array $params = [], $fileUpload = false): TelegramResponse
+    protected function post(string $endpoint, array $params = [], $fileUpload = false): TelegramResponse
     {
         if ($fileUpload) {
             $params = ['multipart' => $params];
@@ -233,7 +227,7 @@ trait Http
      * @throws CouldNotUploadInputFile
      * @return TelegramResponse
      */
-    protected function uploadFile($endpoint, array $params, $inputFileField): TelegramResponse
+    protected function uploadFile(string $endpoint, array $params, $inputFileField): TelegramResponse
     {
         if (!isset($params[$inputFileField]) || $this->hasFileId($inputFileField, $params)) {
             return $this->post($endpoint, $params);

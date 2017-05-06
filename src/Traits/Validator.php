@@ -49,4 +49,16 @@ trait Validator
 
         return preg_match('/^[\w\-]{20,}+$/u', trim($value)) > 0;
     }
+
+    /**
+     * Determine given string is a URL
+     *
+     * @param string $value A filename or URL to a sticker
+     *
+     * @return bool
+     */
+    protected function isUrl($value): bool
+    {
+        return (bool)filter_var($value, FILTER_VALIDATE_URL);
+    }
 }
