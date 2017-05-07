@@ -2,6 +2,7 @@
 
 namespace Telegram\Bot\Methods;
 
+use Telegram\Bot\FileUpload\InputFile;
 use Telegram\Bot\Exceptions\TelegramSDKException;
 use Telegram\Bot\Objects\Message as MessageObject;
 
@@ -27,15 +28,17 @@ trait Message
      *
      * @link https://core.telegram.org/bots/api#sendmessage
      *
-     * @param array    $params
+     * @param array     $params                   [
      *
-     * @var int|string $params ['chat_id']
-     * @var string     $params ['text']
-     * @var string     $params ['parse_mode']
-     * @var bool       $params ['disable_web_page_preview']
-     * @var bool       $params ['disable_notification']
-     * @var int        $params ['reply_to_message_id']
-     * @var string     $params ['reply_markup']
+     * @type int|string $chat_id                  Required. Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @type string     $text                     Required. Text of the message to be sent
+     * @type string     $parse_mode               Optional. Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in your bot's message.
+     * @type bool       $disable_web_page_preview Optional. Disables link previews for links in this message
+     * @type bool       $disable_notification     Optional. Sends the message silently. iOS users will not receive a notification, Android users will receive a notification with no sound.
+     * @type int        $reply_to_message_id      Optional. If the message is a reply, ID of the original message
+     * @type string     $reply_markup             Optional. Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.
+     *
+     * ]
      *
      * @throws TelegramSDKException
      *
@@ -62,12 +65,14 @@ trait Message
      *
      * @link https://core.telegram.org/bots/api#forwardmessage
      *
-     * @param array    $params
+     * @param array     $params               [
      *
-     * @var int|string $params ['chat_id']
-     * @var int        $params ['from_chat_id']
-     * @var bool       $params ['disable_notification']
-     * @var int        $params ['message_id']
+     * @type int|string $chat_id              Required. Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @type int        $from_chat_id         Required. Unique identifier for the chat where the original message was sent (or channel username in the format @channelusername)
+     * @type bool       $disable_notification Optional. Sends the message silently. iOS users will not receive a notification, Android users will receive a notification with no sound.
+     * @type int        $message_id           Required. Message identifier in the chat specified in from_chat_id
+     *
+     * ]
      *
      * @throws TelegramSDKException
      *
@@ -96,14 +101,16 @@ trait Message
      *
      * @link https://core.telegram.org/bots/api#sendphoto
      *
-     * @param array    $params
+     * @param array           $params               [
      *
-     * @var int|string $params ['chat_id']
-     * @var string     $params ['photo']
-     * @var string     $params ['caption']
-     * @var bool       $params ['disable_notification']
-     * @var int        $params ['reply_to_message_id']
-     * @var string     $params ['reply_markup']
+     * @type int|string       $chat_id              Required. Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @type InputFile|string $photo                Required. Photo to send. Pass a file_id as String to send a photo that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a photo from the Internet, or upload a new photo using multipart/form-data.
+     * @type string           $caption              Optional. Photo caption (may also be used when resending photos by file_id), 0-200 characters
+     * @type bool             $disable_notification Optional. Sends the message silently. iOS users will not receive a notification, Android users will receive a notification with no sound.
+     * @type int              $reply_to_message_id  Optional. If the message is a reply, ID of the original message
+     * @type string           $reply_markup         Optional. Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.
+     *
+     * ]
      *
      * @throws TelegramSDKException
      *
@@ -135,17 +142,19 @@ trait Message
      *
      * @link https://core.telegram.org/bots/api#sendaudio
      *
-     * @param array    $params
+     * @param array           $params               [
      *
-     * @var int|string $params ['chat_id']
-     * @var string     $params ['audio']
-     * @var string     $params ['caption']
-     * @var int        $params ['duration']
-     * @var string     $params ['performer']
-     * @var string     $params ['title']
-     * @var bool       $params ['disable_notification']
-     * @var int        $params ['reply_to_message_id']
-     * @var string     $params ['reply_markup']
+     * @type int|string       $chat_id              Required. Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @type InputFile|string $audio                Required. Audio file to send. Pass a file_id as String to send an audio file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get an audio file from the Internet, or upload a new one using multipart/form-data.
+     * @type string           $caption              Optional. Audio caption, 0-200 characters
+     * @type int              $duration             Optional. Duration of the audio in seconds
+     * @type string           $performer            Optional. Performer
+     * @type string           $title                Optional. Track name
+     * @type bool             $disable_notification Optional. Sends the message silently. iOS users will not receive a notification, Android users will receive a notification with no sound.
+     * @type int              $reply_to_message_id  Optional. If the message is a reply, ID of the original message
+     * @type string           $reply_markup         Optional. Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.
+     *
+     * ]
      *
      * @throws TelegramSDKException
      *
@@ -174,14 +183,16 @@ trait Message
      *
      * @link https://core.telegram.org/bots/api#senddocument
      *
-     * @param array    $params
+     * @param array           $params               [
      *
-     * @var int|string $params ['chat_id']
-     * @var string     $params ['document']
-     * @var string     $params ['caption']
-     * @var bool       $params ['disable_notification']
-     * @var int        $params ['reply_to_message_id']
-     * @var string     $params ['reply_markup']
+     * @type int|string       $chat_id              Required. Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @type InputFile|string $document             Required. File to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data.
+     * @type string           $caption              Optional. Document caption (may also be used when resending documents by file_id), 0-200 characters
+     * @type bool             $disable_notification Optional. Sends the message silently. iOS users will not receive a notification, Android users will receive a notification with no sound.
+     * @type int              $reply_to_message_id  Optional. If the message is a reply, ID of the original message
+     * @type string           $reply_markup         Optional. Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.
+     *
+     * ]
      *
      * @throws TelegramSDKException
      *
@@ -209,13 +220,15 @@ trait Message
      *
      * @link https://core.telegram.org/bots/api#sendsticker
      *
-     * @param array    $params
+     * @param array           $params               [
      *
-     * @var int|string $params ['chat_id']
-     * @var string     $params ['sticker']
-     * @var bool       $params ['disable_notification']
-     * @var int        $params ['reply_to_message_id']
-     * @var string     $params ['reply_markup']
+     * @type int|string       $chat_id              Required. Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @type InputFile|string $sticker              Required. Sticker to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a .webp file from the Internet, or upload a new one using multipart/form-data.
+     * @type bool             $disable_notification Optional. Sends the message silently. iOS users will not receive a notification, Android users will receive a notification with no sound.
+     * @type int              $reply_to_message_id  Optional. If the message is a reply, ID of the original message
+     * @type string           $reply_markup         Optional. Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.
+     *
+     * ]
      *
      * @throws TelegramSDKException
      *
@@ -252,17 +265,19 @@ trait Message
      * @see  sendDocument
      * @link https://core.telegram.org/bots/api#sendvideo
      *
-     * @param array    $params
+     * @param array           $params               [
      *
-     * @var int|string $params ['chat_id']
-     * @var string     $params ['video']
-     * @var int        $params ['duration']
-     * @var int        $params ['width']
-     * @var int        $params ['height']
-     * @var string     $params ['caption']
-     * @var bool       $params ['disable_notification']
-     * @var int        $params ['reply_to_message_id']
-     * @var string     $params ['reply_markup']
+     * @type int|string       $chat_id              Required. Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @type InputFile|string $video                Required. Video to send. Pass a file_id as String to send a video that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a video from the Internet, or upload a new video using multipart/form-data.
+     * @type int              $duration             Optional. Duration of sent video in seconds
+     * @type int              $width                Optional. Video width
+     * @type int              $height               Optional. Video height
+     * @type string           $caption              Optional    Video caption (may also be used when resending videos by file_id), 0-200 characters.
+     * @type bool             $disable_notification Optional. Sends the message silently. iOS users will not receive a notification, Android users will receive a notification with no sound.
+     * @type int              $reply_to_message_id  Optional. If the message is a reply, ID of the original message
+     * @type string           $reply_markup         Optional. Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.
+     *
+     * ]
      *
      * @throws TelegramSDKException
      *
@@ -290,17 +305,19 @@ trait Message
      * ];
      * </code>
      *
-     * @link https://core.telegram.org/bots/api#sendaudio
+     * @link https://core.telegram.org/bots/api#sendvoice
      *
-     * @param array    $params
+     * @param array           $params               [
      *
-     * @var int|string $params ['chat_id']
-     * @var string     $params ['voice']
-     * @var string     $params ['caption']
-     * @var int        $params ['duration']
-     * @var bool       $params ['disable_notification']
-     * @var int        $params ['reply_to_message_id']
-     * @var string     $params ['reply_markup']
+     * @type int|string       $chat_id              Required. Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @type InputFile|string $voice                Required. Audio file to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data.
+     * @type string           $caption              Optional. Voice message caption, 0-200 characters
+     * @type int              $duration             Optional. Duration of the voice message in seconds
+     * @type bool             $disable_notification Optional. Sends the message silently. iOS users will not receive a notification, Android users will receive a notification with no sound.
+     * @type int              $reply_to_message_id  Optional. If the message is a reply, ID of the original message
+     * @type string           $reply_markup         Optional. Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.
+     *
+     * ]
      *
      * @throws TelegramSDKException
      *
@@ -329,14 +346,16 @@ trait Message
      *
      * @link https://core.telegram.org/bots/api#sendlocation
      *
-     * @param array    $params
+     * @param array     $params               [
      *
-     * @var int|string $params ['chat_id']
-     * @var float      $params ['latitude']
-     * @var float      $params ['longitude']
-     * @var bool       $params ['disable_notification']
-     * @var int        $params ['reply_to_message_id']
-     * @var string     $params ['reply_markup']
+     * @type int|string $chat_id              Required. Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @type float      $latitude             Required. Latitude of location
+     * @type float      $longitude            Required. Longitude of location
+     * @type bool       $disable_notification Optional. Sends the message silently. iOS users will not receive a notification, Android users will receive a notification with no sound.
+     * @type int        $reply_to_message_id  Optional. If the message is a reply, ID of the original message
+     * @type string     $reply_markup         Optional. Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.
+     *
+     * ]
      *
      * @throws TelegramSDKException
      *
@@ -368,17 +387,19 @@ trait Message
      *
      * @link https://core.telegram.org/bots/api#sendvenue
      *
-     * @param array    $params
+     * @param array     $params               [
      *
-     * @var int|string $params ['chat_id']
-     * @var float      $params ['latitude']
-     * @var float      $params ['longitude']
-     * @var string     $params ['title']
-     * @var string     $params ['address']
-     * @var string     $params ['foursquare_id']
-     * @var bool       $params ['disable_notification']
-     * @var int        $params ['reply_to_message_id']
-     * @var string     $params ['reply_markup']
+     * @type int|string $chat_id              Required. Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @type float      $latitude             Required. Latitude of the venue
+     * @type float      $longitude            Required. Longitude of the venue
+     * @type string     $title                Required. Name of the venue
+     * @type string     $address              Required. Address of the venue
+     * @type string     $foursquare_id        Optional. Foursquare identifier of the venue
+     * @type bool       $disable_notification Optional. Sends the message silently. iOS users will not receive a notification, Android users will receive a notification with no sound.
+     * @type int        $reply_to_message_id  Optional. If the message is a reply, ID of the original message
+     * @type string     $reply_markup         Optional. Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.
+     *
+     * ]
      *
      * @throws TelegramSDKException
      *
@@ -408,15 +429,17 @@ trait Message
      *
      * @link https://core.telegram.org/bots/api#sendcontact
      *
-     * @param array    $params
+     * @param array     $params               [
      *
-     * @var int|string $params ['chat_id']
-     * @var string     $params ['phone_number']
-     * @var string     $params ['first_name']
-     * @var string     $params ['last_name']
-     * @var bool       $params ['disable_notification']
-     * @var int        $params ['reply_to_message_id']
-     * @var string     $params ['reply_markup']
+     * @type int|string $chat_id              Required. Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @type string     $phone_number         Required. Contact's phone number
+     * @type string     $first_name           Required. Contact's first name
+     * @type string     $last_name            Required. Contact's last name
+     * @type bool       $disable_notification Optional. Sends the message silently. iOS users will not receive a notification, Android users will receive a notification with no sound.
+     * @type int        $reply_to_message_id  Optional. If the message is a reply, ID of the original message
+     * @type string     $reply_markup         Optional. Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.
+     *
+     * ]
      *
      * @throws TelegramSDKException
      *
@@ -441,10 +464,12 @@ trait Message
      *
      * @link https://core.telegram.org/bots/api#sendchataction
      *
-     * @param array    $params
+     * @param array     $params  [
      *
-     * @var int|string $params ['chat_id']
-     * @var string     $params ['action']
+     * @type int|string $chat_id Required. Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @type string     $action  Required. Type of action to broadcast. Choose one, depending on what the user is about to receive: typing for text messages, upload_photo for photos, record_video or upload_video for videos, record_audio or upload_audio for audio files, upload_document for general files, find_location for location data.
+     *
+     * ]
      *
      * @throws TelegramSDKException
      *

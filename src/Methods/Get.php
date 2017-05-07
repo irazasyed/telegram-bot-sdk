@@ -42,11 +42,13 @@ trait Get
      *
      * @link https://core.telegram.org/bots/api#getuserprofilephotos
      *
-     * @param array $params
+     * @param array $params  [
      *
-     * @var int     $params ['user_id']
-     * @var int     $params ['offset']
-     * @var int     $params ['limit']
+     * @type int    $user_id Required. Unique identifier of the target user
+     * @type int    $offset  Optional. Sequential number of the first photo to be returned. By default, all photos are returned.
+     * @type int    $limit   Optional. Limits the number of photos to be retrieved. Values between 1—100 are accepted. Defaults to 100.
+     *
+     * ]
      *
      * @throws TelegramSDKException
      *
@@ -74,9 +76,11 @@ trait Get
      *
      * @link https://core.telegram.org/bots/api#getFile
      *
-     * @param array $params
+     * @param array $params  [
      *
-     * @var string  $params ['file_id']
+     * @type string $file_id Required. File identifier to get info about
+     *
+     * ]
      *
      * @throws TelegramSDKException
      *

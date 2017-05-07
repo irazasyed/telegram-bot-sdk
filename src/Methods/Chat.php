@@ -32,10 +32,12 @@ trait Chat
      *
      * @link https://core.telegram.org/bots/api#kickchatmember
      *
-     * @param array    $params
+     * @param array     $params  [
      *
-     * @var int|string $params ['chat_id']
-     * @var int        $params ['user_id']
+     * @type int|string $chat_id Unique identifier for the target group or username of the target supergroup (in the format @supergroupusername)
+     * @type int        $user_id Unique identifier of the target user.
+     *
+     * ]
      *
      * @throws TelegramSDKException
      *
@@ -59,10 +61,11 @@ trait Chat
      *
      * @link https://core.telegram.org/bots/api#leavechat
      *
-     * @param array    $params
+     * @param array     $params  [
      *
-     * @var string|int $params ['chat_id'] Unique identifier for the target chat or username of the target supergroup
-     *      or channel (in the format @channelusername)
+     * @type string|int $chat_id Unique identifier for the target chat or username of the target supergroup or channel (in the format @channelusername)
+     *
+     * ]
      *
      * @throws TelegramSDKException
      *
@@ -91,10 +94,12 @@ trait Chat
      *
      * @link https://core.telegram.org/bots/api#unbanchatmember
      *
-     * @param array    $params
+     * @param array     $params  [
      *
-     * @var int|string $params ['chat_id']
-     * @var int        $params ['user_id']
+     * @type int|string $chat_id Unique identifier for the target group or username of the target supergroup (in the format @supergroupusername)
+     * @type int        $user_id Unique identifier of the target user.
+     *
+     * ]
      *
      * @throws TelegramSDKException
      *
@@ -119,10 +124,11 @@ trait Chat
      *
      * @link https://core.telegram.org/bots/api#getchat
      *
-     * @param array    $params
+     * @param array     $params  [
      *
-     * @var string|int $params ['chat_id'] Unique identifier for the target chat or username of the target supergroup
-     *      or channel (in the format @channelusername)
+     * @type string|int $chat_id Unique identifier for the target chat or username of the target supergroup or channel (in the format @channelusername)
+     *
+     * ]
      *
      * @throws TelegramSDKException
      *
@@ -146,10 +152,11 @@ trait Chat
      *
      * @link https://core.telegram.org/bots/api#getchatadministrators
      *
-     * @param array    $params
+     * @param array     $params  [
      *
-     * @var string|int $params ['chat_id'] Unique identifier for the target chat or username of the target supergroup
-     *      or channel (in the format @channelusername);
+     * @type string|int $chat_id Unique identifier for the target chat or username of the target supergroup or channel (in the format @channelusername);
+     *
+     * ]
      *
      * @throws TelegramSDKException
      *
@@ -177,10 +184,11 @@ trait Chat
      *
      * @link https://core.telegram.org/bots/api#getchatmemberscount
      *
-     * @param array    $params
+     * @param array     $params  [
      *
-     * @var string|int $params ['chat_id'] Unique identifier for the target chat or username of the target supergroup
-     *      or channel (in the format @channelusername)
+     * @type string|int $chat_id Unique identifier for the target chat or username of the target supergroup or channel (in the format @channelusername).
+     *
+     * ]
      *
      * @throws TelegramSDKException
      *
@@ -205,11 +213,12 @@ trait Chat
      *
      * @link https://core.telegram.org/bots/api#getchatmember
      *
-     * @param array    $params
+     * @param array     $params  [
      *
-     * @var string|int $params ['chat_id'] Unique identifier for the target chat or username of the target supergroup
-     *      or channel (in the format @channelusername)
-     * @var int        $params ['user_id'] Unique identifier of the target user.
+     * @type string|int $chat_id Unique identifier for the target chat or username of the target supergroup or channel (in the format @channelusername).
+     * @type int        $user_id Unique identifier of the target user.
+     *
+     * ]
      *
      * @throws TelegramSDKException
      *
