@@ -7,8 +7,6 @@ use Illuminate\Contracts\Container\Container;
 
 /**
  * Class BotsManager
- *
- * @TODO Add methods in docblock for autocompletion from Api file.
  */
 class BotsManager
 {
@@ -240,6 +238,7 @@ class BotsManager
         $commandGroups = $this->getConfig('command_groups');
         $sharedCommands = $this->getConfig('shared_commands');
 
+        //TODO: This is ripe for refactor / collections.
         $results = [];
         foreach ($commands as $command) {
             // If the command is a group, we'll parse through the group of commands
