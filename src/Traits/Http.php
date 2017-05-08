@@ -95,9 +95,9 @@ trait Http
      */
     public function setAccessToken(string $accessToken)
     {
-            $this->accessToken = $accessToken;
+        $this->accessToken = $accessToken;
 
-            return $this;
+        return $this;
     }
 
     /**
@@ -176,9 +176,7 @@ trait Http
      */
     protected function get(string $endpoint, array $params = []): TelegramResponse
     {
-        if (isset($params['reply_markup'])) {
-            $params['reply_markup'] = (string)$params['reply_markup'];
-        }
+        $params = $this->replyMarkupToString($params);
 
         return $this->sendRequest(
             'GET',
@@ -202,9 +200,7 @@ trait Http
             $params = ['multipart' => $params];
         } else {
 
-            if (isset($params['reply_markup'])) {
-                $params['reply_markup'] = (string)$params['reply_markup'];
-            }
+            $params = $this->replyMarkupToString($params);
 
             $params = ['form_params' => $params];
         }
@@ -214,6 +210,22 @@ trait Http
             $endpoint,
             $params
         );
+    }
+
+    /**
+     * Converts a reply_markup field in the $params to a string.
+     *
+     * @param array $params
+     *
+     * @return array
+     */
+    protected function replyMarkupToString(array $params): array
+    {
+        if (isset($params['reply_markup'])) {
+            $params['reply_markup'] = (string)$params['reply_markup'];
+        }
+
+        return $params;
     }
 
     /**
@@ -229,10 +241,12 @@ trait Http
      */
     protected function uploadFile(string $endpoint, array $params, $inputFileField): TelegramResponse
     {
+        //Check if the field in the $params array (that is being used to send the relative file), is a file id.
         if (!isset($params[$inputFileField]) || $this->hasFileId($inputFileField, $params)) {
             return $this->post($endpoint, $params);
         }
 
+        //Sending an actual file requires it to be sent using multipart/form-data
         return $this->post($endpoint, $this->prepareMultipartParams($params, $inputFileField), true);
     }
 
@@ -253,15 +267,17 @@ trait Http
 
         $inputFile = $params[$inputFileField];
 
-
+        //All files should be provided in an InputFile object
         if (is_resource($inputFile)) {
             throw CouldNotUploadInputFile::resourceShouldBeInputFileEntity($inputFileField);
         }
 
+        //If the user provides a path to a file, attempt to create an InputFile Object automatically for them.
         if (is_string($inputFile)) {
             $params[$inputFileField] = InputFile::create($inputFile);
         }
 
+        //Iterate through all param options and convert to multipart/form-data.
         return collect($params)
             ->reject(function ($value) {
                 return is_null($value);
