@@ -2,8 +2,8 @@
 
 namespace Telegram\Bot;
 
-use Illuminate\Contracts\Container\Container;
 use InvalidArgumentException;
+use Illuminate\Contracts\Container\Container;
 
 /**
  * Class BotsManager
@@ -58,8 +58,9 @@ class BotsManager
     {
         $name = $name ?? $this->getDefaultBot();
 
-        $bots = $this->getConfig('bots');
-        if (!is_array($config = array_get($bots, $name)) && !$config) {
+        $bots = collect($this->getConfig('bots'));
+
+        if (!$config = $bots->get($name, null)) {
             throw new InvalidArgumentException("Bot [$name] not configured.");
         }
 
