@@ -75,9 +75,9 @@ trait Update
      *
      * @throws TelegramSDKException
      *
-     * @return TelegramResponse
+     * @return bool
      */
-    public function setWebhook(array $params): TelegramResponse
+    public function setWebhook(array $params): bool
     {
         if (filter_var($params['url'], FILTER_VALIDATE_URL) === false) {
             throw new TelegramSDKException('Invalid URL Provided');
@@ -87,7 +87,7 @@ trait Update
             throw new TelegramSDKException('Invalid URL, should be a HTTPS url.');
         }
 
-        return $this->uploadFile('setWebhook', $params, 'certificate');
+        return $this->uploadFile('setWebhook', $params, 'certificate')->getResult();
     }
 
     /**
@@ -95,11 +95,11 @@ trait Update
      *
      * @link https://core.telegram.org/bots/api#deletewebhook
      *
-     * @return TelegramResponse
+     * @return bool
      */
-    public function deleteWebhook(): TelegramResponse
+    public function deleteWebhook(): bool
     {
-        return $this->get('deleteWebhook');
+        return $this->get('deleteWebhook')->getResult();
     }
 
     /**
@@ -111,6 +111,7 @@ trait Update
      */
     public function getWebhookInfo(): WebhookInfo
     {
+        /** @var TelegramResponse $response */
         $response = $this->get('getWebhookInfo');
 
         return new WebhookInfo($response->getDecodedBody());
@@ -159,9 +160,9 @@ trait Update
      *
      * @throws TelegramSDKException
      *
-     * @return TelegramResponse
+     * @return bool
      */
-    public function removeWebhook(): TelegramResponse
+    public function removeWebhook(): bool
     {
         return $this->deleteWebhook();
     }

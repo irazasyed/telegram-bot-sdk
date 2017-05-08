@@ -182,7 +182,7 @@ trait Http
      */
     protected function get($endpoint, array $params = []): TelegramResponse
     {
-        if (array_key_exists('reply_markup', $params)) {
+        if (isset($params['reply_markup'])) {
             $params['reply_markup'] = (string)$params['reply_markup'];
         }
 
@@ -208,7 +208,7 @@ trait Http
             $params = ['multipart' => $params];
         } else {
 
-            if (array_key_exists('reply_markup', $params)) {
+            if (isset($params['reply_markup'])) {
                 $params['reply_markup'] = (string)$params['reply_markup'];
             }
 
@@ -235,7 +235,7 @@ trait Http
      */
     protected function uploadFile($endpoint, array $params, $inputFileField): TelegramResponse
     {
-        if ($this->hasFileId($inputFileField, $params)) {
+        if (!isset($params[$inputFileField]) || $this->hasFileId($inputFileField, $params)) {
             return $this->post($endpoint, $params);
         }
 
@@ -245,14 +245,18 @@ trait Http
     /**
      * Prepare Multipart Params for File Upload.
      *
-     * @param array $params
-     * @param       $inputFileField
+     * @param array  $params
+     * @param string $inputFileField
      *
      * @throws CouldNotUploadInputFile
      * @return array
      */
     protected function prepareMultipartParams(array $params, $inputFileField): array
     {
+        if (!isset($params[$inputFileField])) {
+            throw CouldNotUploadInputFile::missingParam($inputFileField);
+        }
+
         $inputFile = $params[$inputFileField];
 
 
