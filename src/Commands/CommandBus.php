@@ -172,43 +172,52 @@ class CommandBus extends AnswerBus
      *
      * @param $text
      *
-     * @throws \InvalidArgumentException
+     * @param $offset
+     * @param $length
      *
-     * @return array
+     * @return string
      */
-    public function parseCommand($text): array
+    public function parseCommand($text, $offset, $length): string
     {
         if (trim($text) === '') {
             throw new \InvalidArgumentException('Message is empty, Cannot parse for command');
         }
 
-        preg_match('/^\/([^\s@]+)@?(\S+)?\s?(.*)$/s', $text, $matches);
-
-        return $matches;
+        return substr(
+            $text,
+            $offset + 1,
+            $length - 1
+        );
     }
 
     /**
      * Handles Inbound Messages and Executes Appropriate Command.
      *
-     * @param $message
      * @param $update
      *
      * @throws TelegramSDKException
      *
      * @return Update
      */
-    protected function handler($message, Update $update): Update
+    protected function handler(Update $update): Update
     {
+        $message = $update->getMessage();
+
         if ($message === null) {
             return $update;
-        }
+        } elseif ($message !== null && $message->has('text') && $message->has('entities')) {
+            foreach ($message->entities as $entity) {
+                if ($entity['type'] === 'bot_command') {
+                    $command = $this->parseCommand(
+                        $message->text,
+                        $entity['offset'],
+                        $entity['length']
+                    );
 
-        $match = $this->parseCommand($message);
-        if (!empty($match)) {
-            $command = strtolower($match[1]); // All commands must be lowercase.
-            $arguments = $match[3];
 
-            $this->execute($command, $arguments, $update);
+                    $this->execute($command, $update);
+                }
+            }
         }
 
         return $update;
@@ -218,19 +227,18 @@ class CommandBus extends AnswerBus
      * Execute the command.
      *
      * @param $name
-     * @param $arguments
-     * @param $message
+     * @param $update
      *
      * @return mixed
      */
-    protected function execute($name, $arguments, $message)
+    protected function execute(string $name, Update $update)
     {
         if (isset($this->commands[$name])) {
-            return $this->commands[$name]->make($this->telegram, $arguments, $message);
+            return $this->commands[$name]->make($this->telegram, $update);
         } elseif (isset($this->commandAliases[$name])) {
-            return $this->commandAliases[$name]->make($this->telegram, $arguments, $message);
+            return $this->commandAliases[$name]->make($this->telegram, $update);
         } elseif (isset($this->commands['help'])) {
-            return $this->commands['help']->make($this->telegram, $arguments, $message);
+            return $this->commands['help']->make($this->telegram, $update);
         }
 
         return 'Ok';

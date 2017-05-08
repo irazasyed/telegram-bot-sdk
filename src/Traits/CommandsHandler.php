@@ -85,21 +85,7 @@ trait CommandsHandler
      */
     public function processCommand(Update $update)
     {
-        $message = $update->getMessage();
-
-        if ($message !== null && $message->has('entities')) {
-            foreach ($message->entities as $entity) {
-                if ($entity['type'] === 'bot_command') {
-                    $command = substr(
-                        $this->getMessageText($update),
-                        $entity['offset'] + 1,
-                        $entity['length']
-                    );
-
-                    $this->triggerCommand($command, $update);
-                }
-            }
-        }
+        $this->getCommandBus()->handler($update);
     }
 
     /**
@@ -110,26 +96,8 @@ trait CommandsHandler
      *
      * @return mixed
      */
-    public function triggerCommand($name, Update $update)
+    public function triggerCommand(string $name, Update $update)
     {
-        return $this->getCommandBus()->execute($name, $this->getMessageText($update), $update);
-    }
-
-    /**
-     * Get Message Text from Update.
-     *
-     * @param Update $update
-     *
-     * @return mixed|null
-     */
-    protected function getMessageText(Update $update)
-    {
-        $message = $update->getMessage();
-
-        if ($message !== null && $message->has('text')) {
-            return $message->text;
-        }
-
-        return null;
+        return $this->getCommandBus()->execute($name, $update);
     }
 }

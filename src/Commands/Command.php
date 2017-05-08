@@ -121,13 +121,18 @@ abstract class Command implements CommandInterface
     /**
      * @inheritDoc
      */
-    public function make(Api $telegram, $arguments, Update $update)
+    public function make(Api $telegram, Update $update)
     {
         $this->telegram = $telegram;
-        $this->arguments = $arguments;
         $this->update = $update;
 
-        return $this->handle($arguments);
+        $message = $update->getMessage();
+
+        if ($message !== null && $message->has('text')) {
+            $this->arguments = $message->text;
+        }
+
+        return $this->handle($this->arguments);
     }
 
     /**
@@ -138,14 +143,13 @@ abstract class Command implements CommandInterface
     /**
      * Helper to Trigger other Commands.
      *
-     * @param      $command
-     * @param null $arguments
+     * @param string $command
      *
      * @return mixed
      */
-    protected function triggerCommand($command, $arguments = null)
+    protected function triggerCommand(string $command)
     {
-        return $this->getCommandBus()->execute($command, $arguments ?? $this->arguments, $this->update);
+        return $this->getCommandBus()->execute($command, $this->update);
     }
 
     /**

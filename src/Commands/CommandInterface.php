@@ -42,10 +42,9 @@ interface CommandInterface
      * Process Inbound Command.
      *
      * @param Api    $telegram
-     * @param string $arguments
      * @param Update $update
      *
      * @return mixed
      */
-    public function make(Api $telegram, $arguments, Update $update);
+    public function make(Api $telegram, Update $update);
 }
