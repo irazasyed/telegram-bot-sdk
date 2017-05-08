@@ -51,4 +51,14 @@ class CouldNotUploadInputFile extends TelegramSDKException
     {
         return new static("Resource file should be uploaded using `Telegram\Bot\FileUpload\InputFile::create(\$resourceOrRemoteUrl, \$filename)` for `{$property}` property.");
     }
+
+    /**
+     * @param $inputFileField
+     *
+     * @return CouldNotUploadInputFile
+     */
+    public static function missingParam($inputFileField): CouldNotUploadInputFile
+    {
+        return new static("Input field [{$inputFileField}] is missing in your params. Please make sure it exists and is an `Telegram\Bot\FileUpload\InputFile` entity.");
+    }
 }
