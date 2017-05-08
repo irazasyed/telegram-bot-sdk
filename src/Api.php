@@ -79,6 +79,7 @@ class Api
             return call_user_func_array([$this, $method], $arguments);
         }
 
+        //If the method does not exist on the API, try the commandBus.
         if (preg_match('/^\w+Commands?/', $method, $matches)) {
             return call_user_func_array([$this->getCommandBus(), $matches[0]], $arguments);
         }
