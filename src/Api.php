@@ -4,7 +4,6 @@ namespace Telegram\Bot;
 
 use Telegram\Bot\Exceptions\TelegramSDKException;
 use Telegram\Bot\HttpClients\HttpClientInterface;
-use Telegram\Bot\Keyboard\Keyboard;
 
 /**
  * Class Api.
@@ -64,112 +63,6 @@ class Api
     public static function manager($config): BotsManager
     {
         return new BotsManager($config);
-    }
-
-    /**
-     * Hide the current custom keyboard and display the default letter-keyboard.
-     *
-     * <code>
-     * $params = [
-     *   'hide_keyboard' => true,
-     *   'selective'     => false,
-     * ];
-     * </code>
-     *
-     * @deprecated Use Telegram\Bot\Keyboard\Keyboard::hide(array $params = []) instead.
-     *             To be removed in next major version.
-     *
-     * @link       https://core.telegram.org/bots/api#replykeyboardhide
-     *
-     * @param array $params
-     *
-     * @var bool    $params ['hide_keyboard']
-     * @var bool    $params ['selective']
-     *
-     * @return string
-     */
-    public static function replyKeyboardHide(array $params = []): string
-    {
-        return Keyboard::hide($params);
-    }
-
-    /**
-     * Display a reply interface to the user (act as if the user has selected the bot‘s message and tapped ’Reply').
-     *
-     * <code>
-     * $params = [
-     *   'force_reply' => true,
-     *   'selective'   => false,
-     * ];
-     * </code>
-     *
-     * @deprecated Use Telegram\Bot\Keyboard\Keyboard::forceReply(array $params = []) instead.
-     *             To be removed in next major version.
-     *
-     * @link       https://core.telegram.org/bots/api#forcereply
-     *
-     * @param array $params
-     *
-     * @var bool    $params ['force_reply']
-     * @var bool    $params ['selective']
-     *
-     * @return string
-     */
-    public static function forceReply(array $params = []): string
-    {
-        return Keyboard::forceReply($params);
-    }
-
-    /**
-     * Builds a custom keyboard markup.
-     *
-     * <code>
-     * $params = [
-     *   'keyboard'          => '',
-     *   'resize_keyboard'   => '',
-     *   'one_time_keyboard' => '',
-     *   'selective'         => '',
-     * ];
-     * </code>
-     *
-     * @deprecated Use Telegram\Bot\Keyboard\Keyboard::make(array $params = []) instead.
-     *             To be removed in next major version.
-     *
-     * @link       https://core.telegram.org/bots/api#replykeyboardmarkup
-     *
-     * @param array $params
-     *
-     * @var array   $params ['keyboard']
-     * @var bool    $params ['resize_keyboard']
-     * @var bool    $params ['one_time_keyboard']
-     * @var bool    $params ['selective']
-     *
-     * @return string
-     */
-    public function replyKeyboardMarkup(array $params): string
-    {
-        return Keyboard::make($params);
-    }
-
-    /**
-     * @deprecated Call method isType directly on Message object
-     *             To be removed in next major version.
-     *
-     */
-    public function isMessageType($type, $object)
-    {
-        trigger_error('This method has been deprecated. Use isType() on the Message object instead.',
-            E_USER_DEPRECATED);
-    }
-
-    /**
-     * @deprecated Call method detectType directly on Message object
-     *             To be removed in next major version.
-     */
-    public function detectMessageType($object)
-    {
-        trigger_error('This method has been deprecated. Use detectType() on the Message object instead.',
-            E_USER_DEPRECATED);
     }
 
     /**
