@@ -129,7 +129,7 @@ class Keyboard extends Base
      *
      * @link https://core.telegram.org/bots/api#inlinekeyboardbutton
      *
-     * @param string|array $params                           [
+     * @param array $params                           [
      *
      * @type string        $text                             Required. Label text on the button
      * @type string        $url                              Optional. HTTP url to be opened when button is pressed
@@ -140,11 +140,11 @@ class Keyboard extends Base
      *
      * ]
      *
-     * @return string
+     * @return array
      */
-    public static function inlineButton($params = []): string
+    public static function inlineButton(array $params = [])
     {
-        return self::button($params);
+        return $params;
     }
 
     /**
