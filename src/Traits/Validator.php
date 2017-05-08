@@ -19,7 +19,7 @@ trait Validator
      */
     protected function hasFileId($param, array $params): bool
     {
-        return array_key_exists($param, $params) && $this->isFileId($params[$param]);
+        return isset($params[$param]) && $this->isFileId($params[$param]);
     }
 
     /**

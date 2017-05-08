@@ -225,11 +225,11 @@ class CommandBus extends AnswerBus
      */
     protected function execute($name, $arguments, $message)
     {
-        if (array_key_exists($name, $this->commands)) {
+        if (isset($this->commands[$name])) {
             return $this->commands[$name]->make($this->telegram, $arguments, $message);
-        } elseif (array_key_exists($name, $this->commandAliases)) {
+        } elseif (isset($this->commandAliases[$name])) {
             return $this->commandAliases[$name]->make($this->telegram, $arguments, $message);
-        } elseif (array_key_exists('help', $this->commands)) {
+        } elseif (isset($this->commands['help'])) {
             return $this->commands['help']->make($this->telegram, $arguments, $message);
         }
 
