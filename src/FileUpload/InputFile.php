@@ -2,7 +2,6 @@
 
 namespace Telegram\Bot\FileUpload;
 
-use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\LazyOpenStream;
 use Psr\Http\Message\StreamInterface;
 use Telegram\Bot\Exceptions\CouldNotUploadInputFile;
@@ -202,7 +201,7 @@ class InputFile
      */
     protected function isFileLocalAndExists(): bool
     {
-        $file = @is_readable($this->file);
+        $file = @is_file($this->file) && @is_readable($this->file);
 
         if (is_null($file)) {
             return false;
