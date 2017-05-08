@@ -88,8 +88,16 @@ trait CommandsHandler
         $message = $update->getMessage();
 
         if ($message !== null && $message->has('entities')) {
-            if ($message->entities[0]['type'] == 'bot_command') {
-                $this->getCommandBus()->handler($this->getMessageText($update), $update);
+            foreach ($message->entities as $entity) {
+                if ($entity['type'] === 'bot_command') {
+                    $command = substr(
+                        $this->getMessageText($update),
+                        $entity['offset'] + 1,
+                        $entity['length']
+                    );
+
+                    $this->triggerCommand($command, $update);
+                }
             }
         }
     }

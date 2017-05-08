@@ -50,9 +50,7 @@ trait Answerable
             $reply_name = studly_case(substr($method, 9));
             $methodName = 'send' . $reply_name;
 
-            $class = 'Telegram\Bot\Methods\\' . studly_case($methodName);
-
-            if (!class_exists($class)) {
+            if (!method_exists($this->telegram, $methodName)) {
                 throw new \BadMethodCallException("Method [$method] does not exist.");
             }
 
