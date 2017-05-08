@@ -2,11 +2,12 @@
 
 namespace Telegram\Bot\Commands;
 
-use Telegram\Bot\Answers\AnswerBus;
 use Telegram\Bot\Api;
 use Telegram\Bot\Objects\Update;
-use Telegram\Bot\Exceptions\TelegramSDKException;
 use Telegram\Bot\Traits\Singleton;
+use Illuminate\Support\Collection;
+use Telegram\Bot\Answers\AnswerBus;
+use Telegram\Bot\Exceptions\TelegramSDKException;
 
 /**
  * Class CommandBus.
@@ -203,25 +204,49 @@ class CommandBus extends AnswerBus
     {
         $message = $update->getMessage();
 
-        if ($message === null) {
-            return $update;
-        } elseif ($message !== null && $message->has('text') && $message->has('entities')) {
-            foreach ($message->entities as $entity) {
-                if ($entity['type'] === 'bot_command') {
-                    $command = $this->parseCommand(
-                        $message->text,
-                        $entity['offset'],
-                        $entity['length']
-                    );
+        if ($message !== null && $message->has('text') && $message->has('entities')) {
 
-
-                    $this->execute($command, $update);
-                }
-            }
+            $this->parseCommandsIn($message)
+                ->each(function ($botCommand) use ($update) {
+                    $this->process($botCommand, $update);
+                });
         }
 
         return $update;
     }
+
+    /**
+     * Returns all bot_commands detected in the update
+     *
+     * @param $message
+     *
+     * @return Collection
+     */
+    protected function parseCommandsIn(Collection $message): Collection
+    {
+        return collect($message->get('entities'))
+            ->filter(function ($entity) {
+                return $entity['type'] === 'bot_command';
+            });
+    }
+
+    /**
+     * Execute a bot command from the update text
+     *
+     * @param array  $entity
+     * @param Update $update
+     */
+    protected function process($entity, Update $update)
+    {
+        $command = $this->parseCommand(
+            $update->getMessage()->text,
+            $entity['offset'],
+            $entity['length']
+        );
+
+        $this->execute($command, $update);
+    }
+
 
     /**
      * Execute the command.
