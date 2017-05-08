@@ -204,12 +204,12 @@ class CommandBus extends AnswerBus
     {
         $message = $update->getMessage();
 
-        if ($message !== null && $message->has('text') && $message->has('entities')) {
-
+        if ($message->has('entities')) {
             $this->parseCommandsIn($message)
                 ->each(function ($botCommand) use ($update) {
                     $this->process($botCommand, $update);
                 });
+
         }
 
         return $update;
