@@ -2,7 +2,6 @@
 
 namespace Telegram\Bot\Methods;
 
-use Telegram\Bot\Traits\Validator;
 use Telegram\Bot\FileUpload\InputFile;
 use Telegram\Bot\Exceptions\TelegramSDKException;
 use Telegram\Bot\Objects\Message as MessageObject;
