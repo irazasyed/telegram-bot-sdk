@@ -39,19 +39,6 @@ class ApiTest extends \PHPUnit_Framework_TestCase
         new Api();
     }
 
-    /**
-     * @test
-     * @dataProvider badTypes
-     * @expectedException InvalidArgumentException
-     * @link         https://phpunit.de/manual/3.7/en/appendixes.annotations.html#appendixes.annotations.dataProvider
-     *
-     * @param mixed $type The item under test
-     */
-    public function it_only_allows_a_string_as_the_api_token($type)
-    {
-        $this->api->setAccessToken($type);
-    }
-
     /** @test */
     public function it_checks_the_passed_api_token_is_returned()
     {
@@ -96,20 +83,22 @@ class ApiTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf(Update::class, $updates[0]);
     }
 
-    /** @test */
-    public function it_checks_the_correct_command_is_handled()
-    {
-        $this->api = Mocker::createMessageResponse('/mycommand');
-        $command = Mocker::createMockCommand('mycommand');
-        $command2 = Mocker::createMockCommand('mycommand2');
 
-        $this->api->addCommands([$command->reveal(), $command2->reveal()]);
-
-        $this->api->commandsHandler();
-
-        $command->make(Argument::any(), Argument::any(), Argument::any())->shouldHaveBeenCalled();
-        $command2->make(Argument::any(), Argument::any(), Argument::any())->shouldNotHaveBeenCalled();
-    }
+//TODO Must implement the new entities array to deal with commands.
+//    /** @test */
+//    public function it_checks_the_correct_command_is_handled()
+//    {
+//        $this->api = Mocker::createMessageResponse('/mycommand');
+//        $command = Mocker::createMockCommand('mycommand');
+//        $command2 = Mocker::createMockCommand('mycommand2');
+//
+//        $this->api->addCommands([$command->reveal(), $command2->reveal()]);
+//
+//        $this->api->commandsHandler();
+//
+//        $command->make(Argument::any(), Argument::any(), Argument::any())->shouldHaveBeenCalled();
+//        $command2->make(Argument::any(), Argument::any(), Argument::any())->shouldNotHaveBeenCalled();
+//    }
 
     /** @test */
     public function it_checks_the_lastResponse_property_gets_populated_after_a_request()
@@ -421,26 +410,23 @@ class ApiTest extends \PHPUnit_Framework_TestCase
     }
 
     /** @test */
-    public function it_returns_a_successful_response_object_if_correct_webhook_is_sent()
+    public function it_returns_a_successful_response_bool_if_correct_webhook_is_sent()
     {
-        $this->api = Mocker::createApiResponse([true]);
+        $this->api = Mocker::createApiResponse(true);
 
         $response = $this->api->setWebhook(['url' => 'https://example.com']);
 
-        $this->assertInstanceOf(TelegramResponse::class, $response);
-        $this->assertTrue($response->getResult()[0]);
+        $this->assertTrue($response);
     }
 
     /** @test */
     public function it_returns_a_successful_response_object_when_webhook_removed()
     {
-        $this->api = Mocker::createApiResponse([true]);
+        $this->api = Mocker::createApiResponse(true);
 
         $response = $this->api->removeWebhook();
 
-        $this->assertInstanceOf(TelegramResponse::class, $response);
-        $this->assertTrue($response->getDecodedBody()['result'][0]);
-        $this->assertEquals(200, $response->getHttpStatusCode());
+        $this->assertTrue($response);
     }
 
     /**
@@ -472,26 +458,4 @@ class ApiTest extends \PHPUnit_Framework_TestCase
         ];
     }
 
-    /**
-     * Gets an array of arrays.
-     *
-     * These are types of data that should not be allowed to be used
-     * as an API token.
-     *
-     * @return array
-     */
-    public function badTypes()
-    {
-        return [
-            [
-                new \stdClass(),
-            ],
-            [
-                ['token'],
-            ],
-            [
-                12345,
-            ],
-        ];
-    }
 }
