@@ -71,7 +71,7 @@ trait Http
      *
      * @return TelegramResponse
      */
-    public function getLastResponse(): TelegramResponse
+    public function getLastResponse(): ?TelegramResponse
     {
         return $this->lastResponse;
     }
