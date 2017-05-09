@@ -267,14 +267,9 @@ trait Http
 
         $inputFile = $params[$inputFileField];
 
-        //All files should be provided in an InputFile object
-        if (is_resource($inputFile)) {
-            throw CouldNotUploadInputFile::resourceShouldBeInputFileEntity($inputFileField);
-        }
-
-        //If the user provides a path to a file, attempt to create an InputFile Object automatically for them.
-        if (is_string($inputFile)) {
-            $params[$inputFileField] = InputFile::create($inputFile);
+        //All file-paths, urls, or file resources should be provided by using the InputFile object
+        if (!$inputFile instanceof InputFile) {
+            throw CouldNotUploadInputFile::inputFileParameterShouldBeInputFileEntity($inputFileField);
         }
 
         //Iterate through all param options and convert to multipart/form-data.
