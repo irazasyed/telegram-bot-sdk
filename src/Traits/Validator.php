@@ -12,12 +12,12 @@ trait Validator
     /**
      * Determine given param in params array is a file id.
      *
-     * @param $inputFileField
-     * @param $params
+     * @param string $inputFileField
+     * @param array  $params
      *
      * @return bool
      */
-    protected function hasFileId($inputFileField, array $params): bool
+    protected function hasFileId(string $inputFileField, array $params): bool
     {
         return isset($params[$inputFileField]) && $this->isFileId($params[$inputFileField]);
     }

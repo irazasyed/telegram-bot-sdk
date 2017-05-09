@@ -30,7 +30,7 @@ namespace Telegram\Bot\Keyboard;
  */
 class Keyboard extends Base
 {
-    /** @type bool Make an Inline Keyboard */
+    /** @var bool Make an Inline Keyboard */
     protected $inline = false;
 
     /**
@@ -166,9 +166,9 @@ class Keyboard extends Base
      *
      * ]
      *
-     * @return string
+     * @return Keyboard
      */
-    public static function remove(array $params = []): string
+    public static function remove(array $params = []): Keyboard
     {
         return new static(array_merge(['remove_keyboard' => true, 'selective' => false], $params));
     }
