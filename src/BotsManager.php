@@ -54,7 +54,7 @@ class BotsManager
      */
     public function getBotConfig($name = null): array
     {
-        $name = $name ?? $this->getDefaultBot();
+        $name = $name ?? $this->getDefaultBotName();
 
         $bots = collect($this->getConfig('bots'));
 
@@ -76,7 +76,7 @@ class BotsManager
      */
     public function bot($name = null): Api
     {
-        $name = $name ?? $this->getDefaultBot();
+        $name = $name ?? $this->getDefaultBotName();
 
         if (!isset($this->bots[$name])) {
             $this->bots[$name] = $this->makeBot($name);
@@ -94,7 +94,7 @@ class BotsManager
      */
     public function reconnect($name = null): Api
     {
-        $name = $name ?? $this->getDefaultBot();
+        $name = $name ?? $this->getDefaultBotName();
         $this->disconnect($name);
 
         return $this->bot($name);
@@ -109,7 +109,7 @@ class BotsManager
      */
     public function disconnect($name = null): BotsManager
     {
-        $name = $name ?? $this->getDefaultBot();
+        $name = $name ?? $this->getDefaultBotName();
         unset($this->bots[$name]);
 
         return $this;
@@ -133,7 +133,7 @@ class BotsManager
      *
      * @return string
      */
-    public function getDefaultBot(): string
+    public function getDefaultBotName(): string
     {
         return $this->getConfig('default');
     }
