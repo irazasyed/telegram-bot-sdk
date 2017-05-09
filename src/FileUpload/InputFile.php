@@ -90,11 +90,42 @@ class InputFile
      */
     public function getFilename(): string
     {
-        if (($this->isFileResourceOrStream() || $this->isFileRemote()) && !isset($this->filename)) {
-            throw CouldNotUploadInputFile::filenameNotProvided($this->file);
+        if ($this->isFileResourceOrStream() && !isset($this->filename)) {
+            return $this->filename = $this->attemptFileNameDetection();
         }
 
         return $this->filename ?? basename($this->file);
+    }
+
+    /**
+     * Attempts to access the meta data in the stream or resource to determine what
+     * the filename should be if the user did not supply one.
+     *
+     * @return string
+     * @throws CouldNotUploadInputFile
+     */
+    protected function attemptFileNameDetection()
+    {
+        if ($uri = $this->getUriMetaDataFromStream()) {
+            return basename($uri);
+        };
+
+        throw CouldNotUploadInputFile::filenameNotProvided($this->file);
+    }
+
+    /**
+     * Depending on if supplied Input was a resource or stream, call the appropriate
+     * stream_meta command to get information required.
+     *
+     * Note: We can only get here if the file is a resource or a stream.
+     *
+     * @return string|null
+     */
+    protected function getUriMetaDataFromStream(): ?string
+    {
+        $meta = is_resource($this->file) ? stream_get_meta_data($this->file) : $this->file->getMetadata();
+
+        return $meta['uri'] ?? null;
     }
 
     /**
