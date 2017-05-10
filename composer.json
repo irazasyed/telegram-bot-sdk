@@ -19,8 +19,8 @@
     "league/event": "^2.1"
   },
   "require-dev": {
-    "phpunit/phpunit": "~5.7||~6.0",
-    "phpspec/prophecy": "^1.5"
+    "phpspec/prophecy": "^1.5",
+    "phpunit/phpunit": "^6.1"
   },
   "autoload": {
     "psr-4": {

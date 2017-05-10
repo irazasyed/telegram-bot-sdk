@@ -5,6 +5,7 @@ namespace Telegram\Bot\Tests;
 use Telegram\Bot\Api;
 use Prophecy\Argument;
 use InvalidArgumentException;
+use PHPUnit\Framework\TestCase;
 use Telegram\Bot\Objects\File;
 use Telegram\Bot\Objects\User;
 use Telegram\Bot\TelegramClient;
@@ -18,7 +19,7 @@ use Telegram\Bot\HttpClients\GuzzleHttpClient;
 /**
  * Class ApiTest
  */
-class ApiTest extends \PHPUnit_Framework_TestCase
+class ApiTest extends TestCase
 {
     /**
      * @var Api

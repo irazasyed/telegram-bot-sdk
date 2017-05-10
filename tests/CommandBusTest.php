@@ -2,6 +2,7 @@
 
 namespace Telegram\Bot\Tests;
 
+use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Telegram\Bot\Objects\Update;
 use Telegram\Bot\Commands\Command;
@@ -13,7 +14,7 @@ use Telegram\Bot\Tests\Mocks\MockCommandTwo;
 /**
  * Class CommandBusTest
  */
-class CommandBusTest extends \PHPUnit_Framework_TestCase
+class CommandBusTest extends TestCase
 {
     /**
      * @var CommandBus

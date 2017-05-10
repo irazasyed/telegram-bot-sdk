@@ -2,10 +2,11 @@
 
 namespace Telegram\Bot\Tests;
 
+use PHPUnit\Framework\TestCase;
 use GuzzleHttp\Psr7\LazyOpenStream;
 use Telegram\Bot\FileUpload\InputFile;
 
-class InputFileTest extends \PHPUnit_Framework_TestCase
+class InputFileTest extends TestCase
 {
 
     protected $tempPath;
