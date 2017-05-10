@@ -2,6 +2,8 @@
 
 namespace Telegram\Bot\Objects;
 
+use Illuminate\Support\Collection;
+
 /**
  * Class Update.
  *
@@ -92,15 +94,19 @@ class Update extends BaseObject
     /**
      * Get the message contained in the Update
      *
-     * @return null|EditedMessage|Message
+     * @return Message|EditedMessage|Collection
      */
-    public function getMessage()
+    public function getMessage(): Collection
     {
         switch ($this->detectType()) {
             case 'message':
                 return $this->message;
             case 'edited_message':
                 return $this->editedMessage;
+            case 'channel_post':
+                return $this->channelPost;
+            case 'edited_channel_post':
+                return $this->editedChannelPost;
             case 'callback_query':
                 $callbackQuery = $this->callbackQuery;
                 if ($callbackQuery->has('message')) {
@@ -108,21 +114,20 @@ class Update extends BaseObject
                 }
                 break;
         }
-        return null;
+
+        return collect();
     }
 
     /**
      * Get chat object (if exists)
      *
-     * @return null|Chat
+     * @return Chat|Collection
      */
-    public function getChat()
+    public function getChat(): Collection
     {
-        if (null === $message = $this->getMessage()) {
-            return null;
-        }
+        $message = $this->getMessage();
 
-        return $message->chat;
+        return $message->has('chat') ? $message->get('chat') : collect();
     }
 
 }
