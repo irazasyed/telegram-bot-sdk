@@ -121,7 +121,7 @@ class InputFile
      *
      * @return string|null
      */
-    protected function getUriMetaDataFromStream(): ?string
+    protected function getUriMetaDataFromStream()
     {
         $meta = is_resource($this->file) ? stream_get_meta_data($this->file) : $this->file->getMetadata();
 

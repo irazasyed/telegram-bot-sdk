@@ -69,9 +69,9 @@ trait Http
     /**
      * Returns the last response returned from API request.
      *
-     * @return TelegramResponse
+     * @return TelegramResponse|null
      */
-    public function getLastResponse(): ?TelegramResponse
+    public function getLastResponse()
     {
         return $this->lastResponse;
     }
