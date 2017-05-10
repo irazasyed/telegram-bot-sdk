@@ -30,10 +30,10 @@ return [
     |                       Acme\Project\Commands\BotFather\ByeCommand::class,
     |             ]
     */
-    'bots' => [
+    'bots'                         => [
         'mybot' => [
-            'username'  => 'TelegramBot',
-            'token' => env('TELEGRAM_BOT_TOKEN', 'YOUR-BOT-TOKEN'),
+            'username' => 'TelegramBot',
+            'token'    => env('TELEGRAM_BOT_TOKEN', 'YOUR-BOT-TOKEN'),
             'commands' => [
                 //Acme\Project\Commands\MyTelegramBot\BotCommand::class
             ],
@@ -55,7 +55,7 @@ return [
     | your default bot for regular use. Of course,
     |
     */
-    'default' => 'mybot',
+    'default'                      => 'mybot',
 
     /*
     |--------------------------------------------------------------------------
@@ -68,7 +68,7 @@ return [
     | Possible Values: (Boolean) "true" OR "false"
     |
     */
-    'async_requests' => env('TELEGRAM_ASYNC_REQUESTS', false),
+    'async_requests'               => env('TELEGRAM_ASYNC_REQUESTS', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -81,7 +81,7 @@ return [
     | Default: GuzzlePHP
     |
     */
-    'http_client_handler' => null,
+    'http_client_handler'          => null,
 
     /*
     |--------------------------------------------------------------------------
@@ -113,7 +113,7 @@ return [
     | will respond with a list of available commands and description.
     |
     */
-    'commands' => [
+    'commands'                     => [
         Telegram\Bot\Commands\HelpCommand::class,
     ],
 
@@ -135,7 +135,7 @@ return [
     |
     | Examples shown below are by the group type for you to understand each of them.
     */
-    'command_groups' => [
+    'command_groups'               => [
         /* // Group Type: 1
            'commmon' => [
                 Acme\Project\Commands\TodoCommand::class,
@@ -194,7 +194,7 @@ return [
     | Think of this as a central storage, to register, reuse and maintain them across all bots.
     |
     */
-    'shared_commands' => [
+    'shared_commands'              => [
         // 'start' => Acme\Project\Commands\StartCommand::class,
         // 'stop' => Acme\Project\Commands\StopCommand::class,
         // 'status' => Acme\Project\Commands\StatusCommand::class,
