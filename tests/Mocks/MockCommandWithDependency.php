@@ -31,11 +31,10 @@ class MockCommandWithDependency extends Command
     protected $description = 'a mock command that has a dependency';
 
     /**
-     * @param $args
      *
      * @return string
      */
-    public function handle($args)
+    public function handle()
     {
         return 'mycommandwithdependency handled';
     }

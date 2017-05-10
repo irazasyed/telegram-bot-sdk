@@ -27,9 +27,6 @@ abstract class Command implements CommandInterface
     /** @var string The Telegram command description. */
     protected $description;
 
-    /** @var string Arguments passed to the command. */
-    protected $arguments;
-
     /**
      * Get Command Name.
      *
@@ -89,16 +86,6 @@ abstract class Command implements CommandInterface
     }
 
     /**
-     * Get Arguments passed to the command.
-     *
-     * @return string
-     */
-    public function getArguments(): string
-    {
-        return $this->arguments;
-    }
-
-    /**
      * @inheritDoc
      */
     public function make(Api $telegram, Update $update)
@@ -106,19 +93,13 @@ abstract class Command implements CommandInterface
         $this->telegram = $telegram;
         $this->update = $update;
 
-        $message = $update->getMessage();
-
-        if ($message !== null && $message->has('text')) {
-            $this->arguments = $message->text;
-        }
-
-        return $this->handle($this->arguments);
+        return $this->handle();
     }
 
     /**
      * {@inheritdoc}
      */
-    abstract public function handle($arguments);
+    abstract public function handle();
 
     /**
      * Helper to Trigger other Commands.
