@@ -1,57 +1,61 @@
 <?php
-
 return [
+    /*
+    |--------------------------------------------------------------------------
+    | Your Telegram Bots
+    |--------------------------------------------------------------------------
+    | You may use multiple bots at once using the manager class. Each bot
+    | that you own should be configured here.
+    |
+    | Here are each of the telegram bots config parameters.
+    |
+    | Supported Params:
+    |
+    | - name: The *personal* name you would like to refer to your bot as.
+    |
+    |       - username: Your Telegram Bot's Username.
+    |                       Example: (string) 'BotFather'.
+    |
+    |       - token:    Your Telegram Bot's Access Token.
+                        Refer for more details: https://core.telegram.org/bots#botfather
+    |                   Example: (string) '123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11'.
+    |
+    |       - commands: (Optional) Commands to register for this bot,
+    |                   Supported Values: "Command Group Name", "Shared Command Name", "Full Path to Class".
+    |                   Default: Registers Global Commands.
+    |                   Example: (array) [
+    |                       'admin', // Command Group Name.
+    |                       'status', // Shared Command Name.
+    |                       Acme\Project\Commands\BotFather\HelloCommand::class,
+    |                       Acme\Project\Commands\BotFather\ByeCommand::class,
+    |             ]
+    */
+    'bots'                         => [
+        'mybot' => [
+            'username' => 'TelegramBot',
+            'token'    => env('TELEGRAM_BOT_TOKEN', 'YOUR-BOT-TOKEN'),
+            'commands' => [
+                //Acme\Project\Commands\MyTelegramBot\BotCommand::class
+            ],
+        ],
+
+//        'mySecondBot' => [
+//            'username'  => 'AnotherTelegram_Bot',
+//            'token' => '123456:abc',
+//        ],
+    ],
+
+
     /*
     |--------------------------------------------------------------------------
     | Default Bot Name
     |--------------------------------------------------------------------------
     |
-    | Here you may specify which of the bots below you wish to use as
-    | your default bot for regular use. Of course, you may use many
-    | bots at once using the manager class.
+    | Here you may specify which of the bots you wish to use as
+    | your default bot for regular use.
     |
     */
-    'default' => 'common',
-
-    /*
-    |--------------------------------------------------------------------------
-    | Telegram Bots
-    |--------------------------------------------------------------------------
-    |
-    | Here are each of the telegram bots config.
-    |
-    | Supported Params:
-    | - username: Your Telegram Bot's Username.
-    |         Example: (string) 'BotFather'.
-    |
-    | - token: Your Telegram Bot's Access Token.
-               Refer for more details: https://core.telegram.org/bots#botfather
-    |          Example: (string) '123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11'.
-    |
-    | - commands: (Optional) Commands to register for this bot,
-    |             Supported Values: "Command Group Name", "Shared Command Name", "Full Path to Class".
-    |             Default: Registers Global Commands.
-    |             Example: (array) [
-    |               'admin', // Command Group Name.
-    |               'status', // Shared Command Name.
-    |               Acme\Project\Commands\BotFather\HelloCommand::class,
-    |               Acme\Project\Commands\BotFather\ByeCommand::class,
-    |             ]
-    */
-    'bots' => [
-        'common' => [
-            'username'  => 'MyTelegramBot',
-            'token' => env('TELEGRAM_BOT_TOKEN', 'YOUR-BOT-TOKEN'),
-            'commands' => [
-//                Acme\Project\Commands\MyTelegramBot\BotCommand::class
-            ],
-        ],
-
-//        'second' => [
-//            'username'  => 'MySecondBot',
-//            'token' => '123456:abc',
-//        ],
-    ],
+    'default'                      => 'mybot',
 
     /*
     |--------------------------------------------------------------------------
@@ -64,7 +68,7 @@ return [
     | Possible Values: (Boolean) "true" OR "false"
     |
     */
-    'async_requests' => env('TELEGRAM_ASYNC_REQUESTS', false),
+    'async_requests'               => env('TELEGRAM_ASYNC_REQUESTS', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -77,7 +81,7 @@ return [
     | Default: GuzzlePHP
     |
     */
-    'http_client_handler' => null,
+    'http_client_handler'          => null,
 
     /*
     |--------------------------------------------------------------------------
@@ -109,7 +113,7 @@ return [
     | will respond with a list of available commands and description.
     |
     */
-    'commands' => [
+    'commands'                     => [
         Telegram\Bot\Commands\HelpCommand::class,
     ],
 
@@ -131,7 +135,7 @@ return [
     |
     | Examples shown below are by the group type for you to understand each of them.
     */
-    'command_groups' => [
+    'command_groups'               => [
         /* // Group Type: 1
            'commmon' => [
                 Acme\Project\Commands\TodoCommand::class,
@@ -190,7 +194,7 @@ return [
     | Think of this as a central storage, to register, reuse and maintain them across all bots.
     |
     */
-    'shared_commands' => [
+    'shared_commands'              => [
         // 'start' => Acme\Project\Commands\StartCommand::class,
         // 'stop' => Acme\Project\Commands\StopCommand::class,
         // 'status' => Acme\Project\Commands\StatusCommand::class,
