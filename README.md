@@ -52,7 +52,7 @@ See License section for more details.
 
 This project is released under the [BSD 3-Clause][link-license] License.
 
-© 2015-16 [Syed Irfaq R.][link-author], All rights reserved.
+© 2015-17 [Syed Irfaq R.][link-author], All rights reserved.
 
 [link-author]: https://github.com/irazasyed
 [link-repo]: https://github.com/irazasyed/telegram-bot-sdk
