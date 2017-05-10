@@ -4,10 +4,10 @@ return [
     |--------------------------------------------------------------------------
     | Your Telegram Bots
     |--------------------------------------------------------------------------
-    | You may use as multiple bots at once  using the manager class. Each bot
+    | You may use multiple bots at once using the manager class. Each bot
     | that you own should be configured here.
     |
-    | Here are each of the telegram bots config.
+    | Here are each of the telegram bots config parameters.
     |
     | Supported Params:
     |
