@@ -51,8 +51,8 @@ return [
     | Default Bot Name
     |--------------------------------------------------------------------------
     |
-    | Here you may specify which of the bots below you wish to use as
-    | your default bot for regular use. Of course,
+    | Here you may specify which of the bots you wish to use as
+    | your default bot for regular use.
     |
     */
     'default'                      => 'mybot',
