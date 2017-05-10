@@ -25,9 +25,9 @@ class HelpCommand extends Command
     /**
      * {@inheritdoc}
      */
-    public function handle($arguments)
+    public function handle()
     {
-        $commands = $this->telegram->getCommands();
+        $commands = collect($this->telegram->getCommands());
 
         $text = '';
         foreach ($commands as $name => $handler) {

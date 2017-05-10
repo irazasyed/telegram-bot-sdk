@@ -22,11 +22,10 @@ class MockCommand extends Command
     }
 
     /**
-     * @param $args
      *
      * @return string
      */
-    public function handle($args)
+    public function handle()
     {
         return 'mycommand handled';
     }

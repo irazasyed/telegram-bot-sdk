@@ -13,10 +13,7 @@ class MockCommandTwo extends Command
 
     protected $description = 'another mock command';
 
-    /**
-     * @param $args
-     */
-    public function handle($args)
+    public function handle()
     {
     }
 }
