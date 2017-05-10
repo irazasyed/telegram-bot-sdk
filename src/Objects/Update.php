@@ -90,32 +90,34 @@ class Update extends BaseObject
     }
 
     /**
-     * Returns message.
+     * Get the message contained in the Update
      *
      * @return null|EditedMessage|Message
      */
     public function getMessage()
     {
-        if ($this->has('message')) {
-            return $this->message;
-        } elseif ($this->has('edited_message')) {
-            return $this->editedMessage;
+        switch ($this->detectType()) {
+            case 'message':
+                return $this->message;
+            case 'edited_message':
+                return $this->editedMessage;
+            case 'callback_query':
+                $callbackQuery = $this->callbackQuery;
+                if ($callbackQuery->has('message')) {
+                    return $callbackQuery->message;
+                }
+                break;
         }
-
         return null;
     }
 
     /**
-     * Get message object (if exists)
+     * Get chat object (if exists)
      *
      * @return null|Chat
      */
     public function getChat()
     {
-        if ($this->isType('callback_query')) {
-            return $this->callbackQuery->message->chat;
-        }
-
         if (null === $message = $this->getMessage()) {
             return null;
         }
