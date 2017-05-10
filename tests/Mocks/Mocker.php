@@ -59,7 +59,9 @@ class Mocker
      */
     public static function createUpdateObject()
     {
-        return (new Prophet())->prophesize(Update::class);
+        $update = (new Prophet())->prophesize(Update::class);
+        $update->getMessage()->willReturn(collect());
+        return $update;
     }
 
     /**
