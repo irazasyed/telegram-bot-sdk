@@ -27,7 +27,7 @@ class HelpCommand extends Command
      */
     public function handle()
     {
-        $commands = collect($this->telegram->getCommands());
+        $commands = $this->telegram->getCommands();
 
         $text = '';
         foreach ($commands as $name => $handler) {
