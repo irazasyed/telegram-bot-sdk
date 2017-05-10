@@ -69,9 +69,9 @@ trait Http
     /**
      * Returns the last response returned from API request.
      *
-     * @return TelegramResponse
+     * @return TelegramResponse|null
      */
-    public function getLastResponse(): TelegramResponse
+    public function getLastResponse()
     {
         return $this->lastResponse;
     }
@@ -91,19 +91,13 @@ trait Http
      *
      * @param string $accessToken The bot access token to save.
      *
-     * @throws \InvalidArgumentException
-     *
      * @return $this
      */
-    public function setAccessToken($accessToken)
+    public function setAccessToken(string $accessToken)
     {
-        if (is_string($accessToken)) {
-            $this->accessToken = $accessToken;
+        $this->accessToken = $accessToken;
 
-            return $this;
-        }
-
-        throw new \InvalidArgumentException('The Telegram bot access token must be of type "string"');
+        return $this;
     }
 
     /**
@@ -123,7 +117,7 @@ trait Http
      *
      * @return $this
      */
-    public function setAsyncRequest($isAsyncRequest)
+    public function setAsyncRequest(bool $isAsyncRequest)
     {
         $this->isAsyncRequest = $isAsyncRequest;
 
@@ -143,7 +137,7 @@ trait Http
      *
      * @return $this
      */
-    public function setTimeOut($timeOut)
+    public function setTimeOut(int $timeOut)
     {
         $this->timeOut = $timeOut;
 
@@ -163,7 +157,7 @@ trait Http
      *
      * @return $this
      */
-    public function setConnectTimeOut($connectTimeOut)
+    public function setConnectTimeOut(int $connectTimeOut)
     {
         $this->connectTimeOut = $connectTimeOut;
 
@@ -180,11 +174,9 @@ trait Http
      *
      * @return TelegramResponse
      */
-    protected function get($endpoint, array $params = []): TelegramResponse
+    protected function get(string $endpoint, array $params = []): TelegramResponse
     {
-        if (isset($params['reply_markup'])) {
-            $params['reply_markup'] = (string)$params['reply_markup'];
-        }
+        $params = $this->replyMarkupToString($params);
 
         return $this->sendRequest(
             'GET',
@@ -202,15 +194,13 @@ trait Http
      *
      * @return TelegramResponse
      */
-    protected function post($endpoint, array $params = [], $fileUpload = false): TelegramResponse
+    protected function post(string $endpoint, array $params = [], $fileUpload = false): TelegramResponse
     {
         if ($fileUpload) {
             $params = ['multipart' => $params];
         } else {
 
-            if (isset($params['reply_markup'])) {
-                $params['reply_markup'] = (string)$params['reply_markup'];
-            }
+            $params = $this->replyMarkupToString($params);
 
             $params = ['form_params' => $params];
         }
@@ -220,6 +210,22 @@ trait Http
             $endpoint,
             $params
         );
+    }
+
+    /**
+     * Converts a reply_markup field in the $params to a string.
+     *
+     * @param array $params
+     *
+     * @return array
+     */
+    protected function replyMarkupToString(array $params): array
+    {
+        if (isset($params['reply_markup'])) {
+            $params['reply_markup'] = (string)$params['reply_markup'];
+        }
+
+        return $params;
     }
 
     /**
@@ -233,12 +239,14 @@ trait Http
      * @throws CouldNotUploadInputFile
      * @return TelegramResponse
      */
-    protected function uploadFile($endpoint, array $params, $inputFileField): TelegramResponse
+    protected function uploadFile(string $endpoint, array $params, $inputFileField): TelegramResponse
     {
+        //Check if the field in the $params array (that is being used to send the relative file), is a file id.
         if (!isset($params[$inputFileField]) || $this->hasFileId($inputFileField, $params)) {
             return $this->post($endpoint, $params);
         }
 
+        //Sending an actual file requires it to be sent using multipart/form-data
         return $this->post($endpoint, $this->prepareMultipartParams($params, $inputFileField), true);
     }
 
@@ -259,15 +267,12 @@ trait Http
 
         $inputFile = $params[$inputFileField];
 
-
-        if (is_resource($inputFile)) {
-            throw CouldNotUploadInputFile::resourceShouldBeInputFileEntity($inputFileField);
+        //All file-paths, urls, or file resources should be provided by using the InputFile object
+        if (!$inputFile instanceof InputFile) {
+            throw CouldNotUploadInputFile::inputFileParameterShouldBeInputFileEntity($inputFileField);
         }
 
-        if (is_string($inputFile)) {
-            $params[$inputFileField] = InputFile::create($inputFile);
-        }
-
+        //Iterate through all param options and convert to multipart/form-data.
         return collect($params)
             ->reject(function ($value) {
                 return is_null($value);

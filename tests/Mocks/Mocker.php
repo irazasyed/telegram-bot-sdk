@@ -72,7 +72,7 @@ class Mocker
     public static function createMockCommand($name = 'start')
     {
         $command = (new Prophet())->prophesize(MockCommand::class);
-        $command->getAliases()->willReturn(null);
+        $command->getAliases()->willReturn([]);
         $command->getName()->willReturn($name);
         $command->make(Argument::any(), Argument::any(), Argument::any())->willReturn(null);
 
@@ -127,7 +127,7 @@ class Mocker
             'result' => [
                 [
                     'update_id' => $updateId,
-                    'message'   => array_merge($defaultResponseFields, $updateFields),
+                    'message'   => collect(array_merge($defaultResponseFields, $updateFields)),
                 ],
             ],
         ];
@@ -161,12 +161,12 @@ class Mocker
      * This creates a raw api response to simulate what Telegram replies
      * with.
      *
-     * @param array $apiResponseFields
+     * @param string| array $apiResponseFields
      * @param bool  $ok
      *
      * @return Api
      */
-    public static function createApiResponse(array $apiResponseFields, $ok = true)
+    public static function createApiResponse($apiResponseFields, $ok = true)
     {
         $response = [
             'ok'          => $ok,

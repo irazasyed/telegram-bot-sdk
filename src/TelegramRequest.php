@@ -101,11 +101,11 @@ class TelegramRequest
     /**
      * Set the bot access token for this request.
      *
-     * @param string
+     * @param string $accessToken
      *
      * @return TelegramRequest
      */
-    public function setAccessToken($accessToken): TelegramRequest
+    public function setAccessToken(string $accessToken): TelegramRequest
     {
         $this->accessToken = $accessToken;
 
@@ -124,7 +124,7 @@ class TelegramRequest
         }
 
         if (!in_array($this->method, ['GET', 'POST'])) {
-            throw new TelegramSDKException('Invalid HTTP method specified.');
+            throw new TelegramSDKException('Invalid HTTP method specified. Must be GET or POST');
         }
     }
 
@@ -145,7 +145,7 @@ class TelegramRequest
      *
      * @return TelegramRequest
      */
-    public function setEndpoint($endpoint): TelegramRequest
+    public function setEndpoint(string $endpoint): TelegramRequest
     {
         $this->endpoint = $endpoint;
 
@@ -231,7 +231,7 @@ class TelegramRequest
      *
      * @return TelegramRequest
      */
-    public function setMethod($method): TelegramRequest
+    public function setMethod(string $method): TelegramRequest
     {
         $this->method = strtoupper($method);
 
@@ -279,7 +279,7 @@ class TelegramRequest
      *
      * @return TelegramRequest
      */
-    public function setTimeOut($timeOut): TelegramRequest
+    public function setTimeOut(int $timeOut): TelegramRequest
     {
         $this->timeOut = $timeOut;
 
@@ -303,7 +303,7 @@ class TelegramRequest
      *
      * @return TelegramRequest
      */
-    public function setConnectTimeOut($connectTimeOut): TelegramRequest
+    public function setConnectTimeOut(int $connectTimeOut): TelegramRequest
     {
         $this->connectTimeOut = $connectTimeOut;
 

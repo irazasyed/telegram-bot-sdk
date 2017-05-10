@@ -12,14 +12,14 @@ trait Validator
     /**
      * Determine given param in params array is a file id.
      *
-     * @param $param
-     * @param $params
+     * @param string $inputFileField
+     * @param array  $params
      *
      * @return bool
      */
-    protected function hasFileId($param, array $params): bool
+    protected function hasFileId(string $inputFileField, array $params): bool
     {
-        return isset($params[$param]) && $this->isFileId($params[$param]);
+        return isset($params[$inputFileField]) && $this->isFileId($params[$inputFileField]);
     }
 
     /**
@@ -48,5 +48,17 @@ trait Validator
         }
 
         return preg_match('/^[\w\-]{20,}+$/u', trim($value)) > 0;
+    }
+
+    /**
+     * Determine given string is a URL
+     *
+     * @param string $value A filename or URL to a sticker
+     *
+     * @return bool
+     */
+    protected function isUrl($value): bool
+    {
+        return (bool)filter_var($value, FILTER_VALIDATE_URL);
     }
 }

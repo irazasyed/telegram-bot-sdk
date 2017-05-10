@@ -2,13 +2,11 @@
 
 namespace Telegram\Bot;
 
-use Illuminate\Contracts\Container\Container;
 use InvalidArgumentException;
+use Illuminate\Contracts\Container\Container;
 
 /**
  * Class BotsManager
- *
- * @TODO Add methods in docblock for autocompletion from Api file.
  */
 class BotsManager
 {
@@ -56,10 +54,11 @@ class BotsManager
      */
     public function getBotConfig($name = null): array
     {
-        $name = $name ?? $this->getDefaultBot();
+        $name = $name ?? $this->getDefaultBotName();
 
-        $bots = $this->getConfig('bots');
-        if (!is_array($config = array_get($bots, $name)) && !$config) {
+        $bots = collect($this->getConfig('bots'));
+
+        if (!$config = $bots->get($name, null)) {
             throw new InvalidArgumentException("Bot [$name] not configured.");
         }
 
@@ -77,7 +76,7 @@ class BotsManager
      */
     public function bot($name = null): Api
     {
-        $name = $name ?? $this->getDefaultBot();
+        $name = $name ?? $this->getDefaultBotName();
 
         if (!isset($this->bots[$name])) {
             $this->bots[$name] = $this->makeBot($name);
@@ -95,7 +94,7 @@ class BotsManager
      */
     public function reconnect($name = null): Api
     {
-        $name = $name ?? $this->getDefaultBot();
+        $name = $name ?? $this->getDefaultBotName();
         $this->disconnect($name);
 
         return $this->bot($name);
@@ -110,7 +109,7 @@ class BotsManager
      */
     public function disconnect($name = null): BotsManager
     {
-        $name = $name ?? $this->getDefaultBot();
+        $name = $name ?? $this->getDefaultBotName();
         unset($this->bots[$name]);
 
         return $this;
@@ -134,7 +133,7 @@ class BotsManager
      *
      * @return string
      */
-    public function getDefaultBot(): string
+    public function getDefaultBotName(): string
     {
         return $this->getConfig('default');
     }
@@ -239,6 +238,7 @@ class BotsManager
         $commandGroups = $this->getConfig('command_groups');
         $sharedCommands = $this->getConfig('shared_commands');
 
+        //TODO: This is ripe for refactor / collections.
         $results = [];
         foreach ($commands as $command) {
             // If the command is a group, we'll parse through the group of commands
