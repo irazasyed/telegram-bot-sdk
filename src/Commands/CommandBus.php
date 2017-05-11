@@ -206,8 +206,8 @@ class CommandBus extends AnswerBus
 
         if (!is_null($message) && $message->has('entities')) {
             $this->parseCommandsIn($message)
-                ->each(function ($botCommand) use ($update) {
-                    $this->process($botCommand, $update);
+                ->each(function ($botCommand, $entityNumber) use ($update) {
+                    $this->process($botCommand, $update, $entityNumber);
                 });
 
         }
@@ -235,8 +235,9 @@ class CommandBus extends AnswerBus
      *
      * @param array  $entity
      * @param Update $update
+     * @param int    $commandNumber
      */
-    protected function process($entity, Update $update)
+    protected function process($entity, Update $update, $commandNumber)
     {
         $command = $this->parseCommand(
             $update->getMessage()->text,
@@ -244,24 +245,25 @@ class CommandBus extends AnswerBus
             $entity['length']
         );
 
-        $this->execute($command, $update);
+        $this->execute($command, $update, $commandNumber);
     }
 
 
     /**
      * Execute the command.
      *
-     * @param $name
-     * @param $update
+     * @param string   $name
+     * @param Update   $update
+     * @param int|null $commandNumber
      *
      * @return mixed
      */
-    protected function execute(string $name, Update $update)
+    protected function execute(string $name, Update $update, $commandNumber = null)
     {
         if (isset($this->commands[$name])) {
-            return $this->commands[$name]->make($this->telegram, $update);
+            return $this->commands[$name]->make($this->telegram, $update, $commandNumber);
         } elseif (isset($this->commandAliases[$name])) {
-            return $this->commandAliases[$name]->make($this->telegram, $update);
+            return $this->commandAliases[$name]->make($this->telegram, $update, $commandNumber);
         } elseif (isset($this->commands['help'])) {
             return $this->commands['help']->make($this->telegram, $update);
         }

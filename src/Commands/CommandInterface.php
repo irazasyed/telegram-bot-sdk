@@ -41,10 +41,11 @@ interface CommandInterface
     /**
      * Process Inbound Command.
      *
-     * @param Api    $telegram
-     * @param Update $update
+     * @param Api      $telegram
+     * @param Update   $update
+     * @param int|null $entityNumber
      *
      * @return mixed
      */
-    public function make(Api $telegram, Update $update);
+    public function make(Api $telegram, Update $update, $entityNumber = null);
 }
