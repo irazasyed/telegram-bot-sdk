@@ -60,13 +60,15 @@ class Keyboard extends Base
     /**
      * Create a new row in keyboard to add buttons.
      *
+     * @param array $buttons
+     *
      * @return Keyboard
      */
-    public function row(): Keyboard
+    public function row(...$buttons): Keyboard
     {
 
         $property = $this->isInlineKeyboard() ? 'inline_keyboard' : 'keyboard';
-        $this->items[$property][] = func_get_args();
+        $this->items[$property][] = $buttons;
 
         return $this;
     }
