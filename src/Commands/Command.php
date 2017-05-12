@@ -27,6 +27,9 @@ abstract class Command implements CommandInterface
     /** @var string The Telegram command description. */
     protected $description;
 
+    /** @var int|null For multiple commands in an update, the current command number. */
+    protected $entityNumber;
+
     /**
      * Get Command Name.
      *
@@ -88,10 +91,11 @@ abstract class Command implements CommandInterface
     /**
      * @inheritDoc
      */
-    public function make(Api $telegram, Update $update)
+    public function make(Api $telegram, Update $update, $entityNumber = null)
     {
         $this->telegram = $telegram;
         $this->update = $update;
+        $this->entityNumber = $entityNumber;
 
         return $this->handle();
     }
