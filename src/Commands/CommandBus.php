@@ -204,7 +204,7 @@ class CommandBus extends AnswerBus
     {
         $message = $update->getMessage();
 
-        if (!is_null($message) && $message->has('entities')) {
+        if ($message->has('entities')) {
             $this->parseCommandsIn($message)
                 ->each(function ($botCommand) use ($update) {
                     $this->process($botCommand, $update);
@@ -247,6 +247,41 @@ class CommandBus extends AnswerBus
         $this->execute($command, $update);
     }
 
+    /**
+     * Parse Command Arguments.
+     *
+     * @param string $command
+     * @param string $pattern
+     * @param string $text
+     *
+     * @return array
+     */
+    protected function parseCommandArguments(string $command, string $pattern, string $text): array
+    {
+        $args = [];
+        $patterns = ['/\/([\w]+)/', '/\{((?:(?!\d+,?\d+?)\w)+?)\}/'];
+
+        $pattern = sprintf('/%s %s', $command, $pattern);
+        $pattern = str_replace(['/', ' '], ['\/', '\s?'], $pattern);
+
+        $regex = '/' . preg_replace($patterns, ['/(${1})', '([\w]+)?'], $pattern) . '/iu';
+
+        if (preg_match($regex, $text, $matches)) {
+            $args = array_slice($matches, 2);
+        }
+
+        preg_match_all($patterns[1], $pattern, $matches);
+
+        $params = $matches[1];
+
+        if (count($args) > count($params)) {
+            $args = array_slice($args, 0, count($params));
+        } elseif (count($args) < count($params)) {
+            $args = array_pad($args, count($params), '');
+        }
+
+        return array_combine($params, $args);
+    }
 
     /**
      * Execute the command.
@@ -258,12 +293,14 @@ class CommandBus extends AnswerBus
      */
     protected function execute(string $name, Update $update)
     {
-        if (isset($this->commands[$name])) {
-            return $this->commands[$name]->make($this->telegram, $update);
-        } elseif (isset($this->commandAliases[$name])) {
-            return $this->commandAliases[$name]->make($this->telegram, $update);
-        } elseif (isset($this->commands['help'])) {
-            return $this->commands['help']->make($this->telegram, $update);
+        $command = $this->commands[$name] ??
+            $this->commandAliases[$name] ??
+            $this->commands['help'] ?? null;
+
+        if ($command) {
+            $args = $this->parseCommandArguments($name, $command->getPattern(), $update->getMessage()->text);
+
+            return $command->setArguments($args)->make($this->telegram, $update);
         }
 
         return 'Ok';

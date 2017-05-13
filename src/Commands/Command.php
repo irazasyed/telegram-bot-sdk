@@ -24,8 +24,14 @@ abstract class Command implements CommandInterface
     /** @var array Command Aliases - Helpful when you want to trigger command with more than one name. */
     protected $aliases = [];
 
+    /** @var string Command Argument Pattern */
+    protected $pattern = '';
+
     /** @var string The Telegram command description. */
     protected $description;
+
+    /** @var array Holds parsed command arguments */
+    protected $arguments;
 
     /**
      * Get Command Name.
@@ -52,13 +58,51 @@ abstract class Command implements CommandInterface
     }
 
     /**
-     * Get Command Aliases
+     * Get Command Aliases.
      *
      * @return array
      */
     public function getAliases(): array
     {
         return $this->aliases;
+    }
+
+    /**
+     * Set Command Aliases.
+     *
+     * @param $aliases
+     *
+     * @return Command
+     */
+    public function setAliases($aliases): Command
+    {
+        $this->aliases = $aliases;
+
+        return $this;
+    }
+
+    /**
+     * Get Command Arguments Pattern.
+     *
+     * @return string
+     */
+    public function getPattern(): string
+    {
+        return $this->pattern;
+    }
+
+    /**
+     * Get Command Arguments Pattern.
+     *
+     * @param string $pattern
+     *
+     * @return Command
+     */
+    public function setPattern(string $pattern): Command
+    {
+        $this->pattern = $pattern;
+
+        return $this;
     }
 
     /**
@@ -86,6 +130,30 @@ abstract class Command implements CommandInterface
     }
 
     /**
+     * Get Command Arguments.
+     *
+     * @return array
+     */
+    public function getArguments(): array
+    {
+        return $this->arguments;
+    }
+
+    /**
+     * Set Command Arguments.
+     *
+     * @param array $arguments
+     *
+     * @return Command
+     */
+    public function setArguments(array $arguments): Command
+    {
+        $this->arguments = $arguments;
+
+        return $this;
+    }
+
+    /**
      * @inheritDoc
      */
     public function make(Api $telegram, Update $update)
@@ -93,13 +161,13 @@ abstract class Command implements CommandInterface
         $this->telegram = $telegram;
         $this->update = $update;
 
-        return $this->handle();
+        return call_user_func_array([$this, 'handle'], $this->getArguments());
     }
 
     /**
      * {@inheritdoc}
      */
-    abstract public function handle();
+//    abstract public function handle(...$args);
 
     /**
      * Helper to Trigger other Commands.
