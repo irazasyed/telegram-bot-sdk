@@ -10,41 +10,13 @@ use Telegram\Bot\Objects\Update;
  */
 interface CommandInterface
 {
-    /**
-     * Get Command Name.
-     *
-     * The name of the Telegram command.
-     * Ex: help - Whenever the user sends /help, this would be resolved.
-     *
-     * @return string
-     */
     public function getName(): string;
 
-    /**
-     * Get Command Aliases
-     *
-     * Helpful when you want to trigger command with more than one name.
-     *
-     * @return array
-     */
     public function getAliases(): array;
 
-    /**
-     * Get Command Description.
-     *
-     * The Telegram command description.
-     *
-     * @return string
-     */
     public function getDescription(): string;
 
-    /**
-     * Process Inbound Command.
-     *
-     * @param Api    $telegram
-     * @param Update $update
-     *
-     * @return mixed
-     */
-    public function make(Api $telegram, Update $update);
+    public function getArguments(): array;
+
+    public function make(Api $telegram, Update $update, array $entity);
 }
