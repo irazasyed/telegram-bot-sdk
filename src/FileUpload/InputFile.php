@@ -232,13 +232,11 @@ class InputFile
      */
     protected function isFileLocalAndExists(): bool
     {
-        $file = @is_file($this->file) && @is_readable($this->file);
-
-        if (is_null($file)) {
+        if (!is_string($this->file)) {
             return false;
         }
 
-        if ($file) {
+        if (is_file($this->file) && is_readable($this->file)) {
             return true;
         }
 

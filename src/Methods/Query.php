@@ -9,6 +9,10 @@ use Telegram\Bot\Exceptions\TelegramSDKException;
  */
 trait Query
 {
+    //TODO Check these methods. They should possibly return the result of the query,
+    //not just a hard coded bool value.
+
+
     /**
      * Send answers to callback queries sent from inline keyboards.
      *
