@@ -21,7 +21,7 @@ abstract class Command implements CommandInterface
      */
     protected $name;
 
-    /** @var array Command Aliases - Helpful when you want to trigger command with more than one name. */
+    /** @var string[] Command Aliases - Helpful when you want to trigger command with more than one name. */
     protected $aliases = [];
 
     /** @var string Command Argument Pattern */
@@ -50,7 +50,7 @@ abstract class Command implements CommandInterface
      *
      * @return Command
      */
-    public function setName($name): Command
+    public function setName(string $name): Command
     {
         $this->name = $name;
 
@@ -60,7 +60,7 @@ abstract class Command implements CommandInterface
     /**
      * Get Command Aliases.
      *
-     * @return array
+     * @return string[]
      */
     public function getAliases(): array
     {
@@ -122,7 +122,7 @@ abstract class Command implements CommandInterface
      *
      * @return Command
      */
-    public function setDescription($description): Command
+    public function setDescription(string $description): Command
     {
         $this->description = $description;
 
