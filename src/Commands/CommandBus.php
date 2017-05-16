@@ -260,18 +260,19 @@ class CommandBus extends AnswerBus
     protected function parseCommandArguments(string $command, array $entity, string $pattern, string $text): array
     {
         $args = [];
-        $patterns = ['/\/([\w]+)/', '/\{((?:(?!\d+,?\d+?)\w)+?)\}/'];
+
+        $paramPattern = '/\{((?:(?!\d+,?\d+?)\w)+?)\}/';
 
         $pattern = sprintf('/%s %s', $command, $pattern);
         $pattern = str_replace(['/', ' '], ['\/', '\s?'], $pattern);
 
-        $regex = '/' . preg_replace($patterns, ['/(${1})', '([\w]+)?'], $pattern) . '/iu';
+        $regex = '/' . preg_replace($paramPattern, '([\w]+)?', $pattern) . '/iu';
 
-        if (preg_match($regex, $text, $matches, 0, $entity['offset'])) {
-            $args = array_slice($matches, 2);
+        if (preg_match($regex, $text, $args, 0, $entity['offset'])) {
+            array_shift($args);
         }
 
-        preg_match_all($patterns[1], $pattern, $matches);
+        preg_match_all($paramPattern, $pattern, $matches);
 
         $params = $matches[1];
 
