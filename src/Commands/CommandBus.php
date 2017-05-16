@@ -244,19 +244,20 @@ class CommandBus extends AnswerBus
             $entity['length']
         );
 
-        $this->execute($command, $update);
+        $this->execute($command, $entity, $update);
     }
 
     /**
      * Parse Command Arguments.
      *
      * @param string $command
+     * @param array  $entity
      * @param string $pattern
      * @param string $text
      *
      * @return array
      */
-    protected function parseCommandArguments(string $command, string $pattern, string $text): array
+    protected function parseCommandArguments(string $command, array $entity, string $pattern, string $text): array
     {
         $args = [];
         $patterns = ['/\/([\w]+)/', '/\{((?:(?!\d+,?\d+?)\w)+?)\}/'];
@@ -266,7 +267,7 @@ class CommandBus extends AnswerBus
 
         $regex = '/' . preg_replace($patterns, ['/(${1})', '([\w]+)?'], $pattern) . '/iu';
 
-        if (preg_match($regex, $text, $matches)) {
+        if (preg_match($regex, $text, $matches, 0, $entity['offset'])) {
             $args = array_slice($matches, 2);
         }
 
@@ -286,19 +287,20 @@ class CommandBus extends AnswerBus
     /**
      * Execute the command.
      *
-     * @param $name
-     * @param $update
+     * @param string $name
+     * @param array  $entity
+     * @param Update $update
      *
      * @return mixed
      */
-    protected function execute(string $name, Update $update)
+    protected function execute(string $name, array $entity, Update $update)
     {
         $command = $this->commands[$name] ??
             $this->commandAliases[$name] ??
             $this->commands['help'] ?? null;
 
         if ($command) {
-            $args = $this->parseCommandArguments($name, $command->getPattern(), $update->getMessage()->text);
+            $args = $this->parseCommandArguments($name, $entity, $command->getPattern(), $update->getMessage()->text);
 
             return $command->setArguments($args)->make($this->telegram, $update);
         }
