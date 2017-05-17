@@ -18,9 +18,9 @@ trait GuzzleMock
      * This collection contains a history of all requests and responses
      * sent using the client.
      *
-     * @var Collection
+     * @var array
      */
-    protected $history;
+    protected $history = [];
 
     /**
      *
@@ -42,7 +42,7 @@ trait GuzzleMock
      */
     protected function createClientWithQueuedResponse(array $responsesToQueue)
     {
-        $this->history = collect();
+        $this->history = [];
         $handler = HandlerStack::create(new MockHandler($responsesToQueue));
         $handler->push(Middleware::history($this->history));
 
@@ -75,6 +75,14 @@ trait GuzzleMock
             $headers,
             json_encode($data)
         );
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getHistory(): Collection
+    {
+        return collect($this->history);
     }
 
 

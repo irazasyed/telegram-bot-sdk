@@ -101,7 +101,7 @@ class TelegramApiTest extends TestCase
         $api->getMe();
 
         /** @var Request $request */
-        $request = $this->history->pluck('request')->first();
+        $request = $this->getHistory()->pluck('request')->first();
 
         $this->assertEquals('https', $request->getUri()->getScheme());
         $this->assertEquals('api.telegram.org', $request->getUri()->getHost());
@@ -121,7 +121,7 @@ class TelegramApiTest extends TestCase
         ]);
 
         /** @var Request $request */
-        $request = $this->history->pluck('request')->first();
+        $request = $this->getHistory()->pluck('request')->first();
 
         $this->assertEquals('', $request->getBody(), "The get request had a body when it should be blank.");
         $this->assertEquals('https', $request->getUri()->getScheme());
@@ -148,7 +148,7 @@ class TelegramApiTest extends TestCase
         $api->sendMessage($params);
 
         /** @var Request $request */
-        $request = $this->history->pluck('request')->first();
+        $request = $this->getHistory()->pluck('request')->first();
 
         $this->assertInstanceOf(Stream::class, $request->getBody());
         $this->assertEquals(http_build_query($params), (string)$request->getBody());
@@ -376,7 +376,7 @@ class TelegramApiTest extends TestCase
         ]);
 
         /** @var Request $request */
-        $request = $this->history->pluck('request')->first();
+        $request = $this->getHistory()->pluck('request')->first();
 
         $this->assertInstanceOf(Message::class, $result);
         $this->assertContains('document=AwADBAADYwADO1wlBuF1ogMa7HnMAg', (string)$request->getBody());
@@ -429,7 +429,7 @@ class TelegramApiTest extends TestCase
         ]);
 
         /** @var Request $request */
-        $request = $this->history->pluck('request')->first();
+        $request = $this->getHistory()->pluck('request')->first();
         $body = (string)$request->getBody();
 
         $this->assertInstanceOf(Message::class, $result);
@@ -464,7 +464,7 @@ class TelegramApiTest extends TestCase
         ]);
 
         /** @var Request $request */
-        $request = $this->history->pluck('request')->first();
+        $request = $this->getHistory()->pluck('request')->first();
         $body = (string)$request->getBody();
 
         $this->assertContains('Content-Disposition: form-data; name="chat_id"', $body);
@@ -509,7 +509,7 @@ class TelegramApiTest extends TestCase
 
 
         /** @var Request $request */
-        $request = $this->history->pluck('request')->first();
+        $request = $this->getHistory()->pluck('request')->first();
         $body = (string)$request->getBody();
 
         $this->assertContains('Content-Disposition: form-data; name="certificate"; filename="public.key"', $body);
@@ -584,7 +584,7 @@ class TelegramApiTest extends TestCase
 
         $updates = collect($api->commandsHandler());
 
-        $markAsReadRequest = $this->history->pluck('request')->last();
+        $markAsReadRequest = $this->getHistory()->pluck('request')->last();
         $updates->each(function ($update) {
             $this->assertInstanceOf(Update::class, $update);
         });

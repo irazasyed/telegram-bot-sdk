@@ -219,27 +219,24 @@ abstract class Command implements CommandInterface
     protected function parseCommandArguments(): array
     {
         $args = [];
-        $patterns = ['/\/([\w]+)/', '/\{((?:(?!\d+,?\d+?)\w)+?)\}/'];
+
+        $paramPattern = '/\{((?:(?!\d+,?\d+?)\w)+?)\}/';
 
         $pattern = sprintf('/%s %s', $this->getName(), $this->getPattern());
         $pattern = str_replace(['/', ' '], ['\/', '\s?'], $pattern);
 
-        $regex = '/' . preg_replace($patterns, ['/(${1})', '([\w]+)?'], $pattern) . '/iu';
+        $regex = '/' . preg_replace($paramPattern, '([\w]+)?', $pattern) . '/iu';
 
-        if (preg_match($regex, $this->getUpdate()->getMessage()->text, $matches, 0, $this->entity['offset'])) {
-            $args = array_slice($matches, 2);
+        if (preg_match($regex, $this->getUpdate()->getMessage()->text, $args, 0, $this->entity['offset'])) {
+            array_shift($args);
         }
 
-        preg_match_all($patterns[1], $pattern, $matches);
-
-        $params = $matches[1];
-
-        if (count($args) > count($params)) {
-            $args = array_slice($args, 0, count($params));
-        } elseif (count($args) < count($params)) {
-            $args = array_pad($args, count($params), '');
+        if(count($args) === 0) {
+            $method = new \ReflectionMethod($this, 'handle');
+            $paramsCount = $method->getNumberOfParameters();
+            $args = array_pad($args, $paramsCount, '');
         }
 
-        return array_combine($params, $args);
+        return $args;
     }
 }

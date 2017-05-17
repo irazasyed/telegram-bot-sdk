@@ -96,6 +96,29 @@ class CommandTest extends TestCase
     }
 
     /** @test */
+    public function normal_message_and_arguments()
+    {
+        //Condensed update data
+        $update = new Update([
+            "message" => [
+                "text"     => "This /demo john doe",
+                "entities" => [
+                    [
+                        "type"   => "bot_command",
+                        "offset" => 5,
+                        "length" => 5,
+                    ],
+                ],
+            ],
+        ]);
+
+        //First time the command is triggered for entity "0"
+        $entity0 = $update->getMessage()->entities->get(0)->toArray();
+        $this->command->make($this->api, $update, $entity0);
+        $this->assertEquals(['fname' => 'john', 'lastname' => 'doe'], $this->command->getArguments());
+    }
+
+    /** @test */
     public function it_checks_the_arguments_can_be_detected_in_a_message_with_multiple_commands_that_are_the_same()
     {
         //Condensed update data
