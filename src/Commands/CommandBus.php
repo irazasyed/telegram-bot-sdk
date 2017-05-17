@@ -272,17 +272,13 @@ class CommandBus extends AnswerBus
             array_shift($args);
         }
 
-        preg_match_all($paramPattern, $pattern, $matches);
-
-        $params = $matches[1];
-
-        if (count($args) > count($params)) {
-            $args = array_slice($args, 0, count($params));
-        } elseif (count($args) < count($params)) {
-            $args = array_pad($args, count($params), '');
+        if(count($args) === 0) {
+            $method = new \ReflectionMethod($this, 'handle');
+            $paramsCount = $method->getNumberOfParameters();
+            $args = array_pad($args, $paramsCount, '');
         }
 
-        return array_combine($params, $args);
+        return $args;
     }
 
     /**
