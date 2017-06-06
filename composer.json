@@ -48,7 +48,7 @@
             "Telegram\\Bot\\Laravel\\TelegramServiceProvider"
         ],
         "aliases": {
-            "Telegram": "Telegram\\Bot\\Laravel\\Facades\Telegram"
+            "Telegram": "Telegram\\Bot\\Laravel\\Facades\\Telegram"
         }
     }
   },
