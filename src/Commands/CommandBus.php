@@ -250,19 +250,19 @@ class CommandBus extends AnswerBus
     /**
      * Parse Command Arguments.
      *
-     * @param string $command
-     * @param array  $entity
-     * @param string $pattern
-     * @param string $text
+     * @param string  $command
+     * @param array   $entity
+     * @param Command $commandInstance
+     * @param string  $text
      *
      * @return array
      */
-    protected function parseCommandArguments(string $command, array $entity, string $pattern, string $text): array
+    protected function parseCommandArguments(string $command, array $entity, $commandInstance, string $text): array
     {
         $args = [];
 
         $paramPattern = '/\{((?:(?!\d+,?\d+?)\w)+?)\}/';
-
+        $pattern = $commandInstance->getPattern();
         $pattern = sprintf('/%s %s', $command, $pattern);
         $pattern = str_replace(['/', ' '], ['\/', '\s?'], $pattern);
 
@@ -272,8 +272,8 @@ class CommandBus extends AnswerBus
             array_shift($args);
         }
 
-        if(count($args) === 0) {
-            $method = new \ReflectionMethod($this, 'handle');
+        if (count($args) === 0 && method_exists($commandInstance, 'handle')) {
+            $method = new \ReflectionMethod($commandInstance, 'handle');
             $paramsCount = $method->getNumberOfParameters();
             $args = array_pad($args, $paramsCount, '');
         }
@@ -297,7 +297,7 @@ class CommandBus extends AnswerBus
             $this->commands['help'] ?? null;
 
         if ($command) {
-            $args = $this->parseCommandArguments($name, $entity, $command->getPattern(), $update->getMessage()->text);
+            $args = $this->parseCommandArguments($name, $entity, $command, $update->getMessage()->text);
 
             return $command->setArguments($args)->make($this->telegram, $update);
         }
