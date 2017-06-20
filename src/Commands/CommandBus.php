@@ -184,11 +184,19 @@ class CommandBus extends AnswerBus
             throw new \InvalidArgumentException('Message is empty, Cannot parse for command');
         }
 
-        return substr(
+        $command = substr(
             $text,
             $offset + 1,
             $length - 1
         );
+
+        // When in group - Ex: /command@MyBot
+        if (str_contains($command, '@') && ends_with($command, ['bot', 'Bot'])) {
+            $command = explode('@', $command);
+            $command = $command[0];
+        }
+
+        return $command;
     }
 
     /**
@@ -263,12 +271,12 @@ class CommandBus extends AnswerBus
 
         $paramPattern = '/\{((?:(?!\d+,?\d+?)\w)+?)\}/';
         $pattern = $commandInstance->getPattern();
-        $pattern = sprintf('/%s %s', $command, $pattern);
+        $pattern = sprintf('/%s(?:\@\w+[bot])? %s', $command, $pattern);
         $pattern = str_replace(['/', ' '], ['\/', '\s?'], $pattern);
 
         $regex = '/' . preg_replace($paramPattern, '([\w]+)?', $pattern) . '/iu';
 
-        if (preg_match($regex, $text, $args, 0, $entity['offset'])) {
+        if (preg_match($regex, $text, $args)) {
             array_shift($args);
         }
 
@@ -302,6 +310,6 @@ class CommandBus extends AnswerBus
             return $command->setArguments($args)->make($this->telegram, $update);
         }
 
-        return 'Ok';
+        return false;
     }
 }
