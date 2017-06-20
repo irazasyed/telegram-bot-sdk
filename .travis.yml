@@ -3,6 +3,8 @@ language: php
 php:
   - 7.0
   - 7.1
+  - nightly
+  - hhvm
 
 sudo: false
 
@@ -15,6 +17,12 @@ env:
   matrix:
     - COMPOSER_FLAGS="--prefer-lowest"
     - COMPOSER_FLAGS=""
+
+matrix:
+  allow_failures:
+    - php: hhvm
+    - php: nightly
+  fast_finish: true
 
 before_script:
   - travis_retry composer update ${COMPOSER_FLAGS} --no-interaction --prefer-source
