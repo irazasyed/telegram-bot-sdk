@@ -242,7 +242,7 @@ trait Http
     protected function uploadFile(string $endpoint, array $params, $inputFileField): TelegramResponse
     {
         //Check if the field in the $params array (that is being used to send the relative file), is a file id.
-        if (!isset($params[$inputFileField]) || $this->hasFileId($inputFileField, $params)) {
+        if (!isset($params[$inputFileField]) || $this->hasFileId($inputFileField, $params) || $this->hasUrl($inputFileField, $params)) {
             return $this->post($endpoint, $params);
         }
 
