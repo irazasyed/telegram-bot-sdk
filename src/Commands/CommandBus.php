@@ -193,7 +193,12 @@ class CommandBus extends AnswerBus
         // When in group - Ex: /command@MyBot
         if (str_contains($command, '@') && ends_with($command, ['bot', 'Bot'])) {
             $command = explode('@', $command);
-            $command = $command[0];
+            $bot = config('telegram.bots.' . $this->telegram->getBotName());
+            if ($bot['username'] == $command[1]) {
+                $command = $command[0];
+            } else {
+                $command = '';
+            }
         }
 
         return $command;
@@ -312,6 +317,7 @@ class CommandBus extends AnswerBus
 
         $command = $this->commands[$name] ??
             $this->commandAliases[$name] ?? null;
+
 
         if ($command) {
             $args = $this->parseCommandArguments($name, $command, $text);
