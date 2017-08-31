@@ -1309,11 +1309,12 @@ class Api
     /**
      * Processes Inbound Commands.
      *
-     * @param bool $webhook
+     * @param bool  $webhook
+     * @param array $params
      *
      * @return Update|Update[]
      */
-    public function commandsHandler($webhook = false)
+    public function commandsHandler($webhook = false, array $params = [])
     {
         if ($webhook) {
             $update = $this->getWebhookUpdates();
@@ -1322,7 +1323,7 @@ class Api
             return $update;
         }
 
-        $updates = $this->getUpdates();
+        $updates = $this->getUpdates($params);
         $highestId = -1;
 
         foreach ($updates as $update) {
