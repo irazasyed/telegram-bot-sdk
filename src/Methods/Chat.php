@@ -222,4 +222,32 @@ trait Chat
 
         return new ChatMember($response->getDecodedBody());
     }
+
+    /**
+     * exportChatInviteLink
+     *
+     * <code>
+     * $params = [
+     *   'chat_id'  => '',
+     * ];
+     * </code>
+     *
+     * @link https://core.telegram.org/bots/api#exportchatinvitelink
+     *
+     * @param array     $params  [
+     *
+     * @type string|int $chat_id Unique identifier for the target chat or username of the target supergroup or channel (in the format @channelusername).
+     *
+     * ]
+     *
+     * @throws TelegramSDKException
+     *
+     * @return ChatMember
+     */
+    public function exportChatInviteLink(array $params): ChatMember
+    {
+        $response = $this->get('exportChatInviteLink', $params);
+
+        return new ChatMember($response->getDecodedBody());
+    }
 }
