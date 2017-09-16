@@ -1126,7 +1126,7 @@ class Api
             throw new TelegramSDKException('Invalid URL, should be a HTTPS url.');
         }
 
-        return $this->uploadFile('setWebhook', $params);
+        return $this->post('setWebhook', $params);
     }
 
     /**
