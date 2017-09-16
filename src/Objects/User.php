@@ -7,6 +7,7 @@ namespace Telegram\Bot\Objects;
  *
  *
  * @property int      $id         Unique identifier for this user or bot.
+ * @property bool     $isBot      True, if this user is a bot
  * @property string   $firstName  User's or bot's first name.
  * @property string   $lastName   (Optional). User's or bot's last name.
  * @property string   $username   (Optional). User's or bot's username.
