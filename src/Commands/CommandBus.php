@@ -230,12 +230,7 @@ class CommandBus extends AnswerBus
     {
         $args = [];
 
-        $paramPattern = '/\{((?:(?!\d+,?\d+?)\w)+?)\}/';
-        $pattern = $commandInstance->getPattern();
-        $pattern = sprintf('/%s(?:\@\w+[bot])? %s', $command, $pattern);
-        $pattern = str_replace(['/', ' '], ['\/', '\s?'], $pattern);
-
-        $regex = '/' . preg_replace($paramPattern, '([\w]+)?', $pattern) . '/iu';
+        $regex = $this->prepareRegex($command, $commandInstance);
 
         if (preg_match($regex, $text, $args)) {
             array_shift($args);
@@ -326,4 +321,20 @@ class CommandBus extends AnswerBus
         return new $command();
     }
 
+    /**
+     * @param string $command
+     * @param $commandInstance
+     * @return string
+     */
+    private function prepareRegex(string $command, $commandInstance)
+    {
+        $paramPattern = '/\{((?:(?!\d+,?\d+?)\w)+?)\}/';
+        $pattern = $commandInstance->getPattern();
+        $pattern = sprintf('/%s(?:\@\w+[bot])? %s', $command, $pattern);
+        $pattern = str_replace(['/', ' '], ['\/', '\s?'], $pattern);
+
+        $regex = '/'.preg_replace($paramPattern, '([\w]+)?', $pattern).'/iu';
+
+        return $regex;
+    }
 }
