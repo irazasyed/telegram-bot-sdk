@@ -23,6 +23,19 @@ trait Validator
     }
 
     /**
+     * Determine given param in params array is a url.
+     *
+     * @param string $inputFileField
+     * @param array  $params
+     *
+     * @return bool
+     */
+    protected function hasUrl(string $inputFileField, array $params): bool
+    {
+        return isset($params[$inputFileField]) && $this->isUrl($params[$inputFileField]);
+    }
+
+    /**
      * Determine if given contents are an instance of InputFile.
      *
      * @param $contents
