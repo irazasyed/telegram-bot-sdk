@@ -19,13 +19,13 @@ class Base extends Collection
      */
     public function __call($method, $args)
     {
-        if (starts_with($method, 'set')) {
-            $property = snake_case(substr($method, 3));
-            $this->items[$property] = $args[0];
-
-            return $this;
+        if (!starts_with($method, 'set')) {
+            return parent::__call($method, $args);
         }
+        $property = snake_case(substr($method, 3));
+        $this->items[$property] = $args[0];
 
-        return parent::__call($method, $args);
+        return $this;
+
     }
 }
