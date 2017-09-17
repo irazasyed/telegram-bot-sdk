@@ -261,14 +261,7 @@ trait Http
      */
     protected function prepareMultipartParams(array $params, $inputFileField): array
     {
-        if (!isset($params[$inputFileField])) {
-            throw CouldNotUploadInputFile::missingParam($inputFileField);
-        }
-
-        //All file-paths, urls, or file resources should be provided by using the InputFile object
-        if (! $params[$inputFileField] instanceof InputFile) {
-            throw CouldNotUploadInputFile::inputFileParameterShouldBeInputFileEntity($inputFileField);
-        }
+        $this->validateInputFileField($params, $inputFileField);
 
         //Iterate through all param options and convert to multipart/form-data.
         return collect($params)
@@ -340,5 +333,23 @@ trait Http
         ))
             ->setTimeOut($this->getTimeOut())
             ->setConnectTimeOut($this->getConnectTimeOut());
+    }
+
+    /**
+     * @param array $params
+     * @param $inputFileField
+     * @return array
+     * @throws \Telegram\Bot\Exceptions\CouldNotUploadInputFile
+     */
+    protected function validateInputFileField(array $params, $inputFileField)
+    {
+        if (! isset($params[$inputFileField])) {
+            throw CouldNotUploadInputFile::missingParam($inputFileField);
+        }
+
+        //All file-paths, urls, or file resources should be provided by using the InputFile object
+        if (! $params[$inputFileField] instanceof InputFile) {
+            throw CouldNotUploadInputFile::inputFileParameterShouldBeInputFileEntity($inputFileField);
+        }
     }
 }
