@@ -17,13 +17,14 @@ class Base extends Collection
     {
         $action = substr($method, 0, 3);
 
-        if ($action === 'set') {
-            $property = snake_case(substr($method, 3));
-            $this->items[$property] = $args[0];
-
-            return $this;
+        if ($action !== 'set') {
+            return parent::__call($method, $args);
         }
 
-        return parent::__call($method, $args);
+        $property = snake_case(substr($method, 3));
+        $this->items[$property] = $args[0];
+
+        return $this;
+
     }
 }

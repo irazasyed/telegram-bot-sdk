@@ -60,14 +60,12 @@ abstract class BaseObject extends Collection
 
         return $this->items = collect($this->all())
             ->map(function ($value, $key) use ($relations) {
-
-                if ($relations->has($key)) {
-                    $className = $relations->get($key);
-
-                    return new $className($value);
+                if (!$relations->has($key)) {
+                    return $value;
                 }
 
-                return $value;
+                $className = $relations->get($key);
+                return new $className($value);
             })
             ->all();
     }
@@ -115,20 +113,18 @@ abstract class BaseObject extends Collection
     public function __call($name, $arguments)
     {
         $action = substr($name, 0, 3);
+        if ($action !== 'get') {
+            return false;
+        }
+        $property = snake_case(substr($name, 3));
+        $response = $this->get($property);
 
-        if ($action === 'get') {
-            $property = snake_case(substr($name, 3));
-            $response = $this->get($property);
-
-            // Map relative property to an object
-            $relations = $this->relations();
-            if (null != $response && isset($relations[$property])) {
-                return new $relations[$property]($response);
-            }
-
-            return $response;
+        // Map relative property to an object
+        $relations = $this->relations();
+        if (null != $response && isset($relations[$property])) {
+            return new $relations[$property]($response);
         }
 
-        return false;
+        return $response;
     }
 }
