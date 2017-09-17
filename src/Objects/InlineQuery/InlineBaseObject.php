@@ -33,13 +33,14 @@ abstract class InlineBaseObject extends Collection
      */
     public function __call($name, $arguments)
     {
-        if (starts_with($name, 'set')) {
-            $property = snake_case(substr($name, 3));
-            $this->put($property, $arguments[0]);
-
-            return $this;
+        if (!starts_with($name, 'set')) {
+            throw new \BadMethodCallException("Method {$name} does not exist.");
         }
+        $property = snake_case(substr($name, 3));
+        $this->put($property, $arguments[0]);
 
-        throw new \BadMethodCallException("Method {$name} does not exist.");
+        return $this;
     }
+
+
 }
