@@ -75,67 +75,28 @@ class CommandBus extends AnswerBus
      */
     public function addCommand($command): CommandBus
     {
-        if (!is_object($command)) {
-            if (!class_exists($command)) {
-                throw new TelegramSDKException(
-                    sprintf(
-                        'Command class "%s" not found! Please make sure the class exists.',
-                        $command
-                    )
-                );
-            }
+        $command = $this->resolveCommand($command);
 
-            if ($this->telegram->hasContainer()) {
-                $command = $this->buildDependencyInjectedAnswer($command);
-            } else {
-                $command = new $command();
-            }
-        }
+        /*
+         * At this stage we definitely have a proper command to use.
+         *
+         * @var Command $command
+         */
+        $this->commands[$command->getName()] = $command;
 
-        if ($command instanceof CommandInterface) {
+        $aliases = $command->getAliases();
 
-            /*
-             * At this stage we definitely have a proper command to use.
-             *
-             * @var Command $command
-             */
-            $this->commands[$command->getName()] = $command;
-
-            $aliases = $command->getAliases();
-
-            if (empty($aliases)) {
-                return $this;
-            }
-
-            foreach ($command->getAliases() as $alias) {
-                if (isset($this->commands[$alias])) {
-                    throw new TelegramSDKException(sprintf(
-                        '[Error] Alias [%s] conflicts with command name of "%s" try with another name or remove this alias from the list.',
-                        $alias,
-                        get_class($command)
-                    ));
-                }
-
-                if (isset($this->commandAliases[$alias])) {
-                    throw new TelegramSDKException(sprintf(
-                        '[Error] Alias [%s] conflicts with another command\'s alias list: "%s", try with another name or remove this alias from the list.',
-                        $alias,
-                        get_class($command)
-                    ));
-                }
-
-                $this->commandAliases[$alias] = $command;
-            }
-
+        if (empty($aliases)) {
             return $this;
         }
 
-        throw new TelegramSDKException(
-            sprintf(
-                'Command class "%s" should be an instance of "Telegram\Bot\Commands\CommandInterface"',
-                get_class($command)
-            )
-        );
+        foreach ($command->getAliases() as $alias) {
+            $this->checkForConflicts($command, $alias);
+
+            $this->commandAliases[$alias] = $command;
+        }
+
+        return $this;
     }
 
     /**
@@ -269,12 +230,7 @@ class CommandBus extends AnswerBus
     {
         $args = [];
 
-        $paramPattern = '/\{((?:(?!\d+,?\d+?)\w)+?)\}/';
-        $pattern = $commandInstance->getPattern();
-        $pattern = sprintf('/%s(?:\@\w+[bot])? %s', $command, $pattern);
-        $pattern = str_replace(['/', ' '], ['\/', '\s?'], $pattern);
-
-        $regex = '/' . preg_replace($paramPattern, '([\w]+)?', $pattern) . '/iu';
+        $regex = $this->prepareRegex($command, $commandInstance);
 
         if (preg_match($regex, $text, $args)) {
             array_shift($args);
@@ -311,5 +267,74 @@ class CommandBus extends AnswerBus
         }
 
         return false;
+    }
+
+    /**
+     * @param $command
+     * @return object
+     * @throws \Telegram\Bot\Exceptions\TelegramSDKException
+     */
+    private function resolveCommand($command)
+    {
+        $command = $this->makeCommandObj($command);
+
+        if (! ($command instanceof CommandInterface)) {
+            throw new TelegramSDKException(sprintf('Command class "%s" should be an instance of "Telegram\Bot\Commands\CommandInterface"', get_class($command)));
+        }
+
+        return $command;
+    }
+
+    /**
+     * @param $command
+     * @param $alias
+     * @throws \Telegram\Bot\Exceptions\TelegramSDKException
+     */
+    private function checkForConflicts($command, $alias)
+    {
+        if (isset($this->commands[$alias])) {
+            throw new TelegramSDKException(sprintf('[Error] Alias [%s] conflicts with command name of "%s" try with another name or remove this alias from the list.', $alias, get_class($command)));
+        }
+
+        if (isset($this->commandAliases[$alias])) {
+            throw new TelegramSDKException(sprintf('[Error] Alias [%s] conflicts with another command\'s alias list: "%s", try with another name or remove this alias from the list.', $alias, get_class($command)));
+        }
+    }
+
+    /**
+     * @param $command
+     * @return object
+     * @throws \Telegram\Bot\Exceptions\TelegramSDKException
+     */
+    private function makeCommandObj($command)
+    {
+        if (is_object($command)) {
+            return $command;
+        }
+        if (! class_exists($command)) {
+            throw new TelegramSDKException(sprintf('Command class "%s" not found! Please make sure the class exists.', $command));
+        }
+
+        if ($this->telegram->hasContainer()) {
+            return $this->buildDependencyInjectedAnswer($command);
+        }
+        return new $command();
+    }
+
+    /**
+     * @param string $command
+     * @param $commandInstance
+     * @return string
+     */
+    private function prepareRegex(string $command, $commandInstance)
+    {
+        $paramPattern = '/\{((?:(?!\d+,?\d+?)\w)+?)\}/';
+        $pattern = $commandInstance->getPattern();
+        $pattern = sprintf('/%s(?:\@\w+[bot])? %s', $command, $pattern);
+        $pattern = str_replace(['/', ' '], ['\/', '\s?'], $pattern);
+
+        $regex = '/'.preg_replace($paramPattern, '([\w]+)?', $pattern).'/iu';
+
+        return $regex;
     }
 }
