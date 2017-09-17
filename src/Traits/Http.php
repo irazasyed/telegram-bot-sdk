@@ -196,14 +196,7 @@ trait Http
      */
     protected function post(string $endpoint, array $params = [], $fileUpload = false): TelegramResponse
     {
-        if ($fileUpload) {
-            $params = ['multipart' => $params];
-        } else {
-
-            $params = $this->replyMarkupToString($params);
-
-            $params = ['form_params' => $params];
-        }
+        $params = $this->normalizeParams($params, $fileUpload);
 
         return $this->sendRequest(
             'POST',
@@ -352,5 +345,18 @@ trait Http
         if (! $params[$inputFileField] instanceof InputFile) {
             throw CouldNotUploadInputFile::inputFileParameterShouldBeInputFileEntity($inputFileField);
         }
+    }
+
+    /**
+     * @param array $params
+     * @param $fileUpload
+     * @return array
+     */
+    private function normalizeParams(array $params, $fileUpload)
+    {
+        if ($fileUpload) {
+            return ['multipart' => $params];
+        }
+        return ['form_params' => $this->replyMarkupToString($params)];
     }
 }
