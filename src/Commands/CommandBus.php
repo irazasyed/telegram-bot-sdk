@@ -75,31 +75,7 @@ class CommandBus extends AnswerBus
      */
     public function addCommand($command): CommandBus
     {
-        if (!is_object($command)) {
-            if (!class_exists($command)) {
-                throw new TelegramSDKException(
-                    sprintf(
-                        'Command class "%s" not found! Please make sure the class exists.',
-                        $command
-                    )
-                );
-            }
-
-            if ($this->telegram->hasContainer()) {
-                $command = $this->buildDependencyInjectedAnswer($command);
-            } else {
-                $command = new $command();
-            }
-        }
-
-        if (!($command instanceof CommandInterface)) {
-            throw new TelegramSDKException(
-                sprintf(
-                    'Command class "%s" should be an instance of "Telegram\Bot\Commands\CommandInterface"',
-                    get_class($command)
-                )
-            );
-        }
+        $command = $this->resolveCommand($command);
 
         /*
          * At this stage we definitely have a proper command to use.
@@ -310,5 +286,31 @@ class CommandBus extends AnswerBus
         }
 
         return false;
+    }
+
+    /**
+     * @param $command
+     * @return object
+     * @throws \Telegram\Bot\Exceptions\TelegramSDKException
+     */
+    private function resolveCommand($command)
+    {
+        if (! is_object($command)) {
+            if (! class_exists($command)) {
+                throw new TelegramSDKException(sprintf('Command class "%s" not found! Please make sure the class exists.', $command));
+            }
+
+            if ($this->telegram->hasContainer()) {
+                $command = $this->buildDependencyInjectedAnswer($command);
+            } else {
+                $command = new $command();
+            }
+        }
+
+        if (! ($command instanceof CommandInterface)) {
+            throw new TelegramSDKException(sprintf('Command class "%s" should be an instance of "Telegram\Bot\Commands\CommandInterface"', get_class($command)));
+        }
+
+        return $command;
     }
 }
