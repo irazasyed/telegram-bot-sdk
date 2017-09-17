@@ -285,15 +285,16 @@ trait Http
      */
     protected function generateMultipartData($contents, $name): array
     {
-        if ($this->isInputFile($contents)) {
-            $filename = $contents->getFilename();
-            $contents = $contents->getContents();
-
-            return compact('name', 'contents', 'filename');
+        if (!$this->isInputFile($contents)) {
+            return compact('name', 'contents');
         }
+        
+        $filename = $contents->getFilename();
+        $contents = $contents->getContents();
 
-        return compact('name', 'contents');
+        return compact('name', 'contents', 'filename');
     }
+
 
     /**
      * Sends a request to Telegram Bot API and returns the result.
