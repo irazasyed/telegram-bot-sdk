@@ -265,10 +265,8 @@ trait Http
             throw CouldNotUploadInputFile::missingParam($inputFileField);
         }
 
-        $inputFile = $params[$inputFileField];
-
         //All file-paths, urls, or file resources should be provided by using the InputFile object
-        if (!$inputFile instanceof InputFile) {
+        if (! $params[$inputFileField] instanceof InputFile) {
             throw CouldNotUploadInputFile::inputFileParameterShouldBeInputFileEntity($inputFileField);
         }
 
