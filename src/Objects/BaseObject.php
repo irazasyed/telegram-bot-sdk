@@ -115,20 +115,18 @@ abstract class BaseObject extends Collection
     public function __call($name, $arguments)
     {
         $action = substr($name, 0, 3);
+        if ($action !== 'get') {
+            return false;
+        }
+        $property = snake_case(substr($name, 3));
+        $response = $this->get($property);
 
-        if ($action === 'get') {
-            $property = snake_case(substr($name, 3));
-            $response = $this->get($property);
-
-            // Map relative property to an object
-            $relations = $this->relations();
-            if (null != $response && isset($relations[$property])) {
-                return new $relations[$property]($response);
-            }
-
-            return $response;
+        // Map relative property to an object
+        $relations = $this->relations();
+        if (null != $response && isset($relations[$property])) {
+            return new $relations[$property]($response);
         }
 
-        return false;
+        return $response;
     }
 }
