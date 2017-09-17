@@ -136,12 +136,12 @@ abstract class BaseObject extends Collection
      */
     public function __call($name, $arguments)
     {
-        if (starts_with($name, 'get')) {
-            $property = substr($name, 3);
-
-            return $this->getPropertyValue($property);
+        if (!starts_with($name, 'get')) {
+            return false;
         }
+        $property = substr($name, 3);
 
-        return false;
+        return $this->getPropertyValue($property);
+
     }
 }
