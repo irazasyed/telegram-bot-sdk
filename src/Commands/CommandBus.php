@@ -91,21 +91,7 @@ class CommandBus extends AnswerBus
         }
 
         foreach ($command->getAliases() as $alias) {
-            if (isset($this->commands[$alias])) {
-                throw new TelegramSDKException(sprintf(
-                    '[Error] Alias [%s] conflicts with command name of "%s" try with another name or remove this alias from the list.',
-                    $alias,
-                    get_class($command)
-                ));
-            }
-
-            if (isset($this->commandAliases[$alias])) {
-                throw new TelegramSDKException(sprintf(
-                    '[Error] Alias [%s] conflicts with another command\'s alias list: "%s", try with another name or remove this alias from the list.',
-                    $alias,
-                    get_class($command)
-                ));
-            }
+            $this->checkForConflicts($command, $alias);
 
             $this->commandAliases[$alias] = $command;
         }
@@ -312,5 +298,21 @@ class CommandBus extends AnswerBus
         }
 
         return $command;
+    }
+
+    /**
+     * @param $command
+     * @param $alias
+     * @throws \Telegram\Bot\Exceptions\TelegramSDKException
+     */
+    private function checkForConflicts($command, $alias)
+    {
+        if (isset($this->commands[$alias])) {
+            throw new TelegramSDKException(sprintf('[Error] Alias [%s] conflicts with command name of "%s" try with another name or remove this alias from the list.', $alias, get_class($command)));
+        }
+
+        if (isset($this->commandAliases[$alias])) {
+            throw new TelegramSDKException(sprintf('[Error] Alias [%s] conflicts with another command\'s alias list: "%s", try with another name or remove this alias from the list.', $alias, get_class($command)));
+        }
     }
 }
