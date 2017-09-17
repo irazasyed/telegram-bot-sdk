@@ -302,9 +302,9 @@ trait Http
      */
     protected function sendRequest($method, $endpoint, array $params = []): TelegramResponse
     {
-        $request = $this->request($method, $endpoint, $params);
+        $telegramRequest = $this->resolveTelegramRequest($method, $endpoint, $params);
 
-        return $this->lastResponse = $this->getClient()->sendRequest($request);
+        return $this->lastResponse = $this->getClient()->sendRequest($telegramRequest);
     }
 
     /**
@@ -316,7 +316,7 @@ trait Http
      *
      * @return TelegramRequest
      */
-    protected function request($method, $endpoint, array $params = []): TelegramRequest
+    protected function resolveTelegramRequest($method, $endpoint, array $params = []): TelegramRequest
     {
         return (new TelegramRequest(
             $this->getAccessToken(),
