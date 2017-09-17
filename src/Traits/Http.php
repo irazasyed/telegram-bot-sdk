@@ -178,11 +178,7 @@ trait Http
     {
         $params = $this->replyMarkupToString($params);
 
-        return $this->sendRequest(
-            'GET',
-            $endpoint,
-            $params
-        );
+        return $this->sendRequest('GET', $endpoint, $params);
     }
 
     /**
@@ -198,11 +194,7 @@ trait Http
     {
         $params = $this->normalizeParams($params, $fileUpload);
 
-        return $this->sendRequest(
-            'POST',
-            $endpoint,
-            $params
-        );
+        return $this->sendRequest('POST', $endpoint, $params);
     }
 
     /**
