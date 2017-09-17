@@ -27,9 +27,7 @@ trait EmitsEvents
             return false;
         }
 
-        if (!is_string($event) && !$event instanceof EventInterface) {
-            throw new \InvalidArgumentException('Event must be either be of type "string" or instance of League\Event\EventInterface');
-        }
+        $this->validateEvent($event);
 
         $this->eventEmitter->emit($event);
 
@@ -51,9 +49,7 @@ trait EmitsEvents
         }
 
         foreach ($events as $e) {
-            if (!is_string($e) && !$e instanceof EventInterface) {
-                throw new \InvalidArgumentException('Event must be either be of type "string" or instance of League\Event\EventInterface');
-            }
+            $this->validateEvent($e);
         }
 
         $this->emitBatchOfEvents($events);
@@ -83,5 +79,15 @@ trait EmitsEvents
         $this->eventEmitter = $eventEmitter;
 
         return $this;
+    }
+
+    /**
+     * @param $event
+     */
+    private function validateEvent($event)
+    {
+        if (! is_string($event) && ! $event instanceof EventInterface) {
+            throw new \InvalidArgumentException('Event must be either be of type "string" or instance of League\Event\EventInterface');
+        }
     }
 }
