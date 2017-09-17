@@ -37,25 +37,26 @@ trait Answerable
      */
     public function __call($method, $arguments)
     {
-        if (starts_with($method, 'replyWith')) {
-            $reply_name = studly_case(substr($method, 9));
-            $methodName = 'send' . $reply_name;
+        if (!starts_with($method, 'replyWith')) {
+            throw new \BadMethodCallException("Method [$method] does not exist.");
+        }
+        $reply_name = studly_case(substr($method, 9));
+        $methodName = 'send' . $reply_name;
 
-            if (!method_exists($this->telegram, $methodName)) {
-                throw new \BadMethodCallException("Method [$method] does not exist.");
-            }
-
-            if (!$this->update->getChat()->has('id')) {
-                throw new \BadMethodCallException("No chat available for reply with [$method].");
-            }
-
-            $params = array_merge(['chat_id' => $this->update->getChat()->id], $arguments[0]);
-
-            return call_user_func_array([$this->telegram, $methodName], [$params]);
+        if (!method_exists($this->telegram, $methodName)) {
+            throw new \BadMethodCallException("Method [$method] does not exist.");
         }
 
-        throw new \BadMethodCallException("Method [$method] does not exist.");
+        if (!$this->update->getChat()->has('id')) {
+            throw new \BadMethodCallException("No chat available for reply with [$method].");
+        }
+
+        $params = array_merge(['chat_id' => $this->update->getChat()->id], $arguments[0]);
+
+        return call_user_func_array([$this->telegram, $methodName], [$params]);
     }
+
+
 
     /**
      * Returns Update object.
