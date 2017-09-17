@@ -25,6 +25,9 @@ class Api
         Methods\Query,
         Methods\Update;
 
+    /** @var string */
+    protected $botName = null;
+
     /** @var string Version number of the Telegram Bot PHP SDK. */
     const VERSION = '3.0.0';
 
@@ -35,10 +38,10 @@ class Api
      * Instantiates a new Telegram super-class object.
      *
      *
-     * @param string                   $token                 The Telegram Bot API Access Token.
-     * @param bool                     $async                 (Optional) Indicates if the request to Telegram
+     * @param string $token The Telegram Bot API Access Token.
+     * @param bool $async (Optional) Indicates if the request to Telegram
      *                                                        will be asynchronous (non-blocking).
-     * @param HttpClientInterface|null $httpClientHandler     (Optional) Custom HTTP Client Handler.
+     * @param HttpClientInterface|null $httpClientHandler (Optional) Custom HTTP Client Handler.
      *
      * @throws TelegramSDKException
      */
@@ -51,6 +54,29 @@ class Api
 
         $this->setAsyncRequest($async);
         $this->httpClientHandler = $httpClientHandler;
+    }
+
+    /**
+     * Returns Telegram Bot name.
+     *
+     * @return string
+     */
+    public function getBotName()
+    {
+        return $this->botName;
+    }
+
+    /**
+     * Sets the bot name to use with API.
+     *
+     * @param string $name The bot name to save.
+     * @return $this
+     */
+    public function setBotName($name)
+    {
+        $this->botName = $name;
+
+        return $this;
     }
 
     /**

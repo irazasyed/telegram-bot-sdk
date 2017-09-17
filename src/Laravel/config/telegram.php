@@ -32,6 +32,7 @@ return [
     */
     'bots'                         => [
         'mybot' => [
+            'default_command'  => Telegram\Bot\Commands\HelpCommand::class,
             'username' => 'TelegramBot',
             'token'    => env('TELEGRAM_BOT_TOKEN', 'YOUR-BOT-TOKEN'),
             'commands' => [

@@ -193,7 +193,12 @@ class CommandBus extends AnswerBus
         // When in group - Ex: /command@MyBot
         if (str_contains($command, '@') && ends_with($command, ['bot', 'Bot'])) {
             $command = explode('@', $command);
-            $command = $command[0];
+            $bot = config('telegram.bots.' . $this->telegram->getBotName());
+            if ($bot['username'] == $command[1]) {
+                $command = $command[0];
+            } else {
+                $command = '';
+            }
         }
 
         return $command;
@@ -241,7 +246,7 @@ class CommandBus extends AnswerBus
     /**
      * Execute a bot command from the update text
      *
-     * @param array  $entity
+     * @param array $entity
      * @param Update $update
      */
     protected function process($entity, Update $update)
@@ -252,20 +257,19 @@ class CommandBus extends AnswerBus
             $entity['length']
         );
 
-        $this->execute($command, $entity, $update);
+        $this->execute($command, $update);
     }
 
     /**
      * Parse Command Arguments.
      *
-     * @param string  $command
-     * @param array   $entity
+     * @param string $command
      * @param Command $commandInstance
-     * @param string  $text
+     * @param string $text
      *
      * @return array
      */
-    protected function parseCommandArguments(string $command, array $entity, $commandInstance, string $text): array
+    protected function parseCommandArguments(string $command, $commandInstance, string $text): array
     {
         $args = [];
 
@@ -274,10 +278,14 @@ class CommandBus extends AnswerBus
         $pattern = sprintf('/%s(?:\@\w+[bot])? %s', $command, $pattern);
         $pattern = str_replace(['/', ' '], ['\/', '\s?'], $pattern);
 
-        $regex = '/' . preg_replace($paramPattern, '([\w]+)?', $pattern) . '/iu';
+        $regex = '/' . preg_replace($paramPattern, '([^\s]+)?', $pattern) . '/iu';
 
-        if (preg_match($regex, $text, $args)) {
-            array_shift($args);
+        try {
+            if (preg_match($regex, $text, $args)) {
+                array_shift($args);
+            }
+        } catch (\Exception $exception) {
+            // ...
         }
 
         if (count($args) === 0 && method_exists($commandInstance, 'handle')) {
@@ -293,19 +301,26 @@ class CommandBus extends AnswerBus
      * Execute the command.
      *
      * @param string $name
-     * @param array  $entity
      * @param Update $update
      *
      * @return mixed
      */
-    protected function execute(string $name, array $entity, Update $update)
+    protected function execute(string $name, Update $update)
     {
+        if (substr($name, 0, 1) == '/') {
+            preg_match('@/([\w\-]+)@', $name, $args);
+            $text = $name;
+            $name = $args[1];
+        } else {
+            $text = $update->getMessage()->text;
+        }
+
         $command = $this->commands[$name] ??
-            $this->commandAliases[$name] ??
-            $this->commands['help'] ?? null;
+            $this->commandAliases[$name] ?? null;
+
 
         if ($command) {
-            $args = $this->parseCommandArguments($name, $entity, $command, $update->getMessage()->text);
+            $args = $this->parseCommandArguments($name, $command, $text);
 
             return $command->setArguments($args)->make($this->telegram, $update);
         }
