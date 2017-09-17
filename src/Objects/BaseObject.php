@@ -60,14 +60,12 @@ abstract class BaseObject extends Collection
 
         return $this->items = collect($this->all())
             ->map(function ($value, $key) use ($relations) {
-
-                if ($relations->has($key)) {
-                    $className = $relations->get($key);
-
-                    return new $className($value);
+                if (!$relations->has($key)) {
+                    return $value;
                 }
 
-                return $value;
+                $className = $relations->get($key);
+                return new $className($value);
             })
             ->all();
     }
