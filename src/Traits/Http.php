@@ -178,11 +178,7 @@ trait Http
     {
         $params = $this->replyMarkupToString($params);
 
-        return $this->sendRequest(
-            'GET',
-            $endpoint,
-            $params
-        );
+        return $this->sendRequest('GET', $endpoint, $params);
     }
 
     /**
@@ -196,20 +192,9 @@ trait Http
      */
     protected function post(string $endpoint, array $params = [], $fileUpload = false): TelegramResponse
     {
-        if ($fileUpload) {
-            $params = ['multipart' => $params];
-        } else {
+        $params = $this->normalizeParams($params, $fileUpload);
 
-            $params = $this->replyMarkupToString($params);
-
-            $params = ['form_params' => $params];
-        }
-
-        return $this->sendRequest(
-            'POST',
-            $endpoint,
-            $params
-        );
+        return $this->sendRequest('POST', $endpoint, $params);
     }
 
     /**
@@ -261,16 +246,7 @@ trait Http
      */
     protected function prepareMultipartParams(array $params, $inputFileField): array
     {
-        if (!isset($params[$inputFileField])) {
-            throw CouldNotUploadInputFile::missingParam($inputFileField);
-        }
-
-        $inputFile = $params[$inputFileField];
-
-        //All file-paths, urls, or file resources should be provided by using the InputFile object
-        if (!$inputFile instanceof InputFile) {
-            throw CouldNotUploadInputFile::inputFileParameterShouldBeInputFileEntity($inputFileField);
-        }
+        $this->validateInputFileField($params, $inputFileField);
 
         //Iterate through all param options and convert to multipart/form-data.
         return collect($params)
@@ -294,15 +270,16 @@ trait Http
      */
     protected function generateMultipartData($contents, $name): array
     {
-        if ($this->isInputFile($contents)) {
-            $filename = $contents->getFilename();
-            $contents = $contents->getContents();
-
-            return compact('name', 'contents', 'filename');
+        if (!$this->isInputFile($contents)) {
+            return compact('name', 'contents');
         }
+        
+        $filename = $contents->getFilename();
+        $contents = $contents->getContents();
 
-        return compact('name', 'contents');
+        return compact('name', 'contents', 'filename');
     }
+
 
     /**
      * Sends a request to Telegram Bot API and returns the result.
@@ -317,9 +294,9 @@ trait Http
      */
     protected function sendRequest($method, $endpoint, array $params = []): TelegramResponse
     {
-        $request = $this->request($method, $endpoint, $params);
+        $telegramRequest = $this->resolveTelegramRequest($method, $endpoint, $params);
 
-        return $this->lastResponse = $this->getClient()->sendRequest($request);
+        return $this->lastResponse = $this->getClient()->sendRequest($telegramRequest);
     }
 
     /**
@@ -331,7 +308,7 @@ trait Http
      *
      * @return TelegramRequest
      */
-    protected function request($method, $endpoint, array $params = []): TelegramRequest
+    protected function resolveTelegramRequest($method, $endpoint, array $params = []): TelegramRequest
     {
         return (new TelegramRequest(
             $this->getAccessToken(),
@@ -342,5 +319,36 @@ trait Http
         ))
             ->setTimeOut($this->getTimeOut())
             ->setConnectTimeOut($this->getConnectTimeOut());
+    }
+
+    /**
+     * @param array $params
+     * @param $inputFileField
+     * @return array
+     * @throws \Telegram\Bot\Exceptions\CouldNotUploadInputFile
+     */
+    protected function validateInputFileField(array $params, $inputFileField)
+    {
+        if (! isset($params[$inputFileField])) {
+            throw CouldNotUploadInputFile::missingParam($inputFileField);
+        }
+
+        //All file-paths, urls, or file resources should be provided by using the InputFile object
+        if (! $params[$inputFileField] instanceof InputFile) {
+            throw CouldNotUploadInputFile::inputFileParameterShouldBeInputFileEntity($inputFileField);
+        }
+    }
+
+    /**
+     * @param array $params
+     * @param $fileUpload
+     * @return array
+     */
+    private function normalizeParams(array $params, $fileUpload)
+    {
+        if ($fileUpload) {
+            return ['multipart' => $params];
+        }
+        return ['form_params' => $this->replyMarkupToString($params)];
     }
 }

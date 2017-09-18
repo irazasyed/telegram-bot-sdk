@@ -45,9 +45,7 @@ class Api
     public function __construct($token = null, $async = false, $httpClientHandler = null)
     {
         $this->accessToken = $token ?? getenv(static::BOT_TOKEN_ENV_NAME);
-        if (!$this->accessToken) {
-            throw TelegramSDKException::tokenNotProvided(static::BOT_TOKEN_ENV_NAME);
-        }
+        $this->validateAccessToken();
 
         $this->setAsyncRequest($async);
         $this->httpClientHandler = $httpClientHandler;
@@ -85,5 +83,12 @@ class Api
         }
 
         throw new \BadMethodCallException("Method [$method] does not exist.");
+    }
+
+    private function validateAccessToken()
+    {
+        if (! $this->accessToken) {
+            throw TelegramSDKException::tokenNotProvided(static::BOT_TOKEN_ENV_NAME);
+        }
     }
 }
