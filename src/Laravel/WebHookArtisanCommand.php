@@ -4,9 +4,12 @@ namespace Telegram\Bot\Laravel;
 
 use Illuminate\Console\GeneratorCommand as LaravelGeneratorCommand;
 use Symfony\Component\Console\Input\InputOption;
+use Telegram\Bot\Api;
 
 class WebHookArtisanCommand extends LaravelGeneratorCommand
 {
+    private $telegram;
+
     /**
      * Create a new command instance.
      *
@@ -41,7 +44,9 @@ class WebHookArtisanCommand extends LaravelGeneratorCommand
     public function handle()
     {
         $botName = $this->argument('botName');
-        $this->token = config("telegram.bots.$botName.token");
+        $token = config("telegram.bots.$botName.token");
+        $this->telegram = new Api($token);
+
 
         if ($this->option('setup')) {
             $this->setupWebhook();
