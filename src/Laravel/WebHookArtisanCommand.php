@@ -58,6 +58,17 @@ class WebHookArtisanCommand extends LaravelGeneratorCommand
 
     private function setupWebhook()
     {
+        $botName = $this->argument('botName');
+
+        $params = ['url' => config("telegram.bots.$botName.webhookUrl")];
+        ;
+        if($certificatePath = config("telegram.bots.$botName.certificatePath")){
+            $params['certificate'] = $certificatePath;
+        }
+
+        $response = $this->telegram->setWebhook($params);
+
+        $this->info($response->description);
     }
 
     private function removeWebHook()
