@@ -9,17 +9,6 @@ use Telegram\Bot\BotsManager;
 
 class WebHookArtisanCommand extends LaravelGeneratorCommand
 {
-    private $telegram;
-
-    /**
-     * Create a new command instance.
-     *
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
     /**
      * The name and signature of the console command.
      *
@@ -36,6 +25,19 @@ class WebHookArtisanCommand extends LaravelGeneratorCommand
      * @var string
      */
     protected $description = 'Ease the Process of setting up and removing webhooks.';
+
+    private $telegram;
+
+    private $config;
+
+    /**
+     * Create a new command instance.
+     *
+     */
+    public function __construct()
+    {
+        parent::__construct();
+    }
 
     /**
      * Execute the console command.
@@ -69,7 +71,7 @@ class WebHookArtisanCommand extends LaravelGeneratorCommand
         $params = ['url' => array_get($this->config, 'webhook_url')];
 
         $certificatePath = array_get($this->config, 'certificate_path', false);
-        if($certificatePath){
+        if ($certificatePath) {
             $params['certificate'] = $certificatePath;
         }
 
