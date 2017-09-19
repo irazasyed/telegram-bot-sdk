@@ -5,6 +5,7 @@ namespace Telegram\Bot\Laravel;
 use Illuminate\Console\GeneratorCommand as LaravelGeneratorCommand;
 use Symfony\Component\Console\Input\InputOption;
 use Telegram\Bot\Api;
+use Telegram\Bot\BotsManager;
 
 class WebHookArtisanCommand extends LaravelGeneratorCommand
 {
@@ -39,14 +40,15 @@ class WebHookArtisanCommand extends LaravelGeneratorCommand
     /**
      * Execute the console command.
      *
+     * @param \Telegram\Bot\BotsManager $botManager
      * @return void
      */
-    public function handle()
+    public function handle(BotsManager $botManager)
     {
         $botName = $this->argument('botName');
-        $token = config("telegram.bots.$botName.token");
-        $this->telegram = new Api($token);
 
+        $this->telegram = $botManager->bot($botName);
+        $this->config = $botManager->getBotConfig($botName);
 
         if ($this->option('setup')) {
             $this->setupWebhook();
@@ -63,11 +65,11 @@ class WebHookArtisanCommand extends LaravelGeneratorCommand
 
     private function setupWebhook()
     {
-        $botName = $this->argument('botName');
 
-        $params = ['url' => config("telegram.bots.$botName.webhookUrl")];
-        ;
-        if($certificatePath = config("telegram.bots.$botName.certificatePath")){
+        $params = ['url' => array_get($this->config, 'webhook_url')];
+
+        $certificatePath = array_get($this->config, 'certificate_path', false);
+        if($certificatePath){
             $params['certificate'] = $certificatePath;
         }
 
