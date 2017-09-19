@@ -89,7 +89,13 @@ trait Update
      */
     public function setWebhook(array $params): bool
     {
-        $this->validateHookUrl($params['url']);
+        if (filter_var($params['url'], FILTER_VALIDATE_URL) === false) {
+            throw new TelegramSDKException('Invalid URL Provided');
+        }
+
+        if (parse_url($params['url'], PHP_URL_SCHEME) !== 'https') {
+            throw new TelegramSDKException('Invalid URL, should be a HTTPS url.');
+        }
 
         return $this->uploadFile('setWebhook', $params, 'certificate')->getResult();
     }
@@ -169,20 +175,5 @@ trait Update
     public function removeWebhook(): bool
     {
         return $this->deleteWebhook();
-    }
-
-    /**
-     * @param array $params
-     * @throws \Telegram\Bot\Exceptions\TelegramSDKException
-     */
-    private function validateHookUrl(string $url)
-    {
-        if (filter_var($url, FILTER_VALIDATE_URL) === false) {
-            throw new TelegramSDKException('Invalid URL Provided');
-        }
-
-        if (parse_url($url, PHP_URL_SCHEME) !== 'https') {
-            throw new TelegramSDKException('Invalid URL, should be a HTTPS url.');
-        }
     }
 }
