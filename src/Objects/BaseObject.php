@@ -56,9 +56,9 @@ abstract class BaseObject extends Collection
 
         $value = $this->items[$property];
 
-        $relations = $this->relations();
-        if (isset($relations[$property])) {
-            return $relations[$property]::make($value);
+        $class = array_get($this->relations(), $property);
+        if ($class) {
+            return $class::make($value);
         }
 
         /** @var BaseObject $class */
