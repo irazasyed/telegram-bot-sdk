@@ -62,7 +62,9 @@ class WebHookArtisanCommand extends LaravelGeneratorCommand
 
     private function removeWebHook()
     {
-        
+        $response = $this->telegram->removeWebhook();
+
+        $this->info($response->description);
     }
 
     private function getInfo()
