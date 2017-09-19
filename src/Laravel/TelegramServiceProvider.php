@@ -8,6 +8,7 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Contracts\Container\Container as Application;
 use Laravel\Lumen\Application as LumenApplication;
 use Illuminate\Foundation\Application as LaravelApplication;
+use Telegram\Bot\Laravel\Artisan\WebhookCommand;
 
 /**
  * Class TelegramServiceProvider.
@@ -48,6 +49,7 @@ class TelegramServiceProvider extends ServiceProvider
     {
         $this->registerManager($this->app);
         $this->registerBindings($this->app);
+        $this->commands('telegram.bot.commands.webhook');
     }
 
     /**
@@ -78,6 +80,10 @@ class TelegramServiceProvider extends ServiceProvider
             $manager = $app['telegram'];
 
             return $manager->bot();
+        });
+
+        $this->app->singleton('telegram.bot.commands.webhook', function () {
+            return new WebhookCommand();
         });
 
         $app->alias('telegram.bot', Api::class);
