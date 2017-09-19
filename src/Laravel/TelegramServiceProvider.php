@@ -48,6 +48,7 @@ class TelegramServiceProvider extends ServiceProvider
     {
         $this->registerManager($this->app);
         $this->registerBindings($this->app);
+        $this->commands('telegrambot.commands.webhook');
     }
 
     /**
@@ -78,6 +79,10 @@ class TelegramServiceProvider extends ServiceProvider
             $manager = $app['telegram'];
 
             return $manager->bot();
+        });
+
+        $this->app->singleton('telegrambot.commands.webhook', function () {
+            return new WebHookArtisanCommand();
         });
 
         $app->alias('telegram.bot', Api::class);
