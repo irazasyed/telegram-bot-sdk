@@ -1,13 +1,12 @@
 <?php
 
-namespace Telegram\Bot\Laravel;
+namespace Telegram\Bot\Laravel\Artisan;
 
 use Illuminate\Console\GeneratorCommand as LaravelGeneratorCommand;
 use Symfony\Component\Console\Input\InputOption;
-use Telegram\Bot\Api;
 use Telegram\Bot\BotsManager;
 
-class WebHookArtisanCommand extends LaravelGeneratorCommand
+class WebhookCommand extends LaravelGeneratorCommand
 {
     /**
      * The name and signature of the console command.
@@ -67,7 +66,6 @@ class WebHookArtisanCommand extends LaravelGeneratorCommand
 
     private function setupWebhook()
     {
-
         $params = ['url' => array_get($this->config, 'webhook_url')];
 
         $certificatePath = array_get($this->config, 'certificate_path', false);
