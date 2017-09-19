@@ -22,7 +22,7 @@ class WebHookArtisanCommand extends LaravelGeneratorCommand
      * @var string
      */
     protected $signature = 'telegram:webhook
-                {--setup : To declare your webhook on telegram servers. So the can call you.} 
+                {--setup : To declare your webhook on telegram servers. So they can call you.} 
                 {--remove : To remove your already declared webhook on telegram servers.} 
                 {--info : To get the information about your current webhook on telegram servers.}';
 
