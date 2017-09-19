@@ -21,7 +21,7 @@ class WebHookArtisanCommand extends LaravelGeneratorCommand
      *
      * @var string
      */
-    protected $signature = 'telegram:webhook
+    protected $signature = 'telegram:webhook {botName : The bot name defined in the config file}
                 {--setup : To declare your webhook on telegram servers. So they can call you.} 
                 {--remove : To remove your already declared webhook on telegram servers.} 
                 {--info : To get the information about your current webhook on telegram servers.}';
@@ -40,6 +40,9 @@ class WebHookArtisanCommand extends LaravelGeneratorCommand
      */
     public function handle()
     {
+        $botName = $this->argument('botName');
+        $this->token = config("telegram.bots.$botName.token");
+
         if ($this->option('setup')) {
             $this->setupWebhook();
         }
@@ -59,6 +62,7 @@ class WebHookArtisanCommand extends LaravelGeneratorCommand
 
     private function removeWebHook()
     {
+        
     }
 
     private function getInfo()
