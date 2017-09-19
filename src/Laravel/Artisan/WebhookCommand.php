@@ -2,6 +2,7 @@
 
 namespace Telegram\Bot\Laravel\Artisan;
 
+use Telegram\Bot\Api;
 use Telegram\Bot\BotsManager;
 use Illuminate\Console\Command;
 use Telegram\Bot\Objects\WebhookInfo;
