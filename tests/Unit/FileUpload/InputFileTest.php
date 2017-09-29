@@ -1,6 +1,6 @@
 <?php
 
-namespace Telegram\Bot\Tests;
+namespace Telegram\Bot\Tests\Unit\FileUpload;
 
 use PHPUnit\Framework\TestCase;
 use GuzzleHttp\Psr7\LazyOpenStream;

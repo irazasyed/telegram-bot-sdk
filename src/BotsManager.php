@@ -4,6 +4,7 @@ namespace Telegram\Bot;
 
 use InvalidArgumentException;
 use Illuminate\Contracts\Container\Container;
+use Telegram\Bot\Exceptions\TelegramSDKException;
 
 /**
  * Class BotsManager
@@ -130,10 +131,11 @@ class BotsManager
 
     /**
      * Get the default bot name.
+     * @throws TelegramSDKException
      *
-     * @return string
+     * @return string|null
      */
-    public function getDefaultBotName(): string
+    public function getDefaultBotName()
     {
         return $this->getConfig('default');
     }
@@ -186,7 +188,6 @@ class BotsManager
         $config = $this->getBotConfig($name);
 
         $token = array_get($config, 'token');
-        $commands = array_get($config, 'commands', []);
 
         $telegram = new Api(
             $token,
@@ -199,6 +200,7 @@ class BotsManager
             $telegram->setContainer($this->container);
         }
 
+        $commands = array_get($config, 'commands', []);
         $commands = $this->parseBotCommands($commands);
 
         // Register Commands
@@ -214,7 +216,7 @@ class BotsManager
      *
      * @return array An array of commands which includes global and bot specific commands.
      */
-    protected function parseBotCommands(array $commands): array
+    public function parseBotCommands(array $commands): array
     {
         $globalCommands = $this->getConfig('commands', []);
         $parsedCommands = $this->parseCommands($commands);

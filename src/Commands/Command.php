@@ -21,20 +21,26 @@ abstract class Command implements CommandInterface
      */
     protected $name;
 
-    /** @var array Command Aliases - Helpful when you want to trigger command with more than one name. */
+    /** @var string[] Command Aliases - Helpful when you want to trigger command with more than one name. */
     protected $aliases = [];
-
-    /** @var string Command Argument Pattern */
-    protected $pattern = '';
 
     /** @var string The Telegram command description. */
     protected $description;
 
     /** @var array Holds parsed command arguments */
-    protected $arguments;
+    protected $arguments = [];
+
+    /** @var string Command Argument Pattern */
+    protected $pattern = '';
+
+    /** @var array|null Details of the current entity this command is responding to - offset, length, type etc */
+    protected $entity;
 
     /**
-     * Get Command Name.
+     * Get the Command Name.
+     *
+     * The name of the Telegram command.
+     * Ex: help - Whenever the user sends /help, this would be resolved.
      *
      * @return string
      */
@@ -50,7 +56,7 @@ abstract class Command implements CommandInterface
      *
      * @return Command
      */
-    public function setName($name): Command
+    public function setName(string $name): Command
     {
         $this->name = $name;
 
@@ -58,7 +64,9 @@ abstract class Command implements CommandInterface
     }
 
     /**
-     * Get Command Aliases.
+     * Get Command Aliases
+     *
+     * Helpful when you want to trigger command with more than one name.
      *
      * @return array
      */
@@ -70,13 +78,65 @@ abstract class Command implements CommandInterface
     /**
      * Set Command Aliases.
      *
-     * @param $aliases
+     * @param string|array $aliases
      *
      * @return Command
      */
     public function setAliases($aliases): Command
     {
-        $this->aliases = $aliases;
+        $this->aliases = is_array($aliases) ? $aliases : [$aliases];
+
+        return $this;
+    }
+
+    /**
+     * Get Command Description.
+     *
+     * The Telegram command description.
+     *
+     * @return string
+     */
+    public function getDescription(): string
+    {
+        return $this->description;
+    }
+
+    /**
+     * Set Command Description.
+     *
+     * @param $description
+     *
+     * @return Command
+     */
+    public function setDescription(string $description): Command
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get Arguments Description.
+     *
+     * Get Command Arguments.
+     *
+     * @return array
+     */
+    public function getArguments(): array
+    {
+        return $this->arguments;
+    }
+
+    /**
+     * Set Command Arguments.
+     *
+     * @param array $arguments
+     *
+     * @return Command
+     */
+    public function setArguments(array $arguments): Command
+    {
+        $this->arguments = $arguments;
 
         return $this;
     }
@@ -106,60 +166,20 @@ abstract class Command implements CommandInterface
     }
 
     /**
-     * Get Command Description.
+     * Process Inbound Command.
      *
-     * @return string
+     * @param Api    $telegram
+     * @param Update $update
+     * @param array  $entity
+     *
+     * @return mixed
      */
-    public function getDescription(): string
-    {
-        return $this->description;
-    }
-
-    /**
-     * Set Command Description.
-     *
-     * @param $description
-     *
-     * @return Command
-     */
-    public function setDescription($description): Command
-    {
-        $this->description = $description;
-
-        return $this;
-    }
-
-    /**
-     * Get Command Arguments.
-     *
-     * @return array
-     */
-    public function getArguments(): array
-    {
-        return $this->arguments;
-    }
-
-    /**
-     * Set Command Arguments.
-     *
-     * @param array $arguments
-     *
-     * @return Command
-     */
-    public function setArguments(array $arguments): Command
-    {
-        $this->arguments = $arguments;
-
-        return $this;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function make(Api $telegram, Update $update)
+    public function make(Api $telegram, Update $update, array $entity)
     {
         $this->telegram = $telegram;
         $this->update = $update;
+        $this->entity = $entity;
+        $this->arguments = $this->parseCommandArguments();
 
         return call_user_func_array([$this, 'handle'], $this->getArguments());
     }
@@ -167,7 +187,7 @@ abstract class Command implements CommandInterface
     /**
      * {@inheritdoc}
      */
-//    abstract public function handle(...$args);
+    abstract public function handle();
 
     /**
      * Helper to Trigger other Commands.
@@ -189,5 +209,34 @@ abstract class Command implements CommandInterface
     public function getCommandBus(): CommandBus
     {
         return $this->telegram->getCommandBus();
+    }
+
+    /**
+     * Parse Command Arguments.
+     *
+     * @return array
+     */
+    protected function parseCommandArguments(): array
+    {
+        $args = [];
+
+        $paramPattern = '/\{((?:(?!\d+,?\d+?)\w)+?)\}/';
+
+        $pattern = sprintf('/%s %s', $this->getName(), $this->getPattern());
+        $pattern = str_replace(['/', ' '], ['\/', '\s?'], $pattern);
+
+        $regex = '/' . preg_replace($paramPattern, '([\w]+)?', $pattern) . '/iu';
+
+        if (preg_match($regex, $this->getUpdate()->getMessage()->text, $args, 0, $this->entity['offset'])) {
+            array_shift($args);
+        }
+
+        if(count($args) === 0) {
+            $method = new \ReflectionMethod($this, 'handle');
+            $paramsCount = $method->getNumberOfParameters();
+            $args = array_pad($args, $paramsCount, '');
+        }
+
+        return $args;
     }
 }
