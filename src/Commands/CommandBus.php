@@ -175,7 +175,7 @@ class CommandBus extends AnswerBus
 
         if ($message->has('entities')) {
             $this->parseCommandsIn($message)
-                ->each(function ($botCommand) use ($update) {
+                ->each(function (array $botCommand) use ($update) {
                     $this->process($botCommand, $update);
                 });
 
@@ -213,64 +213,31 @@ class CommandBus extends AnswerBus
             $entity['length']
         );
 
-        $this->execute($command, $entity, $update);
+        $this->execute($command, $update, $entity);
     }
 
-    /**
-     * Parse Command Arguments.
-     *
-     * @param string  $command
-     * @param array   $entity
-     * @param Command $commandInstance
-     * @param string  $text
-     *
-     * @return array
-     */
-    protected function parseCommandArguments(string $command, array $entity, $commandInstance, string $text): array
-    {
-        $args = [];
-
-        $regex = $this->prepareRegex($command, $commandInstance);
-
-        if (preg_match($regex, $text, $args)) {
-            array_shift($args);
-        }
-
-        if (count($args) === 0 && method_exists($commandInstance, 'handle')) {
-            $method = new \ReflectionMethod($commandInstance, 'handle');
-            $paramsCount = $method->getNumberOfParameters();
-            $args = array_pad($args, $paramsCount, '');
-        }
-
-        return $args;
-    }
 
     /**
      * Execute the command.
      *
      * @param string $name
-     * @param array  $entity
      * @param Update $update
+     * @param array  $entity
      *
      * @return mixed
      */
-    protected function execute(string $name, array $entity, Update $update)
+    protected function execute(string $name, Update $update, array $entity)
     {
         $command = $this->commands[$name] ??
             $this->commandAliases[$name] ??
             $this->commands['help'] ?? null;
 
-        if ($command) {
-            $args = $this->parseCommandArguments($name, $entity, $command, $update->getMessage()->text);
-
-            return $command->setArguments($args)->make($this->telegram, $update);
-        }
-
-        return false;
+        return $command ? $command->make($this->telegram, $update, $entity) : false;
     }
 
     /**
      * @param $command
+     *
      * @return object
      * @throws \Telegram\Bot\Exceptions\TelegramSDKException
      */
@@ -319,22 +286,5 @@ class CommandBus extends AnswerBus
             return $this->buildDependencyInjectedAnswer($command);
         }
         return new $command();
-    }
-
-    /**
-     * @param string $command
-     * @param $commandInstance
-     * @return string
-     */
-    private function prepareRegex(string $command, $commandInstance)
-    {
-        $paramPattern = '/\{((?:(?!\d+,?\d+?)\w)+?)\}/';
-        $pattern = $commandInstance->getPattern();
-        $pattern = sprintf('/%s(?:\@\w+[bot])? %s', $command, $pattern);
-        $pattern = str_replace(['/', ' '], ['\/', '\s?'], $pattern);
-
-        $regex = '/'.preg_replace($paramPattern, '([\w]+)?', $pattern).'/iu';
-
-        return $regex;
     }
 }

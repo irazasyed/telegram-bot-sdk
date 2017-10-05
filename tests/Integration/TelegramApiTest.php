@@ -497,23 +497,39 @@ class TelegramApiTest extends TestCase
         THISISSOMERANDOMKEYDATA
         -----END PUBLIC KEY-----';
 
+        //Probably not the best way to attempt to create a file on a server.
+        //Help appreciated.
+        $fakeFile = fopen('php://temp', 'w+');
+        fwrite($fakeFile, $pubKey);
+        fseek($fakeFile, 0);
 
-        $data = true;
-        $api = $this->getApi($this->getGuzzleHttpClient([$this->makeFakeServerResponse($data)]));
+        //Setup the responses the fake telegram server should reply with.
+        $api = $this->getApi($this->getGuzzleHttpClient([
+            $this->makeFakeServerResponse(true),
+            $this->makeFakeServerResponse(true),
+        ]));
 
-        //We can use any file input here, for testing a stream is quick and easy.
+        // If the user uses the INPUTFILE class to send the webhook cert, the filename will override our default
+        // setting of certificate.pem
         $api->setWebhook([
             'url'         => 'https://example.com',
             'certificate' => InputFile::create(stream_for($pubKey), 'public.key'),
         ]);
 
+        //If the user uses just a string to the path/filename of the webhook cert.
+        $api->setWebhook([
+            'url'         => 'https://example.com',
+            'certificate' => $fakeFile,
+        ]);
 
         /** @var Request $request */
-        $request = $this->getHistory()->pluck('request')->first();
-        $body = (string)$request->getBody();
+        $response1 = (string)$this->getHistory()->pluck('request')->get(0)->getBody();
+        $response2 = (string)$this->getHistory()->pluck('request')->get(1)->getBody();
 
-        $this->assertContains('Content-Disposition: form-data; name="certificate"; filename="public.key"', $body);
-        $this->assertContains('THISISSOMERANDOMKEYDATA', $body);
+        $this->assertContains('Content-Disposition: form-data; name="certificate"; filename="public.key"', $response1);
+        $this->assertContains('THISISSOMERANDOMKEYDATA', $response1);
+        $this->assertContains('Content-Disposition: form-data; name="certificate"; filename="certificate.pem"', $response2);
+        $this->assertContains('THISISSOMERANDOMKEYDATA', $response1);
     }
 
     /** @test check the webhook works */
@@ -571,7 +587,7 @@ class TelegramApiTest extends TestCase
                         [
                             "type"   => "bot_command",
                             "offset" => 0,
-                            "length" => 12,
+                            "length" => 13,
                         ],
                     ],
                 ],

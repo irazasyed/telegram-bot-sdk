@@ -198,7 +198,7 @@ abstract class Command implements CommandInterface
      */
     protected function triggerCommand(string $command)
     {
-        return $this->getCommandBus()->execute($command, $this->update);
+        return $this->getCommandBus()->execute($command, $this->update, $this->entity);
     }
 
     /**
@@ -212,7 +212,7 @@ abstract class Command implements CommandInterface
     }
 
     /**
-     * Parse Command Arguments.
+     * Parse Command Arguments
      *
      * @return array
      */
@@ -220,23 +220,33 @@ abstract class Command implements CommandInterface
     {
         $args = [];
 
-        $paramPattern = '/\{((?:(?!\d+,?\d+?)\w)+?)\}/';
+        $regex = $this->prepareRegex();
 
-        $pattern = sprintf('/%s %s', $this->getName(), $this->getPattern());
-        $pattern = str_replace(['/', ' '], ['\/', '\s?'], $pattern);
-
-        $regex = '/' . preg_replace($paramPattern, '([\w]+)?', $pattern) . '/iu';
-
-        if (preg_match($regex, $this->getUpdate()->getMessage()->text, $args, 0, $this->entity['offset'])) {
+        if (preg_match($regex, $this->getUpdate()->getMessage()->text, $args)) {
             array_shift($args);
         }
 
-        if(count($args) === 0) {
+        if (count($args) === 0 && method_exists($this, 'handle')) {
             $method = new \ReflectionMethod($this, 'handle');
             $paramsCount = $method->getNumberOfParameters();
             $args = array_pad($args, $paramsCount, '');
         }
 
         return $args;
+    }
+
+    /**
+     * @return string
+     */
+    private function prepareRegex()
+    {
+        $paramPattern = '/\{((?:(?!\d+,?\d+?)\w)+?)\}/';
+        $pattern = $this->getPattern();
+        $pattern = sprintf('/%s(?:\@\w+[bot])? %s', $this->getName(), $pattern);
+        $pattern = str_replace(['/', ' '], ['\/', '\s?'], $pattern);
+
+        $regex = '/' . preg_replace($paramPattern, '([\w]+)?', $pattern) . '/iu';
+
+        return $regex;
     }
 }

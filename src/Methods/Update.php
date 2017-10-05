@@ -91,7 +91,13 @@ trait Update
     {
         $this->validateHookUrl($params['url']);
 
-        return $this->uploadFile('setWebhook', $params, 'certificate')->getResult();
+        if (isset($params['certificate'])) {
+            $params['certificate'] = $this->formatCertificate($params['certificate']);
+
+            return $this->uploadFile('setWebhook', $params, 'certificate')->getResult();
+        }
+
+        return $this->post('setWebhook', $params)->getResult();
     }
 
     /**
@@ -172,8 +178,9 @@ trait Update
     }
 
     /**
-     * @param array $params
-     * @throws \Telegram\Bot\Exceptions\TelegramSDKException
+     * @param string $url
+     *
+     * @throws TelegramSDKException
      */
     private function validateHookUrl(string $url)
     {
@@ -184,5 +191,14 @@ trait Update
         if (parse_url($url, PHP_URL_SCHEME) !== 'https') {
             throw new TelegramSDKException('Invalid URL, should be a HTTPS url.');
         }
+    }
+
+    private function formatCertificate($certificate)
+    {
+        if ($certificate instanceof InputFile) {
+            return $certificate;
+        }
+
+        return InputFile::create($certificate, 'certificate.pem');
     }
 }
