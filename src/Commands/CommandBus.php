@@ -247,7 +247,8 @@ class CommandBus extends AnswerBus
 
         if (!($command instanceof CommandInterface)) {
             throw new TelegramSDKException(
-                sprintf('Command class "%s" should be an instance of "Telegram\Bot\Commands\CommandInterface"',
+                sprintf(
+                    'Command class "%s" should be an instance of "Telegram\Bot\Commands\CommandInterface"',
                     get_class($command)
                 )
             );
