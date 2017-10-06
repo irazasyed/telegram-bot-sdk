@@ -88,7 +88,7 @@ trait EmitsEvents
      */
     private function validateEvent($event)
     {
-        if (!is_string($event) && !$event instanceof EventInterface) {
+        if (! is_string($event) && ! $event instanceof EventInterface) {
             throw new \InvalidArgumentException('Event must be either be of type "string" or instance of League\Event\EventInterface');
         }
     }

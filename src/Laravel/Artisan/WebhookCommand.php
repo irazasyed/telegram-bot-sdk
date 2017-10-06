@@ -2,11 +2,11 @@
 
 namespace Telegram\Bot\Laravel\Artisan;
 
-use Illuminate\Console\Command;
-use Symfony\Component\Console\Helper\TableCell;
 use Telegram\Bot\Api;
 use Telegram\Bot\BotsManager;
+use Illuminate\Console\Command;
 use Telegram\Bot\Objects\WebhookInfo;
+use Symfony\Component\Console\Helper\TableCell;
 
 class WebhookCommand extends Command
 {
@@ -117,7 +117,7 @@ class WebhookCommand extends Command
     {
         $this->alert('Webhook Info');
 
-        if ($this->hasArgument('bot') && !$this->option('all')) {
+        if ($this->hasArgument('bot') && ! $this->option('all')) {
             $response = $this->telegram->getWebhookInfo();
             $this->makeWebhookInfoResponse($response, $this->config['username']);
 

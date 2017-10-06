@@ -2,12 +2,12 @@
 
 namespace Telegram\Bot\Commands;
 
-use Illuminate\Support\Collection;
-use Telegram\Bot\Answers\AnswerBus;
 use Telegram\Bot\Api;
-use Telegram\Bot\Exceptions\TelegramSDKException;
 use Telegram\Bot\Objects\Update;
+use Illuminate\Support\Collection;
 use Telegram\Bot\Traits\Singleton;
+use Telegram\Bot\Answers\AnswerBus;
+use Telegram\Bot\Exceptions\TelegramSDKException;
 
 /**
  * Class CommandBus.
@@ -243,7 +243,7 @@ class CommandBus extends AnswerBus
     {
         $command = $this->makeCommandObj($command);
 
-        if (!($command instanceof CommandInterface)) {
+        if (! ($command instanceof CommandInterface)) {
             throw new TelegramSDKException(
                 sprintf(
                     'Command class "%s" should be an instance of "Telegram\Bot\Commands\CommandInterface"',
@@ -295,7 +295,7 @@ class CommandBus extends AnswerBus
         if (is_object($command)) {
             return $command;
         }
-        if (!class_exists($command)) {
+        if (! class_exists($command)) {
             throw new TelegramSDKException(
                 sprintf(
                     'Command class "%s" not found! Please make sure the class exists.',

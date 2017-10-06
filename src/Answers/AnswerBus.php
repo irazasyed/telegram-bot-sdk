@@ -40,7 +40,7 @@ abstract class AnswerBus
     protected function buildDependencyInjectedAnswer($answerClass)
     {
         // check if the command has a constructor
-        if (!method_exists($answerClass, '__construct')) {
+        if (! method_exists($answerClass, '__construct')) {
             return new $answerClass();
         }
 

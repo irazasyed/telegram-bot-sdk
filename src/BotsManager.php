@@ -2,8 +2,8 @@
 
 namespace Telegram\Bot;
 
-use Illuminate\Contracts\Container\Container;
 use InvalidArgumentException;
+use Illuminate\Contracts\Container\Container;
 use Telegram\Bot\Exceptions\TelegramSDKException;
 
 /**
@@ -59,7 +59,7 @@ class BotsManager
 
         $bots = collect($this->getConfig('bots'));
 
-        if (!$config = $bots->get($name, null)) {
+        if (! $config = $bots->get($name, null)) {
             throw new InvalidArgumentException("Bot [$name] not configured.");
         }
 
@@ -79,7 +79,7 @@ class BotsManager
     {
         $name = $name ?? $this->getDefaultBotName();
 
-        if (!isset($this->bots[$name])) {
+        if (! isset($this->bots[$name])) {
             $this->bots[$name] = $this->makeBot($name);
         }
 
@@ -234,7 +234,7 @@ class BotsManager
      */
     protected function parseCommands(array $commands): array
     {
-        if (!is_array($commands)) {
+        if (! is_array($commands)) {
             return $commands;
         }
 
@@ -260,7 +260,7 @@ class BotsManager
                 $command = $sharedCommands[$command];
             }
 
-            if (!in_array($command, $results)) {
+            if (! in_array($command, $results)) {
                 $results[] = $command;
             }
         }

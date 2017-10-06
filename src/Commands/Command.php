@@ -2,9 +2,9 @@
 
 namespace Telegram\Bot\Commands;
 
-use Telegram\Bot\Answers\Answerable;
 use Telegram\Bot\Api;
 use Telegram\Bot\Objects\Update;
+use Telegram\Bot\Answers\Answerable;
 
 /**
  * Class Command.

@@ -2,9 +2,9 @@
 
 namespace Telegram\Bot\Methods;
 
-use Telegram\Bot\Exceptions\TelegramSDKException;
-use Telegram\Bot\Objects\Chat as ChatObject;
 use Telegram\Bot\Objects\ChatMember;
+use Telegram\Bot\Objects\Chat as ChatObject;
+use Telegram\Bot\Exceptions\TelegramSDKException;
 
 /**
  * Class Chat.

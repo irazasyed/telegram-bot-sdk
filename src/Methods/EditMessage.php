@@ -2,8 +2,8 @@
 
 namespace Telegram\Bot\Methods;
 
-use Telegram\Bot\Exceptions\TelegramSDKException;
 use Telegram\Bot\Objects\Message;
+use Telegram\Bot\Exceptions\TelegramSDKException;
 
 /**
  * Class EditMessage.

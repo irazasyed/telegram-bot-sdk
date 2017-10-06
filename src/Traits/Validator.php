@@ -43,7 +43,7 @@ trait Validator
      */
     protected function isFileId($value): bool
     {
-        if (!is_string($value)) {
+        if (! is_string($value)) {
             return false;
         }
 

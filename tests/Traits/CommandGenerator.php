@@ -2,11 +2,11 @@
 
 namespace Telegram\Bot\Tests\Traits;
 
-use Illuminate\Support\Collection;
-use Prophecy\Argument;
 use Telegram\Bot\Api;
-use Telegram\Bot\Commands\Command;
+use Prophecy\Argument;
 use Telegram\Bot\Objects\Update;
+use Illuminate\Support\Collection;
+use Telegram\Bot\Commands\Command;
 
 trait CommandGenerator
 {

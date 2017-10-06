@@ -19,7 +19,7 @@ class Base extends Collection
      */
     public function __call($method, $args)
     {
-        if (!starts_with($method, 'set')) {
+        if (! starts_with($method, 'set')) {
             return parent::__call($method, $args);
         }
         $property = snake_case(substr($method, 3));

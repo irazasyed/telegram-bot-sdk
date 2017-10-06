@@ -2,13 +2,13 @@
 
 namespace Telegram\Bot\Laravel;
 
-use Illuminate\Contracts\Container\Container as Application;
-use Illuminate\Foundation\Application as LaravelApplication;
-use Illuminate\Support\ServiceProvider;
-use Laravel\Lumen\Application as LumenApplication;
 use Telegram\Bot\Api;
 use Telegram\Bot\BotsManager;
+use Illuminate\Support\ServiceProvider;
 use Telegram\Bot\Laravel\Artisan\WebhookCommand;
+use Laravel\Lumen\Application as LumenApplication;
+use Illuminate\Contracts\Container\Container as Application;
+use Illuminate\Foundation\Application as LaravelApplication;
 
 /**
  * Class TelegramServiceProvider.
