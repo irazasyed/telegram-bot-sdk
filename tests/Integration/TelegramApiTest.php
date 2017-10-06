@@ -2,23 +2,23 @@
 
 namespace Telegram\Bot\Tests\Integration;
 
-use GuzzleHttp\Psr7\Request;
-use GuzzleHttp\Psr7\Stream;
-use League\Event\Emitter;
-use PHPUnit\Framework\TestCase;
-use Prophecy\Argument;
 use Telegram\Bot\Api;
-use Telegram\Bot\Commands\CommandBus;
-use Telegram\Bot\Events\UpdateWasReceived;
-use Telegram\Bot\Exceptions\TelegramResponseException;
-use Telegram\Bot\FileUpload\InputFile;
-use Telegram\Bot\HttpClients\GuzzleHttpClient;
-use Telegram\Bot\Objects\Message;
+use Prophecy\Argument;
+use League\Event\Emitter;
+use GuzzleHttp\Psr7\Stream;
+use GuzzleHttp\Psr7\Request;
+use PHPUnit\Framework\TestCase;
 use Telegram\Bot\Objects\Update;
+use Telegram\Bot\Objects\Message;
 use Telegram\Bot\TelegramResponse;
-use Telegram\Bot\Tests\Traits\CommandGenerator;
-use Telegram\Bot\Tests\Traits\GuzzleMock;
+use Telegram\Bot\Commands\CommandBus;
+use Telegram\Bot\FileUpload\InputFile;
 use function GuzzleHttp\Psr7\stream_for;
+use Telegram\Bot\Tests\Traits\GuzzleMock;
+use Telegram\Bot\Events\UpdateWasReceived;
+use Telegram\Bot\HttpClients\GuzzleHttpClient;
+use Telegram\Bot\Tests\Traits\CommandGenerator;
+use Telegram\Bot\Exceptions\TelegramResponseException;
 
 class TelegramApiTest extends TestCase
 {

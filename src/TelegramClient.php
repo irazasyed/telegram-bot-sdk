@@ -2,10 +2,10 @@
 
 namespace Telegram\Bot;
 
-use GuzzleHttp\Promise\PromiseInterface;
 use Psr\Http\Message\ResponseInterface;
-use Telegram\Bot\Exceptions\TelegramSDKException;
+use GuzzleHttp\Promise\PromiseInterface;
 use Telegram\Bot\HttpClients\GuzzleHttpClient;
+use Telegram\Bot\Exceptions\TelegramSDKException;
 use Telegram\Bot\HttpClients\HttpClientInterface;
 
 /**

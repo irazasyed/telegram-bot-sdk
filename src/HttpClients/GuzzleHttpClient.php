@@ -3,12 +3,12 @@
 namespace Telegram\Bot\HttpClients;
 
 use GuzzleHttp\Client;
-use GuzzleHttp\ClientInterface;
-use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Promise;
-use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\RequestOptions;
+use GuzzleHttp\ClientInterface;
 use Psr\Http\Message\ResponseInterface;
+use GuzzleHttp\Promise\PromiseInterface;
+use GuzzleHttp\Exception\RequestException;
 use Telegram\Bot\Exceptions\TelegramSDKException;
 
 /**
@@ -84,7 +84,7 @@ class GuzzleHttpClient implements HttpClientInterface
         } catch (RequestException $e) {
             $response = $e->getResponse();
 
-            if (!$response instanceof ResponseInterface) {
+            if (! $response instanceof ResponseInterface) {
                 throw new TelegramSDKException($e->getMessage(), $e->getCode());
             }
         }
@@ -113,7 +113,7 @@ class GuzzleHttpClient implements HttpClientInterface
             RequestOptions::BODY            => $body,
             RequestOptions::TIMEOUT         => $this->getTimeOut(),
             RequestOptions::CONNECT_TIMEOUT => $this->getConnectTimeOut(),
-            RequestOptions::SYNCHRONOUS     => !$isAsyncRequest,
+            RequestOptions::SYNCHRONOUS     => ! $isAsyncRequest,
         ];
 
         return array_merge($default_options, $options);

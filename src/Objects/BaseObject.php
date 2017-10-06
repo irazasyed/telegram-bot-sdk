@@ -51,7 +51,7 @@ abstract class BaseObject extends Collection
     protected function getPropertyValue($property, $default = null)
     {
         $property = snake_case($property);
-        if (!$this->offsetExists($property)) {
+        if (! $this->offsetExists($property)) {
             return value($default);
         }
 
@@ -88,7 +88,7 @@ abstract class BaseObject extends Collection
     {
         $value = parent::get($key, $default);
 
-        if (!is_null($value) && is_array($value)) {
+        if (! is_null($value) && is_array($value)) {
             return $this->getPropertyValue($key, $default);
         }
 
@@ -137,7 +137,7 @@ abstract class BaseObject extends Collection
      */
     public function __call($name, $arguments)
     {
-        if (!starts_with($name, 'get')) {
+        if (! starts_with($name, 'get')) {
             return false;
         }
         $property = substr($name, 3);

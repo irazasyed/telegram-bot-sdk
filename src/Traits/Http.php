@@ -2,13 +2,13 @@
 
 namespace Telegram\Bot\Traits;
 
-use Telegram\Bot\Exceptions\CouldNotUploadInputFile;
-use Telegram\Bot\Exceptions\TelegramSDKException;
-use Telegram\Bot\FileUpload\InputFile;
-use Telegram\Bot\HttpClients\HttpClientInterface;
 use Telegram\Bot\TelegramClient;
 use Telegram\Bot\TelegramRequest;
 use Telegram\Bot\TelegramResponse;
+use Telegram\Bot\FileUpload\InputFile;
+use Telegram\Bot\Exceptions\TelegramSDKException;
+use Telegram\Bot\HttpClients\HttpClientInterface;
+use Telegram\Bot\Exceptions\CouldNotUploadInputFile;
 
 /**
  * Http.
@@ -228,7 +228,7 @@ trait Http
     protected function uploadFile(string $endpoint, array $params, $inputFileField): TelegramResponse
     {
         //Check if the field in the $params array (that is being used to send the relative file), is a file id.
-        if (!isset($params[$inputFileField])) {
+        if (! isset($params[$inputFileField])) {
             throw CouldNotUploadInputFile::missingParam($inputFileField);
         }
 
@@ -276,7 +276,7 @@ trait Http
      */
     protected function generateMultipartData($contents, $name): array
     {
-        if (!$this->isInputFile($contents)) {
+        if (! $this->isInputFile($contents)) {
             return compact('name', 'contents');
         }
 
@@ -336,12 +336,12 @@ trait Http
      */
     protected function validateInputFileField(array $params, $inputFileField)
     {
-        if (!isset($params[$inputFileField])) {
+        if (! isset($params[$inputFileField])) {
             throw CouldNotUploadInputFile::missingParam($inputFileField);
         }
 
         //All file-paths, urls, or file resources should be provided by using the InputFile object
-        if (!$params[$inputFileField] instanceof InputFile) {
+        if (! $params[$inputFileField] instanceof InputFile) {
             throw CouldNotUploadInputFile::inputFileParameterShouldBeInputFileEntity($inputFileField);
         }
     }

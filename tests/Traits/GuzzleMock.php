@@ -2,14 +2,14 @@
 
 namespace Telegram\Bot\Tests\Traits;
 
-use Guzzle\Http\Exception\RequestException;
 use GuzzleHttp\Client;
-use GuzzleHttp\Handler\MockHandler;
-use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Middleware;
+use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use Illuminate\Support\Collection;
+use GuzzleHttp\Handler\MockHandler;
+use Guzzle\Http\Exception\RequestException;
 use Telegram\Bot\HttpClients\GuzzleHttpClient;
 
 trait GuzzleMock

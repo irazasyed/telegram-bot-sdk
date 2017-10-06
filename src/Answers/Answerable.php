@@ -37,17 +37,17 @@ trait Answerable
      */
     public function __call($method, $arguments)
     {
-        if (!starts_with($method, 'replyWith')) {
+        if (! starts_with($method, 'replyWith')) {
             throw new \BadMethodCallException("Method [$method] does not exist.");
         }
         $reply_name = studly_case(substr($method, 9));
         $methodName = 'send'.$reply_name;
 
-        if (!method_exists($this->telegram, $methodName)) {
+        if (! method_exists($this->telegram, $methodName)) {
             throw new \BadMethodCallException("Method [$method] does not exist.");
         }
 
-        if (!$this->update->getChat()->has('id')) {
+        if (! $this->update->getChat()->has('id')) {
             throw new \BadMethodCallException("No chat available for reply with [$method].");
         }
 

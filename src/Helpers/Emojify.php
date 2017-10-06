@@ -195,11 +195,11 @@ class Emojify
      */
     protected function getEmojiMap()
     {
-        if (!isset($this->emojiMapFile)) {
+        if (! isset($this->emojiMapFile)) {
             $this->emojiMapFile = realpath(__DIR__.self::DEFAULT_EMOJI_MAP_FILE);
         }
 
-        if (!file_exists($this->emojiMapFile)) {
+        if (! file_exists($this->emojiMapFile)) {
             throw new TelegramEmojiMapFileNotFoundException();
         }
 
