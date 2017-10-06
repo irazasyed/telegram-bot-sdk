@@ -5,9 +5,9 @@ namespace Telegram\Bot\Tests\Unit\Commands;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Telegram\Bot\Api;
+use Telegram\Bot\Commands\HelpCommand;
 use Telegram\Bot\Objects\Message;
 use Telegram\Bot\Objects\Update;
-use Telegram\Bot\Commands\HelpCommand;
 
 class HelpCommandTest extends TestCase
 {
@@ -15,29 +15,29 @@ class HelpCommandTest extends TestCase
     public function it_ensures_a_command_make_method_works()
     {
         $update = new Update([
-            "update_id" => 377695723,
-            "message"   => [
-                "message_id" => 999,
-                "from"       => [
-                    "id"         => 123456789,
-                    "first_name" => "John",
-                    "last_name"  => "Doe",
-                    "username"   => "jdoe",
+            'update_id' => 377695723,
+            'message'   => [
+                'message_id' => 999,
+                'from'       => [
+                    'id'         => 123456789,
+                    'first_name' => 'John',
+                    'last_name'  => 'Doe',
+                    'username'   => 'jdoe',
                 ],
-                "chat"       => [
-                    "id"         => 77777777,
-                    "first_name" => "John",
-                    "last_name"  => "Doe",
-                    "username"   => "jdoe",
-                    "type"       => "private",
+                'chat'       => [
+                    'id'         => 77777777,
+                    'first_name' => 'John',
+                    'last_name'  => 'Doe',
+                    'username'   => 'jdoe',
+                    'type'       => 'private',
                 ],
-                "date"       => 1494250044,
-                "text"       => "/help",
-                "entities"   => [
+                'date'       => 1494250044,
+                'text'       => '/help',
+                'entities'   => [
                     [
-                        "type"   => "bot_command",
-                        "offset" => 0,
-                        "length" => 5,
+                        'type'   => 'bot_command',
+                        'offset' => 0,
+                        'length' => 5,
                     ],
                 ],
             ],
@@ -52,9 +52,8 @@ class HelpCommandTest extends TestCase
 
         $api->getCommands()->shouldHaveBeenCalled();
         $api->sendMessage([
-            "chat_id" => 77777777,
-            "text"    => "/help - Help command, Get a list of commands\n",
+            'chat_id' => 77777777,
+            'text'    => "/help - Help command, Get a list of commands\n",
         ])->shouldHaveBeenCalled();
     }
-
 }

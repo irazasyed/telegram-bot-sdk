@@ -2,9 +2,9 @@
 
 namespace Telegram\Bot\Commands;
 
+use Telegram\Bot\Answers\Answerable;
 use Telegram\Bot\Api;
 use Telegram\Bot\Objects\Update;
-use Telegram\Bot\Answers\Answerable;
 
 /**
  * Class Command.
@@ -64,7 +64,7 @@ abstract class Command implements CommandInterface
     }
 
     /**
-     * Get Command Aliases
+     * Get Command Aliases.
      *
      * Helpful when you want to trigger command with more than one name.
      *
@@ -212,7 +212,7 @@ abstract class Command implements CommandInterface
     }
 
     /**
-     * Parse Command Arguments
+     * Parse Command Arguments.
      *
      * @return array
      */
@@ -245,7 +245,7 @@ abstract class Command implements CommandInterface
         $pattern = sprintf('/%s(?:\@\w+[bot])? %s', $this->getName(), $pattern);
         $pattern = str_replace(['/', ' '], ['\/', '\s?'], $pattern);
 
-        $regex = '/' . preg_replace($paramPattern, '([\w]+)?', $pattern) . '/iu';
+        $regex = '/'.preg_replace($paramPattern, '([\w]+)?', $pattern).'/iu';
 
         return $regex;
     }

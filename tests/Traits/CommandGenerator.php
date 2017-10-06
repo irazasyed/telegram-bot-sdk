@@ -11,9 +11,8 @@ use Telegram\Bot\Objects\Update;
 trait CommandGenerator
 {
     /**
-     * @param        $numberRequired
-     *
-     * @param array  $arguments
+     * @param       $numberRequired
+     * @param array $arguments
      *
      * @return Collection
      */
@@ -30,7 +29,7 @@ trait CommandGenerator
                 $mockCommand->getArguments()->willReturn([]);
                 $mockCommand->setArguments(Argument::type('array'))->willReturn($mockCommand);
                 $mockCommand->make(Argument::type(Api::class), Argument::type(Update::class),
-                    Argument::withEntry("type", "bot_command"))->willReturn(null);
+                    Argument::withEntry('type', 'bot_command'))->willReturn(null);
 
                 return $mockCommand->reveal();
             });

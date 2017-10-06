@@ -3,7 +3,7 @@
 namespace Telegram\Bot\Objects;
 
 /**
- * Class Object
+ * Class Object.
  */
 class TelegramObject extends BaseObject
 {

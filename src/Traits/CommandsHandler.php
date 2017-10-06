@@ -2,11 +2,11 @@
 
 namespace Telegram\Bot\Traits;
 
-use Telegram\Bot\Objects\Update;
 use Telegram\Bot\Commands\CommandBus;
+use Telegram\Bot\Objects\Update;
 
 /**
- * CommandsHandler
+ * CommandsHandler.
  */
 trait CommandsHandler
 {

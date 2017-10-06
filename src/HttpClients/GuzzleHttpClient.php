@@ -35,7 +35,7 @@ class GuzzleHttpClient implements HttpClientInterface
      */
     public function __construct(ClientInterface $client = null)
     {
-        $this->client = $client ?? new Client;
+        $this->client = $client ?? new Client();
     }
 
     /**
@@ -61,7 +61,7 @@ class GuzzleHttpClient implements HttpClientInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function send(
         $url,
@@ -120,7 +120,7 @@ class GuzzleHttpClient implements HttpClientInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getTimeOut(): int
     {
@@ -128,7 +128,7 @@ class GuzzleHttpClient implements HttpClientInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function setTimeOut($timeOut): GuzzleHttpClient
     {
@@ -138,7 +138,7 @@ class GuzzleHttpClient implements HttpClientInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getConnectTimeOut(): int
     {
@@ -146,7 +146,7 @@ class GuzzleHttpClient implements HttpClientInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function setConnectTimeOut($connectTimeOut): GuzzleHttpClient
     {

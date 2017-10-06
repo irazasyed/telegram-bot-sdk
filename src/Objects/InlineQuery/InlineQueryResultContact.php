@@ -3,7 +3,7 @@
 namespace Telegram\Bot\Objects\InlineQuery;
 
 /**
- * Class InlineQueryResultContact
+ * Class InlineQueryResultContact.
  *
  * <code>
  * $params = [

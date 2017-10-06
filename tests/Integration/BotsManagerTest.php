@@ -5,8 +5,6 @@ namespace Telegram\Bot\Tests\Integration;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Telegram\Bot\BotsManager;
-use Telegram\Bot\Tests\Traits\GuzzleMock;
-use Telegram\Bot\HttpClients\GuzzleHttpClient;
 
 class BotsManagerTest extends TestCase
 {
@@ -44,9 +42,7 @@ class BotsManagerTest extends TestCase
                 ],
             ]
         );
-
     }
-
 
     /** @test a bots manager can be created */
     public function a_bots_manager_can_be_created_with_no_config()
@@ -106,7 +102,6 @@ class BotsManagerTest extends TestCase
         $this->assertArrayHasKey('bot1', $this->manager->getBots());
     }
 
-
     /** @test Duplicated commands dont cause a problem */
     public function duplicated_commands_dont_cause_a_problem()
     {
@@ -138,7 +133,7 @@ class BotsManagerTest extends TestCase
                         'admin', // Command Group Name.
                         'subscription', // Command Group Name.
                         'status', // Shared Command Name.
-                        'Acme\Project\Commands\BotCommand' // Full Path to Command Class.
+                        'Acme\Project\Commands\BotCommand', // Full Path to Command Class.
                     ],
                 ],
             ]

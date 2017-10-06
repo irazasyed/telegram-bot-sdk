@@ -3,7 +3,7 @@
 namespace Telegram\Bot\Objects\InlineQuery;
 
 /**
- * Class InlineQueryResultCachedVideo
+ * Class InlineQueryResultCachedVideo.
  *
  * <code>
  * $params = [

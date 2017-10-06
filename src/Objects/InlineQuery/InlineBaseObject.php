@@ -5,7 +5,7 @@ namespace Telegram\Bot\Objects\InlineQuery;
 use Illuminate\Support\Collection;
 
 /**
- * Class InlineBaseObject
+ * Class InlineBaseObject.
  */
 abstract class InlineBaseObject extends Collection
 {
@@ -41,6 +41,4 @@ abstract class InlineBaseObject extends Collection
 
         return $this;
     }
-
-
 }

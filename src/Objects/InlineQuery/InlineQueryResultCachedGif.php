@@ -3,7 +3,7 @@
 namespace Telegram\Bot\Objects\InlineQuery;
 
 /**
- * Class InlineQueryResultCachedGif
+ * Class InlineQueryResultCachedGif.
  *
  * <code>
  * $params = [

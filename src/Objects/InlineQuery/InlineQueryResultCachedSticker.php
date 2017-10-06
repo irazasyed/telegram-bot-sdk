@@ -3,7 +3,7 @@
 namespace Telegram\Bot\Objects\InlineQuery;
 
 /**
- * Class InlineQueryResultCachedsticker
+ * Class InlineQueryResultCachedsticker.
  *
  * <code>
  * $params = [

@@ -5,7 +5,7 @@ namespace Telegram\Bot\Traits;
 use Illuminate\Contracts\Container\Container;
 
 /**
- * HasContainer
+ * HasContainer.
  */
 trait HasContainer
 {

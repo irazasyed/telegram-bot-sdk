@@ -5,7 +5,7 @@ namespace Telegram\Bot\Keyboard;
 use Illuminate\Support\Collection;
 
 /**
- * Class Base
+ * Class Base.
  */
 class Base extends Collection
 {
@@ -26,6 +26,5 @@ class Base extends Collection
         $this->items[$property] = $args[0];
 
         return $this;
-
     }
 }

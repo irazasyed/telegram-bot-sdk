@@ -1,12 +1,13 @@
 <?php
+
 namespace Telegram\Bot\Traits;
 
 /**
- * Singleton
+ * Singleton.
  */
 trait Singleton
 {
-    static $instance;
+    public static $instance;
 
     /**
      * Returns the singleton instance of this class.

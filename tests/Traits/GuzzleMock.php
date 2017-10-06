@@ -2,13 +2,13 @@
 
 namespace Telegram\Bot\Tests\Traits;
 
+use Guzzle\Http\Exception\RequestException;
 use GuzzleHttp\Client;
+use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Middleware;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
-use GuzzleHttp\Handler\MockHandler;
-use Guzzle\Http\Exception\RequestException;
 use Illuminate\Support\Collection;
 use Telegram\Bot\HttpClients\GuzzleHttpClient;
 
@@ -23,7 +23,6 @@ trait GuzzleMock
     protected $history = [];
 
     /**
-     *
      * @param array $responsesToQueue
      *
      * @return GuzzleHttpClient
@@ -62,8 +61,8 @@ trait GuzzleMock
             $status_code,
             $headers,
             json_encode([
-                "ok"     => true,
-                "result" => $data,
+                'ok'     => true,
+                'result' => $data,
             ])
         );
     }
@@ -85,16 +84,15 @@ trait GuzzleMock
         return collect($this->history);
     }
 
-
     protected function makeFakeServerErrorResponse($error_code, $description, $status_code = 200, $headers = [])
     {
         return new Response(
             $status_code,
             $headers,
             json_encode([
-                "ok"          => false,
-                "error_code"  => $error_code,
-                "description" => "$description",
+                'ok'          => false,
+                'error_code'  => $error_code,
+                'description' => "$description",
             ])
         );
     }
@@ -103,5 +101,4 @@ trait GuzzleMock
 //    {
 //        return new RequestException($text, new Request('GET', $uri));
 //    }
-
 }

@@ -16,7 +16,6 @@ class Api
         Traits\Http,
         Traits\CommandsHandler,
         Traits\HasContainer;
-
     use Methods\Chat,
         Methods\EditMessage,
         Methods\Game,
@@ -37,7 +36,6 @@ class Api
      *
      * @param string                   $token             The Telegram Bot API Access Token.
      * @param bool                     $async             (Optional) Indicates if the request to Telegram will be asynchronous (non-blocking).
-     *
      * @param HttpClientInterface|null $httpClientHandler (Optional) Custom HTTP Client Handler.
      *
      * @throws TelegramSDKException
@@ -90,7 +88,7 @@ class Api
 
     private function validateAccessToken()
     {
-        if (! $this->accessToken || !is_string($this->accessToken)) {
+        if (!$this->accessToken || !is_string($this->accessToken)) {
             throw TelegramSDKException::tokenNotProvided(static::BOT_TOKEN_ENV_NAME);
         }
     }
