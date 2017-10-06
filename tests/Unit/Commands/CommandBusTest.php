@@ -2,11 +2,10 @@
 
 namespace Telegram\Bot\Tests\Unit\Commands;
 
-use Illuminate\Container\Container;
-use Illuminate\Support\Collection;
 use PHPUnit\Framework\TestCase;
-use Telegram\Bot\Api;
+use Illuminate\Support\Collection;
 use Telegram\Bot\Commands\Command;
+use Illuminate\Container\Container;
 use Telegram\Bot\Commands\CommandBus;
 use Telegram\Bot\Tests\Traits\CommandGenerator;
 
@@ -165,6 +164,19 @@ class CommandBusTest extends TestCase
 
         $this->assertEquals('demo', $commandName01);
         $this->assertEquals('beginning', $commandName02);
+    }
+
+    /** @test */
+    public function it_can_parse_a_command_from_a_group_of_bots()
+    {
+        $message01 = "The command is /demo@MyDemo_Bot and is in the middle of the string.";
+        $message02 = "/demo@MyDemo_Bot command is at the start of a string.";
+
+        $commandName01 = $this->bus->parseCommand($message01, 15, 16);
+        $commandName02 = $this->bus->parseCommand($message02, 0, 16);
+
+        $this->assertEquals('demo', $commandName01);
+        $this->assertEquals('demo', $commandName02);
     }
 
     /**
