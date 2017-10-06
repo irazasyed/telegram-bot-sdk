@@ -2,13 +2,13 @@
 
 namespace Telegram\Bot\Methods;
 
-use Telegram\Bot\Objects\{
-    File, User, UserProfilePhotos
-};
 use Telegram\Bot\Exceptions\TelegramSDKException;
+use Telegram\Bot\Objects\File;
+use Telegram\Bot\Objects\User;
+use Telegram\Bot\Objects\UserProfilePhotos;
 
 /**
- * Class Get
+ * Class Get.
  */
 trait Get
 {
@@ -42,11 +42,11 @@ trait Get
      *
      * @link https://core.telegram.org/bots/api#getuserprofilephotos
      *
-     * @param array $params  [
+     * @param array $params [
      *
-     * @type int    $user_id Required. Unique identifier of the target user
-     * @type int    $offset  Optional. Sequential number of the first photo to be returned. By default, all photos are returned.
-     * @type int    $limit   Optional. Limits the number of photos to be retrieved. Values between 1—100 are accepted. Defaults to 100.
+     * @var int $user_id Required. Unique identifier of the target user
+     * @var int $offset  Optional. Sequential number of the first photo to be returned. By default, all photos are returned.
+     * @var int $limit   Optional. Limits the number of photos to be retrieved. Values between 1—100 are accepted. Defaults to 100.
      *
      * ]
      *
@@ -76,9 +76,9 @@ trait Get
      *
      * @link https://core.telegram.org/bots/api#getFile
      *
-     * @param array $params  [
+     * @param array $params [
      *
-     * @type string $file_id Required. File identifier to get info about
+     * @var string $file_id Required. File identifier to get info about
      *
      * ]
      *

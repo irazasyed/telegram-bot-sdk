@@ -2,11 +2,11 @@
 
 namespace Telegram\Bot\Laravel\Artisan;
 
+use Illuminate\Console\Command;
+use Symfony\Component\Console\Helper\TableCell;
 use Telegram\Bot\Api;
 use Telegram\Bot\BotsManager;
-use Illuminate\Console\Command;
 use Telegram\Bot\Objects\WebhookInfo;
-use Symfony\Component\Console\Helper\TableCell;
 
 class WebhookCommand extends Command
 {
@@ -71,7 +71,7 @@ class WebhookCommand extends Command
     }
 
     /**
-     * Setup Webhook
+     * Setup Webhook.
      */
     protected function setupWebhook()
     {
@@ -93,12 +93,11 @@ class WebhookCommand extends Command
     }
 
     /**
-     * Remove Webhook
+     * Remove Webhook.
      */
     protected function removeWebHook()
     {
         if ($this->confirm("Are you sure you want to remove the webhook for {$this->config['bot']}?")) {
-
             $this->info('Removing webhook...');
 
             if ($this->telegram->removeWebhook()) {
@@ -112,7 +111,7 @@ class WebhookCommand extends Command
     }
 
     /**
-     * Get Webhook Info
+     * Get Webhook Info.
      */
     protected function getInfo()
     {
@@ -150,7 +149,7 @@ class WebhookCommand extends Command
         })->toArray();
 
         $this->table([
-            [new TableCell('Bot: ' . $bot, ['colspan' => 2])],
+            [new TableCell('Bot: '.$bot, ['colspan' => 2])],
             ['Key', 'Info'],
         ], $rows);
     }
@@ -167,4 +166,3 @@ class WebhookCommand extends Command
         return $value ? 'Yes' : 'No';
     }
 }
-

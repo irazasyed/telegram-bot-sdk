@@ -2,13 +2,12 @@
 
 namespace Telegram\Bot\Tests\Unit\FileUpload;
 
-use PHPUnit\Framework\TestCase;
 use GuzzleHttp\Psr7\LazyOpenStream;
+use PHPUnit\Framework\TestCase;
 use Telegram\Bot\FileUpload\InputFile;
 
 class InputFileTest extends TestCase
 {
-
     protected $tempPath;
     protected $tempFileResource;
     protected $tempStream;
@@ -19,7 +18,7 @@ class InputFileTest extends TestCase
     {
         parent::setUp();
         $this->tempPath = sys_get_temp_dir();
-        $this->tempFileName = $this->tempPath . '/TestFile.tmp';
+        $this->tempFileName = $this->tempPath.'/TestFile.tmp';
         $this->tempFileResource = fopen($this->tempFileName, 'w+');
         $this->tempStream = new LazyOpenStream($this->tempFileName, 'r');
     }
@@ -35,11 +34,10 @@ class InputFileTest extends TestCase
     public function it_detects_the_file_name_from_a_stream_or_resource_or_url_or_string()
     {
         $inputFileString = InputFile::create($this->tempFileName);
-        $inputFileUrlWithExtension = InputFile::create("http://localhost/remoteFile.tmp");
-        $inputFileUrlNoExtension = InputFile::create("http://localhost/uo13nzxcl5014pnSX7DIty16k_H47F_GulRO");
+        $inputFileUrlWithExtension = InputFile::create('http://localhost/remoteFile.tmp');
+        $inputFileUrlNoExtension = InputFile::create('http://localhost/uo13nzxcl5014pnSX7DIty16k_H47F_GulRO');
         $inputFileResource = InputFile::create($this->tempFileResource);
         $inputFileStream = InputFile::create($this->tempStream);
-
 
         $this->assertEquals('TestFile.tmp', $inputFileString->getFilename());
         $this->assertEquals('remoteFile.tmp', $inputFileUrlWithExtension->getFilename());

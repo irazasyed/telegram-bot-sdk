@@ -7,7 +7,6 @@ use Telegram\Bot\Traits\Validator;
 
 class ValidatorTest extends TestCase
 {
-
     use Validator;
 
     /** @test */
@@ -19,7 +18,6 @@ class ValidatorTest extends TestCase
         $result04 = $this->isFileId('asuperlongfilenamethatisover20characters.pdf');
 
         $result10 = $this->isFileId('AwADBAADYwADO1wlBuF1ogMa7HnMAg');
-
 
         $this->assertFalse($result01);
         $this->assertFalse($result02);

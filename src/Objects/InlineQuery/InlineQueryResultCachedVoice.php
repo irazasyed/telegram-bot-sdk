@@ -3,7 +3,7 @@
 namespace Telegram\Bot\Objects\InlineQuery;
 
 /**
- * Class InlineQueryResultCachedVoice
+ * Class InlineQueryResultCachedVoice.
  *
  * <code>
  * $params = [
@@ -25,7 +25,6 @@ namespace Telegram\Bot\Objects\InlineQuery;
  * @method $this setReplyMarkup($object)            Optional. Inline keyboard attached to the message
  * @method $this setInputMessageContent($object)    Optional. Content of the message to be sent instead of the photo
  */
-
 class InlineQueryResultCachedVoice extends InlineBaseObject
 {
     protected $type = 'voice';

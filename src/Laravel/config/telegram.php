@@ -1,4 +1,5 @@
 <?php
+
 return [
     /*
     |--------------------------------------------------------------------------
@@ -32,11 +33,11 @@ return [
     */
     'bots'                         => [
         'mybot' => [
-            'username' => 'TelegramBot',
-            'token'    => env('TELEGRAM_BOT_TOKEN', 'YOUR-BOT-TOKEN'),
+            'username'            => 'TelegramBot',
+            'token'               => env('TELEGRAM_BOT_TOKEN', 'YOUR-BOT-TOKEN'),
             'certificate_path'    => env('TELEGRAM_CERTIFICATE_PATH', 'YOUR-CERTIFICATE-PATH'),
-            'webhook_url'    => env('TELEGRAM_WEBHOOK_URL', 'YOUR-BOT-WEBHOOK-URL'),
-            'commands' => [
+            'webhook_url'         => env('TELEGRAM_WEBHOOK_URL', 'YOUR-BOT-WEBHOOK-URL'),
+            'commands'            => [
                 //Acme\Project\Commands\MyTelegramBot\BotCommand::class
             ],
         ],
@@ -46,7 +47,6 @@ return [
 //            'token' => '123456:abc',
 //        ],
     ],
-
 
     /*
     |--------------------------------------------------------------------------

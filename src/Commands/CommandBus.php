@@ -2,12 +2,12 @@
 
 namespace Telegram\Bot\Commands;
 
-use Telegram\Bot\Api;
-use Telegram\Bot\Objects\Update;
-use Telegram\Bot\Traits\Singleton;
 use Illuminate\Support\Collection;
 use Telegram\Bot\Answers\AnswerBus;
+use Telegram\Bot\Api;
 use Telegram\Bot\Exceptions\TelegramSDKException;
+use Telegram\Bot\Objects\Update;
+use Telegram\Bot\Traits\Singleton;
 
 /**
  * Class CommandBus.
@@ -133,7 +133,6 @@ class CommandBus extends AnswerBus
      * Parse a Command for a Match.
      *
      * @param $text
-     *
      * @param $offset
      * @param $length
      *
@@ -178,14 +177,13 @@ class CommandBus extends AnswerBus
                 ->each(function (array $botCommand) use ($update) {
                     $this->process($botCommand, $update);
                 });
-
         }
 
         return $update;
     }
 
     /**
-     * Returns all bot_commands detected in the update
+     * Returns all bot_commands detected in the update.
      *
      * @param $message
      *
@@ -200,7 +198,7 @@ class CommandBus extends AnswerBus
     }
 
     /**
-     * Execute a bot command from the update text
+     * Execute a bot command from the update text.
      *
      * @param array  $entity
      * @param Update $update
@@ -215,7 +213,6 @@ class CommandBus extends AnswerBus
 
         $this->execute($command, $update, $entity);
     }
-
 
     /**
      * Execute the command.
@@ -238,8 +235,9 @@ class CommandBus extends AnswerBus
     /**
      * @param $command
      *
-     * @return object
      * @throws \Telegram\Bot\Exceptions\TelegramSDKException
+     *
+     * @return object
      */
     private function resolveCommand($command)
     {
@@ -288,8 +286,9 @@ class CommandBus extends AnswerBus
     /**
      * @param $command
      *
-     * @return object
      * @throws \Telegram\Bot\Exceptions\TelegramSDKException
+     *
+     * @return object
      */
     private function makeCommandObj($command)
     {

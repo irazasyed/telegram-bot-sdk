@@ -20,5 +20,4 @@ namespace Telegram\Bot\Objects;
  */
 class ResponseParameters
 {
-
 }

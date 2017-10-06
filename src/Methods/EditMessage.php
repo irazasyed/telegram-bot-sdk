@@ -2,11 +2,11 @@
 
 namespace Telegram\Bot\Methods;
 
-use Telegram\Bot\Objects\Message;
 use Telegram\Bot\Exceptions\TelegramSDKException;
+use Telegram\Bot\Objects\Message;
 
 /**
- * Class EditMessage
+ * Class EditMessage.
  */
 trait EditMessage
 {
@@ -27,15 +27,15 @@ trait EditMessage
      *
      * @link https://core.telegram.org/bots/api#editmessagetext
      *
-     * @param array     $params                   [
+     * @param array $params [
      *
-     * @type int|string $chat_id                  Optional. Required if inline_message_id is not specified. Unique identifier for the target chat or username of the target channel (in the format @channelusername)
-     * @type int        $message_id               Optional. Required if inline_message_id is not specified. Identifier of the sent message
-     * @type string     $inline_message_id        Optional. Required if chat_id and message_id are not specified. Identifier of the inline message
-     * @type string     $text                     Required. New text of the message.
-     * @type string     $parse_mode               Optional. Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in your bot's message.
-     * @type bool       $disable_web_page_preview Optional. Disables link previews for links in this message
-     * @type string     $reply_markup             Optional. A JSON-serialized object for an inline keyboard.
+     * @var int|string $chat_id                  Optional. Required if inline_message_id is not specified. Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @var int        $message_id               Optional. Required if inline_message_id is not specified. Identifier of the sent message
+     * @var string     $inline_message_id        Optional. Required if chat_id and message_id are not specified. Identifier of the inline message
+     * @var string     $text                     Required. New text of the message.
+     * @var string     $parse_mode               Optional. Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in your bot's message.
+     * @var bool       $disable_web_page_preview Optional. Disables link previews for links in this message
+     * @var string     $reply_markup             Optional. A JSON-serialized object for an inline keyboard.
      *
      * ]
      *
@@ -65,15 +65,16 @@ trait EditMessage
      *
      * @link https://core.telegram.org/bots/api#editmessagecaption
      *
-     * @param array     $params            [
+     * @param array $params [
      *
-     * @type int|string $chat_id           Optional. Required if inline_message_id is not specified. Unique identifier for the target chat or username of the target channel (in the format @channelusername)
-     * @type int        $message_id        Optional. Required if inline_message_id is not specified. Identifier of the sent message
-     * @type string     $inline_message_id Optional. Required if chat_id and message_id are not specified. Identifier of the inline message
-     * @type string     $caption           Optional. New caption of the message
-     * @type string     $reply_markup      Optional. A JSON-serialized object for an inline keyboard.
+     * @var int|string $chat_id           Optional. Required if inline_message_id is not specified. Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @var int        $message_id        Optional. Required if inline_message_id is not specified. Identifier of the sent message
+     * @var string     $inline_message_id Optional. Required if chat_id and message_id are not specified. Identifier of the inline message
+     * @var string     $caption           Optional. New caption of the message
+     * @var string     $reply_markup      Optional. A JSON-serialized object for an inline keyboard.
      *
      * ]
+     *
      * @throws TelegramSDKException
      *
      * @return Message|bool
@@ -99,12 +100,12 @@ trait EditMessage
      *
      * @link https://core.telegram.org/bots/api#editmessagereplymarkup
      *
-     * @param array     $params            [
+     * @param array $params [
      *
-     * @type int|string $chat_id           Optional. Required if inline_message_id is not specified. Unique identifier for the target chat or username of the target channel (in the format @channelusername)
-     * @type int        $message_id        Optional. Required if inline_message_id is not specified. Identifier of the sent message
-     * @type string     $inline_message_id Optional. Required if chat_id and message_id are not specified. Identifier of the inline message
-     * @type string     $reply_markup      Optional. A JSON-serialized object for an inline keyboard.
+     * @var int|string $chat_id           Optional. Required if inline_message_id is not specified. Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @var int        $message_id        Optional. Required if inline_message_id is not specified. Identifier of the sent message
+     * @var string     $inline_message_id Optional. Required if chat_id and message_id are not specified. Identifier of the inline message
+     * @var string     $reply_markup      Optional. A JSON-serialized object for an inline keyboard.
      *
      * ]
      *

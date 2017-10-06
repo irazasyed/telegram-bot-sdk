@@ -6,7 +6,7 @@ use Telegram\Bot\Objects\Update;
 use Telegram\Bot\Traits\Telegram;
 
 /**
- * Class Answerable
+ * Class Answerable.
  *
  * @method mixed replyWithMessage($use_sendMessage_parameters)       Reply Chat with a message. You can use all the sendMessage() parameters except chat_id.
  * @method mixed replyWithPhoto($use_sendPhoto_parameters)           Reply Chat with a Photo. You can use all the sendPhoto() parameters except chat_id.
@@ -41,7 +41,7 @@ trait Answerable
             throw new \BadMethodCallException("Method [$method] does not exist.");
         }
         $reply_name = studly_case(substr($method, 9));
-        $methodName = 'send' . $reply_name;
+        $methodName = 'send'.$reply_name;
 
         if (!method_exists($this->telegram, $methodName)) {
             throw new \BadMethodCallException("Method [$method] does not exist.");
@@ -55,8 +55,6 @@ trait Answerable
 
         return call_user_func_array([$this->telegram, $methodName], [$params]);
     }
-
-
 
     /**
      * Returns Update object.

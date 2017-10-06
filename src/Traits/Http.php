@@ -11,7 +11,7 @@ use Telegram\Bot\TelegramRequest;
 use Telegram\Bot\TelegramResponse;
 
 /**
- * Http
+ * Http.
  */
 trait Http
 {
@@ -207,7 +207,7 @@ trait Http
     protected function replyMarkupToString(array $params): array
     {
         if (isset($params['reply_markup'])) {
-            $params['reply_markup'] = (string)$params['reply_markup'];
+            $params['reply_markup'] = (string) $params['reply_markup'];
         }
 
         return $params;
@@ -222,6 +222,7 @@ trait Http
      * @param string $inputFileField
      *
      * @throws CouldNotUploadInputFile
+     *
      * @return TelegramResponse
      */
     protected function uploadFile(string $endpoint, array $params, $inputFileField): TelegramResponse
@@ -246,6 +247,7 @@ trait Http
      * @param string $inputFileField
      *
      * @throws CouldNotUploadInputFile
+     *
      * @return array
      */
     protected function prepareMultipartParams(array $params, $inputFileField): array
@@ -277,13 +279,12 @@ trait Http
         if (!$this->isInputFile($contents)) {
             return compact('name', 'contents');
         }
-        
+
         $filename = $contents->getFilename();
         $contents = $contents->getContents();
 
         return compact('name', 'contents', 'filename');
     }
-
 
     /**
      * Sends a request to Telegram Bot API and returns the result.
@@ -328,17 +329,19 @@ trait Http
     /**
      * @param array $params
      * @param $inputFileField
-     * @return array
+     *
      * @throws \Telegram\Bot\Exceptions\CouldNotUploadInputFile
+     *
+     * @return array
      */
     protected function validateInputFileField(array $params, $inputFileField)
     {
-        if (! isset($params[$inputFileField])) {
+        if (!isset($params[$inputFileField])) {
             throw CouldNotUploadInputFile::missingParam($inputFileField);
         }
 
         //All file-paths, urls, or file resources should be provided by using the InputFile object
-        if (! $params[$inputFileField] instanceof InputFile) {
+        if (!$params[$inputFileField] instanceof InputFile) {
             throw CouldNotUploadInputFile::inputFileParameterShouldBeInputFileEntity($inputFileField);
         }
     }
@@ -346,6 +349,7 @@ trait Http
     /**
      * @param array $params
      * @param $fileUpload
+     *
      * @return array
      */
     private function normalizeParams(array $params, $fileUpload)
@@ -353,6 +357,7 @@ trait Http
         if ($fileUpload) {
             return ['multipart' => $params];
         }
+
         return ['form_params' => $this->replyMarkupToString($params)];
     }
 }

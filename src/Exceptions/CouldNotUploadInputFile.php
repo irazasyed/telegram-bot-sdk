@@ -27,7 +27,7 @@ class CouldNotUploadInputFile extends TelegramSDKException
         $file = is_string($path) ? $path : "the resource that you're trying to upload";
 
         return new static(
-            "Filename not provided for {$file}. " .
+            "Filename not provided for {$file}. ".
             'Remote or Resource file uploads require a filename. Refer Docs for more information.'
         );
     }

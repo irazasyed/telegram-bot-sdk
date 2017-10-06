@@ -54,7 +54,7 @@ class Update extends BaseObject
     }
 
     /**
-     * Determine if the update is of given type
+     * Determine if the update is of given type.
      *
      * @param string $type
      *
@@ -92,7 +92,7 @@ class Update extends BaseObject
     }
 
     /**
-     * Get the message contained in the Update
+     * Get the message contained in the Update.
      *
      * @return Message|EditedMessage|Collection
      */
@@ -119,7 +119,7 @@ class Update extends BaseObject
     }
 
     /**
-     * Get chat object (if exists)
+     * Get chat object (if exists).
      *
      * @return Chat|Collection
      */
@@ -129,5 +129,4 @@ class Update extends BaseObject
 
         return $message->has('chat') ? $message->get('chat') : collect();
     }
-
 }

@@ -3,7 +3,7 @@
 namespace Telegram\Bot\Keyboard;
 
 /**
- * Class Keyboard
+ * Class Keyboard.
  *
  * <code>
  * // For Standard Keyboard
@@ -66,7 +66,6 @@ class Keyboard extends Base
      */
     public function row(...$buttons): Keyboard
     {
-
         $property = $this->isInlineKeyboard() ? 'inline_keyboard' : 'keyboard';
         $this->items[$property][] = $buttons;
 
@@ -93,11 +92,11 @@ class Keyboard extends Base
      *
      * @link https://core.telegram.org/bots/api#keyboardbutton
      *
-     * @param string|array $params           [
+     * @param string|array $params [
      *
-     * @type string        $text             Required. Text of the button. If none of the optional fields are used, it will be sent to the bot as a message when the button is pressed
-     * @type bool          $request_contact  Optional. If True, the user's phone number will be sent as a contact when the button is pressed. Available in private chats only
-     * @type bool          $request_location Optional. If True, the user's current location will be sent when the button is pressed. Available in private chats only
+     * @var string $text             Required. Text of the button. If none of the optional fields are used, it will be sent to the bot as a message when the button is pressed
+     * @var bool   $request_contact  Optional. If True, the user's phone number will be sent as a contact when the button is pressed. Available in private chats only
+     * @var bool   $request_location Optional. If True, the user's current location will be sent when the button is pressed. Available in private chats only
      *
      * ]
      *
@@ -131,14 +130,14 @@ class Keyboard extends Base
      *
      * @link https://core.telegram.org/bots/api#inlinekeyboardbutton
      *
-     * @param array $params                           [
+     * @param array $params [
      *
-     * @type string        $text                             Required. Label text on the button
-     * @type string        $url                              Optional. HTTP url to be opened when button is pressed
-     * @type string        $callback_data                    Optional. Data to be sent in a callback query to the bot when button is pressed, 1-64 bytes
-     * @type string        $switch_inline_query              Optional. If set, pressing the button will prompt the user to select one of their chats, open that chat and insert the bot‘s username and the specified inline query in the input field. Can be empty, in which case just the bot’s username will be inserted.
-     * @type string        $switch_inline_query_current_chat Optional. If set, pressing the button will insert the bot‘s username and the specified inline query in the current chat's input field. Can be empty, in which case only the bot’s username will be inserted.
-     * @type string        $callback_game                    Optional. Description of the game that will be launched when the user presses the button. NOTE: This type of button must always be the first button in the first row.
+     * @var string $text                             Required. Label text on the button
+     * @var string $url                              Optional. HTTP url to be opened when button is pressed
+     * @var string $callback_data                    Optional. Data to be sent in a callback query to the bot when button is pressed, 1-64 bytes
+     * @var string $switch_inline_query              Optional. If set, pressing the button will prompt the user to select one of their chats, open that chat and insert the bot‘s username and the specified inline query in the input field. Can be empty, in which case just the bot’s username will be inserted.
+     * @var string $switch_inline_query_current_chat Optional. If set, pressing the button will insert the bot‘s username and the specified inline query in the current chat's input field. Can be empty, in which case only the bot’s username will be inserted.
+     * @var string $callback_game                    Optional. Description of the game that will be launched when the user presses the button. NOTE: This type of button must always be the first button in the first row.
      *
      * ]
      *
@@ -161,10 +160,10 @@ class Keyboard extends Base
      *
      * @link https://core.telegram.org/bots/api#replykeyboardremove
      *
-     * @param array $params          [
+     * @param array $params [
      *
-     * @type bool   $remove_keyboard Required. Requests clients to remove the custom keyboard (user will not be able to summon this keyboard; if you want to hide the keyboard from sight but keep it accessible, use one_time_keyboard in ReplyKeyboardMarkup)
-     * @type bool   $selective       Optional. Use this parameter if you want to remove the keyboard for specific users only. Targets: 1) users that are @mentioned in the text of the Message object; 2) if the bot's message is a reply (has reply_to_message_id), sender of the original message.
+     * @var bool $remove_keyboard Required. Requests clients to remove the custom keyboard (user will not be able to summon this keyboard; if you want to hide the keyboard from sight but keep it accessible, use one_time_keyboard in ReplyKeyboardMarkup)
+     * @var bool $selective       Optional. Use this parameter if you want to remove the keyboard for specific users only. Targets: 1) users that are @mentioned in the text of the Message object; 2) if the bot's message is a reply (has reply_to_message_id), sender of the original message.
      *
      * ]
      *
@@ -187,10 +186,10 @@ class Keyboard extends Base
      *
      * @link https://core.telegram.org/bots/api#forcereply
      *
-     * @param array $params      [
+     * @param array $params [
      *
-     * @type bool   $force_reply Required. Shows reply interface to the user, as if they manually selected the bot‘s message and tapped ’Reply'
-     * @type bool   $selective   Optional. Use this parameter if you want to force reply from specific users only. Targets: 1) users that are @mentioned in the text of the Message object; 2) if the bot's message is a reply (has reply_to_message_id), sender of the original message.
+     * @var bool $force_reply Required. Shows reply interface to the user, as if they manually selected the bot‘s message and tapped ’Reply'
+     * @var bool $selective   Optional. Use this parameter if you want to force reply from specific users only. Targets: 1) users that are @mentioned in the text of the Message object; 2) if the bot's message is a reply (has reply_to_message_id), sender of the original message.
      *
      * ]
      *

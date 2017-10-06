@@ -5,7 +5,6 @@ namespace Telegram\Bot\Tests\Unit\Methods;
 use PHPUnit\Framework\TestCase;
 use Telegram\Bot\Methods\Update;
 
-
 class UpdateTest extends TestCase
 {
     use Update;
@@ -31,5 +30,4 @@ class UpdateTest extends TestCase
             'url' => 'not a valid url',
         ]);
     }
-
 }

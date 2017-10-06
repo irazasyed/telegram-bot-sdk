@@ -4,8 +4,8 @@ namespace Telegram\Bot\Tests\Unit\Commands;
 
 use PHPUnit\Framework\TestCase;
 use Telegram\Bot\Api;
-use Telegram\Bot\Objects\Update;
 use Telegram\Bot\Commands\Command;
+use Telegram\Bot\Objects\Update;
 
 class CommandTest extends TestCase
 {
@@ -29,13 +29,13 @@ class CommandTest extends TestCase
     {
         //Condensed update data
         $update = new Update([
-            "message" => [
-                "text"     => "This /demo john ",
-                "entities" => [
+            'message' => [
+                'text'     => 'This /demo john ',
+                'entities' => [
                     [
-                        "type"   => "bot_command",
-                        "offset" => 5,
-                        "length" => 5,
+                        'type'   => 'bot_command',
+                        'offset' => 5,
+                        'length' => 5,
                     ],
                 ],
             ],

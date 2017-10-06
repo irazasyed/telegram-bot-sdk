@@ -5,7 +5,7 @@ namespace Telegram\Bot\Objects\InputContent;
 use Telegram\Bot\Objects\InlineQuery\InlineBaseObject;
 
 /**
- * Class InputLocationMessageContent
+ * Class InputLocationMessageContent.
  *
  * <code>
  * $params = [
@@ -18,5 +18,4 @@ use Telegram\Bot\Objects\InlineQuery\InlineBaseObject;
  */
 class InputLocationMessageContent extends InlineBaseObject
 {
-
 }

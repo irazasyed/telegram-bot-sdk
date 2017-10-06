@@ -7,7 +7,7 @@ use Telegram\Bot\Api;
 use Telegram\Bot\Objects\Update;
 
 /**
- * Class UpdateWasReceived
+ * Class UpdateWasReceived.
  */
 class UpdateWasReceived extends AbstractEvent
 {

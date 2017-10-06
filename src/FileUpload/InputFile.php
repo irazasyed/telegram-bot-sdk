@@ -85,8 +85,9 @@ class InputFile
     /**
      * Return the name of the file.
      *
-     * @return string
      * @throws CouldNotUploadInputFile
+     *
+     * @return string
      */
     public function getFilename(): string
     {
@@ -101,14 +102,15 @@ class InputFile
      * Attempts to access the meta data in the stream or resource to determine what
      * the filename should be if the user did not supply one.
      *
-     * @return string
      * @throws CouldNotUploadInputFile
+     *
+     * @return string
      */
     protected function attemptFileNameDetection()
     {
         if ($uri = $this->getUriMetaDataFromStream()) {
             return basename($uri);
-        };
+        }
 
         throw CouldNotUploadInputFile::filenameNotProvided($this->file);
     }
@@ -133,8 +135,9 @@ class InputFile
      *
      * @param $filename
      *
-     * @return InputFile
      * @throws \InvalidArgumentException
+     *
+     * @return InputFile
      */
     public function setFilename($filename): InputFile
     {
@@ -176,8 +179,9 @@ class InputFile
     /**
      * Opens remote & local file.
      *
-     * @return StreamInterface|resource|string
      * @throws CouldNotUploadInputFile
+     *
+     * @return StreamInterface|resource|string
      */
     protected function open()
     {
@@ -224,11 +228,11 @@ class InputFile
     /**
      * Determine if it's a local file and exists.
      *
+     * @throws CouldNotUploadInputFile
+     *
      * @return bool true if the file exists and readable, false if it's not a
      *              local file. Throws exception if the file doesn't exist or
      *              is not readable otherwise.
-     *
-     * @throws CouldNotUploadInputFile
      */
     protected function isFileLocalAndExists(): bool
     {

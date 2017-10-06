@@ -2,13 +2,12 @@
 
 namespace Telegram\Bot\Methods;
 
-use Telegram\Bot\Objects\{
-    Chat as ChatObject, ChatMember
-};
 use Telegram\Bot\Exceptions\TelegramSDKException;
+use Telegram\Bot\Objects\Chat as ChatObject;
+use Telegram\Bot\Objects\ChatMember;
 
 /**
- * Class Chat
+ * Class Chat.
  */
 trait Chat
 {
@@ -32,10 +31,10 @@ trait Chat
      *
      * @link https://core.telegram.org/bots/api#kickchatmember
      *
-     * @param array     $params  [
+     * @param array $params [
      *
-     * @type int|string $chat_id Unique identifier for the target group or username of the target supergroup (in the format @supergroupusername)
-     * @type int        $user_id Unique identifier of the target user.
+     * @var int|string $chat_id Unique identifier for the target group or username of the target supergroup (in the format @supergroupusername)
+     * @var int        $user_id Unique identifier of the target user.
      *
      * ]
      *
@@ -59,9 +58,9 @@ trait Chat
      *
      * @link https://core.telegram.org/bots/api#leavechat
      *
-     * @param array     $params  [
+     * @param array $params [
      *
-     * @type string|int $chat_id Unique identifier for the target chat or username of the target supergroup or channel (in the format @channelusername)
+     * @var string|int $chat_id Unique identifier for the target chat or username of the target supergroup or channel (in the format @channelusername)
      *
      * ]
      *
@@ -90,10 +89,10 @@ trait Chat
      *
      * @link https://core.telegram.org/bots/api#unbanchatmember
      *
-     * @param array     $params  [
+     * @param array $params [
      *
-     * @type int|string $chat_id Unique identifier for the target group or username of the target supergroup (in the format @supergroupusername)
-     * @type int        $user_id Unique identifier of the target user.
+     * @var int|string $chat_id Unique identifier for the target group or username of the target supergroup (in the format @supergroupusername)
+     * @var int        $user_id Unique identifier of the target user.
      *
      * ]
      *
@@ -118,9 +117,9 @@ trait Chat
      *
      * @link https://core.telegram.org/bots/api#getchat
      *
-     * @param array     $params  [
+     * @param array $params [
      *
-     * @type string|int $chat_id Unique identifier for the target chat or username of the target supergroup or channel (in the format @channelusername)
+     * @var string|int $chat_id Unique identifier for the target chat or username of the target supergroup or channel (in the format @channelusername)
      *
      * ]
      *
@@ -146,9 +145,9 @@ trait Chat
      *
      * @link https://core.telegram.org/bots/api#getchatadministrators
      *
-     * @param array     $params  [
+     * @param array $params [
      *
-     * @type string|int $chat_id Unique identifier for the target chat or username of the target supergroup or channel (in the format @channelusername);
+     * @var string|int $chat_id Unique identifier for the target chat or username of the target supergroup or channel (in the format @channelusername);
      *
      * ]
      *
@@ -168,7 +167,7 @@ trait Chat
     }
 
     /**
-     * Get the number of members in a chat
+     * Get the number of members in a chat.
      *
      * <code>
      * $params = [
@@ -178,9 +177,9 @@ trait Chat
      *
      * @link https://core.telegram.org/bots/api#getchatmemberscount
      *
-     * @param array     $params  [
+     * @param array $params [
      *
-     * @type string|int $chat_id Unique identifier for the target chat or username of the target supergroup or channel (in the format @channelusername).
+     * @var string|int $chat_id Unique identifier for the target chat or username of the target supergroup or channel (in the format @channelusername).
      *
      * ]
      *
@@ -205,10 +204,10 @@ trait Chat
      *
      * @link https://core.telegram.org/bots/api#getchatmember
      *
-     * @param array     $params  [
+     * @param array $params [
      *
-     * @type string|int $chat_id Unique identifier for the target chat or username of the target supergroup or channel (in the format @channelusername).
-     * @type int        $user_id Unique identifier of the target user.
+     * @var string|int $chat_id Unique identifier for the target chat or username of the target supergroup or channel (in the format @channelusername).
+     * @var int        $user_id Unique identifier of the target user.
      *
      * ]
      *

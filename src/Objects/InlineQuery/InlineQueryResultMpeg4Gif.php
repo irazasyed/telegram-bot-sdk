@@ -3,7 +3,7 @@
 namespace Telegram\Bot\Objects\InlineQuery;
 
 /**
- * Class InlineQueryResultMpeg4Gif
+ * Class InlineQueryResultMpeg4Gif.
  *
  * <code>
  * $params = [
@@ -31,7 +31,6 @@ namespace Telegram\Bot\Objects\InlineQuery;
  * @method $this setReplyMarkup($object)         Optional. Inline keyboard attached to the message
  * @method $this setInputMessageContent($object) Optional. Content of the message to be sent instead of the photo
  */
-
 class InlineQueryResultMpeg4Gif extends InlineBaseObject
 {
     protected $type = 'mpeg4_gif';

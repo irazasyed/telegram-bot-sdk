@@ -6,6 +6,7 @@ use Illuminate\Support\Collection;
 
 /**
  * Class BaseObject.
+ *
  * @mixin Collection
  */
 abstract class BaseObject extends Collection
@@ -142,6 +143,5 @@ abstract class BaseObject extends Collection
         $property = substr($name, 3);
 
         return $this->getPropertyValue($property);
-
     }
 }

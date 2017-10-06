@@ -3,7 +3,7 @@
 namespace Telegram\Bot\Objects\InlineQuery;
 
 /**
- * Class InlineQueryResultAudio
+ * Class InlineQueryResultAudio.
  *
  * <code>
  * $params = [

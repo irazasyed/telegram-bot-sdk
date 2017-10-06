@@ -2,16 +2,14 @@
 
 namespace Telegram\Bot\Tests\Unit\Commands;
 
-use PHPUnit\Framework\TestCase;
 use Illuminate\Support\Collection;
+use PHPUnit\Framework\TestCase;
 use Telegram\Bot\Commands\Command;
-use Illuminate\Container\Container;
 use Telegram\Bot\Commands\CommandBus;
 use Telegram\Bot\Tests\Traits\CommandGenerator;
 
 class CommandBusTest extends TestCase
 {
-
     use CommandGenerator;
 
     /**
@@ -52,7 +50,6 @@ class CommandBusTest extends TestCase
         $this->assertCount(4, $result);
     }
 
-
     /**
      * @test
      * @expectedException \Telegram\Bot\Exceptions\TelegramSDKException
@@ -68,12 +65,10 @@ class CommandBusTest extends TestCase
      */
     public function it_throws_an_exception_if_command_is_not_an_instance_of_command_interface()
     {
-        $this->bus->addCommand(new class
-            {
-            }
+        $this->bus->addCommand(new class() {
+        }
         );
     }
-
 
     /**
      * @test
@@ -84,8 +79,8 @@ class CommandBusTest extends TestCase
         $this->bus->addCommands($this->commandGenerator(3)->all());
 
         $mockCommand = $this->prophesize(Command::class);
-        $mockCommand->getName()->willReturn("MockCommand4");
-        $mockCommand->getAliases()->willReturn(["MockAlias2"]);
+        $mockCommand->getName()->willReturn('MockCommand4');
+        $mockCommand->getAliases()->willReturn(['MockAlias2']);
 
         $this->bus->addCommand($mockCommand->reveal());
     }
@@ -99,12 +94,11 @@ class CommandBusTest extends TestCase
         $this->bus->addCommands($this->commandGenerator(3)->all());
 
         $mockCommand = $this->prophesize(Command::class);
-        $mockCommand->getName()->willReturn("MockCommand4");
-        $mockCommand->getAliases()->willReturn(["MockCommand1"]);
+        $mockCommand->getName()->willReturn('MockCommand4');
+        $mockCommand->getAliases()->willReturn(['MockCommand1']);
 
         $this->bus->addCommand($mockCommand->reveal());
     }
-
 
     /** @test */
     public function it_can_remove_a_command_from_the_bus()
@@ -156,8 +150,8 @@ class CommandBusTest extends TestCase
     /** @test */
     public function it_can_return_the_command_name_from_a_message_correctly_ignoring_the_slash()
     {
-        $message01 = "The command is /demo and is in the middle of the string.";
-        $message02 = "/beginning command is at the start of a string.";
+        $message01 = 'The command is /demo and is in the middle of the string.';
+        $message02 = '/beginning command is at the start of a string.';
 
         $commandName01 = $this->bus->parseCommand($message01, 15, 5);
         $commandName02 = $this->bus->parseCommand($message02, 0, 10);
@@ -169,8 +163,8 @@ class CommandBusTest extends TestCase
     /** @test */
     public function it_can_parse_a_command_from_a_group_of_bots()
     {
-        $message01 = "The command is /demo@MyDemo_Bot and is in the middle of the string.";
-        $message02 = "/demo@MyDemo_Bot command is at the start of a string.";
+        $message01 = 'The command is /demo@MyDemo_Bot and is in the middle of the string.';
+        $message02 = '/demo@MyDemo_Bot command is at the start of a string.';
 
         $commandName01 = $this->bus->parseCommand($message01, 15, 16);
         $commandName02 = $this->bus->parseCommand($message02, 0, 16);
@@ -185,7 +179,7 @@ class CommandBusTest extends TestCase
      */
     public function it_throws_an_exception_if_parsing_for_a_command_in_a_message_with_no_text()
     {
-        $message = "";
+        $message = '';
 
         $this->bus->parseCommand($message, 5, 5);
     }

@@ -2,23 +2,23 @@
 
 namespace Telegram\Bot\Tests\Integration;
 
+use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Psr7\Stream;
 use League\Event\Emitter;
+use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Telegram\Bot\Api;
-use GuzzleHttp\Psr7\Stream;
-use GuzzleHttp\Psr7\Request;
-use PHPUnit\Framework\TestCase;
 use Telegram\Bot\Commands\CommandBus;
+use Telegram\Bot\Events\UpdateWasReceived;
+use Telegram\Bot\Exceptions\TelegramResponseException;
+use Telegram\Bot\FileUpload\InputFile;
+use Telegram\Bot\HttpClients\GuzzleHttpClient;
 use Telegram\Bot\Objects\Message;
 use Telegram\Bot\Objects\Update;
 use Telegram\Bot\TelegramResponse;
-use Telegram\Bot\FileUpload\InputFile;
-use function GuzzleHttp\Psr7\stream_for;
 use Telegram\Bot\Tests\Traits\CommandGenerator;
 use Telegram\Bot\Tests\Traits\GuzzleMock;
-use Telegram\Bot\Events\UpdateWasReceived;
-use Telegram\Bot\HttpClients\GuzzleHttpClient;
-use Telegram\Bot\Exceptions\TelegramResponseException;
+use function GuzzleHttp\Psr7\stream_for;
 
 class TelegramApiTest extends TestCase
 {
@@ -90,7 +90,6 @@ class TelegramApiTest extends TestCase
         $this->assertInternalType('array', $result);
     }
 
-
     /** @test */
     public function the_correct_bot_url_is_used_when_a_request_is_made()
     {
@@ -123,7 +122,7 @@ class TelegramApiTest extends TestCase
         /** @var Request $request */
         $request = $this->getHistory()->pluck('request')->first();
 
-        $this->assertEquals('', $request->getBody(), "The get request had a body when it should be blank.");
+        $this->assertEquals('', $request->getBody(), 'The get request had a body when it should be blank.');
         $this->assertEquals('https', $request->getUri()->getScheme());
         $this->assertEquals('api.telegram.org', $request->getUri()->getHost());
         $this->assertEquals('/botSpecial_Bot_Token/getChatMember', $request->getUri()->getPath());
@@ -143,7 +142,6 @@ class TelegramApiTest extends TestCase
             'reply_to_message_id'      => 99999999,
         ];
 
-
         $api = $this->getApi($this->getGuzzleHttpClient([$fakeResponse]), 'Special_Bot_Token');
         $api->sendMessage($params);
 
@@ -151,7 +149,7 @@ class TelegramApiTest extends TestCase
         $request = $this->getHistory()->pluck('request')->first();
 
         $this->assertInstanceOf(Stream::class, $request->getBody());
-        $this->assertEquals(http_build_query($params), (string)$request->getBody());
+        $this->assertEquals(http_build_query($params), (string) $request->getBody());
         $this->assertEquals('https', $request->getUri()->getScheme());
         $this->assertEquals('api.telegram.org', $request->getUri()->getHost());
         $this->assertEquals('/botSpecial_Bot_Token/sendMessage', $request->getUri()->getPath());
@@ -163,89 +161,89 @@ class TelegramApiTest extends TestCase
     {
         $data1 = [
             [
-                "update_id" => 377695760,
-                "message"   => [
-                    "message_id" => 749,
-                    "from"       => [
-                        "id"         => 123456789,
-                        "first_name" => "John",
-                        "last_name"  => "Doe",
-                        "username"   => "jdoe",
+                'update_id' => 377695760,
+                'message'   => [
+                    'message_id' => 749,
+                    'from'       => [
+                        'id'         => 123456789,
+                        'first_name' => 'John',
+                        'last_name'  => 'Doe',
+                        'username'   => 'jdoe',
                     ],
-                    "chat"       => [
-                        "id"         => 123456789,
-                        "first_name" => "John",
-                        "last_name"  => "Doe",
-                        "username"   => "jdoe",
-                        "type"       => "private",
+                    'chat'       => [
+                        'id'         => 123456789,
+                        'first_name' => 'John',
+                        'last_name'  => 'Doe',
+                        'username'   => 'jdoe',
+                        'type'       => 'private',
                     ],
-                    "date"       => 1494623093,
-                    "text"       => "Test1",
+                    'date'       => 1494623093,
+                    'text'       => 'Test1',
                 ],
             ],
             [
-                "update_id" => 377695761,
-                "message"   => [
-                    "message_id" => 750,
-                    "from"       => [
-                        "id"         => 123456789,
-                        "first_name" => "John",
-                        "last_name"  => "Doe",
-                        "username"   => "jdoe",
+                'update_id' => 377695761,
+                'message'   => [
+                    'message_id' => 750,
+                    'from'       => [
+                        'id'         => 123456789,
+                        'first_name' => 'John',
+                        'last_name'  => 'Doe',
+                        'username'   => 'jdoe',
                     ],
-                    "chat"       => [
-                        "id"         => 123456789,
-                        "first_name" => "John",
-                        "last_name"  => "Doe",
-                        "username"   => "jdoe",
-                        "type"       => "private",
+                    'chat'       => [
+                        'id'         => 123456789,
+                        'first_name' => 'John',
+                        'last_name'  => 'Doe',
+                        'username'   => 'jdoe',
+                        'type'       => 'private',
                     ],
-                    "date"       => 1494623095,
-                    "text"       => "Test2",
+                    'date'       => 1494623095,
+                    'text'       => 'Test2',
                 ],
             ],
         ];
         $data2 = [
             [
-                "update_id" => 377695762,
-                "message"   => [
-                    "message_id" => 751,
-                    "from"       => [
-                        "id"         => 123456789,
-                        "first_name" => "John",
-                        "last_name"  => "Doe",
-                        "username"   => "jdoe",
+                'update_id' => 377695762,
+                'message'   => [
+                    'message_id' => 751,
+                    'from'       => [
+                        'id'         => 123456789,
+                        'first_name' => 'John',
+                        'last_name'  => 'Doe',
+                        'username'   => 'jdoe',
                     ],
-                    "chat"       => [
-                        "id"         => 123456789,
-                        "first_name" => "John",
-                        "last_name"  => "Doe",
-                        "username"   => "jdoe",
-                        "type"       => "private",
+                    'chat'       => [
+                        'id'         => 123456789,
+                        'first_name' => 'John',
+                        'last_name'  => 'Doe',
+                        'username'   => 'jdoe',
+                        'type'       => 'private',
                     ],
-                    "date"       => 1494623093,
-                    "text"       => "Test3",
+                    'date'       => 1494623093,
+                    'text'       => 'Test3',
                 ],
             ],
             [
-                "update_id" => 377695763,
-                "message"   => [
-                    "message_id" => 752,
-                    "from"       => [
-                        "id"         => 123456789,
-                        "first_name" => "John",
-                        "last_name"  => "Doe",
-                        "username"   => "jdoe",
+                'update_id' => 377695763,
+                'message'   => [
+                    'message_id' => 752,
+                    'from'       => [
+                        'id'         => 123456789,
+                        'first_name' => 'John',
+                        'last_name'  => 'Doe',
+                        'username'   => 'jdoe',
                     ],
-                    "chat"       => [
-                        "id"         => 123456789,
-                        "first_name" => "John",
-                        "last_name"  => "Doe",
-                        "username"   => "jdoe",
-                        "type"       => "private",
+                    'chat'       => [
+                        'id'         => 123456789,
+                        'first_name' => 'John',
+                        'last_name'  => 'Doe',
+                        'username'   => 'jdoe',
+                        'type'       => 'private',
                     ],
-                    "date"       => 1494623095,
-                    "text"       => "Test4",
+                    'date'       => 1494623095,
+                    'text'       => 'Test4',
                 ],
             ],
         ];
@@ -302,7 +300,7 @@ class TelegramApiTest extends TestCase
     {
         $data = [
             [
-                "update_id" => 377695760,
+                'update_id' => 377695760,
             ],
         ];
         $replyFromTelegram = $this->makeFakeServerResponse($data);
@@ -318,7 +316,6 @@ class TelegramApiTest extends TestCase
         $this->assertInstanceOf(TelegramResponse::class, $lastResponse);
     }
 
-
     /** @test */
     public function it_throws_an_exception_if_the_api_response_is_not_ok()
     {
@@ -328,7 +325,6 @@ class TelegramApiTest extends TestCase
         try {
             $api->getUpdates();
         } catch (TelegramResponseException $exception) {
-
             $this->assertEquals(123, $exception->getCode());
             $this->assertEquals('BadResponse Test', $exception->getMessage());
 
@@ -347,13 +343,12 @@ class TelegramApiTest extends TestCase
         $this->getApi()->sendChatAction(['action' => 'zzz']);
     }
 
-
     /** @test */
     public function it_can_use_async_promises_to_send_requests()
     {
         $data = [
             [
-                "update_id" => 377695763,
+                'update_id' => 377695763,
             ],
         ];
         $replyFromTelegram = $this->makeFakeServerResponse($data);
@@ -379,7 +374,7 @@ class TelegramApiTest extends TestCase
         $request = $this->getHistory()->pluck('request')->first();
 
         $this->assertInstanceOf(Message::class, $result);
-        $this->assertContains('document=AwADBAADYwADO1wlBuF1ogMa7HnMAg', (string)$request->getBody());
+        $this->assertContains('document=AwADBAADYwADO1wlBuF1ogMa7HnMAg', (string) $request->getBody());
     }
 
     /**
@@ -389,7 +384,6 @@ class TelegramApiTest extends TestCase
      *
      * @dataProvider fileTypes
      * @expectedException \Telegram\Bot\Exceptions\CouldNotUploadInputFile
-     *
      */
     public function it_requires_all_file_uploads_except_file_id_to_be_created_with_fileInput_object($type)
     {
@@ -430,7 +424,7 @@ class TelegramApiTest extends TestCase
 
         /** @var Request $request */
         $request = $this->getHistory()->pluck('request')->first();
-        $body = (string)$request->getBody();
+        $body = (string) $request->getBody();
 
         $this->assertInstanceOf(Message::class, $result);
         $this->assertContains('This is some text', $body);
@@ -465,14 +459,13 @@ class TelegramApiTest extends TestCase
 
         /** @var Request $request */
         $request = $this->getHistory()->pluck('request')->first();
-        $body = (string)$request->getBody();
+        $body = (string) $request->getBody();
 
         $this->assertContains('Content-Disposition: form-data; name="chat_id"', $body);
         $this->assertContains('Content-Disposition: form-data; name="document"; filename="testing.txt"', $body);
         $this->assertEquals('POST', $request->getMethod());
         $this->assertContains('multipart/form-data;', $request->getHeaderLine('Content-Type'));
     }
-
 
     /**
      * A list of files/attachments types that should be tested.
@@ -523,8 +516,8 @@ class TelegramApiTest extends TestCase
         ]);
 
         /** @var Request $request */
-        $response1 = (string)$this->getHistory()->pluck('request')->get(0)->getBody();
-        $response2 = (string)$this->getHistory()->pluck('request')->get(1)->getBody();
+        $response1 = (string) $this->getHistory()->pluck('request')->get(0)->getBody();
+        $response2 = (string) $this->getHistory()->pluck('request')->get(1)->getBody();
 
         $this->assertContains('Content-Disposition: form-data; name="certificate"; filename="public.key"', $response1);
         $this->assertContains('THISISSOMERANDOMKEYDATA', $response1);
@@ -548,7 +541,6 @@ class TelegramApiTest extends TestCase
         $emitter->emit(Argument::type(UpdateWasReceived::class))->shouldHaveBeenCalled();
     }
 
-
     /** @test */
     public function the_commands_handler_can_get_all_commands()
     {
@@ -565,29 +557,29 @@ class TelegramApiTest extends TestCase
     {
         $updateData = $this->makeFakeServerResponse([
             [
-                "update_id" => 377695760,
-                "message"   => [
-                    "message_id" => 749,
-                    "from"       => [
-                        "id"         => 123456789,
-                        "first_name" => "John",
-                        "last_name"  => "Doe",
-                        "username"   => "jdoe",
+                'update_id' => 377695760,
+                'message'   => [
+                    'message_id' => 749,
+                    'from'       => [
+                        'id'         => 123456789,
+                        'first_name' => 'John',
+                        'last_name'  => 'Doe',
+                        'username'   => 'jdoe',
                     ],
-                    "chat"       => [
-                        "id"         => 123456789,
-                        "first_name" => "John",
-                        "last_name"  => "Doe",
-                        "username"   => "jdoe",
-                        "type"       => "private",
+                    'chat'       => [
+                        'id'         => 123456789,
+                        'first_name' => 'John',
+                        'last_name'  => 'Doe',
+                        'username'   => 'jdoe',
+                        'type'       => 'private',
                     ],
-                    "date"       => 1494623093,
-                    "text"       => "/MockCommand2",
-                    "entities"   => [
+                    'date'       => 1494623093,
+                    'text'       => '/MockCommand2',
+                    'entities'   => [
                         [
-                            "type"   => "bot_command",
-                            "offset" => 0,
-                            "length" => 13,
+                            'type'   => 'bot_command',
+                            'offset' => 0,
+                            'length' => 13,
                         ],
                     ],
                 ],
@@ -608,7 +600,6 @@ class TelegramApiTest extends TestCase
         $this->assertEquals('377695760', $updates->first()->updateId);
         $this->assertContains('offset=377695761&limit=1', $markAsReadRequest->getUri()->getQuery());
     }
-
 
     /** @test */
     public function the_command_handler_when_using_webhook_to_process_updates_for_commands_will_return_the_update()

@@ -2,12 +2,12 @@
 
 namespace Telegram\Bot;
 
-use InvalidArgumentException;
 use Illuminate\Contracts\Container\Container;
+use InvalidArgumentException;
 use Telegram\Bot\Exceptions\TelegramSDKException;
 
 /**
- * Class BotsManager
+ * Class BotsManager.
  */
 class BotsManager
 {
@@ -119,8 +119,8 @@ class BotsManager
     /**
      * Get the specified configuration value for Telegram.
      *
-     * @param  string $key
-     * @param  mixed  $default
+     * @param string $key
+     * @param mixed  $default
      *
      * @return mixed
      */
@@ -131,6 +131,7 @@ class BotsManager
 
     /**
      * Get the default bot name.
+     *
      * @throws TelegramSDKException
      *
      * @return string|null
@@ -251,7 +252,6 @@ class BotsManager
                 );
 
                 continue;
-
             }
 
             // If this command is actually a shared command, we'll extract the full

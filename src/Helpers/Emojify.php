@@ -5,7 +5,7 @@ namespace Telegram\Bot\Helpers;
 use Telegram\Bot\Exceptions\TelegramEmojiMapFileNotFoundException;
 
 /**
- * Class Emojify
+ * Class Emojify.
  */
 class Emojify
 {
@@ -83,7 +83,7 @@ class Emojify
     }
 
     /**
-     * Translate Word to Emoji
+     * Translate Word to Emoji.
      *
      * @param $text
      *
@@ -95,7 +95,7 @@ class Emojify
     }
 
     /**
-     * Alias of toEmoji()
+     * Alias of toEmoji().
      *
      * @param $text
      *
@@ -107,7 +107,7 @@ class Emojify
     }
 
     /**
-     * Translate Emoji to Word
+     * Translate Emoji to Word.
      *
      * @param $text
      *
@@ -119,7 +119,7 @@ class Emojify
     }
 
     /**
-     * Alias of toWord()
+     * Alias of toWord().
      *
      * @param $text
      *
@@ -131,7 +131,7 @@ class Emojify
     }
 
     /**
-     * Replace
+     * Replace.
      *
      * @param        $line
      * @param        $replace
@@ -169,7 +169,7 @@ class Emojify
     }
 
     /**
-     * Finds emojis and replaces them with text enclosed by the delimiter
+     * Finds emojis and replaces them with text enclosed by the delimiter.
      *
      * @param $line
      * @param $replace
@@ -189,8 +189,9 @@ class Emojify
     /**
      * Get Emoji Map Array.
      *
-     * @return array
      * @throws TelegramEmojiMapFileNotFoundException
+     *
+     * @return array
      */
     protected function getEmojiMap()
     {
