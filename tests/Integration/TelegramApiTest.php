@@ -553,7 +553,7 @@ class TelegramApiTest extends TestCase
     }
 
     /** @test */
-    public function the_command_handler_can_use_getUpdates_to_process_updates_for_commands_and_mark_updates_read()
+    public function the_command_handler_can_use_getUpdates_to_process_updates_and_mark_updates_read()
     {
         $updateData = $this->makeFakeServerResponse([
             [
@@ -574,29 +574,21 @@ class TelegramApiTest extends TestCase
                         'type'       => 'private',
                     ],
                     'date'       => 1494623093,
-                    'text'       => '/MockCommand2',
-                    'entities'   => [
-                        [
-                            'type'   => 'bot_command',
-                            'offset' => 0,
-                            'length' => 13,
-                        ],
-                    ],
+                    'text'       => 'Just some text',
                 ],
             ],
         ]);
         $markAsReadData = $this->makeFakeServerResponse([]);
         $api = $this->getApi($this->getGuzzleHttpClient([$updateData, $markAsReadData]));
 
-        $api->addCommands($this->commandGenerator(2)->all());
-
         $updates = collect($api->commandsHandler());
-
         $markAsReadRequest = $this->getHistory()->pluck('request')->last();
+
+
         $updates->each(function ($update) {
             $this->assertInstanceOf(Update::class, $update);
         });
-        $this->assertEquals('/MockCommand2', $updates->first()->getMessage()->text);
+        $this->assertEquals('Just some text', $updates->first()->getMessage()->text);
         $this->assertEquals('377695760', $updates->first()->updateId);
         $this->assertContains('offset=377695761&limit=1', $markAsReadRequest->getUri()->getQuery());
     }

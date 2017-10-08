@@ -27,9 +27,6 @@ trait CommandGenerator
                 $mockCommand->getAliases()->willReturn(["MockAlias$int"]);
                 $mockCommand->getPattern()->willReturn('');
                 $mockCommand->getArguments()->willReturn([]);
-                $mockCommand->setArguments(Argument::type('array'))->willReturn($mockCommand);
-                $mockCommand->make(Argument::type(Api::class), Argument::type(Update::class),
-                    Argument::withEntry('type', 'bot_command'))->willReturn(null);
 
                 return $mockCommand->reveal();
             });

@@ -4,6 +4,7 @@ namespace Telegram\Bot\Commands;
 
 use Telegram\Bot\Api;
 use Telegram\Bot\Objects\Update;
+use Illuminate\Support\Collection;
 use Telegram\Bot\Answers\Answerable;
 
 /**
@@ -218,35 +219,122 @@ abstract class Command implements CommandInterface
      */
     protected function parseCommandArguments(): array
     {
-        $args = [];
+        //Extract variable names from the supplied pattern
+        $required = $this->extractVariableNames('/\{([^\d]\w+?)\}/');
+        $optional = $this->extractVariableNames('/\{([^\d]\w+?)\?\}/');
+        $customRegex = $this->checkForCustomRegex($required, $optional);
 
-        $regex = $this->prepareRegex();
+        //Generate the regex needed to search for this pattern
+        $regex = $this->prepareRegex($required, $optional, $customRegex);
+        preg_match($regex, $this->relevantMessageSubString(), $matches);
 
-        if (preg_match($regex, $this->getUpdate()->getMessage()->text, $args)) {
-            array_shift($args);
-        }
-
-        if (count($args) === 0 && method_exists($this, 'handle')) {
-            $method = new \ReflectionMethod($this, 'handle');
-            $paramsCount = $method->getNumberOfParameters();
-            $args = array_pad($args, $paramsCount, '');
-        }
-
-        return $args;
+        return $this->formatMatches($matches, $required, $optional);
     }
 
     /**
+     * @param $regex
+     *
+     * @return Collection
+     */
+    private function extractVariableNames($regex)
+    {
+        preg_match_all($regex, $this->pattern, $matches);
+
+        return isset($matches) ? collect($matches[1]) : collect();
+    }
+
+    /**
+     * @param Collection $required
+     * @param Collection $optional
+     *
+     * @param string     $customRegex
+     *
      * @return string
      */
-    private function prepareRegex()
+    private function prepareRegex(Collection $required, Collection $optional, $customRegex)
     {
-        $paramPattern = '/\{((?:(?!\d+,?\d+?)\w)+?)\}/';
-        $pattern = $this->getPattern();
-        $pattern = sprintf('/%s(?:\@\w+[bot])? %s', $this->getName(), $pattern);
-        $pattern = str_replace(['/', ' '], ['\/', '\s?'], $pattern);
+        $optionalBotName = '(?:@.+?bot)?\s+?';
 
-        $regex = '/'.preg_replace($paramPattern, '([\w]+)?', $pattern).'/iu';
+        if ($customRegex) {
+            $customRegex = "(?P<custom>$customRegex)";
+        }
 
-        return $regex;
+        $required = $required
+            ->map(function ($varName) {
+                return "(?P<$varName>[^ ]++)";
+            })
+            ->implode('\s+?');
+
+        $optional = $optional
+            ->map(function ($varName) {
+                return "(?:\s+?(?P<$varName>[^ ]++))?";
+            })
+            ->implode('');
+
+        return "%/{$this->getName()}{$optionalBotName}{$required}{$optional}{$customRegex}%si";
     }
+
+    private function formatMatches(array $matches, Collection $required, Collection $optional)
+    {
+        //Need to update Illuminate\Support to newer version to take advantage of
+        //intersectBykeys method on collections. Have to use this horrible array method until then!
+        return isset($matches) ? array_intersect_key(
+            $matches,
+            $required
+                ->merge($optional)
+                ->push('custom')//incase this was a custom regex search
+                ->flip()
+                ->toArray()
+        ) : [];
+    }
+
+    private function checkForCustomRegex(Collection $required, Collection $optional)
+    {
+        if ($required->isEmpty() && $optional->isEmpty() && $this->pattern) {
+            return $this->pattern;
+        }
+
+        return '';
+    }
+
+    /**
+     * @return bool|string
+     */
+    private function relevantMessageSubString()
+    {
+        //Get all the bot_command offsets in the Update object
+        /** @var Collection $commandOffsets */
+        $commandOffsets = $this->getUpdate()->getMessage()->entities
+            ->filter(function ($entity) {
+                return $entity["type"] == "bot_command";
+            })
+            ->pluck('offset');
+
+
+        //Extract the current offset for this command and, if it exists, the offset of the NEXT bot_command entity
+        $splice = $commandOffsets->splice(
+            $commandOffsets->search($this->entity['offset']),
+            2
+        );
+
+        return $splice->count() === 2 ? $this->cutTextBetween($splice) : $this->cutTextFrom($splice);
+    }
+
+    private function cutTextBetween(Collection $splice)
+    {
+        return substr(
+            $this->getUpdate()->getMessage()->text,
+            $splice->first(),
+            ($splice->last() - $splice->first())
+        );
+    }
+
+    private function cutTextFrom(Collection $splice)
+    {
+        return substr(
+            $this->getUpdate()->getMessage()->text,
+            $splice->first()
+        );
+    }
+
 }
