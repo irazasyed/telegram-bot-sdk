@@ -2,9 +2,6 @@
 
 namespace Telegram\Bot\Tests\Traits;
 
-use Telegram\Bot\Api;
-use Prophecy\Argument;
-use Telegram\Bot\Objects\Update;
 use Illuminate\Support\Collection;
 use Telegram\Bot\Commands\Command;
 

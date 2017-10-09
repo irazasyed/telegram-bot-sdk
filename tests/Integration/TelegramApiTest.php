@@ -584,7 +584,6 @@ class TelegramApiTest extends TestCase
         $updates = collect($api->commandsHandler());
         $markAsReadRequest = $this->getHistory()->pluck('request')->last();
 
-
         $updates->each(function ($update) {
             $this->assertInstanceOf(Update::class, $update);
         });
