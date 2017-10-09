@@ -306,10 +306,9 @@ abstract class Command implements CommandInterface
         /** @var Collection $commandOffsets */
         $commandOffsets = $this->getUpdate()->getMessage()->entities
             ->filter(function ($entity) {
-                return $entity["type"] == "bot_command";
+                return $entity['type'] == 'bot_command';
             })
             ->pluck('offset');
-
 
         //Extract the current offset for this command and, if it exists, the offset of the NEXT bot_command entity
         $splice = $commandOffsets->splice(
@@ -336,5 +335,4 @@ abstract class Command implements CommandInterface
             $splice->first()
         );
     }
-
 }

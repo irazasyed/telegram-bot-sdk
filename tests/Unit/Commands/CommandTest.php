@@ -43,9 +43,7 @@ class CommandTest extends TestCase
         $entity = $update->getMessage()->entities->get(0)->toArray();
         $this->command->setPattern('');
 
-
         $this->command->make($this->api, $update, $entity);
-
 
         $this->assertEquals([], $this->command->getArguments());
     }
@@ -55,13 +53,13 @@ class CommandTest extends TestCase
     {
         //Condensed update data
         $update = new Update([
-            "message" => [
-                "text"     => "/demo@testing_Bot John Doe",
-                "entities" => [
+            'message' => [
+                'text'     => '/demo@testing_Bot John Doe',
+                'entities' => [
                     [
-                        "type"   => "bot_command",
-                        "offset" => 0,
-                        "length" => 17,
+                        'type'   => 'bot_command',
+                        'offset' => 0,
+                        'length' => 17,
                     ],
                 ],
             ],
@@ -69,7 +67,6 @@ class CommandTest extends TestCase
         $this->command->setPattern('');
         $entity = $update->getMessage()->entities->get(0)->toArray();
         $this->command->setPattern('');
-
 
         $this->command->make($this->api, $update, $entity);
 
@@ -81,20 +78,19 @@ class CommandTest extends TestCase
     {
         //Condensed update data
         $update = new Update([
-            "message" => [
-                "text"     => "/demo@testing_Bot John Doe 77 200",
-                "entities" => [
+            'message' => [
+                'text'     => '/demo@testing_Bot John Doe 77 200',
+                'entities' => [
                     [
-                        "type"   => "bot_command",
-                        "offset" => 0,
-                        "length" => 17,
+                        'type'   => 'bot_command',
+                        'offset' => 0,
+                        'length' => 17,
                     ],
                 ],
             ],
         ]);
         $entity = $update->getMessage()->entities->get(0)->toArray();
         $this->command->setPattern('{fname} {lname} {age} {weight}');
-
 
         $this->command->make($this->api, $update, $entity);
 
@@ -109,20 +105,19 @@ class CommandTest extends TestCase
     {
         //Condensed update data
         $update = new Update([
-            "message" => [
-                "text"     => "/demo@testing_Bot John Doe 77 200",
-                "entities" => [
+            'message' => [
+                'text'     => '/demo@testing_Bot John Doe 77 200',
+                'entities' => [
                     [
-                        "type"   => "bot_command",
-                        "offset" => 0,
-                        "length" => 17,
+                        'type'   => 'bot_command',
+                        'offset' => 0,
+                        'length' => 17,
                     ],
                 ],
             ],
         ]);
         $entity = $update->getMessage()->entities->get(0)->toArray();
         $this->command->setPattern('{fname} {lname} {age?} {weight?}');
-
 
         $this->command->make($this->api, $update, $entity);
 
@@ -132,26 +127,24 @@ class CommandTest extends TestCase
         );
     }
 
-
     /** @test */
     public function a_command_with_more_required_pattern_variables_than_exists_in_update_message_is_not_matched()
     {
         //Condensed update data
         $update = new Update([
-            "message" => [
-                "text"     => "/demo@testing_Bot John Doe 77",
-                "entities" => [
+            'message' => [
+                'text'     => '/demo@testing_Bot John Doe 77',
+                'entities' => [
                     [
-                        "type"   => "bot_command",
-                        "offset" => 0,
-                        "length" => 17,
+                        'type'   => 'bot_command',
+                        'offset' => 0,
+                        'length' => 17,
                     ],
                 ],
             ],
         ]);
         $entity = $update->getMessage()->entities->get(0)->toArray();
         $this->command->setPattern('{fname} {lname} {age} {weight}');
-
 
         $this->command->make($this->api, $update, $entity);
 
@@ -163,13 +156,13 @@ class CommandTest extends TestCase
     {
         //Condensed update data
         $update = new Update([
-            "message" => [
-                "text"     => "/demo@testing_Bot eidw einn egaa egcc",
-                "entities" => [
+            'message' => [
+                'text'     => '/demo@testing_Bot eidw einn egaa egcc',
+                'entities' => [
                     [
-                        "type"   => "bot_command",
-                        "offset" => 0,
-                        "length" => 17,
+                        'type'   => 'bot_command',
+                        'offset' => 0,
+                        'length' => 17,
                     ],
                 ],
             ],
@@ -182,36 +175,34 @@ class CommandTest extends TestCase
         $this->assertEquals(['custom' => 'eidw einn egaa egcc'], $this->command->getArguments());
     }
 
-
     /** @test */
     public function it_checks_the_arguments_can_be_detected_in_a_message_with_multiple_commands_that_are_the_same()
     {
         //Condensed update data
         $update = new Update([
-            "message" => [
-                "text"     => "This /demo john doe command with /demo jane doe and a unrelated /test command",
-                "entities" => [
+            'message' => [
+                'text'     => 'This /demo john doe command with /demo jane doe and a unrelated /test command',
+                'entities' => [
                     [
-                        "type"   => "bot_command",
-                        "offset" => 5,
-                        "length" => 5,
+                        'type'   => 'bot_command',
+                        'offset' => 5,
+                        'length' => 5,
                     ],
                     [
-                        "type"   => "bot_command",
-                        "offset" => 33,
-                        "length" => 5,
+                        'type'   => 'bot_command',
+                        'offset' => 33,
+                        'length' => 5,
                     ],
                     [
-                        "type"   => "bot_command",
-                        "offset" => 64,
-                        "length" => 5,
+                        'type'   => 'bot_command',
+                        'offset' => 64,
+                        'length' => 5,
                     ],
                 ],
             ],
         ]);
 
         $this->command->setPattern('{fname} {lname}');
-
 
         //First time the command is triggered for entity "0"
         $entity0 = $update->getMessage()->entities->get(0)->toArray();
