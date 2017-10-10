@@ -240,7 +240,7 @@ abstract class Command implements CommandInterface
     {
         preg_match_all($regex, $this->pattern, $matches);
 
-        return isset($matches) ? collect($matches[1]) : collect();
+        return collect($matches[1]);
     }
 
     /**
@@ -282,7 +282,8 @@ abstract class Command implements CommandInterface
             $matches,
             $required
                 ->merge($optional)
-                ->push('custom')//incase this was a custom regex search
+                //incase this was a custom regex search we need to add a custom key
+                ->push('custom')
                 ->flip()
                 ->toArray()
         ) : [];
@@ -303,12 +304,7 @@ abstract class Command implements CommandInterface
     private function relevantMessageSubString()
     {
         //Get all the bot_command offsets in the Update object
-        /** @var Collection $commandOffsets */
-        $commandOffsets = $this->getUpdate()->getMessage()->entities
-            ->filter(function ($entity) {
-                return $entity['type'] == 'bot_command';
-            })
-            ->pluck('offset');
+        $commandOffsets = $this->allCommandOffsets();
 
         //Extract the current offset for this command and, if it exists, the offset of the NEXT bot_command entity
         $splice = $commandOffsets->splice(
@@ -334,5 +330,17 @@ abstract class Command implements CommandInterface
             $this->getUpdate()->getMessage()->text,
             $splice->first()
         );
+    }
+
+    /**
+     * @return Collection
+     */
+    private function allCommandOffsets()
+    {
+        return $this->getUpdate()->getMessage()->getEntities()
+            ->filter(function ($entity) {
+                return $entity['type'] == 'bot_command';
+            })
+            ->pluck('offset');
     }
 }
