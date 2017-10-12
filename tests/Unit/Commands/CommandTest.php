@@ -176,6 +176,30 @@ class CommandTest extends TestCase
     }
 
     /** @test */
+    public function a_command_with_more_advance_custom_regex_set_as_pattern_will_return_an_array_with_the_match_value()
+    {
+        //Condensed update data
+        $update = new Update([
+            'message' => [
+                'text'     => '/demo@testing_Bot ei105 22/03/2017',
+                'entities' => [
+                    [
+                        'type'   => 'bot_command',
+                        'offset' => 0,
+                        'length' => 17,
+                    ],
+                ],
+            ],
+        ]);
+        $entity = $update->getMessage()->entities->get(0)->toArray();
+        $this->command->setPattern('[a-z]{2}\d{3}\s+?\d{2}/\d{2}/\d{2,4}');
+
+        $this->command->make($this->api, $update, $entity);
+
+        $this->assertEquals(['custom' => 'ei105 22/03/2017'], $this->command->getArguments());
+    }
+
+    /** @test */
     public function it_checks_the_arguments_can_be_detected_in_a_message_with_multiple_commands_that_are_the_same()
     {
         //Condensed update data
