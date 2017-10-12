@@ -11,6 +11,7 @@ namespace Telegram\Bot\Objects\InlineQuery;
  *   'mpeg4_url'                  => '',
  *   'mpeg4_width'                => '',
  *   'mpeg4_height'               => '',
+ *   'mpeg4_duration'             => '',
  *   'thumb_url'                  => '',
  *   'title'                      => '',
  *   'caption'                    => '',
@@ -25,6 +26,7 @@ namespace Telegram\Bot\Objects\InlineQuery;
  * @method $this setMpeg4Url($string)            A valid URL for the MP4 file. File size must not exceed 1MB
  * @method $this setMpeg4Width($int)             Optional. Video width
  * @method $this setMpeg4Height($int)            Optional. Video height
+ * @method $this setMpeg4Duration($int)          Optional. Video duration
  * @method $this setThumbUrl($string)            URL of the static thumbnail (jpeg or gif) for the result
  * @method $this setTitle($string)               Optional. Title for the result
  * @method $this setCaption($string)             Optional. Caption of the MPEG-4 file to be sent, 0-200 characters
