@@ -206,42 +206,6 @@ trait Message
     }
 
     /**
-     * Send .webp stickers.
-     *
-     * <code>
-     * $params = [
-     *   'chat_id'              => '',
-     *   'sticker'              => InputFile::create($resourceOrFile, $filename),
-     *   'disable_notification' => '',
-     *   'reply_to_message_id'  => '',
-     *   'reply_markup'         => '',
-     * ];
-     * </code>
-     *
-     * @link https://core.telegram.org/bots/api#sendsticker
-     *
-     * @param array          $params               [
-     *
-     * @var int|string       $chat_id              Required. Unique identifier for the target chat or username of the target channel (in the format @channelusername)
-     * @var InputFile|string $sticker              Required. Sticker to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a .webp file from the Internet, or upload a new one using multipart/form-data.
-     * @var bool             $disable_notification Optional. Sends the message silently. iOS users will not receive a notification, Android users will receive a notification with no sound.
-     * @var int              $reply_to_message_id  Optional. If the message is a reply, ID of the original message
-     * @var string           $reply_markup         Optional. Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.
-     *
-     * ]
-     *
-     * @throws TelegramSDKException
-     *
-     * @return MessageObject
-     */
-    public function sendSticker(array $params): MessageObject
-    {
-        $response = $this->uploadFile('sendSticker', $params, 'sticker');
-
-        return new MessageObject($response->getDecodedBody());
-    }
-
-    /**
      * Send Video File, Telegram clients support mp4 videos (other formats may be sent as Document).
      *
      * <code>
@@ -322,44 +286,6 @@ trait Message
     public function sendVoice(array $params): MessageObject
     {
         $response = $this->uploadFile('sendVoice', $params, 'voice');
-
-        return new MessageObject($response->getDecodedBody());
-    }
-
-    /**
-     * Send point on the map.
-     *
-     * <code>
-     * $params = [
-     *   'chat_id'              => '',
-     *   'latitude'             => '',
-     *   'longitude'            => '',
-     *   'disable_notification' => '',
-     *   'reply_to_message_id'  => '',
-     *   'reply_markup'         => '',
-     * ];
-     * </code>
-     *
-     * @link https://core.telegram.org/bots/api#sendlocation
-     *
-     * @param array    $params               [
-     *
-     * @var int|string $chat_id              Required. Unique identifier for the target chat or username of the target channel (in the format @channelusername)
-     * @var float      $latitude             Required. Latitude of location
-     * @var float      $longitude            Required. Longitude of location
-     * @var bool       $disable_notification Optional. Sends the message silently. iOS users will not receive a notification, Android users will receive a notification with no sound.
-     * @var int        $reply_to_message_id  Optional. If the message is a reply, ID of the original message
-     * @var string     $reply_markup         Optional. Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.
-     *
-     * ]
-     *
-     * @throws TelegramSDKException
-     *
-     * @return MessageObject
-     */
-    public function sendLocation(array $params): MessageObject
-    {
-        $response = $this->post('sendLocation', $params);
 
         return new MessageObject($response->getDecodedBody());
     }

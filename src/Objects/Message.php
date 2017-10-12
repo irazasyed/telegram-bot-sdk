@@ -3,6 +3,7 @@
 namespace Telegram\Bot\Objects;
 
 use Telegram\Bot\Objects\Payments\Invoice;
+use Telegram\Bot\Objects\Payments\SuccessfulPayment;
 
 /**
  * Class Message.

@@ -3,11 +3,9 @@
 namespace Telegram\Bot\Methods;
 
 use Telegram\Bot\Objects\Message;
-use Telegram\Bot\Objects\GameHighScore;
 use Telegram\Bot\Objects\Payments\LabeledPrice;
 use Telegram\Bot\Objects\Payments\ShippingOption;
 use Telegram\Bot\Exceptions\TelegramSDKException;
-use Telegram\Bot\TelegramResponse;
 
 trait Payments
 {

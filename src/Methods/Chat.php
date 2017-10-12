@@ -540,4 +540,67 @@ trait Chat
 
         return new ChatMember($response->getDecodedBody());
     }
+
+    /**
+     * Set a new group sticker set for a supergroup
+     *
+     * The bot must be an administrator in the group for this to work.
+     *
+     * <code>
+     * $params = [
+     *   'chat_id'                   => ''
+     *   'sticker_set_name'          => ''
+     * ];
+     * </code>
+     *
+     * @link https://core.telegram.org/bots/api#setchatstickerset
+     *
+     * @param array    $params           [
+     *
+     * @var string|int $chat_id          Required. Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
+     * @var int        $sticker_set_name Required. Name of the sticker set to be set as the group sticker set
+     *
+     * ]
+     *
+     * @throws TelegramSDKException
+     *
+     * @return bool
+     */
+    public function setChatStickerSet(array $params): bool
+    {
+        $response = $this->post('setChatStickerSet', $params);
+
+        return $response->getResult();
+    }
+
+    /**
+     * Delete a group sticker set from a supergroup.
+     *
+     * The bot must be an administrator in the group for this to work.
+     *
+     * <code>
+     * $params = [
+     *   'chat_id'                   => ''
+     * ];
+     * </code>
+     *
+     * @link https://core.telegram.org/bots/api#deletechatstickerset
+     *
+     * @param array    $params  [
+     *
+     * @var string|int $chat_id Required. Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
+     *
+     * ]
+     *
+     * @throws TelegramSDKException
+     *
+     * @return bool
+     */
+    public function deleteChatStickerSet(array $params): bool
+    {
+        $response = $this->post('deleteChatStickerSet', $params);
+
+        return $response->getResult();
+    }
+
 }
