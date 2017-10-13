@@ -2,8 +2,8 @@
 
 namespace Telegram\Bot\Methods;
 
-use Telegram\Bot\FileUpload\InputFile;
 use Telegram\Bot\Objects\ChatMember;
+use Telegram\Bot\FileUpload\InputFile;
 use Telegram\Bot\Objects\Chat as ChatObject;
 use Telegram\Bot\Exceptions\TelegramSDKException;
 
@@ -51,7 +51,7 @@ trait Chat
     }
 
     /**
-     * Export an invite link to a supergroup or a channel
+     * Export an invite link to a supergroup or a channel.
      *
      * The bot must be an administrator in the group for this to work.
      *
@@ -143,7 +143,7 @@ trait Chat
     }
 
     /**
-     * Set the title of a chat
+     * Set the title of a chat.
      *
      * The bot must be an administrator in the group for this to work.
      *
@@ -207,7 +207,7 @@ trait Chat
     }
 
     /**
-     * Pin a message in a supergroup
+     * Pin a message in a supergroup.
      *
      * The bot must be an administrator in the group for this to work.
      *
@@ -269,7 +269,6 @@ trait Chat
 
         return $response->getResult();
     }
-
 
     /**
      * Use this method for your bot to leave a group, supergroup or channel.
@@ -374,7 +373,7 @@ trait Chat
     }
 
     /**
-     * Promote or demote a user in a supergroup or a channel
+     * Promote or demote a user in a supergroup or a channel.
      *
      * Pass False for all boolean parameters to demote a user.
      *
@@ -422,7 +421,6 @@ trait Chat
 
         return $response->getResult();
     }
-
 
     /**
      * Get up to date information about the chat (current name of the user for one-on-one conversations,
@@ -542,7 +540,7 @@ trait Chat
     }
 
     /**
-     * Set a new group sticker set for a supergroup
+     * Set a new group sticker set for a supergroup.
      *
      * The bot must be an administrator in the group for this to work.
      *
@@ -602,5 +600,4 @@ trait Chat
 
         return $response->getResult();
     }
-
 }

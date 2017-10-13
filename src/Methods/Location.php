@@ -51,7 +51,7 @@ trait Location
     }
 
     /**
-     * Edit live location messages sent by the bot or via the bot
+     * Edit live location messages sent by the bot or via the bot.
      *
      * <code>
      * $params = [
@@ -88,9 +88,8 @@ trait Location
         return new MessageObject($response->getDecodedBody());
     }
 
-
     /**
-     * Stop updating a live location message sent by the bot or via the bot
+     * Stop updating a live location message sent by the bot or via the bot.
      *
      * <code>
      * $params = [
@@ -122,5 +121,4 @@ trait Location
 
         return new MessageObject($response->getDecodedBody());
     }
-
 }
