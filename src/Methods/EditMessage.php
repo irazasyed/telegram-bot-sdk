@@ -4,6 +4,7 @@ namespace Telegram\Bot\Methods;
 
 use Telegram\Bot\Objects\Message;
 use Telegram\Bot\Exceptions\TelegramSDKException;
+use Telegram\Bot\TelegramResponse;
 
 /**
  * Class EditMessage.
@@ -119,4 +120,36 @@ trait EditMessage
 
         return new Message($response->getDecodedBody());
     }
+
+    /**
+     * Delete a message, including service messages
+     *
+     * <code>
+     * $params = [
+     *   'chat_id'                  => '',
+     *   'message_id'               => '',
+     * ];
+     * </code>
+     *
+     * @link https://core.telegram.org/bots/api#editmessagereplymarkup
+     *
+     * @param array $params [
+     *
+     * @var int|string $chat_id           Required. Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @var int        $message_id        Required. Identifier of the message to delete.
+     *
+     * ]
+     *
+     * @throws TelegramSDKException
+     *
+     * @return Message|bool
+     */
+    public function deleteMessage(array $params)
+    {
+        $response = $this->post('deleteMessage', $params);
+
+        return $response->getResult();
+    }
+
+
 }

@@ -28,7 +28,7 @@ trait Message
      *
      * @link https://core.telegram.org/bots/api#sendmessage
      *
-     * @param array $params [
+     * @param array    $params                   [
      *
      * @var int|string $chat_id                  Required. Unique identifier for the target chat or username of the target channel (in the format @channelusername)
      * @var string     $text                     Required. Text of the message to be sent
@@ -65,7 +65,7 @@ trait Message
      *
      * @link https://core.telegram.org/bots/api#forwardmessage
      *
-     * @param array $params [
+     * @param array    $params               [
      *
      * @var int|string $chat_id              Required. Unique identifier for the target chat or username of the target channel (in the format @channelusername)
      * @var int        $from_chat_id         Required. Unique identifier for the chat where the original message was sent (or channel username in the format @channelusername)
@@ -101,7 +101,7 @@ trait Message
      *
      * @link https://core.telegram.org/bots/api#sendphoto
      *
-     * @param array $params [
+     * @param array          $params               [
      *
      * @var int|string       $chat_id              Required. Unique identifier for the target chat or username of the target channel (in the format @channelusername)
      * @var InputFile|string $photo                Required. Photo to send. Pass a file_id as String to send a photo that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a photo from the Internet, or upload a new photo using multipart/form-data.
@@ -142,7 +142,7 @@ trait Message
      *
      * @link https://core.telegram.org/bots/api#sendaudio
      *
-     * @param array $params [
+     * @param array          $params               [
      *
      * @var int|string       $chat_id              Required. Unique identifier for the target chat or username of the target channel (in the format @channelusername)
      * @var InputFile|string $audio                Required. Audio file to send. Pass a file_id as String to send an audio file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get an audio file from the Internet, or upload a new one using multipart/form-data.
@@ -183,7 +183,7 @@ trait Message
      *
      * @link https://core.telegram.org/bots/api#senddocument
      *
-     * @param array $params [
+     * @param array          $params               [
      *
      * @var int|string       $chat_id              Required. Unique identifier for the target chat or username of the target channel (in the format @channelusername)
      * @var InputFile|string $document             Required. File to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data.
@@ -201,42 +201,6 @@ trait Message
     public function sendDocument(array $params): MessageObject
     {
         $response = $this->uploadFile('sendDocument', $params, 'document');
-
-        return new MessageObject($response->getDecodedBody());
-    }
-
-    /**
-     * Send .webp stickers.
-     *
-     * <code>
-     * $params = [
-     *   'chat_id'              => '',
-     *   'sticker'              => InputFile::create($resourceOrFile, $filename),
-     *   'disable_notification' => '',
-     *   'reply_to_message_id'  => '',
-     *   'reply_markup'         => '',
-     * ];
-     * </code>
-     *
-     * @link https://core.telegram.org/bots/api#sendsticker
-     *
-     * @param array $params [
-     *
-     * @var int|string       $chat_id              Required. Unique identifier for the target chat or username of the target channel (in the format @channelusername)
-     * @var InputFile|string $sticker              Required. Sticker to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a .webp file from the Internet, or upload a new one using multipart/form-data.
-     * @var bool             $disable_notification Optional. Sends the message silently. iOS users will not receive a notification, Android users will receive a notification with no sound.
-     * @var int              $reply_to_message_id  Optional. If the message is a reply, ID of the original message
-     * @var string           $reply_markup         Optional. Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.
-     *
-     * ]
-     *
-     * @throws TelegramSDKException
-     *
-     * @return MessageObject
-     */
-    public function sendSticker(array $params): MessageObject
-    {
-        $response = $this->uploadFile('sendSticker', $params, 'sticker');
 
         return new MessageObject($response->getDecodedBody());
     }
@@ -261,7 +225,7 @@ trait Message
      * @see  sendDocument
      * @link https://core.telegram.org/bots/api#sendvideo
      *
-     * @param array $params [
+     * @param array          $params               [
      *
      * @var int|string       $chat_id              Required. Unique identifier for the target chat or username of the target channel (in the format @channelusername)
      * @var InputFile|string $video                Required. Video to send. Pass a file_id as String to send a video that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a video from the Internet, or upload a new video using multipart/form-data.
@@ -303,7 +267,7 @@ trait Message
      *
      * @link https://core.telegram.org/bots/api#sendvoice
      *
-     * @param array $params [
+     * @param array          $params               [
      *
      * @var int|string       $chat_id              Required. Unique identifier for the target chat or username of the target channel (in the format @channelusername)
      * @var InputFile|string $voice                Required. Audio file to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data.
@@ -327,44 +291,6 @@ trait Message
     }
 
     /**
-     * Send point on the map.
-     *
-     * <code>
-     * $params = [
-     *   'chat_id'              => '',
-     *   'latitude'             => '',
-     *   'longitude'            => '',
-     *   'disable_notification' => '',
-     *   'reply_to_message_id'  => '',
-     *   'reply_markup'         => '',
-     * ];
-     * </code>
-     *
-     * @link https://core.telegram.org/bots/api#sendlocation
-     *
-     * @param array $params [
-     *
-     * @var int|string $chat_id              Required. Unique identifier for the target chat or username of the target channel (in the format @channelusername)
-     * @var float      $latitude             Required. Latitude of location
-     * @var float      $longitude            Required. Longitude of location
-     * @var bool       $disable_notification Optional. Sends the message silently. iOS users will not receive a notification, Android users will receive a notification with no sound.
-     * @var int        $reply_to_message_id  Optional. If the message is a reply, ID of the original message
-     * @var string     $reply_markup         Optional. Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.
-     *
-     * ]
-     *
-     * @throws TelegramSDKException
-     *
-     * @return MessageObject
-     */
-    public function sendLocation(array $params): MessageObject
-    {
-        $response = $this->post('sendLocation', $params);
-
-        return new MessageObject($response->getDecodedBody());
-    }
-
-    /**
      * Send information about a venue.
      *
      * <code>
@@ -383,7 +309,7 @@ trait Message
      *
      * @link https://core.telegram.org/bots/api#sendvenue
      *
-     * @param array $params [
+     * @param array    $params               [
      *
      * @var int|string $chat_id              Required. Unique identifier for the target chat or username of the target channel (in the format @channelusername)
      * @var float      $latitude             Required. Latitude of the venue
@@ -425,7 +351,7 @@ trait Message
      *
      * @link https://core.telegram.org/bots/api#sendcontact
      *
-     * @param array $params [
+     * @param array    $params               [
      *
      * @var int|string $chat_id              Required. Unique identifier for the target chat or username of the target channel (in the format @channelusername)
      * @var string     $phone_number         Required. Contact's phone number
@@ -460,7 +386,7 @@ trait Message
      *
      * @link https://core.telegram.org/bots/api#sendchataction
      *
-     * @param array $params [
+     * @param array    $params  [
      *
      * @var int|string $chat_id Required. Unique identifier for the target chat or username of the target channel (in the format @channelusername)
      * @var string     $action  Required. Type of action to broadcast. Choose one, depending on what the user is about to receive: typing for text messages, upload_photo for photos, record_video or upload_video for videos, record_audio or upload_audio for audio files, upload_document for general files, find_location for location data.
@@ -482,6 +408,8 @@ trait Message
             'upload_audio',
             'upload_document',
             'find_location',
+            'record_video_note',
+            'upload_video_note',
         ];
 
         if (isset($params['action']) && in_array($params['action'], $validActions)) {
@@ -490,6 +418,6 @@ trait Message
             return true;
         }
 
-        throw new TelegramSDKException('Invalid Action! Accepted value: '.implode(', ', $validActions));
+        throw new TelegramSDKException('Invalid Action! Accepted value: ' . implode(', ', $validActions));
     }
 }

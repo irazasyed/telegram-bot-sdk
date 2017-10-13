@@ -20,8 +20,11 @@ class Api
         Methods\EditMessage,
         Methods\Game,
         Methods\Get,
+        Methods\Location,
         Methods\Message,
+        Methods\Payments,
         Methods\Query,
+        Methods\Stickers,
         Methods\Update;
 
     /** @var string Version number of the Telegram Bot PHP SDK. */

@@ -3,6 +3,7 @@
 namespace Telegram\Bot\Objects;
 
 use Illuminate\Support\Collection;
+use Telegram\Bot\Objects\Payments\ShippingQuery;
 
 /**
  * Class Update.
@@ -22,6 +23,10 @@ use Illuminate\Support\Collection;
  * @property ChosenInlineResult $chosenInlineResult     (Optional). A result of an inline query that was chosen by the
  *                                                      user and sent to their chat partner.
  * @property CallbackQuery      $callbackQuery          (Optional). Incoming callback query.
+ * @property ShippingQuery      $shipping_query         (Optional). New incoming shipping query. Only for invoices with
+ *                                                      flexible price
+ * @property PreCheckoutQuery   $pre_checkout_query     (Optional). New incoming pre-checkout query. Contains full
+ *                                                      information about checkout
  *
  * @link https://core.telegram.org/bots/api#update
  */

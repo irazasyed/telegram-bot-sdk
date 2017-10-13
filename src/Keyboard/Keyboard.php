@@ -123,8 +123,10 @@ class Keyboard extends Base
      *   'url'                                  => '',
      *   'callback_data'                        => '',
      *   'switch_inline_query'                  => '',
-     *   '$switch_inline_query_current_chat'    => '',
-     *   '$callback_game'                       => '',
+     *   'switch_inline_query_current_chat'    => '',
+     *   'callback_game'                       => '',
+     *   'pay'                                 => '',
+     * 
      * ];
      * </code>
      *
@@ -138,6 +140,7 @@ class Keyboard extends Base
      * @var string $switch_inline_query              Optional. If set, pressing the button will prompt the user to select one of their chats, open that chat and insert the bot‘s username and the specified inline query in the input field. Can be empty, in which case just the bot’s username will be inserted.
      * @var string $switch_inline_query_current_chat Optional. If set, pressing the button will insert the bot‘s username and the specified inline query in the current chat's input field. Can be empty, in which case only the bot’s username will be inserted.
      * @var string $callback_game                    Optional. Description of the game that will be launched when the user presses the button. NOTE: This type of button must always be the first button in the first row.
+     * @var string $pay                              Optional. Specify True, to send a Pay button. NOTE: This type of button must always be the first button in the first row.
      *
      * ]
      *
