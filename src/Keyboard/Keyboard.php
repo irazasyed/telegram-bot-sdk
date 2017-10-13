@@ -126,7 +126,7 @@ class Keyboard extends Base
      *   'switch_inline_query_current_chat'    => '',
      *   'callback_game'                       => '',
      *   'pay'                                 => '',
-     * 
+     *
      * ];
      * </code>
      *

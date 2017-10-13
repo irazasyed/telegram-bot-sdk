@@ -5,7 +5,6 @@ namespace Telegram\Bot\Objects\Payments;
 use Telegram\Bot\Objects\BaseObject;
 
 /**
- *
  * @property string          $name                 (Optional). User name
  * @property string          $phoneNumber          (Optional). User's phone number
  * @property string          $email                (Optional). User email

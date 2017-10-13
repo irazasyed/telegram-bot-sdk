@@ -5,7 +5,6 @@ namespace Telegram\Bot\Objects\Payments;
 use Telegram\Bot\Objects\BaseObject;
 
 /**
- *
  * @property string $title                    Product name
  * @property string $description              Product description
  * @property string $startParameter           Unique bot deep-linking parameter that can be used to generate this invoice

@@ -2,12 +2,12 @@
 
 namespace Telegram\Bot\Methods;
 
-use Telegram\Bot\FileUpload\InputFile;
-use Telegram\Bot\Exceptions\TelegramSDKException;
 use Telegram\Bot\Objects\File;
-use Telegram\Bot\Objects\MaskPosition;
-use Telegram\Bot\Objects\Message as MessageObject;
 use Telegram\Bot\Objects\StickerSet;
+use Telegram\Bot\FileUpload\InputFile;
+use Telegram\Bot\Objects\MaskPosition;
+use Telegram\Bot\Exceptions\TelegramSDKException;
+use Telegram\Bot\Objects\Message as MessageObject;
 
 /**
  * Class Message.
@@ -109,7 +109,6 @@ trait Stickers
         return new File($response->getDecodedBody());
     }
 
-
     /**
      * Create new sticker set owned by a user.
      *
@@ -151,7 +150,7 @@ trait Stickers
     }
 
     /**
-     * Add a new sticker to a set created by the bot
+     * Add a new sticker to a set created by the bot.
      *
      * <code>
      * $params = [
@@ -187,7 +186,7 @@ trait Stickers
     }
 
     /**
-     * Move a sticker in a set created by the bot to a specific position
+     * Move a sticker in a set created by the bot to a specific position.
      *
      * <code>
      * $params = [
@@ -243,5 +242,4 @@ trait Stickers
 
         return $response->getResult();
     }
-
 }

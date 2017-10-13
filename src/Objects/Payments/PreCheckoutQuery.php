@@ -6,7 +6,6 @@ use Telegram\Bot\Objects\User;
 use Telegram\Bot\Objects\BaseObject;
 
 /**
- *
  * @property string    $id                     Unique query identifier
  * @property User      $from                   User who sent the query.
  * @property string    $currency               Three-letter ISO 4217 currency code

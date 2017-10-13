@@ -4,7 +4,6 @@ namespace Telegram\Bot\Methods;
 
 use Telegram\Bot\Objects\Message;
 use Telegram\Bot\Exceptions\TelegramSDKException;
-use Telegram\Bot\TelegramResponse;
 
 /**
  * Class EditMessage.
@@ -122,7 +121,7 @@ trait EditMessage
     }
 
     /**
-     * Delete a message, including service messages
+     * Delete a message, including service messages.
      *
      * <code>
      * $params = [
@@ -150,6 +149,4 @@ trait EditMessage
 
         return $response->getResult();
     }
-
-
 }
