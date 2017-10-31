@@ -4,6 +4,7 @@ namespace Telegram\Bot\Objects;
 
 use Illuminate\Support\Collection;
 use Telegram\Bot\Objects\Payments\ShippingQuery;
+use Telegram\Bot\Objects\Payments\PreCheckoutQuery;
 
 /**
  * Class Update.
@@ -23,9 +24,9 @@ use Telegram\Bot\Objects\Payments\ShippingQuery;
  * @property ChosenInlineResult $chosenInlineResult     (Optional). A result of an inline query that was chosen by the
  *                                                      user and sent to their chat partner.
  * @property CallbackQuery      $callbackQuery          (Optional). Incoming callback query.
- * @property ShippingQuery      $shipping_query         (Optional). New incoming shipping query. Only for invoices with
+ * @property ShippingQuery      $shippingQuery          (Optional). New incoming shipping query. Only for invoices with
  *                                                      flexible price
- * @property PreCheckoutQuery   $pre_checkout_query     (Optional). New incoming pre-checkout query. Contains full
+ * @property PreCheckoutQuery   $preCheckoutQuery       (Optional). New incoming pre-checkout query. Contains full
  *                                                      information about checkout
  *
  * @link https://core.telegram.org/bots/api#update
@@ -89,6 +90,8 @@ class Update extends BaseObject
             'inline_query',
             'chosen_inline_result',
             'callback_query',
+            'shipping_query',
+            'pre_checkout_query',
         ];
 
         return $this->keys()
@@ -112,12 +115,20 @@ class Update extends BaseObject
                 return $this->channelPost;
             case 'edited_channel_post':
                 return $this->editedChannelPost;
+            case 'inline_query':
+                return $this->inlineQuery;
+            case 'chosen_inline_result':
+                return $this->chosenInlineResult;
             case 'callback_query':
                 $callbackQuery = $this->callbackQuery;
                 if ($callbackQuery->has('message')) {
                     return $callbackQuery->message;
                 }
                 break;
+            case 'shipping_query':
+                return $this->shippingQuery;
+            case 'pre_checkout_query':
+                return $this->preCheckoutQuery;
         }
 
         return collect();
