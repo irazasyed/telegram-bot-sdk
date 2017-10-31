@@ -2,6 +2,7 @@
 
 namespace Telegram\Bot;
 
+use Illuminate\Support\Traits\Macroable;
 use Telegram\Bot\Exceptions\TelegramSDKException;
 use Telegram\Bot\HttpClients\HttpClientInterface;
 
@@ -12,6 +13,10 @@ use Telegram\Bot\HttpClients\HttpClientInterface;
  */
 class Api
 {
+    use Macroable {
+        __call as macroCall;
+    }
+
     use Events\EmitsEvents,
         Traits\Http,
         Traits\CommandsHandler,
@@ -77,6 +82,10 @@ class Api
      */
     public function __call($method, $arguments)
     {
+        if (static::hasMacro($method)) {
+            return $this->macroCall($method, $arguments);
+        }
+
         if (method_exists($this, $method)) {
             return call_user_func_array([$this, $method], $arguments);
         }
