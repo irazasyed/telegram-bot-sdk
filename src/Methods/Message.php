@@ -291,7 +291,7 @@ trait Message
     }
 
     /**
-     * Send rounded square mp4 videos of up to 1 minute long. Use this method to send video messages
+     * Send rounded square mp4 videos of up to 1 minute long. Use this method to send video messages.
      *
      * <code>
      * $params = [
