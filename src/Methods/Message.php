@@ -291,6 +291,46 @@ trait Message
     }
 
     /**
+     * Send rounded square mp4 videos of up to 1 minute long. Use this method to send video messages
+     *
+     * <code>
+     * $params = [
+     *   'chat_id'              => '',
+     *   'video_note'           => InputFile::create($resourceOrFile, $filename),
+     *   'duration'             => '',
+     *   'length'               => '',
+     *   'disable_notification' => '',
+     *   'reply_to_message_id'  => '',
+     *   'reply_markup'         => '',
+     * ];
+     * </code>
+     *
+     * @link https://core.telegram.org/bots/api#sendvideonote
+     *
+     * @param array          $params               [
+     *
+     * @var int|string       $chat_id              Required. Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @var InputFile|string $video_note           Required. Video note to send. Pass a file_id as String to send a video note that exists on the Telegram servers (recommended) or upload a new video using multipart/form-data.
+     * @var int              $duration             Optional. Duration of sent video in seconds
+     * @var int              $length               Optional. Video width and height
+     * @var bool             $disable_notification Optional. Sends the message silently. iOS users will not receive a notification, Android users will receive a notification with no sound.
+     * @var int              $reply_to_message_id  Optional. If the message is a reply, ID of the original message
+     * @var string           $reply_markup         Optional. Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.
+     *
+     * ]
+     *
+     * @throws TelegramSDKException
+     *
+     * @return MessageObject
+     */
+    public function sendVideoNote(array $params): MessageObject
+    {
+        $response = $this->uploadFile('sendVideoNote', $params, 'video_note');
+
+        return new MessageObject($response->getDecodedBody());
+    }
+
+    /**
      * Send information about a venue.
      *
      * <code>
