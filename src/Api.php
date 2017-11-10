@@ -1052,6 +1052,36 @@ class Api
         return new Message($response->getDecodedBody());
     }
 
+    
+    /**
+     * Delete Messages
+     *
+     * <code>
+     * $params = [
+     *   'chat_id'                  => '',
+     *   'message_id'               => '',
+     * ];
+     * </code>
+     *
+     * @link https://core.telegram.org/bots/api#deleteMessage
+     *
+     * @param array    $params
+     *
+     * @var int|string $params ['chat_id']
+     * @var int        $params ['message_id']
+     *
+     * @throws TelegramSDKException
+     *
+     * @return Message|bool
+     */
+    public function deleteMessage(array $params)
+    {
+        $response = $this->post('deleteMessage', $params);
+
+        return new Message($response->getDecodedBody());
+    }
+
+    
     /**
      * Use this method to send answers to an inline query.
      *
