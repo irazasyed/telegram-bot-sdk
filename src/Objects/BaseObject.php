@@ -88,7 +88,7 @@ abstract class BaseObject extends Collection
     {
         $value = parent::get($key, $default);
 
-        if (! is_null($value) && is_array($value)) {
+        if (null !== $value && is_array($value)) {
             return $this->getPropertyValue($key, $default);
         }
 
