@@ -291,7 +291,7 @@ abstract class Command implements CommandInterface
 
     private function checkForCustomRegex(Collection $required, Collection $optional)
     {
-        if ($required->isEmpty() && $optional->isEmpty() && $this->pattern) {
+        if ($this->pattern && $required->isEmpty() && $optional->isEmpty()) {
             return $this->pattern;
         }
 
@@ -320,7 +320,7 @@ abstract class Command implements CommandInterface
         return substr(
             $this->getUpdate()->getMessage()->text,
             $splice->first(),
-            ($splice->last() - $splice->first())
+            $splice->last() - $splice->first()
         );
     }
 
@@ -339,7 +339,7 @@ abstract class Command implements CommandInterface
     {
         return $this->getUpdate()->getMessage()->getEntities()
             ->filter(function ($entity) {
-                return $entity['type'] == 'bot_command';
+                return $entity['type'] === 'bot_command';
             })
             ->pluck('offset');
     }

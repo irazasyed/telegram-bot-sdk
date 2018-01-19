@@ -114,6 +114,6 @@ trait CommandsHandler
      */
     public function triggerCommand(string $name, Update $update)
     {
-        return $this->getCommandBus()->execute($name, $update);
+        return $this->getCommandBus()->execute($name, $update, []);
     }
 }
