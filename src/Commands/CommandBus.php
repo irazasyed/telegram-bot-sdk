@@ -174,7 +174,7 @@ class CommandBus extends AnswerBus
     protected function handler($message, Update $update)
     {
         $match = $this->parseCommand($message);
-        if (!empty($match) && count($match) > 3) {
+        if (is_array($match) && count($match) > 3) {
             $command = strtolower($match[1]); //All commands must be lowercase.
 //            $bot = (!empty($match[2])) ? $match[2] : '';
             $arguments = $match[3];
