@@ -2,6 +2,7 @@
 
 namespace Telegram\Bot\Traits;
 
+use Telegram\Bot\Commands\Command;
 use Telegram\Bot\Objects\Update;
 use Telegram\Bot\Commands\CommandBus;
 
@@ -23,7 +24,7 @@ trait CommandsHandler
     /**
      * Get all registered commands.
      *
-     * @return array
+     * @return Command[]
      */
     public function getCommands(): array
     {
@@ -43,6 +44,18 @@ trait CommandsHandler
     }
 
     /**
+     * Truncate inbound updates Queue on Telegram server.
+     * Method purpose: Error recovery after undandled exception in main message loop.
+     *
+     * @param bool $webhook     
+     * @return Update|Update[]
+     */
+    public function updatesTruncate(bool $webhook = false)
+    {
+        return $webhook ? $this->useTruncateWebHook() : $this->useTruncateUpdates();
+    }
+
+    /**
      * Process the update object for a command from your webhook.
      *
      * @return Update
@@ -52,6 +65,17 @@ trait CommandsHandler
         $update = $this->getWebhookUpdate();
         $this->processCommand($update);
 
+        return $update;
+    }
+
+    /**
+     * Truncate the update object from your webhook.
+     *
+     * @return Update
+     */
+    protected function useTruncateWebHook(): Update
+    {
+        $update = $this->getWebhookUpdate();
         return $update;
     }
 
@@ -68,6 +92,28 @@ trait CommandsHandler
         foreach ($updates as $update) {
             $highestId = $update->updateId;
             $this->processCommand($update);
+        }
+
+        //An update is considered confirmed as soon as getUpdates is called with an offset higher than it's update_id.
+        if ($highestId != -1) {
+            $this->markUpdateAsRead($highestId);
+        }
+
+        return $updates;
+    }
+
+    /**
+     * Truncate all updates
+     *
+     * @return Update[]
+     */
+    protected function useTruncateUpdates(): array
+    {
+        $updates = $this->getUpdates();
+        $highestId = -1;
+
+        foreach ($updates as $update) {
+            $highestId = $update->updateId;
         }
 
         //An update is considered confirmed as soon as getUpdates is called with an offset higher than it's update_id.
