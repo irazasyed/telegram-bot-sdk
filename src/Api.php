@@ -18,6 +18,7 @@ use Telegram\Bot\Objects\Update;
 use Telegram\Bot\Objects\User;
 use Telegram\Bot\Objects\UserProfilePhotos;
 use Telegram\Bot\Keyboard\Keyboard;
+use Telegram\Bot\Objects\Webhook;
 
 /**
  * Class Api.
@@ -1164,6 +1165,24 @@ class Api
     {
         return $this->getWebhookUpdate($shouldEmitEvent);
     }
+
+    /**
+     * A simple method for getting information about webhook configuration
+     * Returns basic information about the configuration in form of a Webhook object.
+     *
+     * @link https://core.telegram.org/bots/api#getwebhookinfo
+     *
+     * @throws TelegramSDKException
+     *
+     * @return Webhook
+     */
+    public function getWebhookInfo()
+    {
+        $response = $this->post('getWebhookInfo');
+
+        return new Webhook($response->getDecodedBody());
+    }
+
 
     /**
      * Removes the outgoing webhook (if any).
