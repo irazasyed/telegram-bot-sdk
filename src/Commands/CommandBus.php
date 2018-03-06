@@ -5,6 +5,7 @@ namespace Telegram\Bot\Commands;
 use Telegram\Bot\Api;
 use Telegram\Bot\Objects\Update;
 use Illuminate\Support\Collection;
+use Telegram\Bot\Objects\User;
 use Telegram\Bot\Traits\Singleton;
 use Telegram\Bot\Answers\AnswerBus;
 use Telegram\Bot\Exceptions\TelegramSDKException;
@@ -15,6 +16,11 @@ use Telegram\Bot\Exceptions\TelegramSDKException;
 class CommandBus extends AnswerBus
 {
     use Singleton;
+
+    /**
+     * @var User
+     */
+    protected $me;
 
     /**
      * @var Command[] Holds all commands.
@@ -136,9 +142,9 @@ class CommandBus extends AnswerBus
      * @param $offset
      * @param $length
      *
-     * @return string
+     * @return array
      */
-    public function parseCommand($text, $offset, $length): string
+    public function parseCommand($text, $offset, $length): array
     {
         if (trim($text) === '') {
             throw new \InvalidArgumentException('Message is empty, Cannot parse for command');
@@ -150,13 +156,15 @@ class CommandBus extends AnswerBus
             $length - 1
         );
 
+        $bot = null;
         // When in group - Ex: /command@MyBot
         if (str_contains($command, '@') && ends_with($command, ['bot', 'Bot'])) {
             $command = explode('@', $command);
+            $bot = $command[1];
             $command = $command[0];
         }
 
-        return $command;
+        return [$command, $bot];
     }
 
     /**
@@ -205,13 +213,22 @@ class CommandBus extends AnswerBus
      */
     protected function process($entity, Update $update)
     {
-        $command = $this->parseCommand(
+        [$command,$bot] = $this->parseCommand(
             $update->getMessage()->text,
             $entity['offset'],
             $entity['length']
         );
-
-        $this->execute($command, $update, $entity);
+        if ($this->isMyCommand($command, $bot)) {
+            $this->execute($command, $update, $entity);
+        }
+    }
+    
+    protected function isMyCommand($command, $bot) 
+    {
+        if ($this->me === null) {
+            $this->me =  $this->telegram->getMe();
+        }
+        return $bot === null || $this->me->username === $bot;
     }
 
     /**
