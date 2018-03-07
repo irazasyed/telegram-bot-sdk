@@ -317,7 +317,7 @@ abstract class Command implements CommandInterface
 
     private function cutTextBetween(Collection $splice)
     {
-        return substr(
+        return mb_substr(
             $this->getUpdate()->getMessage()->text,
             $splice->first(),
             $splice->last() - $splice->first()
@@ -326,7 +326,7 @@ abstract class Command implements CommandInterface
 
     private function cutTextFrom(Collection $splice)
     {
-        return substr(
+        return mb_substr(
             $this->getUpdate()->getMessage()->text,
             $splice->first()
         );

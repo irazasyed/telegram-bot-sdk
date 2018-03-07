@@ -150,7 +150,7 @@ class CommandBus extends AnswerBus
             throw new \InvalidArgumentException('Message is empty, Cannot parse for command');
         }
 
-        $command = substr(
+        $command = mb_substr(
             $text,
             $offset + 1,
             $length - 1
