@@ -89,7 +89,7 @@ class TelegramResponse
      */
     public function isError(): bool
     {
-        return isset($this->decodedBody['ok']) && ($this->decodedBody['ok'] === false);
+        return !isset($this->decodedBody['ok'])  || (isset($this->decodedBody['ok']) && ($this->decodedBody['ok'] === false));
     }
 
     /**

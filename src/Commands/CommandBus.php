@@ -18,9 +18,9 @@ class CommandBus extends AnswerBus
     use Singleton;
 
     /**
-     * @var User
+     * @var string
      */
-    protected $me;
+    protected $myUsername;
 
     /**
      * @var Command[] Holds all commands.
@@ -213,22 +213,24 @@ class CommandBus extends AnswerBus
      */
     protected function process($entity, Update $update)
     {
-        [$command,$bot] = $this->parseCommand(
+        list($command, $bot) = $this->parseCommand(
             $update->getMessage()->text,
             $entity['offset'],
             $entity['length']
         );
-        if ($this->isMyCommand($command, $bot)) {
+        if ($this->isMyCommand($command, $bot, $update)) {
             $this->execute($command, $update, $entity);
         }
     }
     
-    protected function isMyCommand($command, $bot) 
+    protected function isMyCommand($command, $bot, Update $update)
     {
-        if ($this->me === null) {
-            $this->me =  $this->telegram->getMe();
+        if ($this->myUsername === null) {
+            $this->myUsername = $this->telegram->getMe()->username;
         }
-        return $bot === null || $this->me->username === $bot;
+        //We should react only on own command (direct addressed via /command@bot or if bot name not set /command) and
+        // should skip own message duplicated for example in callback query.
+        return ($bot === $this->myUsername || $bot === null) && !($update->getMessage()->from->username === $this->myUsername);
     }
 
     /**

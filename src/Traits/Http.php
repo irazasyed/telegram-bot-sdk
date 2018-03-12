@@ -340,6 +340,13 @@ trait Http
             throw CouldNotUploadInputFile::missingParam($inputFileField);
         }
 
+        $inputFileValue = $params[$inputFileField];
+
+        /** pass url drirect to telegram without dowload file via  InputFile*/
+        if (is_string($inputFileValue) && InputFile::create($inputFileValue)->isFileRemote()) {
+            return;
+        }
+
         //All file-paths, urls, or file resources should be provided by using the InputFile object
         if (! $params[$inputFileField] instanceof InputFile) {
             throw CouldNotUploadInputFile::inputFileParameterShouldBeInputFileEntity($inputFileField);
