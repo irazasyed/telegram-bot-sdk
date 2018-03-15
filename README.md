@@ -10,6 +10,7 @@ Telegram Bot API - PHP SDK
 <a href="https://travis-ci.org/irazasyed/telegram-bot-sdk"><img src="https://img.shields.io/travis/irazasyed/telegram-bot-sdk.svg?style=flat-square" alt="Build Status"/></a>
 <a href="https://github.com/irazasyed/telegram-bot-sdk/releases"><img src="https://img.shields.io/github/release/irazasyed/telegram-bot-sdk.svg?style=flat-square" alt="Latest Version"/></a>
 <a href="https://packagist.org/packages/irazasyed/telegram-bot-sdk"><img src="https://img.shields.io/packagist/dt/irazasyed/telegram-bot-sdk.svg?style=flat-square" alt="Total Downloads"/></a>
+<a href="https://app.fossa.io/projects/git%2Bgithub.com%2Firazasyed%2Ftelegram-bot-sdk?ref=badge_shield" alt="FOSSA Status"><img src="https://app.fossa.io/api/projects/git%2Bgithub.com%2Firazasyed%2Ftelegram-bot-sdk.svg?type=shield"/></a>
 </p>
 
 ## Overview
@@ -62,3 +63,6 @@ This project is released under the [BSD 3-Clause][link-license] License.
 [link-license]: https://github.com/irazasyed/telegram-bot-sdk/blob/master/LICENSE
 [link-sdk-users]: https://github.com/irazasyed/telegram-bot-sdk/wiki/Who's-Using-Telegram-Bot-SDK%3F
 
+
+
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Firazasyed%2Ftelegram-bot-sdk.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Firazasyed%2Ftelegram-bot-sdk?ref=badge_large)
