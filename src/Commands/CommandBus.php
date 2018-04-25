@@ -200,6 +200,10 @@ class CommandBus extends AnswerBus
             return $this->commands[$name]->make($this->telegram, $arguments, $message);
         } elseif (array_key_exists($name, $this->commandAliases)) {
             return $this->commandAliases[$name]->make($this->telegram, $arguments, $message);
+        } elseif ($command = collect($this->commands)->filter(function($command) use ($name){
+            return $command instanceof $name;
+        })->first()) {
+            $command->make($this->telegram, $arguments, $message);
         } elseif (array_key_exists('help', $this->commands)) {
             return $this->commands['help']->make($this->telegram, $arguments, $message);
         }
