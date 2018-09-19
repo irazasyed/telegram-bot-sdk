@@ -1317,7 +1317,7 @@ class Api
     public function commandsHandler($webhook = false, array $params = [])
     {
         if ($webhook) {
-            $update = $this->getWebhookUpdates();
+            $update = $this->getWebhookUpdate();
             $this->processCommand($update);
 
             return $update;
