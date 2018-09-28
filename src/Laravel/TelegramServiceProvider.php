@@ -43,7 +43,7 @@ class TelegramServiceProvider extends ServiceProvider
         $source = __DIR__.'/config/telegram.php';
 
         if ($app instanceof LaravelApplication && $app->runningInConsole()) {
-            $this->publishes([$source => config_path('telegram.php')]);
+            $this->publishes([$source => config_path('telegram.php')], 'config');
         } elseif ($app instanceof LumenApplication) {
             $app->configure('telegram');
         }
