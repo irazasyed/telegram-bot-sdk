@@ -41,26 +41,29 @@ trait Payments
      *
      * @param array        $params              [
      *
-     * @var int            $chat_id             Required. Unique identifier for the target chat or username of the target channel (in the format @channelusername)
-     * @var string         $title               Required. Product name, 1-32 characters
-     * @var string         $description         Required. Product description, 1-255 characters
-     * @var string         $payload             Required. Bot-defined invoice payload, 1-128 bytes. This will not be displayed to the user, use for your internal processes.
-     * @var string         $providerToken       Required. Payments provider token, obtained via Botfather
-     * @var string         $startParameter      Required. Unique deep-linking parameter that can be used to generate this invoice when used as a start parameter
-     * @var string         $currency            Required. Three-letter ISO 4217 currency code
-     * @var LabeledPrice[] $prices              Required. Price breakdown, a list of components (e.g. product price, tax, discount, delivery cost, delivery tax, bonus, etc.)
-     * @var string         $photoUrl            Optional. URL of the product photo for the invoice. Can be a photo of the goods or a marketing image for a service. People like it better when they see what they are paying for.
-     * @var int            $photoSize           Optional. Photo size
-     * @var int            $photoWidth          Optional. Photo width
-     * @var int            $photoHeight         Optional. Photo height
-     * @var bool           $needName            Optional. Pass True, if you require the user's full name to complete the order
-     * @var bool           $needPhoneNumber     Optional. Pass True, if you require the user's phone number to complete the order
-     * @var bool           $needEmail           Optional. Pass True, if you require the user's email to complete the order
-     * @var bool           $needShippingAddress Optional. Pass True, if you require the user's shipping address to complete the order
-     * @var bool           $isFlexible          Optional. Pass True, if the final price depends on the shipping method
-     * @var bool           $disableNotification Optional. Sends the message silently. Users will receive a notification with no sound.
-     * @var int            $reply_to_message_id Optional. If the message is a reply, ID of the original message
-     * @var string         $reply_markup        Optional. A JSON-serialized object for an inline keyboard. If empty, one 'Pay total price' button will be shown. If not empty, the first button must be a Pay button.
+     * @var int            $chat_id                         Required. Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @var string         $title                           Required. Product name, 1-32 characters
+     * @var string         $description                     Required. Product description, 1-255 characters
+     * @var string         $payload                         Required. Bot-defined invoice payload, 1-128 bytes. This will not be displayed to the user, use for your internal processes.
+     * @var string         $providerToken                   Required. Payments provider token, obtained via Botfather
+     * @var string         $startParameter                  Required. Unique deep-linking parameter that can be used to generate this invoice when used as a start parameter
+     * @var string         $currency                        Required. Three-letter ISO 4217 currency code
+     * @var LabeledPrice[] $prices                          Required. Price breakdown, a list of components (e.g. product price, tax, discount, delivery cost, delivery tax, bonus, etc.)
+     * @var string         $provider_data                   Optional. JSON-encoded data about the invoice, which will be shared with the payment provider. A detailed description of required fields should be provided by the payment provider.
+     * @var string         $photoUrl                        Optional. URL of the product photo for the invoice. Can be a photo of the goods or a marketing image for a service. People like it better when they see what they are paying for.
+     * @var int            $photoSize                       Optional. Photo size
+     * @var int            $photoWidth                      Optional. Photo width
+     * @var int            $photoHeight                     Optional. Photo height
+     * @var bool           $needName                        Optional. Pass True, if you require the user's full name to complete the order
+     * @var bool           $needPhoneNumber                 Optional. Pass True, if you require the user's phone number to complete the order
+     * @var bool           $needEmail                       Optional. Pass True, if you require the user's email to complete the order
+     * @var bool           $needShippingAddress             Optional. Pass True, if you require the user's shipping address to complete the order
+     * @var bool           $send_phone_number_to_provider   Optional. Pass True, if user's phone number should be sent to provider
+     * @var bool           $send_email_to_provider          Optional. Pass True, if user's email address should be sent to provider
+     * @var bool           $isFlexible                      Optional. Pass True, if the final price depends on the shipping method
+     * @var bool           $disableNotification             Optional. Sends the message silently. Users will receive a notification with no sound.
+     * @var int            $reply_to_message_id             Optional. If the message is a reply, ID of the original message
+     * @var string         $reply_markup                    Optional. A JSON-serialized object for an inline keyboard. If empty, one 'Pay total price' button will be shown. If not empty, the first button must be a Pay button.
      *
      * ]
      *
