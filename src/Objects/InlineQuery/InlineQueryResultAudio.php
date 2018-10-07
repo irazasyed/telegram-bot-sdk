@@ -11,6 +11,7 @@ namespace Telegram\Bot\Objects\InlineQuery;
  *   'audio_url'                  => '',
  *   'title'                      => '',
  *   'caption'                    => '',
+ *   'parse_mode'                 => '',
  *   'performer'                  => '',
  *   'audio_duration'             => '',
  *   'reply_markup'               => '',
@@ -24,6 +25,7 @@ namespace Telegram\Bot\Objects\InlineQuery;
  * @method $this setAudioUrl($string)               A valid URL for the audio file
  * @method $this setTitle($string)                  Title
  * @method $this setCaption($string)                Optional. Caption, 0-200 characters
+ * @method $this setParseMode($string)              Optional. Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
  * @method $this setPerformer($string)              Optional. Performer
  * @method $this setAudioDuration($int)             Optional. Audio duration in seconds
  * @method $this setReplyMarkup($object)            Optional. Inline keyboard attached to the message

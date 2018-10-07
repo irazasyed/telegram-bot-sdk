@@ -188,6 +188,7 @@ trait Http
      * @param array  $params
      * @param bool   $fileUpload Set true if a file is being uploaded.
      *
+     * @throws TelegramSDKException
      * @return TelegramResponse
      */
     protected function post(string $endpoint, array $params = [], $fileUpload = false): TelegramResponse

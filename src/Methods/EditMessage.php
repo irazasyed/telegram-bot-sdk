@@ -2,6 +2,7 @@
 
 namespace Telegram\Bot\Methods;
 
+use Telegram\Bot\Objects\Inputmedia\InputMedia;
 use Telegram\Bot\Objects\Message;
 use Telegram\Bot\Exceptions\TelegramSDKException;
 
@@ -59,6 +60,7 @@ trait EditMessage
      *   'message_id'               => '',
      *   'inline_message_id'        => '',
      *   'caption'                  => '',
+     *   'parse_mode'               => '',
      *   'reply_markup'             => '',
      * ];
      * </code>
@@ -71,6 +73,7 @@ trait EditMessage
      * @var int        $message_id        Optional. Required if inline_message_id is not specified. Identifier of the sent message
      * @var string     $inline_message_id Optional. Required if chat_id and message_id are not specified. Identifier of the inline message
      * @var string     $caption           Optional. New caption of the message
+     * @var string     $parse_mode        Optional. Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
      * @var string     $reply_markup      Optional. A JSON-serialized object for an inline keyboard.
      *
      * ]
@@ -82,6 +85,42 @@ trait EditMessage
     public function editMessageCaption(array $params)
     {
         $response = $this->post('editMessageCaption', $params);
+
+        return new Message($response->getDecodedBody());
+    }
+
+    /**
+     * Edit audio, document, photo, or video messages sent by the bot or via the bot.
+     *
+     * <code>
+     * $params = [
+     *   'chat_id'                  => '',
+     *   'message_id'               => '',
+     *   'inline_message_id'        => '',
+     *   'media'                    => '',
+     *   'reply_markup'             => '',
+     * ];
+     * </code>
+     *
+     * @link https://core.telegram.org/bots/api#editmessagemedia
+     *
+     * @param array $params [
+     *
+     * @var int|string $chat_id                  Optional. Required if inline_message_id is not specified. Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @var int        $message_id               Optional. Required if inline_message_id is not specified. Identifier of the sent message
+     * @var string     $inline_message_id        Optional. Required if chat_id and message_id are not specified. Identifier of the inline message
+     * @var InputMedia $media                    Required. A JSON-serialized object for a new media content of the message
+     * @var string     $reply_markup             Optional. A JSON-serialized object for an inline keyboard.
+     *
+     * ]
+     *
+     * @throws TelegramSDKException
+     *
+     * @return Message|bool
+     */
+    public function editMessageMedia(array $params)
+    {
+        $response = $this->post('editMessageMedia', $params);
 
         return new Message($response->getDecodedBody());
     }

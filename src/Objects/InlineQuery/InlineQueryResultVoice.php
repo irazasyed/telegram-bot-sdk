@@ -11,6 +11,7 @@ namespace Telegram\Bot\Objects\InlineQuery;
  *   'voice_url'                  => '',
  *   'title'                      => '',
  *   'caption'                    => '',
+ *   'parse_mode'               => '',
  *   'voice_duration'             => '',
  *   'reply_markup'               => '',
  *   'input_message_content'      => '',
@@ -23,6 +24,7 @@ namespace Telegram\Bot\Objects\InlineQuery;
  * @method $this setVoiceUrl($string)               A valid URL for the voice recording
  * @method $this setTitle($string)                  Recording title
  * @method $this setCaption($string)                Optional. Caption, 0-200 characters
+ * @method $this setParseMode($string)              Optional. Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
  * @method $this setVoiceDuration($int)             Optional. Recording duration in seconds
  * @method $this setReplyMarkup($object)            Optional. Inline keyboard attached to the message
  * @method $this setInputMessageContent($object)    Optional. Content of the message to be sent instead of the photo

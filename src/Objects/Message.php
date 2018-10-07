@@ -25,6 +25,7 @@ use Telegram\Bot\Objects\Payments\SuccessfulPayment;
  * @property MessageEntity[]   $captionEntities        (Optional). For messages with a caption, special entities like usernames, URLs, bot commands, etc. that appear in the caption.
  * @property Audio             $audio                  (Optional). Message is an audio file, information about the file.
  * @property Document          $document               (Optional). Message is a general file, information about the file.
+ * @property Animation         $animation              (Optional). Message is an animation, information about the animation. For backward compatibility, when this field is set, the document field will also be set
  * @property Game              $game                   (Optional). Message is a game, information about the game.
  * @property PhotoSize[]       $photo                  (Optional). Message is a photo, available sizes of the photo.
  * @property Sticker           $sticker                (Optional). Message is a sticker, information about the sticker.
@@ -48,6 +49,7 @@ use Telegram\Bot\Objects\Payments\SuccessfulPayment;
  * @property Message           $pinnedMessage          (Optional). Specified message was pinned. Note that the Message object in this field will not contain further reply_to_message fields even if it is itself a reply.
  * @property Invoice           $invoice                (Optional). Message is an invoice for a payment, information about the invoice.
  * @property SuccessfulPayment $successfulPayment      (Optional). Message is a service message about a successful payment, information about the payment.
+ * @property string            $connected_website      (Optional). Optional. The domain name of the website on which the user has logged in.
  */
 class Message extends BaseObject
 {
