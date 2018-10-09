@@ -15,6 +15,7 @@ class InputMedia extends BaseObject
      */
     public function relations()
     {
-        return [];
+        return [
+        ];
     }
 }

@@ -21,6 +21,8 @@ class Audio extends BaseObject
      */
     public function relations()
     {
-        return [];
+        return [
+            'thumb' => PhotoSize::class,
+        ];
     }
 }

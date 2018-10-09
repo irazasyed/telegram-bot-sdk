@@ -18,6 +18,8 @@ class MessageEntity extends BaseObject
      */
     public function relations()
     {
-        return [];
+        return [
+            'user' => User::class,
+        ];
     }
 }

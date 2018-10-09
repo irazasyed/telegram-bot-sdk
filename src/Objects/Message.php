@@ -3,6 +3,7 @@
 namespace Telegram\Bot\Objects;
 
 use Telegram\Bot\Objects\Payments\Invoice;
+use Telegram\Bot\Objects\Passport\PassportData;
 use Telegram\Bot\Objects\Payments\SuccessfulPayment;
 
 /**
@@ -19,6 +20,7 @@ use Telegram\Bot\Objects\Payments\SuccessfulPayment;
  * @property int               $forwardDate            (Optional). For forwarded messages, date the original message was sent in Unix time.
  * @property Message           $replyToMessage         (Optional). For replies, the original message. Note that the Message object in this field will not contain further reply_to_message fields even if it itself is a reply.
  * @property int               $editDate               (Optional). Date the message was last edited in Unix time.
+ * @property string            $mediaGroupId           (Optional). The unique identifier of a media message group this message belongs to
  * @property string            $authorSignature        (Optional). Signature of the post author for messages in channels
  * @property string            $text                   (Optional). For text messages, the actual UTF-8 text of the message, 0-4096 characters.
  * @property MessageEntity[]   $entities               (Optional). For text messages, special entities like usernames, URLs, bot commands, etc. that appear in the text.
@@ -49,7 +51,8 @@ use Telegram\Bot\Objects\Payments\SuccessfulPayment;
  * @property Message           $pinnedMessage          (Optional). Specified message was pinned. Note that the Message object in this field will not contain further reply_to_message fields even if it is itself a reply.
  * @property Invoice           $invoice                (Optional). Message is an invoice for a payment, information about the invoice.
  * @property SuccessfulPayment $successfulPayment      (Optional). Message is a service message about a successful payment, information about the payment.
- * @property string            $connected_website      (Optional). Optional. The domain name of the website on which the user has logged in.
+ * @property string            $connectedWebsite       (Optional). The domain name of the website on which the user has logged in.
+ * @property PassportData      $passportData           (Optional). Telegram Passport data
  */
 class Message extends BaseObject
 {
@@ -65,8 +68,10 @@ class Message extends BaseObject
             'forward_from_chat'  => Chat::class,
             'reply_to_message'   => self::class,
             'entities'           => MessageEntity::class,
+            'caption_entities'   => MessageEntity::class,
             'audio'              => Audio::class,
             'document'           => Document::class,
+            'animation'          => Animation::class,
             'game'               => Game::class,
             'photo'              => PhotoSize::class,
             'sticker'            => Sticker::class,
@@ -82,6 +87,7 @@ class Message extends BaseObject
             'pinned_message'     => self::class,
             'invoice'            => Invoice::class,
             'successful_payment' => SuccessfulPayment::class,
+            'passport'           => PassportData::class,
         ];
     }
 
