@@ -10,6 +10,7 @@ namespace Telegram\Bot\Objects\InlineQuery;
  *   'id'                       => '',
  *   'title'                    => '',
  *   'caption'                  => '',
+ *   'parse_mode'               => '',
  *   'document_url'             => '',
  *   'mime_type'                => '',
  *   'description'              => '',
@@ -26,6 +27,7 @@ namespace Telegram\Bot\Objects\InlineQuery;
  * @method $this setId($string)                     Unique identifier for this result, 1-64 bytes
  * @method $this setTitle($string)                  Title for the result
  * @method $this setCaption($string)                Optional. Caption of the document to be sent, 0-200 characters
+ * @method $this setParseMode($string)              Optional. Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
  * @method $this setDocumentUrl($string)            A valid URL for the file
  * @method $this setMimeType($string)               Mime type of the content of the file, either “application/pdf” or “application/zip”
  * @method $this setDescription($string)            Optional. Short description of the result

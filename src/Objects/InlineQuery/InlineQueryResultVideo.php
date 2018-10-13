@@ -13,6 +13,7 @@ namespace Telegram\Bot\Objects\InlineQuery;
  *   'thumb_url'                => '',
  *   'title'                    => '',
  *   'caption'                  => '',
+ *   'parse_mode'               => '',
  *   'video_width'              => '',
  *   'video_height'             => '',
  *   'video_duration'           => '',
@@ -30,6 +31,7 @@ namespace Telegram\Bot\Objects\InlineQuery;
  * @method $this setThumbUrl($string)               URL of the thumbnail (jpeg only) for the video
  * @method $this setTitle($string)                  Title for the result
  * @method $this setCaption($string)                Optional. Caption of the video to be sent, 0-200 characters
+ * @method $this setParseMode($string)              Optional. Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
  * @method $this setVideoWidth($int)                Optional. Video width
  * @method $this setVideoHeight($int)               Optional. Video height
  * @method $this setVideoDuration($int)             Optional. Video duration in seconds

@@ -27,6 +27,7 @@ class Api
         Methods\Get,
         Methods\Location,
         Methods\Message,
+        Methods\Passport,
         Methods\Payments,
         Methods\Query,
         Methods\Stickers,
