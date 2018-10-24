@@ -1139,7 +1139,7 @@ class Api
      */
     public function getWebhookUpdate($shouldEmitEvent = true)
     {
-        $body = json_decode(file_get_contents('php://input'), true);
+        $body = json_decode(request()->getContent(), true);
 
         $update = new Update($body);
 
