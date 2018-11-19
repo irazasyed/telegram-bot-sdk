@@ -143,4 +143,14 @@ class Message extends BaseObject
             ->intersect($types)
             ->pop();
     }
+
+    /**
+     * Does this message contain a command entity
+     *
+     * @return bool
+     */
+    public function hasCommand()
+    {
+        return (bool)$this->get('entities', collect())->contains('type', 'bot_command');
+    }
 }
