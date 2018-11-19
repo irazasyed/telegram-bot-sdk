@@ -145,4 +145,14 @@ class Update extends BaseObject
 
         return $message->has('chat') ? $message->get('chat') : collect();
     }
+
+    /**
+     * Is there a command entity in this update object
+     *
+     * @return bool
+     */
+    public function hasCommand()
+    {
+        return (bool)$this->getMessage()->get('entities', collect())->contains('type', 'bot_command');
+    }
 }
