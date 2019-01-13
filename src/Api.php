@@ -1178,6 +1178,18 @@ class Api
 
         return $this->post('setWebhook', compact('url'));
     }
+    
+    /**
+     * Retrieves webhook info
+     *
+     * @throws TelegramSDKException
+     *
+     * @return TelegramResponse
+     */
+    public function getWebhookInfo()
+    {
+        return $this->post('getWebhookInfo');
+    }
 
     /**
      * Use this method to receive incoming updates using long polling.
