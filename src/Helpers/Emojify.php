@@ -54,6 +54,7 @@ class Emojify
      * Returns the *Singleton* instance of this class.
      *
      * @return Emojify The *Singleton* instance.
+     * @throws TelegramEmojiMapFileNotFoundException
      */
     public static function getInstance()
     {
@@ -70,6 +71,7 @@ class Emojify
      * @param string $emojiMapFile
      *
      * @return Emojify
+     * @throws TelegramEmojiMapFileNotFoundException
      */
     public function setEmojiMapFile($emojiMapFile)
     {
@@ -97,6 +99,7 @@ class Emojify
      * @param $text
      *
      * @return mixed
+     * @throws TelegramEmojiMapFileNotFoundException
      */
     public static function text($text)
     {
@@ -121,6 +124,7 @@ class Emojify
      * @param $text
      *
      * @return mixed
+     * @throws TelegramEmojiMapFileNotFoundException
      */
     public static function translate($text)
     {
