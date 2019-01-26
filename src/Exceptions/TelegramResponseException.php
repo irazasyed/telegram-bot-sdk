@@ -55,7 +55,7 @@ class TelegramResponseException extends TelegramSDKException
         }
 
         // Others
-        return new static($response, new TelegramOtherException($message, $code));
+        throw new static($response, new TelegramOtherException($message, $code));
     }
 
     /**
