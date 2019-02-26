@@ -53,7 +53,7 @@ See License section for more details.
 
 This project is released under the [BSD 3-Clause][link-license] License.
 
-© 2015-16 [Syed Irfaq R.][link-author], All rights reserved.
+© 2015-19 [Syed Irfaq R.][link-author], All rights reserved.
 
 [link-author]: https://github.com/irazasyed
 [link-repo]: https://github.com/irazasyed/telegram-bot-sdk
@@ -62,7 +62,5 @@ This project is released under the [BSD 3-Clause][link-license] License.
 [link-docs]: https://telegram-bot-sdk.readme.io/docs
 [link-license]: https://github.com/irazasyed/telegram-bot-sdk/blob/master/LICENSE
 [link-sdk-users]: https://github.com/irazasyed/telegram-bot-sdk/wiki/Who's-Using-Telegram-Bot-SDK%3F
-
-
 
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Firazasyed%2Ftelegram-bot-sdk.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Firazasyed%2Ftelegram-bot-sdk?ref=badge_large)
