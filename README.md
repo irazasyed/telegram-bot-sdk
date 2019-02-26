@@ -51,9 +51,7 @@ See License section for more details.
 
 ## License
 
-This project is released under the [BSD 3-Clause][link-license] License.
-
-© 2015-19 [Syed Irfaq R.][link-author], All rights reserved.
+The BSD 3-Clause License. Please see [License File][link-license] for more information.
 
 [link-author]: https://github.com/irazasyed
 [link-repo]: https://github.com/irazasyed/telegram-bot-sdk
