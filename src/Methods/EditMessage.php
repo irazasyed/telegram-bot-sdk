@@ -2,8 +2,9 @@
 
 namespace Telegram\Bot\Methods;
 
-use Telegram\Bot\Objects\Inputmedia\InputMedia;
+use Telegram\Bot\Objects\Poll;
 use Telegram\Bot\Objects\Message;
+use Telegram\Bot\Objects\Inputmedia\InputMedia;
 use Telegram\Bot\Exceptions\TelegramSDKException;
 
 /**
@@ -160,7 +161,48 @@ trait EditMessage
     }
 
     /**
-     * Delete a message, including service messages.
+     * Stop Poll.
+     *
+     * Stop a poll which was sent by the bot. On success, the stopped Poll with the final results is returned.
+     *
+     * <code>
+     * $params = [
+     *   'chat_id'                  => '',
+     *   'message_id'               => '',
+     *   'reply_markup'             => '',
+     * ];
+     * </code>
+     *
+     * @link https://core.telegram.org/bots/api#stoppoll
+     *
+     * @param array $params [
+     *
+     * @var int|string $chat_id           Required. Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @var int        $message_id        Required. Identifier of the original message with the poll
+     * @var string     $reply_markup      Optional. A JSON-serialized object for an inline keyboard.
+     *
+     * ]
+     *
+     * @throws TelegramSDKException
+     *
+     * @return Poll
+     */
+    public function stopPoll(array $params)
+    {
+        $response = $this->post('stopPoll', $params);
+
+        return new Poll($response->getDecodedBody());
+    }
+
+    /**
+     * Delete a message, including service messages, with the following limitations:
+     *
+     * - A message can only be deleted if it was sent less than 48 hours ago.
+     * - Bots can delete outgoing messages in private chats, groups, and supergroups.
+     * - Bots can delete incoming messages in private chats.
+     * - Bots granted can_post_messages permissions can delete outgoing messages in channels.
+     * - If the bot is an administrator of a group, it can delete any message there.
+     * - If the bot has can_delete_messages permission in a supergroup or a channel, it can delete any message there.
      *
      * <code>
      * $params = [
@@ -169,7 +211,7 @@ trait EditMessage
      * ];
      * </code>
      *
-     * @link https://core.telegram.org/bots/api#editmessagereplymarkup
+     * @link https://core.telegram.org/bots/api#deletemessage
      *
      * @param array $params [
      *

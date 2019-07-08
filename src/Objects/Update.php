@@ -28,6 +28,7 @@ use Telegram\Bot\Objects\Payments\PreCheckoutQuery;
  *                                                      flexible price
  * @property PreCheckoutQuery   $preCheckoutQuery       (Optional). New incoming pre-checkout query. Contains full
  *                                                      information about checkout
+ * @property Poll               $poll                   (Optional). Optional. New poll state. Bots receive only updates about stopped polls and polls, which are sent by the bot
  *
  * @link https://core.telegram.org/bots/api#update
  */
@@ -46,6 +47,9 @@ class Update extends BaseObject
             'inline_query'         => InlineQuery::class,
             'chosen_inline_result' => ChosenInlineResult::class,
             'callback_query'       => CallbackQuery::class,
+            'shipping_query'       => ShippingQuery::class,
+            'pre_checkout_query'   => PreCheckoutQuery::class,
+            'poll'                 => Poll::class,
         ];
     }
 
@@ -92,6 +96,7 @@ class Update extends BaseObject
             'callback_query',
             'shipping_query',
             'pre_checkout_query',
+            'poll',
         ];
 
         return $this->keys()
@@ -129,6 +134,8 @@ class Update extends BaseObject
                 return $this->shippingQuery;
             case 'pre_checkout_query':
                 return $this->preCheckoutQuery;
+            case 'poll':
+                return $this->poll;
         }
 
         return collect();

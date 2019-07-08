@@ -17,6 +17,7 @@ use Telegram\Bot\Objects\Payments\SuccessfulPayment;
  * @property Chat              $forwardFromChat        (Optional). For messages forwarded from a channel, information about the original channel.
  * @property int               $forwardFromMessageId   (Optional). For forwarded channel posts, identifier of the original message in the channel.
  * @property string            $forwardSignature       (Optional). For messages forwarded from channels, identifier of the original message in the channel
+ * @property string            $forwardSenderName      (Optional). Sender's name for messages forwarded from users who disallow adding a link to their account in forwarded messages
  * @property int               $forwardDate            (Optional). For forwarded messages, date the original message was sent in Unix time.
  * @property Message           $replyToMessage         (Optional). For replies, the original message. Note that the Message object in this field will not contain further reply_to_message fields even if it itself is a reply.
  * @property int               $editDate               (Optional). Date the message was last edited in Unix time.
@@ -38,6 +39,7 @@ use Telegram\Bot\Objects\Payments\SuccessfulPayment;
  * @property Contact           $contact                (Optional). Message is a shared contact, information about the contact.
  * @property Location          $location               (Optional). Message is a shared location, information about the location.
  * @property Venue             $venue                  (Optional). Message is a venue, information about the venue.
+ * @property Poll              $poll                   (Optional). Message is a native poll, information about the poll
  * @property User[]            $newChatMembers         (Optional). New members that were added to the group or supergroup and information about them (the bot itself may be one of these members).
  * @property User              $leftChatMember         (Optional). A member was removed from the group, information about them (this member may be the bot itself).
  * @property string            $newChatTitle           (Optional). A chat title was changed to this value.

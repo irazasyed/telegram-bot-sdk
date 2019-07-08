@@ -17,6 +17,7 @@ namespace Telegram\Bot\Objects;
  * @property bool   $canRestrictMembers              (Optional). Administrators only. True, if the administrator can restrict, ban or unban chat members
  * @property bool   $canPinMessages                  (Optional). Administrators only. True, if the administrator can pin messages, supergroups only
  * @property bool   $canPromoteMembers               (Optional). Administrators only. True, if the administrator can add new administrators with a subset of his own privileges or demote administrators that he has promoted, directly or indirectly (promoted by administrators that were appointed by the user)
+ * @property bool   $isMember                        (Optional). Restricted only. True, if the user is a member of the chat at the moment of the request
  * @property bool   $canSendMessages                 (Optional). Restricted only. True, if the user can send text messages, contacts, locations and venues
  * @property bool   $canSendMediaMessages            (Optional). Restricted only. True, if the user can send audios, documents, photos, videos, video notes and voice notes, implies can_send_messages
  * @property bool   $canSendOtherMessages            (Optional). Restricted only. True, if the user can send animations, games, stickers and use inline bots, implies can_send_media_messages

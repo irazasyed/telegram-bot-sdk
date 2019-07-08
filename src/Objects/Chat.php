@@ -18,7 +18,7 @@ use Telegram\Bot\Objects\Inputmedia\InputMedia;
  * @property InputMedia $photo                        (Optional). Chat photo. Returned only in getChat.
  * @property string     $description                  (Optional). Description, for supergroups and channel chats. Returned only in getChat.
  * @property string     $inviteLink                   (Optional). Chat invite link, for supergroups and channel chats. Returned only in getChat.
- * @property Message    $pinnedMessage                (Optional). Pinned message, for supergroups. Returned only in getChat.
+ * @property Message    $pinnedMessage                (Optional). Pinned message, for groups, supergroups and channels. Returned only in getChat.
  * @property string     $stickerSetName               (Optional). For supergroups, name of group sticker set. Returned only in getChat.
  * @property bool       $canSetStickerSet             (Optional). True, if the bot can change the group sticker set. Returned only in getChat.
  */

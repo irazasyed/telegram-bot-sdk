@@ -521,6 +521,46 @@ trait Message
     }
 
     /**
+     * Send a poll.
+     *
+     * Use this method to send a native poll. A native poll can't be sent to a private chat.
+     *
+     * <code>
+     * $params = [
+     *   'chat_id'              => '',
+     *   'question'             => '',
+     *   'options'              => '',
+     *   'disable_notification' => '',
+     *   'reply_to_message_id'  => '',
+     *   'reply_markup'         => '',
+     * ];
+     * </code>
+     *
+     * @link https://core.telegram.org/bots/api#sendpoll
+     *
+     * @param array    $params               [
+     *
+     * @var int|string $chat_id              Required. Unique identifier for the target chat or username of the target channel (in the format @channelusername). A native poll can't be sent to a private chat.
+     * @var string     $question             Required. Poll question, 1-255 characters
+     * @var array      $options              Required. List of answer options, 2-10 strings 1-100 characters each
+     * @var bool       $disable_notification Optional. Sends the message silently. Users will receive a notification with no sound.
+     * @var int        $reply_to_message_id  Optional. If the message is a reply, ID of the original message
+     * @var string     $reply_markup         Optional. Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.
+     *
+     * ]
+     *
+     * @throws TelegramSDKException
+     *
+     * @return MessageObject
+     */
+    public function sendPoll(array $params): MessageObject
+    {
+        $response = $this->post('sendContact', $params);
+
+        return new MessageObject($response->getDecodedBody());
+    }
+
+    /**
      * Broadcast a Chat Action.
      *
      * <code>
