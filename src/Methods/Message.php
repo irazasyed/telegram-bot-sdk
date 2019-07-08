@@ -2,12 +2,14 @@
 
 namespace Telegram\Bot\Methods;
 
+use Telegram\Bot\Traits\Http;
 use Telegram\Bot\FileUpload\InputFile;
 use Telegram\Bot\Exceptions\TelegramSDKException;
 use Telegram\Bot\Objects\Message as MessageObject;
 
 /**
  * Class Message.
+ * @mixin Http
  */
 trait Message
 {
@@ -555,7 +557,8 @@ trait Message
      */
     public function sendPoll(array $params): MessageObject
     {
-        $response = $this->post('sendContact', $params);
+        $params['options'] = json_encode($params['options']);
+        $response = $this->post('sendPoll', $params);
 
         return new MessageObject($response->getDecodedBody());
     }
