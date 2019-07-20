@@ -3,6 +3,7 @@
 namespace Telegram\Bot\FileUpload;
 
 use GuzzleHttp\Psr7\LazyOpenStream;
+use InvalidArgumentException;
 use Psr\Http\Message\StreamInterface;
 use Telegram\Bot\Exceptions\CouldNotUploadInputFile;
 
@@ -135,14 +136,14 @@ class InputFile
      *
      * @param $filename
      *
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      *
      * @return InputFile
      */
     public function setFilename($filename): InputFile
     {
         if (false === $this->isStringOrNull($filename)) {
-            throw new \InvalidArgumentException(
+            throw new InvalidArgumentException(
                 'Filename must be a string or null'
             );
         }
@@ -156,6 +157,7 @@ class InputFile
      * Get contents.
      *
      * @return StreamInterface|resource|string
+     * @throws CouldNotUploadInputFile
      */
     public function getContents()
     {

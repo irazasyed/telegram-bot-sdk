@@ -2,6 +2,7 @@
 
 namespace Telegram\Bot\Commands;
 
+use InvalidArgumentException;
 use Telegram\Bot\Api;
 use Telegram\Bot\Objects\Update;
 use Illuminate\Support\Collection;
@@ -30,8 +31,6 @@ class CommandBus extends AnswerBus
      * Instantiate Command Bus.
      *
      * @param Api|null $telegram
-     *
-     * @throws TelegramSDKException
      */
     public function __construct(Api $telegram = null)
     {
@@ -53,6 +52,7 @@ class CommandBus extends AnswerBus
      *
      * @param array $commands
      *
+     * @throws TelegramSDKException
      * @return CommandBus
      */
     public function addCommands(array $commands): CommandBus
@@ -141,7 +141,7 @@ class CommandBus extends AnswerBus
     public function parseCommand($text, $offset, $length): string
     {
         if (trim($text) === '') {
-            throw new \InvalidArgumentException('Message is empty, Cannot parse for command');
+            throw new InvalidArgumentException('Message is empty, Cannot parse for command');
         }
 
         $command = substr(
@@ -163,8 +163,6 @@ class CommandBus extends AnswerBus
      * Handles Inbound Messages and Executes Appropriate Command.
      *
      * @param $update
-     *
-     * @throws TelegramSDKException
      *
      * @return Update
      */
@@ -238,9 +236,9 @@ class CommandBus extends AnswerBus
     /**
      * @param $command
      *
-     * @throws \Telegram\Bot\Exceptions\TelegramSDKException
-     *
      * @return object
+     * @throws TelegramSDKException
+     *
      */
     private function resolveCommand($command)
     {
@@ -262,7 +260,7 @@ class CommandBus extends AnswerBus
      * @param $command
      * @param $alias
      *
-     * @throws \Telegram\Bot\Exceptions\TelegramSDKException
+     * @throws TelegramSDKException
      */
     private function checkForConflicts($command, $alias)
     {
@@ -289,9 +287,9 @@ class CommandBus extends AnswerBus
     /**
      * @param $command
      *
-     * @throws \Telegram\Bot\Exceptions\TelegramSDKException
-     *
      * @return object
+     * @throws TelegramSDKException
+     *
      */
     private function makeCommandObj($command)
     {

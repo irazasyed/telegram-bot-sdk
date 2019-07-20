@@ -2,11 +2,13 @@
 
 namespace Telegram\Bot\Methods;
 
+use Telegram\Bot\Traits\Http;
 use Telegram\Bot\Exceptions\TelegramSDKException;
 use Telegram\Bot\Objects\Message as MessageObject;
 
 /**
  * Class Location.
+ * @mixin Http
  */
 trait Location
 {

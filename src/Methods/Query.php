@@ -2,10 +2,12 @@
 
 namespace Telegram\Bot\Methods;
 
+use Telegram\Bot\Traits\Http;
 use Telegram\Bot\Exceptions\TelegramSDKException;
 
 /**
  * Class Query.
+ * @mixin Http
  */
 trait Query
 {

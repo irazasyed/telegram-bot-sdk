@@ -2,6 +2,7 @@
 
 namespace Telegram\Bot\Methods;
 
+use Telegram\Bot\Traits\Http;
 use Telegram\Bot\Objects\File;
 use Telegram\Bot\Objects\StickerSet;
 use Telegram\Bot\FileUpload\InputFile;
@@ -11,6 +12,7 @@ use Telegram\Bot\Objects\Message as MessageObject;
 
 /**
  * Class Message.
+ * @mixin Http
  */
 trait Stickers
 {

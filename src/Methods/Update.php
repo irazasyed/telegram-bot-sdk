@@ -2,6 +2,7 @@
 
 namespace Telegram\Bot\Methods;
 
+use Telegram\Bot\Traits\Http;
 use Telegram\Bot\TelegramResponse;
 use Telegram\Bot\Objects\WebhookInfo;
 use Telegram\Bot\FileUpload\InputFile;
@@ -11,6 +12,7 @@ use Telegram\Bot\Exceptions\TelegramSDKException;
 
 /**
  * Class Update.
+ * @mixin Http
  */
 trait Update
 {
@@ -104,6 +106,7 @@ trait Update
      *
      * @link https://core.telegram.org/bots/api#deletewebhook
      *
+     * @throws TelegramSDKException
      * @return bool
      */
     public function deleteWebhook(): bool
@@ -116,6 +119,7 @@ trait Update
      *
      * @link https://core.telegram.org/bots/api#getwebhookinfo
      *
+     * @throws TelegramSDKException
      * @return WebhookInfo
      */
     public function getWebhookInfo(): WebhookInfo

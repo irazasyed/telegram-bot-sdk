@@ -2,10 +2,12 @@
 
 namespace Telegram\Bot\Exceptions;
 
+use Exception;
+
 /**
  * Class TelegramSDKException.
  */
-class TelegramSDKException extends \Exception
+class TelegramSDKException extends Exception
 {
     /**
      * Thrown when token is not provided.

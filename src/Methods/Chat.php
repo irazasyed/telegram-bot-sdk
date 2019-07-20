@@ -2,6 +2,7 @@
 
 namespace Telegram\Bot\Methods;
 
+use Telegram\Bot\Traits\Http;
 use Telegram\Bot\Objects\ChatMember;
 use Telegram\Bot\FileUpload\InputFile;
 use Telegram\Bot\Objects\Chat as ChatObject;
@@ -9,6 +10,7 @@ use Telegram\Bot\Exceptions\TelegramSDKException;
 
 /**
  * Class Chat.
+ * @mixin Http
  */
 trait Chat
 {
@@ -207,9 +209,10 @@ trait Chat
     }
 
     /**
-     * Pin a message in a supergroup.
+     * Pin a message in a group, a supergroup, or a channel.
      *
-     * The bot must be an administrator in the group for this to work.
+     * The bot must be an administrator in the chat for this to work and must have the ‘can_pin_messages’ admin right in the supergroup
+     * or ‘can_edit_messages’ admin right in the channel.
      *
      * <code>
      * $params = [
@@ -241,7 +244,10 @@ trait Chat
     }
 
     /**
-     * Unpin a message in a supergroup chat.
+     * Unpin a message in a group, a supergroup, or a channel.
+     *
+     * The bot must be an administrator in the chat for this to work and must have the ‘can_pin_messages’ admin right in the supergroup
+     * or ‘can_edit_messages’ admin right in the channel.
      *
      * The bot must be an administrator in the group for this to work.
      *

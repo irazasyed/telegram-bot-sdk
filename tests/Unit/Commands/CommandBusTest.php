@@ -7,6 +7,7 @@ use Illuminate\Support\Collection;
 use Telegram\Bot\Commands\Command;
 use Telegram\Bot\Commands\CommandBus;
 use Telegram\Bot\Tests\Traits\CommandGenerator;
+use Telegram\Bot\Exceptions\TelegramSDKException;
 
 class CommandBusTest extends TestCase
 {
@@ -23,7 +24,9 @@ class CommandBusTest extends TestCase
         $this->bus = new CommandBus();
     }
 
-    /** @test it can add commands to the bus */
+    /** @test it can add commands to the bus
+     * @throws TelegramSDKException
+     */
     public function it_can_add_a_command_to_the_bus()
     {
         $this->bus->addCommand($this->commandGenerator(1)->first());
@@ -100,7 +103,10 @@ class CommandBusTest extends TestCase
         $this->bus->addCommand($mockCommand->reveal());
     }
 
-    /** @test */
+    /**
+     * @test
+     * @throws TelegramSDKException
+     */
     public function it_can_remove_a_command_from_the_bus()
     {
         $this->bus->addCommands($this->commandGenerator(4)->all());
@@ -122,7 +128,10 @@ class CommandBusTest extends TestCase
         $this->assertContains('MockCommand1', $newCommandNames);
     }
 
-    /** @test */
+    /**
+     * @test
+     * @throws TelegramSDKException
+     */
     public function it_can_remove_multiple_commands_from_the_bus()
     {
         $this->bus->addCommands($this->commandGenerator(4)->all());

@@ -2,6 +2,7 @@
 
 namespace Telegram\Bot;
 
+use BadMethodCallException;
 use Illuminate\Support\Traits\Macroable;
 use Telegram\Bot\Exceptions\TelegramSDKException;
 use Telegram\Bot\HttpClients\HttpClientInterface;
@@ -96,9 +97,12 @@ class Api
             return call_user_func_array([$this->getCommandBus(), $matches[0]], $arguments);
         }
 
-        throw new \BadMethodCallException("Method [$method] does not exist.");
+        throw new BadMethodCallException("Method [$method] does not exist.");
     }
 
+    /**
+     * @throws TelegramSDKException
+     */
     private function validateAccessToken()
     {
         if (! $this->accessToken || ! is_string($this->accessToken)) {
