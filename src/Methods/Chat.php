@@ -2,6 +2,7 @@
 
 namespace Telegram\Bot\Methods;
 
+use Telegram\Bot\Traits\Http;
 use Telegram\Bot\Objects\ChatMember;
 use Telegram\Bot\FileUpload\InputFile;
 use Telegram\Bot\Objects\Chat as ChatObject;
@@ -9,6 +10,7 @@ use Telegram\Bot\Exceptions\TelegramSDKException;
 
 /**
  * Class Chat.
+ * @mixin Http
  */
 trait Chat
 {

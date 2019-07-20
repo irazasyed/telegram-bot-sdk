@@ -10,6 +10,7 @@ use Psr\Http\Message\ResponseInterface;
 use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Exception\RequestException;
 use Telegram\Bot\Exceptions\TelegramSDKException;
+use Throwable;
 
 /**
  * Class GuzzleHttpClient.
@@ -40,6 +41,7 @@ class GuzzleHttpClient implements HttpClientInterface
 
     /**
      * Unwrap Promises.
+     * @throws Throwable
      */
     public function __destruct()
     {
@@ -62,6 +64,7 @@ class GuzzleHttpClient implements HttpClientInterface
 
     /**
      * {@inheritdoc}
+     * @throws TelegramSDKException
      */
     public function send(
         $url,

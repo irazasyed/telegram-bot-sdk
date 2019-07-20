@@ -31,6 +31,7 @@ class HelpCommand extends Command
 
         $text = '';
         foreach ($commands as $name => $handler) {
+            /* @var Command $handler */
             $text .= sprintf('/%s - %s'.PHP_EOL, $name, $handler->getDescription());
         }
 

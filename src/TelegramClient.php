@@ -131,7 +131,7 @@ class TelegramClient
     }
 
     /**
-     * @param \Telegram\Bot\TelegramRequest $request
+     * @param TelegramRequest $request
      * @param $method
      *
      * @return array

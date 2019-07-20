@@ -42,7 +42,7 @@ trait Message
      *
      * ]
      *
-     * @throws TelegramSDKException
+     * @throws \Telegram\Bot\Exceptions\TelegramSDKException
      *
      * @return MessageObject
      */

@@ -2,6 +2,7 @@
 
 namespace Telegram\Bot\Methods;
 
+use Telegram\Bot\Traits\Http;
 use Telegram\Bot\Objects\File;
 use Telegram\Bot\Objects\User;
 use Telegram\Bot\Objects\UserProfilePhotos;
@@ -9,6 +10,7 @@ use Telegram\Bot\Exceptions\TelegramSDKException;
 
 /**
  * Class Get.
+ * @mixin Http
  */
 trait Get
 {

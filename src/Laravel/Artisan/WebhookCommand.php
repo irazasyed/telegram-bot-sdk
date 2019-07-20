@@ -5,6 +5,7 @@ namespace Telegram\Bot\Laravel\Artisan;
 use Telegram\Bot\Api;
 use Telegram\Bot\BotsManager;
 use Illuminate\Console\Command;
+use Telegram\Bot\Exceptions\TelegramSDKException;
 use Telegram\Bot\Objects\WebhookInfo;
 use Symfony\Component\Console\Helper\TableCell;
 
@@ -50,6 +51,8 @@ class WebhookCommand extends Command
 
     /**
      * Execute the console command.
+     *
+     * @throws TelegramSDKException
      */
     public function handle()
     {
@@ -72,6 +75,7 @@ class WebhookCommand extends Command
 
     /**
      * Setup Webhook.
+     * @throws TelegramSDKException
      */
     protected function setupWebhook()
     {
@@ -94,6 +98,7 @@ class WebhookCommand extends Command
 
     /**
      * Remove Webhook.
+     * @throws TelegramSDKException
      */
     protected function removeWebHook()
     {
@@ -112,6 +117,7 @@ class WebhookCommand extends Command
 
     /**
      * Get Webhook Info.
+     * @throws TelegramSDKException
      */
     protected function getInfo()
     {

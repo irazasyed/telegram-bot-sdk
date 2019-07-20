@@ -2,6 +2,7 @@
 
 namespace Telegram\Bot\Methods;
 
+use Telegram\Bot\Traits\Http;
 use Telegram\Bot\Objects\Poll;
 use Telegram\Bot\Objects\Message;
 use Telegram\Bot\Objects\Inputmedia\InputMedia;
@@ -9,6 +10,7 @@ use Telegram\Bot\Exceptions\TelegramSDKException;
 
 /**
  * Class EditMessage.
+ * @mixin Http
  */
 trait EditMessage
 {
