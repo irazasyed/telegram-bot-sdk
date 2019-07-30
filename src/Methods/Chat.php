@@ -5,6 +5,7 @@ namespace Telegram\Bot\Methods;
 use Telegram\Bot\Traits\Http;
 use Telegram\Bot\Objects\ChatMember;
 use Telegram\Bot\FileUpload\InputFile;
+use Telegram\Bot\Objects\ChatPermissions;
 use Telegram\Bot\Objects\Chat as ChatObject;
 use Telegram\Bot\Exceptions\TelegramSDKException;
 
@@ -357,14 +358,10 @@ trait Chat
      *
      * @param array    $params                    [
      *
-     * @var int|string $chat_id                   Required. Unique identifier for the target group or username of the target supergroup (in the format @supergroupusername)
-     * @var int        $user_id                   Required. Unique identifier of the target user.
-     * @var int        $until_date                (Optional). Date when restrictions will be lifted for the user, unix time. If user is restricted for more than 366 days or less than 30 seconds from the current time, they are considered to be restricted forever.
-     * @var bool       $can_send_messages         (Optional). Pass True, if the user can send text messages, contacts, locations and venues
-     * @var bool       $can_send_media_messages   (Optional). Pass True, if the user can send audios, documents, photos, videos, video notes and voice notes, implies can_send_messages
-     * @var bool       $can_send_other_messages   (Optional). Pass True, if the user can send animations, games, stickers and use inline bots, implies can_send_media_messages
-     * @var bool       $can_add_web_page_previews (Optional). Pass True, if the user may add web page previews to their messages, implies can_send_media_messages
-     *
+     * @var int|string      $chat_id        Required. Unique identifier for the target group or username of the target supergroup (in the format @supergroupusername)
+     * @var int             $user_id        Required. Unique identifier of the target user.
+     * @var ChatPermissions $permissions    Required.  New user permissions
+     * @var int             $until_date     (Optional). Date when restrictions will be lifted for the user, unix time. If user is restricted for more than 366 days or less than 30 seconds from the current time, they are considered to be restricted forever.
      * ]
      *
      * @throws TelegramSDKException
@@ -424,6 +421,38 @@ trait Chat
     public function promoteChatMember(array $params): bool
     {
         $response = $this->post('promoteChatMember', $params);
+
+        return $response->getResult();
+    }
+
+    /**
+     * Use this method to set default chat permissions for all members.
+     * The bot must be an administrator in the group or a supergroup for this to work and
+     * must have the can_restrict_members admin rights
+     *
+     * <code>
+     * $params = [
+     *   'chat_id'               => '',
+     *   'permissions'           => '',
+     * ];
+     * </code>
+     *
+     * @link https://core.telegram.org/bots/api#setchatpermissions
+     *
+     * @param array         $params      [
+     *
+     * @var int|string      $chat_id     Required. Unique identifier for the target group or username of the target supergroup (in the format @supergroupusername)
+     * @var ChatPermissions $permissions Required. New default chat permissions
+     *
+     * ]
+     *
+     * @throws TelegramSDKException
+     *
+     * @return bool
+     */
+    public function setChatPermissions(array $params): bool
+    {
+        $response = $this->post('setChatPermissions', $params);
 
         return $response->getResult();
     }

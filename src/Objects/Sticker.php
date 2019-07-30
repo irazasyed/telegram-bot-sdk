@@ -9,6 +9,7 @@ namespace Telegram\Bot\Objects;
  * @property string       $fileId              Unique identifier for this file.
  * @property int          $width               Sticker width.
  * @property int          $height              Sticker height.
+ * @property bool         $isAnimated          True, if the sticker is animated.
  * @property PhotoSize    $thumb               (Optional). Sticker thumbnail in .webp or .jpg format.
  * @property string       $emoji               (Optional). Emoji associated with the sticker
  * @property string       $setName             (Optional). Name of the sticker set to which the sticker belongs
