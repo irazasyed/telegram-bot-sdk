@@ -7,6 +7,7 @@ namespace Telegram\Bot\Objects;
  *
  * @property string    $name               Sticker set name
  * @property string    $title              Sticker set title
+ * @property bool      $isAnimated         True, if the sticker set contains animated stickers
  * @property bool      $containsMasks      True, if the sticker set contains masks
  * @property Sticker[] $stickers           List of all set stickers
  */

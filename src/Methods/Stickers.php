@@ -17,7 +17,7 @@ use Telegram\Bot\Objects\Message as MessageObject;
 trait Stickers
 {
     /**
-     * Send .webp stickers.
+     * Use this method to send static .WEBP or animated .TGS stickers.
      *
      * <code>
      * $params = [
