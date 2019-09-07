@@ -3,6 +3,7 @@ namespace Telegram\Bot\Objects\InlineQuery;
 
 use BadMethodCallException;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 
 abstract class InlineBaseObject extends Collection
 {
@@ -20,7 +21,7 @@ abstract class InlineBaseObject extends Collection
         $action = substr($name, 0, 3);
 
         if ($action === 'set') {
-            $property = snake_case(substr($name, 3));
+            $property = Str::snake(substr($name, 3));
             $this->put($property, $arguments[0]);
 
             return $this;
