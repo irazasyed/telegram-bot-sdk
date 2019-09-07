@@ -4,6 +4,7 @@ namespace Telegram\Bot\Answers;
 
 use Telegram\Bot\Api;
 use Telegram\Bot\Objects\Update;
+use Illuminate\Support\Str;
 
 /**
  * Class Answer
@@ -45,7 +46,7 @@ trait Answerable
             throw new \BadMethodCallException("Method [$method] does not exist.");
         }
         
-        $reply_name = studly_case(substr($method, 9));
+        $reply_name = Str::studly(substr($method, 9));
         $methodName = 'send' . $reply_name;
 
         if (!method_exists($this->telegram, $methodName)) {

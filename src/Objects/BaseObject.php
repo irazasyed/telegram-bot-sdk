@@ -3,6 +3,8 @@
 namespace Telegram\Bot\Objects;
 
 use Illuminate\Support\Collection;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 
 /**
  * Class BaseObject.
@@ -89,7 +91,7 @@ abstract class BaseObject extends Collection
      */
     public function getRawResult($data)
     {
-        return array_get($data, 'result', $data);
+        return Arr::get($data, 'result', $data);
     }
 
     /**
@@ -99,7 +101,7 @@ abstract class BaseObject extends Collection
      */
     public function getStatus()
     {
-        return array_get($this->items, 'ok', false);
+        return Arr::get($this->items, 'ok', false);
     }
 
     /**
@@ -116,7 +118,7 @@ abstract class BaseObject extends Collection
         if ($action !== 'get') {
             return false;
         }
-        $property = snake_case(substr($name, 3));
+        $property = Str::snake(substr($name, 3));
         $response = $this->get($property);
 
         // Map relative property to an object

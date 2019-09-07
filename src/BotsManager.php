@@ -4,6 +4,7 @@ namespace Telegram\Bot;
 
 use Illuminate\Contracts\Container\Container;
 use InvalidArgumentException;
+use Illuminate\Support\Arr;
 
 /**
  * Class BotsManager
@@ -71,7 +72,7 @@ class BotsManager
         $name = $name ?: $this->getDefaultBot();
 
         $bots = $this->getConfig('bots');
-        if (!is_array($config = array_get($bots, $name)) && !$config) {
+        if (!is_array($config = Arr::get($bots, $name)) && !$config) {
             throw new InvalidArgumentException("Bot [$name] not configured.");
         }
 
@@ -136,7 +137,7 @@ class BotsManager
      */
     public function getConfig($key, $default = null)
     {
-        return array_get($this->config, $key, $default);
+        return Arr::get($this->config, $key, $default);
     }
 
     /**
@@ -158,7 +159,7 @@ class BotsManager
      */
     public function setDefaultBot($name)
     {
-        array_set($this->config, 'default', $name);
+        Arr::set($this->config, 'default', $name);
 
         return $this;
     }
@@ -196,8 +197,8 @@ class BotsManager
     {
         $config = $this->getBotConfig($name);
 
-        $token = array_get($config, 'token');
-        $commands = array_get($config, 'commands', []);
+        $token = Arr::get($config, 'token');
+        $commands = Arr::get($config, 'commands', []);
 
         $telegram = new Api(
             $token,
