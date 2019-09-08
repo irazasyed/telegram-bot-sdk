@@ -14,6 +14,7 @@ use Telegram\Bot\Objects\Message;
 use Telegram\Bot\Objects\Update;
 use Telegram\Bot\Objects\User;
 use Telegram\Bot\Objects\UserProfilePhotos;
+use Illuminate\Support\Str;
 
 /**
  * Class Api.
@@ -1052,7 +1053,7 @@ class Api
         $action = substr($method, 0, 3);
         if ($action === 'get') {
             /* @noinspection PhpUndefinedFunctionInspection */
-            $class_name = studly_case(substr($method, 3));
+            $class_name = Str::studly(substr($method, 3));
             $class = 'Telegram\Bot\Objects\\'.$class_name;
             $response = $this->post($method, $arguments[0] ?: []);
 
