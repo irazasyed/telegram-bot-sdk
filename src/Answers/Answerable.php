@@ -2,6 +2,7 @@
 
 namespace Telegram\Bot\Answers;
 
+use Illuminate\Support\Str;
 use Telegram\Bot\Objects\Update;
 use Telegram\Bot\Traits\Telegram;
 
@@ -37,10 +38,10 @@ trait Answerable
      */
     public function __call($method, $arguments)
     {
-        if (! starts_with($method, 'replyWith')) {
+        if (! Str::startsWith($method, 'replyWith')) {
             throw new \BadMethodCallException("Method [$method] does not exist.");
         }
-        $reply_name = studly_case(substr($method, 9));
+        $reply_name = Str::studly(substr($method, 9));
         $methodName = 'send'.$reply_name;
 
         if (! method_exists($this->telegram, $methodName)) {
@@ -53,7 +54,7 @@ trait Answerable
 
         $params = array_merge(['chat_id' => $this->update->getChat()->id], $arguments[0]);
 
-        return call_user_func_array([$this->telegram, $methodName], [$params]);
+        return call_user_func([$this->telegram, $methodName], $params);
     }
 
     /**

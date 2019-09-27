@@ -2,6 +2,7 @@
 
 namespace Telegram\Bot\Objects\InlineQuery;
 
+use Illuminate\Support\Str;
 use Illuminate\Support\Collection;
 
 /**
@@ -33,10 +34,10 @@ abstract class InlineBaseObject extends Collection
      */
     public function __call($name, $arguments)
     {
-        if (! starts_with($name, 'set')) {
+        if (! Str::startsWith($name, 'set')) {
             throw new \BadMethodCallException("Method {$name} does not exist.");
         }
-        $property = snake_case(substr($name, 3));
+        $property = Str::snake(substr($name, 3));
         $this->put($property, $arguments[0]);
 
         return $this;

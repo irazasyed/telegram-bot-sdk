@@ -2,6 +2,7 @@
 
 namespace Telegram\Bot\Objects;
 
+use Illuminate\Support\Str;
 use Illuminate\Support\Collection;
 
 /**
@@ -50,7 +51,7 @@ abstract class BaseObject extends Collection
      */
     protected function getPropertyValue($property, $default = null)
     {
-        $property = snake_case($property);
+        $property = Str::snake($property);
         if (! $this->offsetExists($property)) {
             return value($default);
         }
@@ -63,7 +64,7 @@ abstract class BaseObject extends Collection
         }
 
         /** @var BaseObject $class */
-        $class = 'Telegram\Bot\Objects\\'.studly_case($property);
+        $class = 'Telegram\Bot\Objects\\'.Str::studly($property);
 
         if (class_exists($class)) {
             return $class::make($value);
@@ -137,7 +138,7 @@ abstract class BaseObject extends Collection
      */
     public function __call($name, $arguments)
     {
-        if (! starts_with($name, 'get')) {
+        if (! Str::startsWith($name, 'get')) {
             return false;
         }
         $property = substr($name, 3);
