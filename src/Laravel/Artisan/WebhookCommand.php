@@ -3,6 +3,7 @@
 namespace Telegram\Bot\Laravel\Artisan;
 
 use Telegram\Bot\Api;
+use Illuminate\Support\Str;
 use Telegram\Bot\BotsManager;
 use Illuminate\Console\Command;
 use Telegram\Bot\Exceptions\TelegramSDKException;
@@ -79,8 +80,8 @@ class WebhookCommand extends Command
      */
     protected function setupWebhook()
     {
-        $params = ['url' => array_get($this->config, 'webhook_url')];
-        $certificatePath = array_get($this->config, 'certificate_path', false);
+        $params = ['url' => data_get($this->config, 'webhook_url')];
+        $certificatePath = data_get($this->config, 'certificate_path', false);
 
         if ($certificatePath) {
             $params['certificate'] = $certificatePath;
@@ -148,7 +149,7 @@ class WebhookCommand extends Command
     protected function makeWebhookInfoResponse(WebhookInfo $response, string $bot)
     {
         $rows = $response->map(function ($value, $key) {
-            $key = title_case(str_replace('_', ' ', $key));
+            $key = Str::title(str_replace('_', ' ', $key));
             $value = is_bool($value) ? $this->mapBool($value) : $value;
 
             return compact('key', 'value');

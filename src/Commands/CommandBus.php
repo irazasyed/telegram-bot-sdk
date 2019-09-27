@@ -2,6 +2,7 @@
 
 namespace Telegram\Bot\Commands;
 
+use Illuminate\Support\Str;
 use InvalidArgumentException;
 use Telegram\Bot\Api;
 use Telegram\Bot\Objects\Update;
@@ -151,7 +152,7 @@ class CommandBus extends AnswerBus
         );
 
         // When in group - Ex: /command@MyBot
-        if (str_contains($command, '@') && ends_with($command, ['bot', 'Bot'])) {
+        if (Str::contains($command, '@') && Str::endsWith($command, ['bot', 'Bot'])) {
             $command = explode('@', $command);
             $command = $command[0];
         }
@@ -225,7 +226,7 @@ class CommandBus extends AnswerBus
     {
         $command = $this->commands[$name] ??
             $this->commandAliases[$name] ??
-            $this->commands['help'] ?? 
+            $this->commands['help'] ??
             collect($this->commands)->filter(function($command) use ($name) {
                 return $command instanceof $name;
             })->first() ?? null;

@@ -128,7 +128,7 @@ class BotsManager
      */
     public function getConfig($key, $default = null)
     {
-        return array_get($this->config, $key, $default);
+        return data_get($this->config, $key, $default);
     }
 
     /**
@@ -189,7 +189,7 @@ class BotsManager
     {
         $config = $this->getBotConfig($name);
 
-        $token = array_get($config, 'token');
+        $token = data_get($config, 'token');
 
         $telegram = new Api(
             $token,
@@ -202,7 +202,7 @@ class BotsManager
             $telegram->setContainer($this->container);
         }
 
-        $commands = array_get($config, 'commands', []);
+        $commands = data_get($config, 'commands', []);
         $commands = $this->parseBotCommands($commands);
 
         // Register Commands
