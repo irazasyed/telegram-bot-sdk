@@ -46,7 +46,7 @@ Thank you for considering contributing to the project. Please review the [CONTRI
 
 ## Disclaimer
 
-This project and its author is neither associated, nor affiliated with [Telegram](https://telegram.org/) in anyway.
+This project and its author is neither associated nor affiliated with [Telegram](https://telegram.org/) in any way.
 See License section for more details.
 
 ## License
