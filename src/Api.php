@@ -259,6 +259,15 @@ class Api
 
         return new Message($response->getDecodedBody());
     }
+    
+    
+     public function deleteMessage(array $params)
+    {
+        $response = $this->post('deleteMessage', $params);
+
+        return new Message($response->getDecodedBody());
+    }
+    
 
     /**
      * Forward messages of any kind.
