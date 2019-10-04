@@ -57,4 +57,19 @@ class InputFileTest extends TestCase
         $this->assertEquals('newFileNameResource.jpg', $inputFileResource->getFilename());
         $this->assertEquals('newFileNameStream.jpg', $inputFileStream->getFilename());
     }
+
+    /** @test */
+    public function it_ensures_the_open_method_return_resource()
+    {
+        $object = new InputFile('https://telegram.org/img/t_logo.png');
+
+        try {
+            $this->assertEquals(is_resource($object->getContents()), true);
+        } catch (\RuntimeException $e) {
+            /*
+             * skip this test, if run without internet connection
+             */
+            $this->assertInstanceOf(InputFile::class, $object);
+        }
+    }
 }
