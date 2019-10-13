@@ -26,7 +26,7 @@ Documentation for the SDK can be found on the [website][link-docs].
 
 ## Are You Using Telegram Bot SDK?
 
-If you're using this SDK to build your Telegram Bots, We'd love to know and share the bot with the world. Tell us about it - **[here][link-sdk-users]**.
+If you're using this SDK to build your Telegram Bots, we would love to hear about it and share the bot with the world. Tell us about it - **[here][link-sdk-users]**.
 
 Check out the [Who's Using Telegram Bot SDK][link-sdk-users] wiki page to know more about what people have been building with this SDK.
 
@@ -45,7 +45,7 @@ Thank you for considering contributing to the project. Please review the [CONTRI
 
 ## Disclaimer
 
-This project and its author is neither associated, nor affiliated with [Telegram](https://telegram.org/) in anyway.
+This project and its author is neither associated, nor affiliated with [Telegram](https://telegram.org/) in any way.
 See License section for more details.
 
 ## License
