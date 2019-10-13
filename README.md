@@ -26,7 +26,7 @@ Documentation for the SDK can be found on the [website][link-docs].
 
 ## Are You Using Telegram Bot SDK?
 
-If you're using this SDK to build your Telegram Bots, We'd love to know and share the bot with the world. Tell us about it - **[here][link-sdk-users]**
+If you're using this SDK to build your Telegram Bots, We'd love to know and share the bot with the world. Tell us about it - **[here][link-sdk-users]**.
 
 Check out the [Who's Using Telegram Bot SDK][link-sdk-users] wiki page to know more about what people have been building with this SDK.
 
