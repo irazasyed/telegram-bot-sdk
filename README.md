@@ -1,6 +1,7 @@
 Telegram Bot API - PHP SDK
 ==========================
-[![Join the chat at https://phpchat.co](https://img.shields.io/badge/Join-PHP%20Chat-blue.svg?style=flat-square)](https://telegram-bot-sdk.readme.io/blog/join-php-chat-slack-community-for-support)
+[![Join PHP Chat](https://img.shields.io/badge/Slack-PHP%20Chat-5c6aaa.svg?style=for-the-badge&logo=slack&labelColor=4A154B)](https://phpchat.co)
+[![Chat on Telegram](https://img.shields.io/badge/Chat-on%20Telegram-2CA5E0.svg?style=for-the-badge&logo=telegram)](https://t.me/PHPChatCo)
 
 > The (Unofficial) [Telegram Bot API](https://core.telegram.org/bots) PHP SDK. Lets you develop Telegram Bots easily! Supports Laravel out of the box.
 
