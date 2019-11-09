@@ -2,6 +2,7 @@
 
 namespace Telegram\Bot;
 
+use Illuminate\Support\Arr;
 use InvalidArgumentException;
 use Illuminate\Contracts\Container\Container;
 use Telegram\Bot\Exceptions\TelegramSDKException;
@@ -150,7 +151,7 @@ class BotsManager
      */
     public function setDefaultBot($name): BotsManager
     {
-        array_set($this->config, 'default', $name);
+        Arr::set($this->config, 'default', $name);
 
         return $this;
     }
