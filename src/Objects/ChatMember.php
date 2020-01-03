@@ -6,7 +6,8 @@ namespace Telegram\Bot\Objects;
  * Class ChatMember.
  *
  * @property User   $user                            Information about the user.
- * @property string $status                          (Optional). The member's status in the chat. Can be “creator”, “administrator”, “member”, “left” or “kicked”
+ * @property string $status                          The member's status in the chat. Can be “creator”, “administrator”, “member”, “left” or “kicked”
+ * @property string $customTitle                     (Optional). Owner and administrators only. Custom title for this user
  * @property int    $untilDate                       (Optional). Restictred and kicked only. Date when restrictions will be lifted for this user, unix time
  * @property bool   $canBeEdited                     (Optional). Administrators only. True, if the bot is allowed to edit administrator privileges of that user
  * @property bool   $canPostMessages                 (Optional). Administrators only. True, if the administrator can post in the channel, channels only

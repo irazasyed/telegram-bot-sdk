@@ -426,6 +426,40 @@ trait Chat
     }
 
     /**
+     * Use this method to set a custom title for an administrator in a supergroup promoted by the bot.
+     *
+     * Returns True on success.
+     *
+     * <code>
+     * $params = [
+     *   'chat_id'               => '',
+     *   'user_id'               => '',
+     *   'custom_title'           => '',
+     * ];
+     * </code>
+     *
+     * @link https://core.telegram.org/bots/api#setchatadministratorcustomtitle
+     *
+     * @param array         $params      [
+     *
+     * @var int|string      $chat_id      Required. Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
+     * @var int             $user_id      Required. Unique identifier of the target user
+     * @var string          $custom_title Required. New custom title for the administrator; 0-16 characters, emoji are not allowed
+     *
+     * ]
+     *
+     * @throws TelegramSDKException
+     *
+     * @return bool
+     */
+    public function setChatAdministratorCustomTitle(array $params): bool
+    {
+        $response = $this->post('setChatAdministratorCustomTitle', $params);
+
+        return $response->getResult();
+    }
+
+    /**
      * Use this method to set default chat permissions for all members.
      * The bot must be an administrator in the group or a supergroup for this to work and
      * must have the can_restrict_members admin rights

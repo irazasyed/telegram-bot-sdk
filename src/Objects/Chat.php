@@ -19,6 +19,7 @@ use Telegram\Bot\Objects\Inputmedia\InputMedia;
  * @property string          $inviteLink                   (Optional). Chat invite link, for groups, supergroups and channel chats. Each administrator in a chat generates their own invite links, so the bot must first generate the link using exportChatInviteLink. Returned only in getChat.
  * @property Message         $pinnedMessage                (Optional). Pinned message, for groups, supergroups and channels. Returned only in getChat.
  * @property ChatPermissions $permissions                  (Optional). Pinned message, for groups, supergroups and channels. Returned only in getChat.
+ * @property int             $slowModeDelay                (Optional). For supergroups, the minimum allowed delay between consecutive messages sent by each unpriviledged user. Returned only in getChat.
  * @property string          $stickerSetName               (Optional). For supergroups, name of group sticker set. Returned only in getChat.
  * @property bool            $canSetStickerSet             (Optional). True, if the bot can change the group sticker set. Returned only in getChat.
  */

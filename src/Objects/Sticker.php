@@ -7,6 +7,7 @@ namespace Telegram\Bot\Objects;
  *
  *
  * @property string       $fileId              Unique identifier for this file.
+ * @property string       $fileUniqueId        Unique identifier for this file, which is supposed to be the same over time and for different bots. Can't be used to download or reuse the file.
  * @property int          $width               Sticker width.
  * @property int          $height              Sticker height.
  * @property bool         $isAnimated          True, if the sticker is animated.
