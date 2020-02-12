@@ -44,6 +44,12 @@ Thank you for considering contributing to the project. Please review the [CONTRI
 - [Syed Irfaq R.][link-author]
 - [All Contributors][link-contributors]
 
+## Thanks
+
+Thanks to [JetBrains][link-jetbrains] for providing with an open-source license to their PhpStorm IDE that has been very useful in developing this SDK. Please go check them out!
+
+<a href="https://www.jetbrains.com/?from=telegram-bot-sdk"><img src="https://user-images.githubusercontent.com/1915268/74379552-06464a80-4e0e-11ea-9dfa-2b4f17d6f184.png" alt="JetBrains" width="150"/></a>
+
 ## Disclaimer
 
 This project and its author is neither associated, nor affiliated with [Telegram](https://telegram.org/) in anyway.
@@ -53,7 +59,7 @@ See License section for more details.
 
 This project is released under the [BSD 3-Clause][link-license] License.
 
-© 2015-17 [Syed Irfaq R.][link-author], All rights reserved.
+© 2015-20 [Syed Irfaq R.][link-author], All rights reserved.
 
 [link-author]: https://github.com/irazasyed
 [link-repo]: https://github.com/irazasyed/telegram-bot-sdk
@@ -62,4 +68,4 @@ This project is released under the [BSD 3-Clause][link-license] License.
 [link-docs]: https://telegram-bot-sdk.readme.io/docs
 [link-license]: https://github.com/irazasyed/telegram-bot-sdk/blob/master/LICENSE
 [link-sdk-users]: https://github.com/irazasyed/telegram-bot-sdk/wiki/Who's-Using-Telegram-Bot-SDK%3F
-
+[link-jetbrains]: https://www.jetbrains.com/?from=telegram-bot-sdk
