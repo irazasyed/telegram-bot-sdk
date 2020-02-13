@@ -13,7 +13,7 @@ trait Validator
      * Determine given param in params array is a file id.
      *
      * @param string $inputFileField
-     * @param array  $params
+     * @param array $params
      *
      * @return bool
      */
@@ -43,7 +43,7 @@ trait Validator
      */
     protected function isFileId($value): bool
     {
-        if (! is_string($value)) {
+        if (!is_string($value)) {
             return false;
         }
 
@@ -59,16 +59,16 @@ trait Validator
      */
     protected function isUrl($value): bool
     {
-        return (bool) filter_var($value, FILTER_VALIDATE_URL);
+        return (bool)filter_var($value, FILTER_VALIDATE_URL);
     }
 
     /**
      * Determine given string is a json object.
      *
-     * @param string $string  A json string
+     * @param string $string A json string
      * @return bool
      */
-    function is_json($string) :bool
+    protected function is_json($string): bool
     {
         json_decode($string);
         return (json_last_error() == JSON_ERROR_NONE);
