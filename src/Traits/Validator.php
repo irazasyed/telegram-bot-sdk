@@ -61,4 +61,16 @@ trait Validator
     {
         return (bool) filter_var($value, FILTER_VALIDATE_URL);
     }
+
+    /**
+     * Determine given string is a json object.
+     *
+     * @param string $string A json string
+     * @return bool
+     */
+    protected function is_json($string): bool
+    {
+        json_decode($string);
+        return (json_last_error() == JSON_ERROR_NONE);
+    }
 }
