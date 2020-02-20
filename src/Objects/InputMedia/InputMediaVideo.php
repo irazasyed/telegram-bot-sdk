@@ -28,5 +28,4 @@ class InputMediaVideo extends InputMedia
             'thumb' => InputFile::class,
         ];
     }
-
 }

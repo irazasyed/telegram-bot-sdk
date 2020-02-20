@@ -2,14 +2,14 @@
 
 namespace Telegram\Bot\Commands;
 
+use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use InvalidArgumentException;
-use Telegram\Bot\Api;
-use Telegram\Bot\Objects\Update;
-use Illuminate\Support\Collection;
-use Telegram\Bot\Traits\Singleton;
 use Telegram\Bot\Answers\AnswerBus;
+use Telegram\Bot\Api;
 use Telegram\Bot\Exceptions\TelegramSDKException;
+use Telegram\Bot\Objects\Update;
+use Telegram\Bot\Traits\Singleton;
 
 /**
  * Class CommandBus.
@@ -56,7 +56,7 @@ class CommandBus extends AnswerBus
      * @throws TelegramSDKException
      * @return CommandBus
      */
-    public function addCommands(array $commands): CommandBus
+    public function addCommands(array $commands): self
     {
         foreach ($commands as $command) {
             $this->addCommand($command);
@@ -74,7 +74,7 @@ class CommandBus extends AnswerBus
      *
      * @return CommandBus
      */
-    public function addCommand($command): CommandBus
+    public function addCommand($command): self
     {
         $command = $this->resolveCommand($command);
 
@@ -107,7 +107,7 @@ class CommandBus extends AnswerBus
      *
      * @return CommandBus
      */
-    public function removeCommand($name): CommandBus
+    public function removeCommand($name): self
     {
         unset($this->commands[$name]);
 
@@ -121,7 +121,7 @@ class CommandBus extends AnswerBus
      *
      * @return CommandBus
      */
-    public function removeCommands(array $names): CommandBus
+    public function removeCommands(array $names): self
     {
         foreach ($names as $name) {
             $this->removeCommand($name);
@@ -227,7 +227,7 @@ class CommandBus extends AnswerBus
         $command = $this->commands[$name] ??
             $this->commandAliases[$name] ??
             $this->commands['help'] ??
-            collect($this->commands)->filter(function($command) use ($name) {
+            collect($this->commands)->filter(function ($command) use ($name) {
                 return $command instanceof $name;
             })->first() ?? null;
 
@@ -239,7 +239,6 @@ class CommandBus extends AnswerBus
      *
      * @return object
      * @throws TelegramSDKException
-     *
      */
     private function resolveCommand($command)
     {
@@ -290,7 +289,6 @@ class CommandBus extends AnswerBus
      *
      * @return object
      * @throws TelegramSDKException
-     *
      */
     private function makeCommandObj($command)
     {

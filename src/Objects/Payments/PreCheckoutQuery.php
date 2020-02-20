@@ -2,8 +2,8 @@
 
 namespace Telegram\Bot\Objects\Payments;
 
-use Telegram\Bot\Objects\User;
 use Telegram\Bot\Objects\BaseObject;
+use Telegram\Bot\Objects\User;
 
 /**
  * @property string    $id                     Unique query identifier

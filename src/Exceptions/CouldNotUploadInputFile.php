@@ -12,7 +12,7 @@ class CouldNotUploadInputFile extends TelegramSDKException
      *
      * @return CouldNotUploadInputFile
      */
-    public static function fileDoesNotExistOrNotReadable($file): CouldNotUploadInputFile
+    public static function fileDoesNotExistOrNotReadable($file): self
     {
         return new static("File: `{$file}` does not exist or is not readable!");
     }
@@ -22,7 +22,7 @@ class CouldNotUploadInputFile extends TelegramSDKException
      *
      * @return CouldNotUploadInputFile
      */
-    public static function filenameNotProvided($path): CouldNotUploadInputFile
+    public static function filenameNotProvided($path): self
     {
         $file = is_string($path) ? $path : "the resource that you're trying to upload";
 
@@ -37,7 +37,7 @@ class CouldNotUploadInputFile extends TelegramSDKException
      *
      * @return CouldNotUploadInputFile
      */
-    public static function couldNotOpenResource($path): CouldNotUploadInputFile
+    public static function couldNotOpenResource($path): self
     {
         return new static("Failed to create InputFile entity. Unable to open resource: {$path}.");
     }
@@ -47,7 +47,7 @@ class CouldNotUploadInputFile extends TelegramSDKException
      *
      * @return CouldNotUploadInputFile
      */
-    public static function inputFileParameterShouldBeInputFileEntity($property): CouldNotUploadInputFile
+    public static function inputFileParameterShouldBeInputFileEntity($property): self
     {
         return new static("A path to local file, a URL, or a file resource should be uploaded using `Telegram\Bot\FileUpload\InputFile::create(\$pathOrUrlOrResource, \$filename)` for `{$property}` property. Please view docs for example.");
     }
@@ -57,7 +57,7 @@ class CouldNotUploadInputFile extends TelegramSDKException
      *
      * @return CouldNotUploadInputFile
      */
-    public static function missingParam($inputFileField): CouldNotUploadInputFile
+    public static function missingParam($inputFileField): self
     {
         return new static("Input field [{$inputFileField}] is missing in your params. Please make sure it exists and is an `Telegram\Bot\FileUpload\InputFile` entity.");
     }

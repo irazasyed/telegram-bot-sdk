@@ -22,7 +22,7 @@ class Button extends Base
      *
      * @return Button
      */
-    public function setText($text): Button
+    public function setText($text): self
     {
         $this->items['text'] = $text;
 

@@ -2,12 +2,12 @@
 
 namespace Telegram\Bot\Methods;
 
-use Telegram\Bot\Traits\Http;
-use Telegram\Bot\Objects\ChatMember;
-use Telegram\Bot\FileUpload\InputFile;
-use Telegram\Bot\Objects\ChatPermissions;
-use Telegram\Bot\Objects\Chat as ChatObject;
 use Telegram\Bot\Exceptions\TelegramSDKException;
+use Telegram\Bot\FileUpload\InputFile;
+use Telegram\Bot\Objects\Chat as ChatObject;
+use Telegram\Bot\Objects\ChatMember;
+use Telegram\Bot\Objects\ChatPermissions;
+use Telegram\Bot\Traits\Http;
 
 /**
  * Class Chat.
@@ -462,7 +462,7 @@ trait Chat
     /**
      * Use this method to set default chat permissions for all members.
      * The bot must be an administrator in the group or a supergroup for this to work and
-     * must have the can_restrict_members admin rights
+     * must have the can_restrict_members admin rights.
      *
      * <code>
      * $params = [

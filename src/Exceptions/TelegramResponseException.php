@@ -52,7 +52,7 @@ class TelegramResponseException extends TelegramSDKException
      *
      * @return TelegramResponseException
      */
-    public static function create(TelegramResponse $response): TelegramResponseException
+    public static function create(TelegramResponse $response): self
     {
         $data = $response->getDecodedBody();
 

@@ -29,7 +29,7 @@ class InputFile
      *
      * @return InputFile
      */
-    public static function create($file = null, $filename = null): InputFile
+    public static function create($file = null, $filename = null): self
     {
         return new static($file, $filename);
     }
@@ -76,7 +76,7 @@ class InputFile
      *
      * @return InputFile
      */
-    public function setFile($file): InputFile
+    public function setFile($file): self
     {
         $this->file = $file;
 
@@ -140,7 +140,7 @@ class InputFile
      *
      * @return InputFile
      */
-    public function setFilename($filename): InputFile
+    public function setFilename($filename): self
     {
         if (false === $this->isStringOrNull($filename)) {
             throw new InvalidArgumentException(
@@ -171,7 +171,7 @@ class InputFile
      *
      * @return InputFile
      */
-    public function setContents($contents): InputFile
+    public function setContents($contents): self
     {
         $this->contents = $contents;
 

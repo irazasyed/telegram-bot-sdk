@@ -2,9 +2,6 @@
 
 namespace Telegram\Bot\Methods;
 
-use Telegram\Bot\Objects\Message;
-use Telegram\Bot\Objects\Passport\PassportElementError;
-
 trait Passport
 {
     /**

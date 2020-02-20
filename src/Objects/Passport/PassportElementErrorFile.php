@@ -14,5 +14,4 @@ namespace Telegram\Bot\Objects\Passport;
  */
 class PassportElementErrorFile extends PassportElementError
 {
-
 }

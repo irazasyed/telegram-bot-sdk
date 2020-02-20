@@ -57,7 +57,7 @@ class Entities
 
         return $this->apply();
     }
-    
+
     /**
      * Format it to HTML syntax.
      *

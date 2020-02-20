@@ -68,7 +68,7 @@ class TelegramRequest
      *
      * @return TelegramRequest
      */
-    public function setAsyncRequest($isAsyncRequest): TelegramRequest
+    public function setAsyncRequest($isAsyncRequest): self
     {
         $this->isAsyncRequest = $isAsyncRequest;
 
@@ -104,7 +104,7 @@ class TelegramRequest
      *
      * @return TelegramRequest
      */
-    public function setAccessToken(string $accessToken): TelegramRequest
+    public function setAccessToken(string $accessToken): self
     {
         $this->accessToken = $accessToken;
 
@@ -144,7 +144,7 @@ class TelegramRequest
      *
      * @return TelegramRequest
      */
-    public function setEndpoint(string $endpoint): TelegramRequest
+    public function setEndpoint(string $endpoint): self
     {
         $this->endpoint = $endpoint;
 
@@ -170,7 +170,7 @@ class TelegramRequest
      *
      * @return TelegramRequest
      */
-    public function setHeaders(array $headers): TelegramRequest
+    public function setHeaders(array $headers): self
     {
         $this->headers = array_merge($this->headers, $headers);
 
@@ -230,7 +230,7 @@ class TelegramRequest
      *
      * @return TelegramRequest
      */
-    public function setMethod(string $method): TelegramRequest
+    public function setMethod(string $method): self
     {
         $this->method = strtoupper($method);
 
@@ -254,7 +254,7 @@ class TelegramRequest
      *
      * @return TelegramRequest
      */
-    public function setParams(array $params = []): TelegramRequest
+    public function setParams(array $params = []): self
     {
         $this->params = array_merge($this->params, $params);
 
@@ -278,7 +278,7 @@ class TelegramRequest
      *
      * @return TelegramRequest
      */
-    public function setTimeOut(int $timeOut): TelegramRequest
+    public function setTimeOut(int $timeOut): self
     {
         $this->timeOut = $timeOut;
 
@@ -302,7 +302,7 @@ class TelegramRequest
      *
      * @return TelegramRequest
      */
-    public function setConnectTimeOut(int $connectTimeOut): TelegramRequest
+    public function setConnectTimeOut(int $connectTimeOut): self
     {
         $this->connectTimeOut = $connectTimeOut;
 
