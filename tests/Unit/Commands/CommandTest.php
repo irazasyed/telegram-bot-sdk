@@ -2,10 +2,10 @@
 
 namespace Telegram\Bot\Tests\Unit\Commands;
 
-use Telegram\Bot\Api;
 use PHPUnit\Framework\TestCase;
-use Telegram\Bot\Objects\Update;
+use Telegram\Bot\Api;
 use Telegram\Bot\Commands\Command;
+use Telegram\Bot\Objects\Update;
 
 class CommandTest extends TestCase
 {

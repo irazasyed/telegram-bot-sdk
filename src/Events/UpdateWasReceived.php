@@ -2,8 +2,8 @@
 
 namespace Telegram\Bot\Events;
 
-use Telegram\Bot\Api;
 use League\Event\AbstractEvent;
+use Telegram\Bot\Api;
 use Telegram\Bot\Objects\Update;
 
 /**

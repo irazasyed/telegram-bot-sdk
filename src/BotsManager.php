@@ -2,9 +2,9 @@
 
 namespace Telegram\Bot;
 
+use Illuminate\Contracts\Container\Container;
 use Illuminate\Support\Arr;
 use InvalidArgumentException;
-use Illuminate\Contracts\Container\Container;
 use Telegram\Bot\Exceptions\TelegramSDKException;
 
 /**
@@ -38,7 +38,7 @@ class BotsManager
      *
      * @return BotsManager
      */
-    public function setContainer(Container $container): BotsManager
+    public function setContainer(Container $container): self
     {
         $this->container = $container;
 
@@ -111,7 +111,7 @@ class BotsManager
      *
      * @return BotsManager
      */
-    public function disconnect($name = null): BotsManager
+    public function disconnect($name = null): self
     {
         $name = $name ?? $this->getDefaultBotName();
         unset($this->bots[$name]);
@@ -149,7 +149,7 @@ class BotsManager
      *
      * @return BotsManager
      */
-    public function setDefaultBot($name): BotsManager
+    public function setDefaultBot($name): self
     {
         Arr::set($this->config, 'default', $name);
 

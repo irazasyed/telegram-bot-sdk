@@ -3,12 +3,12 @@
 namespace Telegram\Bot\HttpClients;
 
 use GuzzleHttp\Client;
-use GuzzleHttp\Promise;
-use GuzzleHttp\RequestOptions;
 use GuzzleHttp\ClientInterface;
-use Psr\Http\Message\ResponseInterface;
-use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Promise;
+use GuzzleHttp\Promise\PromiseInterface;
+use GuzzleHttp\RequestOptions;
+use Psr\Http\Message\ResponseInterface;
 use Telegram\Bot\Exceptions\TelegramSDKException;
 use Throwable;
 
@@ -55,7 +55,7 @@ class GuzzleHttpClient implements HttpClientInterface
      *
      * @return GuzzleHttpClient
      */
-    public function setClient(ClientInterface $client): GuzzleHttpClient
+    public function setClient(ClientInterface $client): self
     {
         $this->client = $client;
 
@@ -133,7 +133,7 @@ class GuzzleHttpClient implements HttpClientInterface
     /**
      * {@inheritdoc}
      */
-    public function setTimeOut($timeOut): GuzzleHttpClient
+    public function setTimeOut($timeOut): self
     {
         $this->timeOut = $timeOut;
 
@@ -151,7 +151,7 @@ class GuzzleHttpClient implements HttpClientInterface
     /**
      * {@inheritdoc}
      */
-    public function setConnectTimeOut($connectTimeOut): GuzzleHttpClient
+    public function setConnectTimeOut($connectTimeOut): self
     {
         $this->connectTimeOut = $connectTimeOut;
 

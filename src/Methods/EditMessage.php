@@ -2,11 +2,11 @@
 
 namespace Telegram\Bot\Methods;
 
-use Telegram\Bot\Traits\Http;
-use Telegram\Bot\Objects\Poll;
-use Telegram\Bot\Objects\Message;
-use Telegram\Bot\Objects\Inputmedia\InputMedia;
 use Telegram\Bot\Exceptions\TelegramSDKException;
+use Telegram\Bot\Objects\Inputmedia\InputMedia;
+use Telegram\Bot\Objects\Message;
+use Telegram\Bot\Objects\Poll;
+use Telegram\Bot\Traits\Http;
 
 /**
  * Class EditMessage.
@@ -197,7 +197,7 @@ trait EditMessage
     }
 
     /**
-     * Delete a message, including service messages, with the following limitations:
+     * Delete a message, including service messages, with the following limitations:.
      *
      * - A message can only be deleted if it was sent less than 48 hours ago.
      * - Bots can delete outgoing messages in private chats, groups, and supergroups.

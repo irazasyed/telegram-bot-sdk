@@ -2,13 +2,13 @@
 
 namespace Telegram\Bot\Methods;
 
-use Telegram\Bot\Traits\Http;
-use Telegram\Bot\TelegramResponse;
-use Telegram\Bot\Objects\WebhookInfo;
-use Telegram\Bot\FileUpload\InputFile;
 use Telegram\Bot\Events\UpdateWasReceived;
-use Telegram\Bot\Objects\Update as UpdateObject;
 use Telegram\Bot\Exceptions\TelegramSDKException;
+use Telegram\Bot\FileUpload\InputFile;
+use Telegram\Bot\Objects\Update as UpdateObject;
+use Telegram\Bot\Objects\WebhookInfo;
+use Telegram\Bot\TelegramResponse;
+use Telegram\Bot\Traits\Http;
 
 /**
  * Class Update.

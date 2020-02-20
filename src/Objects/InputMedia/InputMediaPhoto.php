@@ -12,5 +12,4 @@ namespace Telegram\Bot\Objects\Inputmedia;
  */
 class InputMediaPhoto extends InputMedia
 {
-
 }

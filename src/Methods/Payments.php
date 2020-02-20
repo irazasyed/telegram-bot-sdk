@@ -2,14 +2,14 @@
 
 namespace Telegram\Bot\Methods;
 
-use Telegram\Bot\Traits\Http;
+use Telegram\Bot\Exceptions\TelegramSDKException;
 use Telegram\Bot\Objects\Message;
 use Telegram\Bot\Objects\Payments\LabeledPrice;
-use Telegram\Bot\Exceptions\TelegramSDKException;
 use Telegram\Bot\Objects\Payments\ShippingOption;
+use Telegram\Bot\Traits\Http;
 
 /**
- * Trait Payments
+ * Trait Payments.
  * @mixin Http
  */
 trait Payments

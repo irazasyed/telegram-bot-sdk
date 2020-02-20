@@ -3,8 +3,8 @@
 namespace Telegram\Bot\Objects;
 
 use Illuminate\Support\Collection;
-use Telegram\Bot\Objects\Payments\ShippingQuery;
 use Telegram\Bot\Objects\Payments\PreCheckoutQuery;
+use Telegram\Bot\Objects\Payments\ShippingQuery;
 
 /**
  * Class Update.
@@ -154,12 +154,12 @@ class Update extends BaseObject
     }
 
     /**
-     * Is there a command entity in this update object
+     * Is there a command entity in this update object.
      *
      * @return bool
      */
     public function hasCommand()
     {
-        return (bool)$this->getMessage()->get('entities', collect())->contains('type', 'bot_command');
+        return (bool) $this->getMessage()->get('entities', collect())->contains('type', 'bot_command');
     }
 }

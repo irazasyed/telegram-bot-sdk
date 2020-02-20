@@ -3,8 +3,8 @@
 namespace Telegram\Bot\Tests\Integration;
 
 use InvalidArgumentException;
-use Telegram\Bot\BotsManager;
 use PHPUnit\Framework\TestCase;
+use Telegram\Bot\BotsManager;
 
 class BotsManagerTest extends TestCase
 {

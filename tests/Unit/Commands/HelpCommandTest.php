@@ -2,12 +2,12 @@
 
 namespace Telegram\Bot\Tests\Unit\Commands;
 
-use Telegram\Bot\Api;
-use Prophecy\Argument;
 use PHPUnit\Framework\TestCase;
-use Telegram\Bot\Objects\Update;
-use Telegram\Bot\Objects\Message;
+use Prophecy\Argument;
+use Telegram\Bot\Api;
 use Telegram\Bot\Commands\HelpCommand;
+use Telegram\Bot\Objects\Message;
+use Telegram\Bot\Objects\Update;
 
 class HelpCommandTest extends TestCase
 {

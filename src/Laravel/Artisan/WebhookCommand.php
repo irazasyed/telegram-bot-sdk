@@ -2,13 +2,13 @@
 
 namespace Telegram\Bot\Laravel\Artisan;
 
-use Telegram\Bot\Api;
-use Illuminate\Support\Str;
-use Telegram\Bot\BotsManager;
 use Illuminate\Console\Command;
+use Illuminate\Support\Str;
+use Symfony\Component\Console\Helper\TableCell;
+use Telegram\Bot\Api;
+use Telegram\Bot\BotsManager;
 use Telegram\Bot\Exceptions\TelegramSDKException;
 use Telegram\Bot\Objects\WebhookInfo;
-use Symfony\Component\Console\Helper\TableCell;
 
 class WebhookCommand extends Command
 {

@@ -2,8 +2,8 @@
 
 namespace Telegram\Bot\Objects;
 
-use Telegram\Bot\Objects\Payments\Invoice;
 use Telegram\Bot\Objects\Passport\PassportData;
+use Telegram\Bot\Objects\Payments\Invoice;
 use Telegram\Bot\Objects\Payments\SuccessfulPayment;
 
 /**
@@ -148,12 +148,12 @@ class Message extends BaseObject
     }
 
     /**
-     * Does this message contain a command entity
+     * Does this message contain a command entity.
      *
      * @return bool
      */
     public function hasCommand()
     {
-        return (bool)$this->get('entities', collect())->contains('type', 'bot_command');
+        return (bool) $this->get('entities', collect())->contains('type', 'bot_command');
     }
 }

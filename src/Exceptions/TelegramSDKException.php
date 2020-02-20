@@ -16,7 +16,7 @@ class TelegramSDKException extends Exception
      *
      * @return TelegramSDKException
      */
-    public static function tokenNotProvided($tokenEnvName): TelegramSDKException
+    public static function tokenNotProvided($tokenEnvName): self
     {
         return new static('Required "token" not supplied in config and could not find fallback environment variable '.$tokenEnvName.'');
     }

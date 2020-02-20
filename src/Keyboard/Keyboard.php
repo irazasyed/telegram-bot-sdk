@@ -42,7 +42,7 @@ class Keyboard extends Base
      *
      * @return Keyboard
      */
-    public function inline(): Keyboard
+    public function inline(): self
     {
         $this->inline = true;
 
@@ -66,7 +66,7 @@ class Keyboard extends Base
      *
      * @return Keyboard
      */
-    public function row(...$buttons): Keyboard
+    public function row(...$buttons): self
     {
         $property = $this->isInlineKeyboard() ? 'inline_keyboard' : 'keyboard';
         $this->items[$property][] = $buttons;
@@ -176,7 +176,7 @@ class Keyboard extends Base
      *
      * @return Keyboard
      */
-    public static function remove(array $params = []): Keyboard
+    public static function remove(array $params = []): self
     {
         return new static(array_merge(['remove_keyboard' => true, 'selective' => false], $params));
     }
@@ -202,7 +202,7 @@ class Keyboard extends Base
      *
      * @return Keyboard
      */
-    public static function forceReply(array $params = []): Keyboard
+    public static function forceReply(array $params = []): self
     {
         return new static(array_merge(['force_reply' => true, 'selective' => false], $params));
     }

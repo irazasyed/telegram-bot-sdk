@@ -2,11 +2,11 @@
 
 namespace Telegram\Bot\Methods;
 
-use Telegram\Bot\Traits\Http;
+use Telegram\Bot\Exceptions\TelegramSDKException;
 use Telegram\Bot\Objects\File;
 use Telegram\Bot\Objects\User;
 use Telegram\Bot\Objects\UserProfilePhotos;
-use Telegram\Bot\Exceptions\TelegramSDKException;
+use Telegram\Bot\Traits\Http;
 
 /**
  * Class Get.
