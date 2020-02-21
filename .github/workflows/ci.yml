@@ -1,6 +1,18 @@
 name: CI
 
-on: [push, pull_request]
+on:
+  push:
+    paths:
+      - 'src/**'
+      - 'test/**'
+      - 'composer.json'
+      - 'phpunit.xml.dist'
+  pull_request:
+    paths:
+      - 'src/**'
+      - 'test/**'
+      - 'composer.json'
+      - 'phpunit.xml.dist'
 
 jobs:
   tests:
