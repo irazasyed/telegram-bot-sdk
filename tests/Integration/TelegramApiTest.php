@@ -4,6 +4,8 @@ namespace Telegram\Bot\Tests\Integration;
 
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Stream;
+use Telegram\Bot\Exceptions\TelegramSDKException;
+use Telegram\Bot\Exceptions\CouldNotUploadInputFile;
 use function GuzzleHttp\Psr7\stream_for;
 use League\Event\Emitter;
 use PHPUnit\Framework\TestCase;
@@ -24,7 +26,7 @@ class TelegramApiTest extends TestCase
 {
     use GuzzleMock, CommandGenerator;
 
-    public function tearDown()
+    protected function tearDown(): void
     {
         // Prevent previous commands added to the bus lingering between
         // tests.
@@ -32,10 +34,11 @@ class TelegramApiTest extends TestCase
     }
 
     /**
-     * @param GuzzleHttpClient|null $client
-     * @param string                $token
-     * @param bool                  $async
+     * @param  GuzzleHttpClient|null  $client
+     * @param  string                 $token
+     * @param  bool                   $async
      *
+     * @throws TelegramSDKException
      * @return Api
      */
     protected function getApi($client = null, $token = 'TELEGRAM_TOKEN', $async = false)
@@ -45,10 +48,10 @@ class TelegramApiTest extends TestCase
 
     /**
      * @test
-     * @expectedException \Telegram\Bot\Exceptions\TelegramSDKException
      */
-    public function the_bot_token_must_be_a_string()
+    public function the_bot_token_must_be_a_string(): void
     {
+        $this->expectException(TelegramSDKException::class);
         $this->getApi(null, ['mytoken']);
     }
 
@@ -87,7 +90,7 @@ class TelegramApiTest extends TestCase
         $result = $api->getUpdates();
 
         $this->assertCount(0, $result);
-        $this->assertInternalType('array', $result);
+        $this->assertIsArray($result);
     }
 
     /** @test */
@@ -285,10 +288,10 @@ class TelegramApiTest extends TestCase
 
     /**
      * @test
-     * @expectedException \BadMethodCallException
      */
     public function it_throws_an_exception_if_a_method_called_does_not_exist()
     {
+        $this->expectException(\BadMethodCallException::class);
         $badMethod = 'getBadMethod'; //To stop errors in ide!
 
         $api = $this->getApi();
@@ -336,10 +339,10 @@ class TelegramApiTest extends TestCase
 
     /**
      * @test
-     * @expectedException \Telegram\Bot\Exceptions\TelegramSDKException
      */
     public function it_throws_exception_if_invalid_chatAction_is_sent()
     {
+        $this->expectException(TelegramSDKException::class);
         $this->getApi()->sendChatAction(['action' => 'zzz']);
     }
 
@@ -374,7 +377,7 @@ class TelegramApiTest extends TestCase
         $request = $this->getHistory()->pluck('request')->first();
 
         $this->assertInstanceOf(Message::class, $result);
-        $this->assertContains('document=AwADBAADYwADO1wlBuF1ogMa7HnMAg', (string) $request->getBody());
+        $this->assertStringContainsString('document=AwADBAADYwADO1wlBuF1ogMa7HnMAg', (string) $request->getBody());
     }
 
     /**
@@ -383,10 +386,12 @@ class TelegramApiTest extends TestCase
      * @param $type
      *
      * @dataProvider fileTypes
-     * @expectedException \Telegram\Bot\Exceptions\CouldNotUploadInputFile
+     * @throws TelegramSDKException
      */
     public function it_requires_all_file_uploads_except_file_id_to_be_created_with_fileInput_object($type)
     {
+        $this->expectException(TelegramSDKException::class);
+
         $api = $this->getApi();
 
         $api->sendDocument([
@@ -397,10 +402,10 @@ class TelegramApiTest extends TestCase
 
     /**
      * @test
-     * @expectedException \Telegram\Bot\Exceptions\CouldNotUploadInputFile
      */
     public function it_throws_an_exception_if_the_param_key_used_to_upload_file_does_not_match_the_method_being_used()
     {
+        $this->expectException(CouldNotUploadInputFile::class);
         $api = $this->getApi();
 
         //We want to send a document but the params have a voice key instead.
@@ -427,16 +432,16 @@ class TelegramApiTest extends TestCase
         $body = (string) $request->getBody();
 
         $this->assertInstanceOf(Message::class, $result);
-        $this->assertContains('This is some text', $body);
-        $this->assertContains('Content-Disposition: form-data; name="document"; filename="myFile.txt"', $body);
+        $this->assertStringContainsString('This is some text', $body);
+        $this->assertStringContainsString('Content-Disposition: form-data; name="document"; filename="myFile.txt"', $body);
     }
 
     /**
      * @test
-     * @expectedException \Telegram\Bot\Exceptions\CouldNotUploadInputFile
      */
     public function a_file_that_does_not_exist_should_throw_an_error_when_being_uploaded()
     {
+        $this->expectException(CouldNotUploadInputFile::class);
         $api = $this->getApi();
 
         $api->sendDocument([
@@ -461,10 +466,10 @@ class TelegramApiTest extends TestCase
         $request = $this->getHistory()->pluck('request')->first();
         $body = (string) $request->getBody();
 
-        $this->assertContains('Content-Disposition: form-data; name="chat_id"', $body);
-        $this->assertContains('Content-Disposition: form-data; name="document"; filename="testing.txt"', $body);
+        $this->assertStringContainsString('Content-Disposition: form-data; name="chat_id"', $body);
+        $this->assertStringContainsString('Content-Disposition: form-data; name="document"; filename="testing.txt"', $body);
         $this->assertEquals('POST', $request->getMethod());
-        $this->assertContains('multipart/form-data;', $request->getHeaderLine('Content-Type'));
+        $this->assertStringContainsString('multipart/form-data;', $request->getHeaderLine('Content-Type'));
     }
 
     /**
@@ -519,10 +524,10 @@ class TelegramApiTest extends TestCase
         $response1 = (string) $this->getHistory()->pluck('request')->get(0)->getBody();
         $response2 = (string) $this->getHistory()->pluck('request')->get(1)->getBody();
 
-        $this->assertContains('Content-Disposition: form-data; name="certificate"; filename="public.key"', $response1);
-        $this->assertContains('THISISSOMERANDOMKEYDATA', $response1);
-        $this->assertContains('Content-Disposition: form-data; name="certificate"; filename="certificate.pem"', $response2);
-        $this->assertContains('THISISSOMERANDOMKEYDATA', $response1);
+        $this->assertStringContainsString('Content-Disposition: form-data; name="certificate"; filename="public.key"', $response1);
+        $this->assertStringContainsString('THISISSOMERANDOMKEYDATA', $response1);
+        $this->assertStringContainsString('Content-Disposition: form-data; name="certificate"; filename="certificate.pem"', $response2);
+        $this->assertStringContainsString('THISISSOMERANDOMKEYDATA', $response1);
     }
 
     /** @test check the webhook works */
@@ -589,7 +594,7 @@ class TelegramApiTest extends TestCase
         });
         $this->assertEquals('Just some text', $updates->first()->getMessage()->text);
         $this->assertEquals('377695760', $updates->first()->updateId);
-        $this->assertContains('offset=377695761&limit=1', $markAsReadRequest->getUri()->getQuery());
+        $this->assertStringContainsString('offset=377695761&limit=1', $markAsReadRequest->getUri()->getQuery());
     }
 
     /** @test */

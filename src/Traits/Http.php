@@ -331,18 +331,16 @@ trait Http
      * @param array $params
      * @param $inputFileField
      *
-     * @throws \Telegram\Bot\Exceptions\CouldNotUploadInputFile
-     *
-     * @return array
+     * @throws CouldNotUploadInputFile
      */
-    protected function validateInputFileField(array $params, $inputFileField)
+    protected function validateInputFileField(array $params, $inputFileField): void
     {
         if (! isset($params[$inputFileField])) {
             throw CouldNotUploadInputFile::missingParam($inputFileField);
         }
 
-        //All file-paths, urls, or file resources should be provided by using the InputFile object
-        if ((! $params[$inputFileField] instanceof InputFile) && (! $this->is_json($params[$inputFileField]))) {
+        // All file-paths, urls, or file resources should be provided by using the InputFile object
+        if ((! $params[$inputFileField] instanceof InputFile) || (is_string($params[$inputFileField]) && ! $this->is_json($params[$inputFileField]))) {
             throw CouldNotUploadInputFile::inputFileParameterShouldBeInputFileEntity($inputFileField);
         }
     }

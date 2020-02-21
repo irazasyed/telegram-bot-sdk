@@ -15,7 +15,7 @@ class CommandTest extends TestCase
      */
     protected $command;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->api = $this->prophesize(Api::class)->reveal();

@@ -13,7 +13,7 @@ class BotsManagerTest extends TestCase
      */
     protected $manager;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->manager = new BotsManager(
@@ -54,12 +54,12 @@ class BotsManagerTest extends TestCase
 
     /**
      * @test
-     * @expectedException InvalidArgumentException
      */
     public function a_bot_must_be_configured_before_it_can_be_used()
     {
-        $manager = new BotsManager([]);
+        $this->expectException(InvalidArgumentException::class);
 
+        $manager = new BotsManager([]);
         $manager->bot('demo');
     }
 

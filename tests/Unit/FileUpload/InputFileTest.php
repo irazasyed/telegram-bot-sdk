@@ -14,7 +14,7 @@ class InputFileTest extends TestCase
     protected $tempFileName;
     protected $url;
 
-    public function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->tempPath = sys_get_temp_dir();
@@ -23,7 +23,7 @@ class InputFileTest extends TestCase
         $this->tempStream = new LazyOpenStream($this->tempFileName, 'r');
     }
 
-    public function tearDown()
+    protected function tearDown(): void
     {
         if (file_exists($this->tempFileName)) {
             unlink($this->tempFileName);
