@@ -1,17 +1,17 @@
-Telegram Bot API - PHP SDK
-==========================
-[![Join PHP Chat](https://img.shields.io/badge/Slack-PHP%20Chat-5c6aaa.svg?style=for-the-badge&logo=slack&labelColor=4A154B)](https://phpchat.co)
-[![Chat on Telegram](https://img.shields.io/badge/Chat-on%20Telegram-2CA5E0.svg?style=for-the-badge&logo=telegram)](https://t.me/PHPChatCo)
-
-> The (Unofficial) [Telegram Bot API](https://core.telegram.org/bots) PHP SDK. Lets you develop Telegram Bots easily! Supports Laravel out of the box.
-
-[![Telegram Bot API PHP SDK](https://cloud.githubusercontent.com/assets/1915268/8475216/fe774802-20d3-11e5-9692-f54502716d64.png)][link-author]
+[![Telegram Bot API PHP SDK](https://user-images.githubusercontent.com/1915268/75022722-9e060180-54bc-11ea-82a3-d839aeebcf0b.png)][link-author]
 
 <p align="center">
-<img src="https://img.shields.io/github/workflow/status/irazasyed/telegram-bot-sdk/CI.svg?style=flat-square" alt="Tests Status"/>
-<a href="https://github.com/irazasyed/telegram-bot-sdk/releases"><img src="https://img.shields.io/github/release/irazasyed/telegram-bot-sdk.svg?style=flat-square" alt="Latest Version"/></a>
-<a href="https://packagist.org/packages/irazasyed/telegram-bot-sdk"><img src="https://img.shields.io/packagist/dt/irazasyed/telegram-bot-sdk.svg?style=flat-square" alt="Total Downloads"/></a>
+<a href="https://phpchat.co"><img src="https://img.shields.io/badge/Slack-PHP%20Chat-5c6aaa.svg?logo=slack&labelColor=4A154B&style=for-the-badge" alt="Join PHP Chat"/></a>
+<a href="https://t.me/PHPChatCo"><img src="https://img.shields.io/badge/Chat-on%20Telegram-2CA5E0.svg?logo=telegram&style=for-the-badge" alt="Chat on Telegram"/></a>
+<img src="https://img.shields.io/github/workflow/status/irazasyed/telegram-bot-sdk/CI.svg?style=for-the-badge" alt="Build Status"/>
+<a href="https://github.com/irazasyed/telegram-bot-sdk/releases"><img src="https://img.shields.io/github/release/irazasyed/telegram-bot-sdk.svg?style=for-the-badge" alt="Latest Version"/></a>
+<a href="https://packagist.org/packages/irazasyed/telegram-bot-sdk"><img src="https://img.shields.io/packagist/dt/irazasyed/telegram-bot-sdk.svg?style=for-the-badge" alt="Total Downloads"/></a>
 </p>
+
+Telegram Bot API - PHP SDK
+==========================
+
+> The (Unofficial) [Telegram Bot API](https://core.telegram.org/bots) PHP SDK. Lets you develop Telegram Bots easily! Supports Laravel out of the box.
 
 ## Overview
 
