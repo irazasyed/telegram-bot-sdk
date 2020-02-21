@@ -1,4 +1,4 @@
-name: run-tests
+name: CI
 
 on: [push, pull_request]
 
@@ -13,7 +13,7 @@ jobs:
         laravel: [5.5.*, 6.*, 7.*]
         dependency-version: [prefer-lowest, prefer-stable]
 
-    name: PHP${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.dependency-version }}
+    name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.dependency-version }}
     env:
       EXTENSIONS: dom, curl, bcmath, libxml, mbstring, fileinfo
       EXT_CACHE_KEY: ext-cache-v1
