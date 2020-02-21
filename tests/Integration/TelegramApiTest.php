@@ -4,8 +4,6 @@ namespace Telegram\Bot\Tests\Integration;
 
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Stream;
-use Telegram\Bot\Exceptions\TelegramSDKException;
-use Telegram\Bot\Exceptions\CouldNotUploadInputFile;
 use function GuzzleHttp\Psr7\stream_for;
 use League\Event\Emitter;
 use PHPUnit\Framework\TestCase;
@@ -13,7 +11,9 @@ use Prophecy\Argument;
 use Telegram\Bot\Api;
 use Telegram\Bot\Commands\CommandBus;
 use Telegram\Bot\Events\UpdateWasReceived;
+use Telegram\Bot\Exceptions\CouldNotUploadInputFile;
 use Telegram\Bot\Exceptions\TelegramResponseException;
+use Telegram\Bot\Exceptions\TelegramSDKException;
 use Telegram\Bot\FileUpload\InputFile;
 use Telegram\Bot\HttpClients\GuzzleHttpClient;
 use Telegram\Bot\Objects\Message;
