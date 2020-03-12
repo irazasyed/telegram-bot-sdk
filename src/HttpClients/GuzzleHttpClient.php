@@ -109,6 +109,7 @@ class GuzzleHttpClient implements HttpClientInterface
         array $headers,
         $body,
         $options,
+        $proxy = null,
         $isAsyncRequest = false
     ): array {
         $default_options = [
@@ -118,6 +119,10 @@ class GuzzleHttpClient implements HttpClientInterface
             RequestOptions::CONNECT_TIMEOUT => $this->getConnectTimeOut(),
             RequestOptions::SYNCHRONOUS     => ! $isAsyncRequest,
         ];
+
+        if ($proxy !== null) {
+            $default_options[RequestOptions::PROXY] = $proxy;
+        }
 
         return array_merge($default_options, $options);
     }
