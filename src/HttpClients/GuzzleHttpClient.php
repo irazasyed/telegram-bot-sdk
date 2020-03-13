@@ -109,8 +109,8 @@ class GuzzleHttpClient implements HttpClientInterface
         array $headers,
         $body,
         $options,
-        $proxy = null,
-        $isAsyncRequest = false
+        $isAsyncRequest = false,
+        $proxy = null
     ): array {
         $default_options = [
             RequestOptions::HEADERS         => $headers,
