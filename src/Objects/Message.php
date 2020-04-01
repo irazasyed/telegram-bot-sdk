@@ -98,7 +98,7 @@ class Message extends BaseObject
     /**
      * Determine if the message is of given type.
      *
-     * @param string $type
+     * @param  string  $type
      *
      * @return bool
      */
@@ -156,6 +156,6 @@ class Message extends BaseObject
      */
     public function hasCommand()
     {
-        return (bool)$this->get('entities', collect())->contains('type', 'bot_command');
+        return (bool) $this->get('entities', collect())->contains('type', 'bot_command');
     }
 }
