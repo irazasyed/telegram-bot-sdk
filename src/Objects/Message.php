@@ -59,7 +59,6 @@ use Telegram\Bot\Objects\Payments\SuccessfulPayment;
  */
 class Message extends BaseObject
 {
-
     /**
      * {@inheritdoc}
      */
