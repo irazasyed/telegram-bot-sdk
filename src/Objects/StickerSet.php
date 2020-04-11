@@ -10,6 +10,7 @@ namespace Telegram\Bot\Objects;
  * @property bool      $isAnimated         True, if the sticker set contains animated stickers
  * @property bool      $containsMasks      True, if the sticker set contains masks
  * @property Sticker[] $stickers           List of all set stickers
+ * @property PhotoSize $thumb              Optional. Sticker set thumbnail in the .WEBP or .TGS format
  */
 class StickerSet extends BaseObject
 {
@@ -20,6 +21,7 @@ class StickerSet extends BaseObject
     {
         return [
             'stickers' => Sticker::class,
+            'thumb'    => PhotoSize::class,
         ];
     }
 }

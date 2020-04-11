@@ -120,6 +120,7 @@ trait Stickers
      *   'name'              => '',
      *   'title'             => '',
      *   'png_sticker'       => '',
+     *   'tgs_sticker'       => '',
      *   'emojis'            => '',
      *   'contains_masks'    => '',
      *   'mask_position'     => '',
@@ -133,7 +134,8 @@ trait Stickers
      * @var int              $user_id        Required. User identifier of created sticker set owner
      * @var string           $name           Required. Short name of sticker set, to be used in t.me/addstickers/ URLs (e.g., animals). Can contain only english letters, digits and underscores. Must begin with a letter, can't contain consecutive underscores and must end in “_by_<bot username>”. <bot_username> is case insensitive. 1-64 characters.
      * @var string           $title          Required. Sticker set title, 1-64 characters
-     * @var InputFile|string $png_sticker    Required. Png image with the sticker, must be up to 512 kilobytes in size, dimensions must not exceed 512px, and either width or height must be exactly 512px. Pass a file_id as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data.
+     * @var InputFile|string $png_sticker    (Optional). Png image with the sticker, must be up to 512 kilobytes in size, dimensions must not exceed 512px, and either width or height must be exactly 512px. Pass a file_id as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data.
+     * @var InputFile        $tgs_sticker    (Optional). TGS animation with the sticker, uploaded using multipart/form-data. See https://core.telegram.org/animated_stickers#technical-requirements for technical requirements
      * @var string           $emojis         Required. One or more emoji corresponding to the sticker
      * @var bool             $contains_masks (Optional). Pass True, if a set of mask stickers should be created
      * @var MaskPosition     $mask_position  (Optional). A JSON-serialized object for position where the mask should be placed on faces
@@ -159,6 +161,7 @@ trait Stickers
      *   'user_id'           => '',
      *   'name'              => '',
      *   'png_sticker'       => '',
+     *   'tgs_sticker'       => '',
      *   'emojis'            => '',
      *   'mask_position'     => '',
      * ];
@@ -171,6 +174,7 @@ trait Stickers
      * @var int              $user_id       Required. User identifier of sticker set owner
      * @var string           $name          Required. Sticker set name
      * @var InputFile|string $png_sticker   Required. Png image with the sticker, must be up to 512 kilobytes in size, dimensions must not exceed 512px, and either width or height must be exactly 512px. Pass a file_id as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data.
+     * @var InputFile        $tgs_sticker   (Optional). TGS animation with the sticker, uploaded using multipart/form-data. See https://core.telegram.org/animated_stickers#technical-requirements for technical requirements
      * @var string           $emojis        Required. One or more emoji corresponding to the sticker
      * @var MaskPosition     $mask_position (Optional). A JSON-serialized object for position where the mask should be placed on faces
      *
@@ -244,4 +248,37 @@ trait Stickers
 
         return $response->getResult();
     }
+
+    /**
+     * Set the thumbnail of a sticker set
+     *
+     * <code>
+     * $params = [
+     *   'name'          => '',
+     *   'user_id'       => '',
+     *   'thumb'         => '',
+     * ];
+     * </code>
+     *
+     * @link https://core.telegram.org/bots/api#setstickersetthumb
+     *
+     * @param array          $params        [
+     *
+     * @var string           $name          Required. Sticker set name
+     * @var int              $user_id       Required. User identifier of sticker set owner
+     * @var InputFile|string $thumb         (Optional). A PNG image with the thumbnail, must be up to 128 kilobytes in size and have width and height exactly 100px, or a TGS animation with the thumbnail up to 32 kilobytes in size; see https://core.telegram.org/animated_stickers#technical-requirements for animated sticker technical requirements. Pass a file_id as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. More info on Sending Files ». Animated sticker set thumbnail can't be uploaded via HTTP URL
+     *
+     * ]
+     *
+     * @throws TelegramSDKException
+     *
+     * @return bool
+     */
+    public function setStickerSetThumb(array $params): bool
+    {
+        $response = $this->uploadFile('setStickerSetThumb', $params, 'thumb');
+
+        return $response->getResult();
+    }
+
 }
