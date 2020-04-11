@@ -23,6 +23,7 @@ class Api
         Traits\CommandsHandler,
         Traits\HasContainer;
     use Methods\Chat,
+        Methods\Commands,
         Methods\EditMessage,
         Methods\Game,
         Methods\Get,
