@@ -1,6 +1,6 @@
 <?php
 
-namespace Telegram\Bot\Objects\Inputmedia;
+namespace Telegram\Bot\Objects\InputMedia;
 
 /**
  * Class InputMediaPhoto.
