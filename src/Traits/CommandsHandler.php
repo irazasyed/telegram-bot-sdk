@@ -2,8 +2,8 @@
 
 namespace Telegram\Bot\Traits;
 
-use Telegram\Bot\Commands\CommandBus;
 use Telegram\Bot\Objects\Update;
+use Telegram\Bot\Commands\CommandBus;
 
 /**
  * CommandsHandler.
@@ -109,11 +109,18 @@ trait CommandsHandler
      *
      * @param string $name   Command Name
      * @param Update $update Update Object
+     * @param null   $entity
      *
      * @return mixed
      */
-    public function triggerCommand(string $name, Update $update)
+    public function triggerCommand(string $name, Update $update, $entity = null)
     {
-        return $this->getCommandBus()->execute($name, $update, []);
+        $entity = $entity ?? ['offset' => 0, 'length' => strlen($name) + 1, 'type' => "bot_command"];
+
+        return $this->getCommandBus()->execute(
+            $name,
+            $update,
+            $entity
+        );
     }
 }
