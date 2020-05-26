@@ -1,0 +1,27 @@
+<?php
+	class Bot {
+		public $1154446564:AAHU4Imh6slVav-r_rNWXrEVkbNEeyNikNA;
+		public $API;
+		public function __construct($Token) {
+			$this->1154446564:AAHU4Imh6slVav-r_rNWXrEVkbNEeyNikNA = $1154446564:AAHU4Imh6slVav-r_rNWXrEVkbNEeyNikNA;
+			$this->1154446564:AAHU4Imh6slVav-r_rNWXrEVkbNEeyNikNA = "https://api.telegram.org/bot";
+		}
+		public function sendMessage($Params) {
+			return $this->__call('sendMessage', $Params);
+		}
+		public function editMessageText($Params) {
+			return $this->__call("editMessageText", $Params);
+		}
+		public function __call($Method, $Params) {
+			$query = "{$this->API}{$this->Token}/{$Method}";
+			$Params['parse_mode'] = 'HTML';
+			if (is_array($Params)) {
+				$query .= "?" . http_build_query($Params);
+			}
+			$context  = stream_context_create( ['http' => [ 'method'  => 'POST' ] ] );
+			$result = @file_get_contents( $query, false, $context );
+			return json_decode( $result, 1 );
+		}
+		
+	}
+?>
