@@ -7,6 +7,7 @@ use Telegram\Bot\Objects\Message;
 use Telegram\Bot\Objects\Payments\LabeledPrice;
 use Telegram\Bot\Objects\Payments\ShippingOption;
 use Telegram\Bot\Traits\Http;
+use Illuminate\Support\Arr;
 
 /**
  * Trait Payments.
@@ -78,7 +79,7 @@ trait Payments
      */
     public function sendInvoice(array $params): Message
     {
-        $params['prices'] = json_encode(array_wrap($params['prices']));
+        $params['prices'] = json_encode(Arr::wrap($params['prices']));
         $response = $this->post('sendInvoice', $params);
 
         return new Message($response->getDecodedBody());
