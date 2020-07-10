@@ -97,7 +97,7 @@ class TelegramClient
      */
     public function prepareRequest(TelegramRequest $request): array
     {
-        $url = $this->getBaseBotUrl().$request->getAccessToken().'/'.$request->getEndpoint();
+        $url =  $this->getBaseBotUrl($request) . $request->getAccessToken() . '/' . $request->getEndpoint();
 
         return [
             $url,
@@ -112,9 +112,9 @@ class TelegramClient
      *
      * @return string
      */
-    public function getBaseBotUrl(): string
+    public function getBaseBotUrl($request): string
     {
-        return static::BASE_BOT_URL;
+        return $request->getUrl() ? $request->getUrl() : static::BASE_BOT_URL;
     }
 
     /**

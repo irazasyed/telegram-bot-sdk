@@ -14,6 +14,9 @@ class TelegramRequest
     /** @var string|null The bot access token to use for this request. */
     protected $accessToken;
 
+    /** @var string|null The bot base url to use for this request. */
+    protected $url;
+
     /** @var string The HTTP method for this request. */
     protected $method;
 
@@ -49,12 +52,14 @@ class TelegramRequest
      */
     public function __construct(
         $accessToken = null,
+        $url = null,
         $method = null,
         $endpoint = null,
         array $params = [],
         $isAsyncRequest = false
     ) {
         $this->setAccessToken($accessToken);
+        $this->setUrl($url);
         $this->setMethod($method);
         $this->setEndpoint($endpoint);
         $this->setParams($params);
@@ -96,6 +101,16 @@ class TelegramRequest
     {
         return $this->accessToken;
     }
+    
+    /**
+     * Return the bot base url for this request.
+     *
+     * @return string|null
+     */
+    public function getUrl()
+    {
+        return $this->url;
+    }
 
     /**
      * Set the bot access token for this request.
@@ -107,6 +122,20 @@ class TelegramRequest
     public function setAccessToken(string $accessToken): self
     {
         $this->accessToken = $accessToken;
+
+        return $this;
+    }
+
+    /**
+     * Set the bot base url for this request.
+     *
+     * @param string $accessToken
+     *
+     * @return TelegramRequest
+     */
+    public function setUrl(string $url): self
+    {
+        $this->url = $url;
 
         return $this;
     }

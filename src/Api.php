@@ -40,6 +40,7 @@ class Api
 
     /** @var string The name of the environment variable that contains the Telegram Bot API Access Token. */
     const BOT_TOKEN_ENV_NAME = 'TELEGRAM_BOT_TOKEN';
+    const TELEGRAM_WEBHOOK_URL = 'TELEGRAM_WEBHOOK_URL';
 
     /**
      * Instantiates a new Telegram super-class object.
@@ -51,9 +52,10 @@ class Api
      *
      * @throws TelegramSDKException
      */
-    public function __construct($token = null, $async = false, $httpClientHandler = null)
+    public function __construct($token = null, $url = null, $async = false, $httpClientHandler = null)
     {
         $this->accessToken = $token ?? getenv(static::BOT_TOKEN_ENV_NAME);
+        $this->url = $url ?? getenv(static::TELEGRAM_WEBHOOK_URL);
         $this->validateAccessToken();
 
         if ($async) {

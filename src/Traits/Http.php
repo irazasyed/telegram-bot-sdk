@@ -19,6 +19,9 @@ trait Http
 
     /** @var string Telegram Bot API Access Token. */
     protected $accessToken = null;
+    
+    /** @var string Telegram Bot API Base Url. */
+    protected $url = null;
 
     /** @var TelegramClient The Telegram client service. */
     protected $client = null;
@@ -87,6 +90,17 @@ trait Http
     }
 
     /**
+     * Returns Telegram Bot base Url.
+     *
+     * @return string
+     */
+
+    public function getUrl(): string
+    {
+        return $this->url;
+    }
+
+    /**
      * Sets the bot access token to use with API requests.
      *
      * @param string $accessToken The bot access token to save.
@@ -96,6 +110,21 @@ trait Http
     public function setAccessToken(string $accessToken)
     {
         $this->accessToken = $accessToken;
+
+        return $this;
+    }
+
+    /**
+     * Sets the bot url to use with API requests.
+     *
+     * @param string $url The bot base url to save.
+     *
+     * @return $this
+     */
+
+    public function setUrl(string $url)
+    {
+        $this->url = $url;
 
         return $this;
     }
@@ -318,6 +347,7 @@ trait Http
     {
         return (new TelegramRequest(
             $this->getAccessToken(),
+            $this->getUrl(),
             $method,
             $endpoint,
             $params,
