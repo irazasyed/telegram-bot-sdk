@@ -20,13 +20,13 @@ abstract class Command implements CommandInterface
      *
      * @var string
      */
-    protected $name;
+    protected string $name;
 
     /** @var string[] Command Aliases - Helpful when you want to trigger command with more than one name. */
     protected $aliases = [];
 
     /** @var string The Telegram command description. */
-    protected $description;
+    protected string $description;
 
     /** @var array Holds parsed command arguments */
     protected $arguments = [];
@@ -36,6 +36,14 @@ abstract class Command implements CommandInterface
 
     /** @var array|null Details of the current entity this command is responding to - offset, length, type etc */
     protected $entity;
+
+    protected $defaultEntity = array (
+        array (
+            'offset' => 0,
+            'length' => 6,
+            'type' => 'bot_command',
+        ),
+    );
 
     /**
      * Get the Command Name.
@@ -113,7 +121,7 @@ abstract class Command implements CommandInterface
     {
         $this->description = $description;
 
-        return $this;
+        return $thifs;
     }
 
     /**
@@ -306,10 +314,6 @@ abstract class Command implements CommandInterface
         //Get all the bot_command offsets in the Update object
         $commandOffsets = $this->allCommandOffsets();
 
-        if ($commandOffsets->count() === 0) {
-            return $this->getUpdate()->getMessage()->text;
-        }
-
         //Extract the current offset for this command and, if it exists, the offset of the NEXT bot_command entity
         $splice = $commandOffsets->splice(
             $commandOffsets->search($this->entity['offset']),
@@ -336,17 +340,25 @@ abstract class Command implements CommandInterface
         );
     }
 
+    public function setEntity(array $entity = null){
+        $this->entity = collect($entity);
+        if(is_null($entity)){
+            $this->entity = collect($this->defaultEntity);
+        }
+    }
+
     /**
      * @return Collection
      */
     private function allCommandOffsets()
     {
-        return $this->getUpdate()
-            ->getMessage()
-            ->get('entities', collect())
-            ->filter(function ($entity) {
-                return $entity['type'] === 'bot_command';
-            })
+        if(is_null($entity)){
+            $this->setEntity();
+        }
+        $entity = $this->entity;
+        return $entity->filter(function ($entity) {
+            return $entity['type'] === 'bot_command';
+        })
             ->pluck('offset');
     }
 }
