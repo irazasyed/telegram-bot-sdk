@@ -169,9 +169,9 @@ abstract class Command implements CommandInterface
     /**
      * Process Inbound Command.
      *
-     * @param Api    $telegram
+     * @param Api $telegram
      * @param Update $update
-     * @param array  $entity
+     * @param array $entity
      *
      * @return mixed
      */
@@ -247,7 +247,7 @@ abstract class Command implements CommandInterface
      * @param Collection $required
      * @param Collection $optional
      *
-     * @param string     $customRegex
+     * @param string $customRegex
      *
      * @return string
      */
@@ -306,7 +306,7 @@ abstract class Command implements CommandInterface
         //Get all the bot_command offsets in the Update object
         $commandOffsets = $this->allCommandOffsets();
 
-        if ($commandOffsets->count() === 0) {
+        if ($commandOffsets->isEmpty()) {
             return $this->getUpdate()->getMessage()->text;
         }
 
@@ -341,12 +341,16 @@ abstract class Command implements CommandInterface
      */
     private function allCommandOffsets()
     {
-        return $this->getUpdate()
-            ->getMessage()
-            ->get('entities', collect())
-            ->filter(function ($entity) {
-                return $entity['type'] === 'bot_command';
-            })
-            ->pluck('offset');
+        $message = $this->getUpdate()
+            ->getMessage();
+
+        return !$message->hasCommand() ?
+            collect() :
+            $message
+                ->get('entities', collect())
+                ->filter(function ($entity) {
+                    return $entity['type'] === 'bot_command';
+                })
+                ->pluck('offset');
     }
 }
