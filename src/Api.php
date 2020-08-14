@@ -306,6 +306,14 @@ class Api
         return new Message($response->getDecodedBody());
     }
 
+
+    public function answerCallbackQuery(array $params)
+    {
+        $response = $this->post('answerCallbackQuery', $params);
+
+        return new Message($response->getDecodedBody());
+    }
+
     /**
      * Forward messages of any kind.
      *
