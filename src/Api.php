@@ -189,6 +189,7 @@ class Api
      * Returns SDK's Command Bus.
      *
      * @return CommandBus
+     * @throws TelegramSDKException
      */
     public function getCommandBus()
     {
@@ -205,6 +206,7 @@ class Api
      * @param CommandInterface|string $command
      *
      * @return CommandBus
+     * @throws TelegramSDKException
      */
     public function addCommand($command)
     {
@@ -217,6 +219,7 @@ class Api
      * @param array $commands
      *
      * @return CommandBus
+     * @throws TelegramSDKException
      */
     public function addCommands(array $commands)
     {
@@ -229,6 +232,7 @@ class Api
      * @param string $name
      *
      * @return CommandBus
+     * @throws TelegramSDKException
      */
     public function removeCommand($name)
     {
@@ -241,6 +245,7 @@ class Api
      * @param array $names
      *
      * @return CommandBus
+     * @throws TelegramSDKException
      */
     public function removeCommands(array $names)
     {
@@ -251,6 +256,7 @@ class Api
      * Returns list of available commands.
      *
      * @return Commands\Command[]
+     * @throws TelegramSDKException
      */
     public function getCommands()
     {
@@ -305,7 +311,6 @@ class Api
 
         return new Message($response->getDecodedBody());
     }
-
 
     public function answerCallbackQuery(array $params)
     {
@@ -482,19 +487,20 @@ class Api
      * ];
      * </code>
      *
+     * @param array $params
+     *
+     * @return Message
+     * @throws TelegramSDKException
      * @see  sendDocument
      * @link https://core.telegram.org/bots/api#sendvideo
      *
-     * @param array    $params
-     *
      * @var int|string $params ['chat_id']
-     * @var string     $params ['video']
-     * @var int        $params ['duration']
-     * @var string     $params ['caption']
-     * @var int        $params ['reply_to_message_id']
-     * @var string     $params ['reply_markup']
+     * @var string $params ['video']
+     * @var int $params ['duration']
+     * @var string $params ['caption']
+     * @var int $params ['reply_to_message_id']
+     * @var string $params ['reply_markup']
      *
-     * @return Message
      */
     public function sendVideo(array $params)
     {
@@ -516,15 +522,16 @@ class Api
      *
      * @link https://core.telegram.org/bots/api#sendaudio
      *
-     * @param array    $params
+     * @param array $params
      *
      * @var int|string $params ['chat_id']
-     * @var string     $params ['voice']
-     * @var int        $params ['duration']
-     * @var int        $params ['reply_to_message_id']
-     * @var string     $params ['reply_markup']
+     * @var string $params ['voice']
+     * @var int $params ['duration']
+     * @var int $params ['reply_to_message_id']
+     * @var string $params ['reply_markup']
      *
      * @return Message
+     * @throws TelegramSDKException
      */
     public function sendVoice(array $params)
     {
@@ -1063,7 +1070,7 @@ class Api
             /* @noinspection PhpUndefinedFunctionInspection */
             $class_name = Str::studly(substr($method, 3));
             $class = 'Telegram\Bot\Objects\\'.$class_name;
-            $response = $this->post($method, $arguments[0] ?: []);
+            $response = $this->post($method, $arguments[0] ?? []);
 
             if (class_exists($class)) {
                 return new $class($response->getDecodedBody());
