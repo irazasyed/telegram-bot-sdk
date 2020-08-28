@@ -276,17 +276,14 @@ abstract class Command implements CommandInterface
 
     private function formatMatches(array $matches, Collection $required, Collection $optional)
     {
-        //Need to update Illuminate\Support to newer version to take advantage of
-        //intersectBykeys method on collections. Have to use this horrible array method until then!
-        return isset($matches) ? array_intersect_key(
-            $matches,
-            $required
-                ->merge($optional)
-                //incase this was a custom regex search we need to add a custom key
-                ->push('custom')
-                ->flip()
-                ->toArray()
-        ) : [];
+        return collect($matches)
+            ->intersectByKeys(
+                $required
+                    ->merge($optional)
+                    //incase this was a custom regex search we need to add a custom key
+                    ->push('custom')
+                    ->flip()
+            )->all();
     }
 
     private function checkForCustomRegex(Collection $required, Collection $optional)
