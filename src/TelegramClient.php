@@ -19,6 +19,11 @@ class TelegramClient
     const BASE_BOT_URL = 'https://api.telegram.org/bot';
 
     /**
+     * @const string Telegram Bot API URL ENV NAME.
+     */
+    const BASE_BOT_URL_ENV_NAME = 'TELEGRAM_BASE_BOT_URL';
+    
+    /**
      * @const int The timeout in seconds for a request that contains file uploads.
      */
     const DEFAULT_FILE_UPLOAD_REQUEST_TIMEOUT = 3600;
@@ -70,7 +75,7 @@ class TelegramClient
      */
     public function getBaseBotUrl()
     {
-        return static::BASE_BOT_URL;
+        return getenv(static::BASE_BOT_URL_ENV_NAME) ?? static::BASE_BOT_URL;
     }
 
     /**
