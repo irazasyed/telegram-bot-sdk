@@ -4,6 +4,7 @@ namespace Telegram\Bot\Tests\Unit\Commands;
 
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Telegram\Bot\Api;
 use Telegram\Bot\Commands\HelpCommand;
 use Telegram\Bot\Objects\Message;
@@ -11,6 +12,10 @@ use Telegram\Bot\Objects\Update;
 
 class HelpCommandTest extends TestCase
 {
+    use ProphecyTrait {
+        prophesize as phpunitProphesize;
+    }
+
     /** @test it makes the make method work */
     public function it_ensures_a_command_make_method_works()
     {
@@ -43,9 +48,9 @@ class HelpCommandTest extends TestCase
             ],
         ]);
         $help = new HelpCommand();
-        $api = $this->prophesize(Api::class);
+        $api = $this->phpunitProphesize(Api::class);
         $api->getCommands()->willReturn(['help' => $help]);
-        $api->sendMessage(Argument::type('array'))->willReturn($this->prophesize(Message::class)->reveal());
+        $api->sendMessage(Argument::type('array'))->willReturn($this->phpunitProphesize(Message::class)->reveal());
 
         $entity = $update->getMessage()->entities->get(0)->toArray();
         $result = $help->make($api->reveal(), $update, $entity);

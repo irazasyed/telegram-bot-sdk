@@ -4,6 +4,7 @@ namespace Telegram\Bot\Tests\Integration;
 
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Stream;
+use Prophecy\PhpUnit\ProphecyTrait;
 use function GuzzleHttp\Psr7\stream_for;
 use League\Event\Emitter;
 use PHPUnit\Framework\TestCase;
@@ -24,7 +25,11 @@ use Telegram\Bot\Tests\Traits\GuzzleMock;
 
 class TelegramApiTest extends TestCase
 {
-    use GuzzleMock, CommandGenerator;
+    use GuzzleMock;
+    use CommandGenerator;
+    use ProphecyTrait {
+        prophesize as phpunitProphesize;
+    }
 
     protected function tearDown(): void
     {
@@ -273,7 +278,7 @@ class TelegramApiTest extends TestCase
 //    /** @test */
 //    public function it_can_call_a_valid_method_on_the_api()
 //    {
-//        $mock = $this->prophesize(\Telegram\Bot\Api::class);
+//        $mock = $this->phpunitProphesize(\Telegram\Bot\Api::class);
 //        $mock->getConnectTimeOut()->willReturn(30);
 //        $mock->getCommands()->willReturn([]);
 //
@@ -533,7 +538,7 @@ class TelegramApiTest extends TestCase
     /** @test check the webhook works */
     public function check_the_webhook_works_and_can_emmit_an_event()
     {
-        $emitter = $this->prophesize(Emitter::class);
+        $emitter = $this->phpunitProphesize(Emitter::class);
 
         $api = $this->getApi();
         $api->setEventEmitter($emitter->reveal());

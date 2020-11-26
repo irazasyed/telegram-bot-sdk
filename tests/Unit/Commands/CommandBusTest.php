@@ -4,6 +4,7 @@ namespace Telegram\Bot\Tests\Unit\Commands;
 
 use Illuminate\Support\Collection;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Telegram\Bot\Commands\Command;
 use Telegram\Bot\Commands\CommandBus;
 use Telegram\Bot\Exceptions\TelegramSDKException;
@@ -12,6 +13,9 @@ use Telegram\Bot\Tests\Traits\CommandGenerator;
 class CommandBusTest extends TestCase
 {
     use CommandGenerator;
+    use ProphecyTrait {
+        prophesize as phpunitProphesize;
+    }
 
     /**
      * @var CommandBus
@@ -81,7 +85,7 @@ class CommandBusTest extends TestCase
         $this->expectException(TelegramSDKException::class);
         $this->bus->addCommands($this->commandGenerator(3)->all());
 
-        $mockCommand = $this->prophesize(Command::class);
+        $mockCommand = $this->phpunitProphesize(Command::class);
         $mockCommand->getName()->willReturn('MockCommand4');
         $mockCommand->getAliases()->willReturn(['MockAlias2']);
 
@@ -96,7 +100,7 @@ class CommandBusTest extends TestCase
         $this->expectException(TelegramSDKException::class);
         $this->bus->addCommands($this->commandGenerator(3)->all());
 
-        $mockCommand = $this->prophesize(Command::class);
+        $mockCommand = $this->phpunitProphesize(Command::class);
         $mockCommand->getName()->willReturn('MockCommand4');
         $mockCommand->getAliases()->willReturn(['MockCommand1']);
 

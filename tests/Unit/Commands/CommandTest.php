@@ -3,12 +3,17 @@
 namespace Telegram\Bot\Tests\Unit\Commands;
 
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Telegram\Bot\Api;
 use Telegram\Bot\Commands\Command;
 use Telegram\Bot\Objects\Update;
 
 class CommandTest extends TestCase
 {
+    use ProphecyTrait {
+        prophesize as phpunitProphesize;
+    }
+    
     protected $api;
     /**
      * @var Command
@@ -18,7 +23,7 @@ class CommandTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->api = $this->prophesize(Api::class)->reveal();
+        $this->api = $this->phpunitProphesize(Api::class)->reveal();
         $this->command = $this->getMockForAbstractClass(Command::class)
             ->setName('demo');
     }
