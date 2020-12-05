@@ -182,7 +182,7 @@ abstract class Command implements CommandInterface
         $this->entity = $entity;
         $this->arguments = $this->parseCommandArguments();
 
-        return call_user_func_array([$this, 'handle'], $this->getArguments());
+        return call_user_func_array([$this, 'handle'], array_keys($this->getArguments()));
     }
 
     /**
