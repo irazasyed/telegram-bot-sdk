@@ -218,22 +218,24 @@ class Emojify
     }
 
     /**
-     * Private clone method to prevent cloning of the instance of the
-     * *Singleton* instance.
+     * Throw an exception when the user tries to clone the *Singleton*
+     * instance.
      *
-     * @return void
+     * @throws \LogicException always
      */
-    private function __clone()
+    public function __clone()
     {
+        throw new \LogicException('The Emojify helper cannot be cloned');
     }
 
     /**
-     * Private unserialize method to prevent unserializing of the *Singleton*
+     * Throw an exception when the user tries to unserialize the *Singleton*
      * instance.
      *
-     * @return void
+     * @throws \LogicException always
      */
-    private function __wakeup()
+    public function __wakeup()
     {
+        throw new \LogicException('The Emojify helper cannot be serialised');
     }
 }
