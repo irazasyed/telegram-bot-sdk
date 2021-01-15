@@ -56,6 +56,7 @@ use Telegram\Bot\Objects\Payments\SuccessfulPayment;
  * @property string            $connectedWebsite       (Optional). The domain name of the website on which the user has logged in.
  * @property PassportData      $passportData           (Optional). Telegram Passport data
  * @property string            $replyMarkup            (Optional). Inline keyboard attached to the message. login_url buttons are represented as ordinary url buttons.
+ * @property Chat              $senderChat             (Optional). Sender of a message which is a chat (group or channel).
  */
 class Message extends BaseObject
 {
