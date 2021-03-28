@@ -88,6 +88,52 @@ trait Message
     }
 
     /**
+     * Use this method to copy messages of any kind.
+     *
+     * <code>
+     * $params = [
+     *   'chat_id'                      => '',
+     *   'from_chat_id'                 => '',
+     *   'disable_notification'         => '',
+     *   'message_id'                   => '',
+     *   'caption'                      => '',
+     *   'parse_mode'                   => '',
+     *   'caption_entities'             => '',
+     *   'reply_to_message_id'          => '',
+     *   'allow_sending_without_reply'  => '',
+     *   'reply_markup'                 => '',
+     * ];
+     * </code>
+     *
+     * @link https://core.telegram.org/bots/api#copymessage
+     *
+     * @param array    $params               [
+     *
+     * @var int|string $chat_id                     Required. Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @var int        $from_chat_id                Required. Unique identifier for the chat where the original message was sent (or channel username in the format @channelusername)
+     * @var bool       $disable_notification        Optional. Sends the message silently. iOS users will not receive a notification, Android users will receive a notification with no sound.
+     * @var int        $message_id                  Required. Message identifier in the chat specified in from_chat_id
+     * @var string     $caption                     Optional. New caption for media, 0-1024 characters after entities parsing. If not specified, the original caption is kept
+     * @var string     $parse_mode                  Optional. Mode for parsing entities in the new caption. See formatting options for more details.
+     * @var array      $caption_entities            Optional. List of special entities that appear in the new caption, which can be specified instead of parse_mode
+     * @var int        $reply_to_message_id         Optional. If the message is a reply, ID of the original message
+     * @var bool       $allow_sending_without_reply Optional. Pass True, if the message should be sent even if the specified replied-to message is not found
+     * @var string     $reply_markup                Optional. Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.
+     *
+     * ]
+     *
+     * @throws TelegramSDKException
+     *
+     * @return MessageObject
+     */
+    public function copyMessage(array $params): MessageObject
+    {
+        $response = $this->post('copyMessage', $params);
+
+        return new MessageObject($response->getDecodedBody());
+    }
+
+    /**
      * Send Photo.
      *
      * <code>
