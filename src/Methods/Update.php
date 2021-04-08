@@ -5,6 +5,7 @@ namespace Telegram\Bot\Methods;
 use Telegram\Bot\Events\UpdateWasReceived;
 use Telegram\Bot\Exceptions\TelegramSDKException;
 use Telegram\Bot\FileUpload\InputFile;
+use Illuminate\Support\Facades\Request;
 use Telegram\Bot\Objects\Update as UpdateObject;
 use Telegram\Bot\Objects\WebhookInfo;
 use Telegram\Bot\TelegramResponse;
@@ -157,7 +158,7 @@ trait Update
      */
     public function getWebhookUpdate($shouldEmitEvent = true): UpdateObject
     {
-        $body = json_decode(file_get_contents('php://input'), true);
+        $body = json_decode(Request::getContent(), true);
 
         $update = new UpdateObject($body);
 
