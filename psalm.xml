@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<psalm>
+    <projectFiles>
+        <directory name="app" />
+        <ignoreFiles>
+            <directory name="app/Telegram" />
+            <directory name="app/Orchid" />
+            <directory name="app/Models" />
+            <directory name="app/View" />
+            <directory name="app/Http" />
+            <directory name="app/Providers" />
+            <directory name="app/Console" />
+            <directory name="app/Notifications" />
+            <directory name="app/Exceptions" />
+            <directory name="app/Listeners" />
+        </ignoreFiles>
+    </projectFiles>
+</psalm>

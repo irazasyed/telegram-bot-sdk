@@ -5,6 +5,6 @@ namespace Telegram\Bot\Exceptions;
 /**
  * Class TelegramOtherException.
  */
-class TelegramOtherException extends TelegramSDKException
+class TelegramOtherException extends TelegramException
 {
 }

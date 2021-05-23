@@ -178,7 +178,7 @@ class Keyboard extends Base
      */
     public static function remove(array $params = []): self
     {
-        return new static(array_merge(['remove_keyboard' => true, 'selective' => false], $params));
+        return new self(array_merge(['remove_keyboard' => true, 'selective' => false], $params));
     }
 
     /**
@@ -204,6 +204,6 @@ class Keyboard extends Base
      */
     public static function forceReply(array $params = []): self
     {
-        return new static(array_merge(['force_reply' => true, 'selective' => false], $params));
+        return new self(array_merge(['force_reply' => true, 'selective' => false], $params));
     }
 }

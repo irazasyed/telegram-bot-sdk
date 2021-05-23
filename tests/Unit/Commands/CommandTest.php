@@ -3,7 +3,7 @@
 namespace Telegram\Bot\Tests\Unit\Commands;
 
 use PHPUnit\Framework\TestCase;
-use Telegram\Bot\Api;
+use Telegram\Bot\TelegramService;
 use Telegram\Bot\Commands\Command;
 use Telegram\Bot\Objects\Update;
 
@@ -18,7 +18,7 @@ class CommandTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->api = $this->prophesize(Api::class)->reveal();
+        $this->api = $this->prophesize(TelegramService::class)->reveal();
         $this->command = $this->getMockForAbstractClass(Command::class)
             ->setName('demo');
     }

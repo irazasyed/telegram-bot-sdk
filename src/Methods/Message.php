@@ -2,7 +2,7 @@
 
 namespace Telegram\Bot\Methods;
 
-use Telegram\Bot\Exceptions\TelegramSDKException;
+use Telegram\Bot\Exceptions\TelegramException;
 use Telegram\Bot\FileUpload\InputFile;
 use Telegram\Bot\Objects\Message as MessageObject;
 use Telegram\Bot\Traits\Http;
@@ -42,7 +42,7 @@ trait Message
      *
      * ]
      *
-     * @throws \Telegram\Bot\Exceptions\TelegramSDKException
+     * @throws \Telegram\Bot\Exceptions\TelegramException
      *
      * @return MessageObject
      */
@@ -76,7 +76,7 @@ trait Message
      *
      * ]
      *
-     * @throws TelegramSDKException
+     * @throws TelegramException
      *
      * @return MessageObject
      */
@@ -116,7 +116,7 @@ trait Message
      *
      * ]
      *
-     * @throws TelegramSDKException
+     * @throws TelegramException
      *
      * @return MessageObject
      */
@@ -164,7 +164,7 @@ trait Message
      *
      * ]
      *
-     * @throws TelegramSDKException
+     * @throws TelegramException
      *
      * @return MessageObject
      */
@@ -205,7 +205,7 @@ trait Message
      *
      * ]
      *
-     * @throws TelegramSDKException
+     * @throws TelegramException
      *
      * @return MessageObject
      */
@@ -255,7 +255,7 @@ trait Message
      *
      * ]
      *
-     * @throws TelegramSDKException
+     * @throws TelegramException
      *
      * @return MessageObject
      */
@@ -303,7 +303,7 @@ trait Message
      *
      * ]
      *
-     * @throws TelegramSDKException
+     * @throws TelegramException
      *
      * @return MessageObject
      */
@@ -345,7 +345,7 @@ trait Message
      *
      * ]
      *
-     * @throws TelegramSDKException
+     * @throws TelegramException
      *
      * @return MessageObject
      */
@@ -387,7 +387,7 @@ trait Message
      *
      * ]
      *
-     * @throws TelegramSDKException
+     * @throws TelegramException
      *
      * @return MessageObject
      */
@@ -422,7 +422,7 @@ trait Message
      *
      * ]
      *
-     * @throws TelegramSDKException
+     * @throws TelegramException
      *
      * //TODO Check this return type.
      * @return MessageObject
@@ -469,7 +469,7 @@ trait Message
      *
      * ]
      *
-     * @throws TelegramSDKException
+     * @throws TelegramException
      *
      * @return MessageObject
      */
@@ -511,7 +511,7 @@ trait Message
      *
      * ]
      *
-     * @throws TelegramSDKException
+     * @throws TelegramException
      *
      * @return MessageObject
      */
@@ -551,7 +551,7 @@ trait Message
      *
      * ]
      *
-     * @throws TelegramSDKException
+     * @throws TelegramException
      *
      * @return MessageObject
      */
@@ -588,7 +588,7 @@ trait Message
      *
      * ]
      *
-     * @throws TelegramSDKException
+     * @throws TelegramException
      *
      * @return MessageObject
      */
@@ -618,7 +618,7 @@ trait Message
      *
      * ]
      *
-     * @throws TelegramSDKException
+     * @throws TelegramException
      *
      * @return bool
      */
@@ -643,6 +643,6 @@ trait Message
             return true;
         }
 
-        throw new TelegramSDKException('Invalid Action! Accepted value: '.implode(', ', $validActions));
+        throw new TelegramException('Invalid Action! Accepted value: ' . implode(', ', $validActions));
     }
 }

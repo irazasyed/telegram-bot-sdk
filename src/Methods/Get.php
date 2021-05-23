@@ -2,7 +2,7 @@
 
 namespace Telegram\Bot\Methods;
 
-use Telegram\Bot\Exceptions\TelegramSDKException;
+use Telegram\Bot\Exceptions\TelegramException;
 use Telegram\Bot\Objects\File;
 use Telegram\Bot\Objects\User;
 use Telegram\Bot\Objects\UserProfilePhotos;
@@ -20,7 +20,7 @@ trait Get
      *
      * @link https://core.telegram.org/bots/api#getme
      *
-     * @throws TelegramSDKException
+     * @throws TelegramException
      *
      * @return User
      */
@@ -52,7 +52,7 @@ trait Get
      *
      * ]
      *
-     * @throws TelegramSDKException
+     * @throws TelegramException
      *
      * @return UserProfilePhotos
      */
@@ -84,7 +84,7 @@ trait Get
      *
      * ]
      *
-     * @throws TelegramSDKException
+     * @throws TelegramException
      *
      * @return File
      */

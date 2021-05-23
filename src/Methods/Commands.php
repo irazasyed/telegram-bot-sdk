@@ -4,10 +4,10 @@ namespace Telegram\Bot\Methods;
 
 use Telegram\Bot\Traits\Http;
 use Telegram\Bot\Objects\BotCommand;
-use Telegram\Bot\Exceptions\TelegramSDKException;
+use Telegram\Bot\Exceptions\TelegramException;
 
 /**
- * Class Commands.
+ * Class Command.
  * @mixin Http
  */
 trait Commands
@@ -19,7 +19,7 @@ trait Commands
      * @link https://core.telegram.org/bots/api#getmycommands
      *
      * @return BotCommand[]
-     * @throws TelegramSDKException
+     * @throws TelegramException
      */
     public function getMyCommands(): array
     {
@@ -49,11 +49,11 @@ trait Commands
      *
      * ]
      *
-     * @throws TelegramSDKException
+     * @throws TelegramException
      *
      * @return Bool
      */
-    public function setMyCommands(array $params): Bool
+    public function setMyCommands(array $params): bool
     {
         $params['commands'] = json_encode($params['commands']);
 

@@ -1,0 +1,47 @@
+grumphp:
+    tasks:
+#        phpcs:
+#            standard: PSR12
+#            encoding: UTF-8
+#            ignore_patterns: [
+#                ./tests/*,
+#            ]
+        phpstan:
+              configuration: phpstan.neon
+              memory_limit: "-1"
+#              level: max
+#              force_patterns: [ ]
+#              ignore_patterns: [ ]
+#              triggered_by: [ 'php' ]
+              use_grumphp_paths: false
+        phpcpd:
+              directory: ['src']
+              exclude: [vendor]
+              fuzzy: false
+              min_lines: 5
+              min_tokens: 70
+              triggered_by: [ 'php' ]
+        phpmnd:
+              directory: src
+              whitelist_patterns: []
+              exclude: []
+              exclude_name: []
+#              exclude_path: [
+#              ]
+              extensions: []
+              hint: false
+              ignore_funcs: []
+              ignore_numbers: []
+              ignore_strings: []
+              strings: false
+              triggered_by: ['php']
+# TODO::
+#        psalm:
+#              config: psalm.xml
+#              ignore_patterns: [ ]
+#              no_cache: false
+#              report: null
+#              output_format: compact
+#              threads: 3
+#              triggered_by: ['php']
+#              show_info: false

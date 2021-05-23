@@ -4,7 +4,7 @@ namespace Telegram\Bot\Commands;
 
 use Illuminate\Support\Collection;
 use Telegram\Bot\Answers\Answerable;
-use Telegram\Bot\Api;
+use Telegram\Bot\TelegramService;
 use Telegram\Bot\Objects\Update;
 
 /**
@@ -13,6 +13,8 @@ use Telegram\Bot\Objects\Update;
 abstract class Command implements CommandInterface
 {
     use Answerable;
+
+    private const RETURN_TEXT_BETWEEN = 2;
 
     /**
      * The name of the Telegram command.
@@ -169,13 +171,13 @@ abstract class Command implements CommandInterface
     /**
      * Process Inbound Command.
      *
-     * @param Api $telegram
+     * @param TelegramService $telegram
      * @param Update $update
      * @param array $entity
      *
      * @return mixed
      */
-    public function make(Api $telegram, Update $update, array $entity)
+    public function make(TelegramService $telegram, Update $update, array $entity)
     {
         $this->telegram = $telegram;
         $this->update = $update;
@@ -191,7 +193,7 @@ abstract class Command implements CommandInterface
     abstract public function handle();
 
     /**
-     * Helper to Trigger other Commands.
+     * Helper to Trigger other Command.
      *
      * @param string $command
      *
@@ -199,17 +201,13 @@ abstract class Command implements CommandInterface
      */
     protected function triggerCommand(string $command)
     {
-        return $this->getCommandBus()->execute($command, $this->update, $this->entity);
+       // return $this->getCommandBus()->execute($command, $this->update, $this->entity);
     }
 
-    /**
-     * Returns an instance of Command Bus.
-     *
-     * @return CommandBus
-     */
-    public function getCommandBus(): CommandBus
+
+    public function getCommandBus()
     {
-        return $this->telegram->getCommandBus();
+       // return $this->telegram->getCommandBus();
     }
 
     /**
@@ -313,7 +311,7 @@ abstract class Command implements CommandInterface
             2
         );
 
-        return $splice->count() === 2 ? $this->cutTextBetween($splice) : $this->cutTextFrom($splice);
+        return $splice->count() === self::RETURN_TEXT_BETWEEN ? $this->cutTextBetween($splice) : $this->cutTextFrom($splice);
     }
 
     private function cutTextBetween(Collection $splice)

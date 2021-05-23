@@ -6,7 +6,7 @@ use GuzzleHttp\Promise\PromiseInterface;
 use InvalidArgumentException;
 use Psr\Http\Message\ResponseInterface;
 use Telegram\Bot\Exceptions\TelegramResponseException;
-use Telegram\Bot\Exceptions\TelegramSDKException;
+use Telegram\Bot\Exceptions\TelegramException;
 
 /**
  * Class TelegramResponse.
@@ -33,7 +33,7 @@ class TelegramResponse
     /** @var TelegramRequest The original request that returned this response. */
     protected $request;
 
-    /** @var TelegramSDKException The exception thrown by this request. */
+    /** @var TelegramException The exception thrown by this request. */
     protected $thrownException;
 
     /**
@@ -185,9 +185,9 @@ class TelegramResponse
     /**
      * Throws the exception.
      *
-     * @throws TelegramSDKException
+     * @throws TelegramException
      */
-    public function throwException(): TelegramSDKException
+    public function throwException(): TelegramException
     {
         throw $this->thrownException;
     }
@@ -195,9 +195,9 @@ class TelegramResponse
     /**
      * Returns the exception that was thrown for this request.
      *
-     * @return TelegramSDKException
+     * @return TelegramException
      */
-    public function getThrownException(): TelegramSDKException
+    public function getThrownException(): TelegramException
     {
         return $this->thrownException;
     }

@@ -3,7 +3,8 @@
 namespace Telegram\Bot\Traits;
 
 use Telegram\Bot\Objects\Update;
-use Telegram\Bot\Commands\CommandBus;
+
+const HIGHEST_ID = -1;
 
 /**
  * CommandsHandler.
@@ -11,27 +12,17 @@ use Telegram\Bot\Commands\CommandBus;
 trait CommandsHandler
 {
     /**
-     * Return Command Bus.
-     *
-     * @return CommandBus
-     */
-    protected function getCommandBus(): CommandBus
-    {
-        return CommandBus::Instance()->setTelegram($this);
-    }
-
-    /**
      * Get all registered commands.
      *
      * @return array
      */
     public function getCommands(): array
     {
-        return $this->getCommandBus()->getCommands();
+       // return $this->getCommandBus()->getCommands();
     }
 
     /**
-     * Processes Inbound Commands.
+     * Processes Inbound Command.
      *
      * @param bool $webhook
      *
@@ -39,20 +30,15 @@ trait CommandsHandler
      */
     public function commandsHandler(bool $webhook = false)
     {
-        return $webhook ? $this->useWebHook() : $this->useGetUpdates();
+       // return $webhook ? $this->useWebHook() : $this->useGetUpdates();
     }
 
-    /**
-     * Process the update object for a command from your webhook.
-     *
-     * @return Update
-     */
-    protected function useWebHook(): Update
+    protected function useWebHook()
     {
-        $update = $this->getWebhookUpdate();
-        $this->processCommand($update);
-
-        return $update;
+//        $update = $this->getWebhookUpdate();
+//        $this->processCommand($update);
+//
+//        return $update;
     }
 
     /**
@@ -63,7 +49,7 @@ trait CommandsHandler
     protected function useGetUpdates(): array
     {
         $updates = $this->getUpdates();
-        $highestId = -1;
+        $highestId = HIGHEST_ID;
 
         foreach ($updates as $update) {
             $highestId = $update->updateId;
@@ -71,7 +57,7 @@ trait CommandsHandler
         }
 
         //An update is considered confirmed as soon as getUpdates is called with an offset higher than it's update_id.
-        if ($highestId != -1) {
+        if ($highestId != HIGHEST_ID) {
             $this->markUpdateAsRead($highestId);
         }
 
@@ -91,7 +77,7 @@ trait CommandsHandler
         $params['offset'] = $highestId + 1;
         $params['limit'] = 1;
 
-        return $this->getUpdates($params, false);
+        return $this->getUpdates($params);
     }
 
     /**
@@ -101,11 +87,11 @@ trait CommandsHandler
      */
     public function processCommand(Update $update)
     {
-        $this->getCommandBus()->handler($update);
+        //$this->getCommandBus()->handler($update);
     }
 
     /**
-     * Helper to Trigger Commands.
+     * Helper to Trigger Command.
      *
      * @param string $name   Command Name
      * @param Update $update Update Object
@@ -115,12 +101,12 @@ trait CommandsHandler
      */
     public function triggerCommand(string $name, Update $update, $entity = null)
     {
-        $entity = $entity ?? ['offset' => 0, 'length' => strlen($name) + 1, 'type' => "bot_command"];
-
-        return $this->getCommandBus()->execute(
-            $name,
-            $update,
-            $entity
-        );
+//        $entity = $entity ?? ['offset' => 0, 'length' => strlen($name) + 1, 'type' => "bot_command"];
+//
+//        return $this->getCommandBus()->execute(
+//            $name,
+//            $update,
+//            $entity
+//        );
     }
 }

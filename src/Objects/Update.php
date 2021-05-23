@@ -60,7 +60,7 @@ class Update extends BaseObject
      */
     public function recentMessage()
     {
-        return new static($this->last());
+        return new self($this->last());
     }
 
     /**
@@ -144,13 +144,13 @@ class Update extends BaseObject
     /**
      * Get chat object (if exists).
      *
-     * @return Chat|Collection
+     * @return Chat|null
      */
-    public function getChat(): Collection
+    public function getChat(): ?Chat
     {
         $message = $this->getMessage();
 
-        return $message->has('chat') ? $message->get('chat') : collect();
+        return $message->has('chat') ? $message->get('chat') : null;
     }
 
     /**

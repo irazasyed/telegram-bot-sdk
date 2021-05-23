@@ -4,7 +4,7 @@ namespace Telegram\Bot\Tests\Unit\Commands;
 
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
-use Telegram\Bot\Api;
+use Telegram\Bot\TelegramService;
 use Telegram\Bot\Commands\HelpCommand;
 use Telegram\Bot\Objects\Message;
 use Telegram\Bot\Objects\Update;
@@ -43,7 +43,7 @@ class HelpCommandTest extends TestCase
             ],
         ]);
         $help = new HelpCommand();
-        $api = $this->prophesize(Api::class);
+        $api = $this->prophesize(TelegramService::class);
         $api->getCommands()->willReturn(['help' => $help]);
         $api->sendMessage(Argument::type('array'))->willReturn($this->prophesize(Message::class)->reveal());
 

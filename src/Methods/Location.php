@@ -2,7 +2,7 @@
 
 namespace Telegram\Bot\Methods;
 
-use Telegram\Bot\Exceptions\TelegramSDKException;
+use Telegram\Bot\Exceptions\TelegramException;
 use Telegram\Bot\Objects\Message as MessageObject;
 use Telegram\Bot\Traits\Http;
 
@@ -41,7 +41,7 @@ trait Location
      *
      * ]
      *
-     * @throws TelegramSDKException
+     * @throws TelegramException
      *
      * @return MessageObject
      */
@@ -79,7 +79,7 @@ trait Location
      *
      * ]
      *
-     * @throws TelegramSDKException
+     * @throws TelegramException
      *
      * @return MessageObject|bool
      */
@@ -113,7 +113,7 @@ trait Location
      *
      * ]
      *
-     * @throws TelegramSDKException
+     * @throws TelegramException
      *
      * @return MessageObject|bool
      */

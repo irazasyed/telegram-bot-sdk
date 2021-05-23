@@ -7,7 +7,7 @@ use Telegram\Bot\Exceptions\TelegramEmojiMapFileNotFoundException;
 /**
  * Class Emojify.
  */
-class Emojify
+final class Emojify
 {
     /**
      * @var Emojify The reference to *Singleton* instance of this class
@@ -162,7 +162,7 @@ class Emojify
     protected function wordToEmojiReplace($line, $replace, $delimiter)
     {
         foreach ($replace as $key => $value) {
-            $line = str_replace($delimiter.$key.$delimiter, $value, $line);
+            $line = str_replace($delimiter . $key . $delimiter, $value, $line);
         }
 
         return $line;
@@ -180,7 +180,7 @@ class Emojify
     protected function emojiToWordReplace($line, $replace, $delimiter)
     {
         foreach ($replace as $key => $value) {
-            $line = str_replace($key, $delimiter.$value.$delimiter, $line);
+            $line = str_replace($key, $delimiter . $value . $delimiter, $line);
         }
 
         return $line;
@@ -196,7 +196,7 @@ class Emojify
     protected function getEmojiMap()
     {
         if (! isset($this->emojiMapFile)) {
-            $this->emojiMapFile = realpath(__DIR__.self::DEFAULT_EMOJI_MAP_FILE);
+            $this->emojiMapFile = realpath(__DIR__ . self::DEFAULT_EMOJI_MAP_FILE);
         }
 
         if (! file_exists($this->emojiMapFile)) {

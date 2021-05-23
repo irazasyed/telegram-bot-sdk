@@ -31,7 +31,7 @@ class InputFile
      */
     public static function create($file = null, $filename = null): self
     {
-        return new static($file, $filename);
+        return new self($file, $filename);
     }
 
     /**
@@ -44,7 +44,7 @@ class InputFile
      */
     public static function createFromContents($contents, $filename)
     {
-        return (new static(null, $filename))->setContents($contents);
+        return (new self(null, $filename))->setContents($contents);
     }
 
     /**

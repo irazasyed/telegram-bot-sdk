@@ -7,7 +7,7 @@ use Telegram\Bot\TelegramResponse;
 /**
  * Class TelegramResponseException.
  */
-class TelegramResponseException extends TelegramSDKException
+class TelegramResponseException extends TelegramException
 {
     /** @var TelegramResponse The response that threw the exception. */
     protected $response;
@@ -19,9 +19,9 @@ class TelegramResponseException extends TelegramSDKException
      * Creates a TelegramResponseException.
      *
      * @param TelegramResponse     $response          The response that threw the exception.
-     * @param TelegramSDKException $previousException The more detailed exception.
+     * @param TelegramException $previousException The more detailed exception.
      */
-    public function __construct(TelegramResponse $response, TelegramSDKException $previousException = null)
+    public function __construct(TelegramResponse $response, TelegramException $previousException = null)
     {
         $this->response = $response;
         $this->responseData = $response->getDecodedBody();
@@ -64,7 +64,7 @@ class TelegramResponseException extends TelegramSDKException
         }
 
         // Others
-        return new static($response, new TelegramOtherException($message, $code));
+        return new self($response, new TelegramOtherException($message, $code));
     }
 
     /**

@@ -8,7 +8,7 @@ use function GuzzleHttp\Psr7\stream_for;
 use League\Event\Emitter;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
-use Telegram\Bot\Api;
+use Telegram\Bot\TelegramService;
 use Telegram\Bot\Commands\CommandBus;
 use Telegram\Bot\Events\UpdateWasReceived;
 use Telegram\Bot\Exceptions\CouldNotUploadInputFile;
@@ -39,11 +39,11 @@ class TelegramApiTest extends TestCase
      * @param  bool                   $async
      *
      * @throws TelegramSDKException
-     * @return Api
+     * @return TelegramService
      */
     protected function getApi($client = null, $token = 'TELEGRAM_TOKEN', $async = false)
     {
-        return new Api($token, $async, $client);
+        return new TelegramService($token, $async, $client);
     }
 
     /**
@@ -69,7 +69,7 @@ class TelegramApiTest extends TestCase
     {
         $api = $this->getApi($this->getGuzzleHttpClient([]));
 
-        $this->assertInstanceOf(Api::class, $api);
+        $this->assertInstanceOf(TelegramService::class, $api);
     }
 
     /** @test */
@@ -77,7 +77,7 @@ class TelegramApiTest extends TestCase
     {
         $api = $this->getApi(null);
 
-        $this->assertInstanceOf(Api::class, $api);
+        $this->assertInstanceOf(TelegramService::class, $api);
     }
 
     /** @test */
@@ -273,7 +273,7 @@ class TelegramApiTest extends TestCase
 //    /** @test */
 //    public function it_can_call_a_valid_method_on_the_api()
 //    {
-//        $mock = $this->prophesize(\Telegram\Bot\Api::class);
+//        $mock = $this->prophesize(\Telegram\Bot\TelegramService::class);
 //        $mock->getConnectTimeOut()->willReturn(30);
 //        $mock->getCommands()->willReturn([]);
 //

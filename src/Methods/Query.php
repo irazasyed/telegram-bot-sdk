@@ -2,7 +2,7 @@
 
 namespace Telegram\Bot\Methods;
 
-use Telegram\Bot\Exceptions\TelegramSDKException;
+use Telegram\Bot\Exceptions\TelegramException;
 use Telegram\Bot\Traits\Http;
 
 /**
@@ -41,7 +41,7 @@ trait Query
      *
      * ]
      *
-     * @throws TelegramSDKException
+     * @throws TelegramException
      *
      * @return bool
      */
@@ -83,7 +83,7 @@ trait Query
      *
      * ]
      *
-     * @throws TelegramSDKException
+     * @throws TelegramException
      *
      * @return bool
      */

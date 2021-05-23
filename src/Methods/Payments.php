@@ -2,7 +2,7 @@
 
 namespace Telegram\Bot\Methods;
 
-use Telegram\Bot\Exceptions\TelegramSDKException;
+use Telegram\Bot\Exceptions\TelegramException;
 use Telegram\Bot\Objects\Message;
 use Telegram\Bot\Objects\Payments\LabeledPrice;
 use Telegram\Bot\Objects\Payments\ShippingOption;
@@ -73,7 +73,7 @@ trait Payments
      *
      * ]
      *
-     * @throws TelegramSDKException
+     * @throws TelegramException
      *
      * @return Message
      */
@@ -108,7 +108,7 @@ trait Payments
      *
      * ]
      *
-     * @throws TelegramSDKException
+     * @throws TelegramException
      *
      * @return bool
      */
@@ -140,7 +140,7 @@ trait Payments
      *
      * ]
      *
-     * @throws TelegramSDKException
+     * @throws TelegramException
      *
      * @return bool
      */

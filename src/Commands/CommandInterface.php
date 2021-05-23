@@ -2,7 +2,7 @@
 
 namespace Telegram\Bot\Commands;
 
-use Telegram\Bot\Api;
+use Telegram\Bot\TelegramService;
 use Telegram\Bot\Objects\Update;
 
 /**
@@ -18,5 +18,5 @@ interface CommandInterface
 
     public function getArguments(): array;
 
-    public function make(Api $telegram, Update $update, array $entity);
+    public function make(TelegramService $telegram, Update $update, array $entity);
 }

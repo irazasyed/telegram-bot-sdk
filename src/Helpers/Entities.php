@@ -31,7 +31,7 @@ class Entities
      */
     public static function format(string $text): self
     {
-        return new static($text);
+        return new self($text);
     }
 
     /**

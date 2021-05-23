@@ -2,7 +2,7 @@
 
 namespace Telegram\Bot\Methods;
 
-use Telegram\Bot\Exceptions\TelegramSDKException;
+use Telegram\Bot\Exceptions\TelegramException;
 use Telegram\Bot\FileUpload\InputFile;
 use Telegram\Bot\Objects\Chat as ChatObject;
 use Telegram\Bot\Objects\ChatMember;
@@ -44,7 +44,7 @@ trait Chat
      *
      * ]
      *
-     * @throws TelegramSDKException
+     * @throws TelegramException
      *
      * @return bool
      */
@@ -72,7 +72,7 @@ trait Chat
      *
      * ]
      *
-     * @throws TelegramSDKException
+     * @throws TelegramException
      *
      * @return string
      */
@@ -104,7 +104,7 @@ trait Chat
      *
      * ]
      *
-     * @throws TelegramSDKException
+     * @throws TelegramException
      *
      * @return bool
      */
@@ -134,7 +134,7 @@ trait Chat
      *
      * ]
      *
-     * @throws TelegramSDKException
+     * @throws TelegramException
      *
      * @return bool
      */
@@ -166,7 +166,7 @@ trait Chat
      *
      * ]
      *
-     * @throws TelegramSDKException
+     * @throws TelegramException
      *
      * @return bool
      */
@@ -198,7 +198,7 @@ trait Chat
      *
      * ]
      *
-     * @throws TelegramSDKException
+     * @throws TelegramException
      *
      * @return bool
      */
@@ -233,7 +233,7 @@ trait Chat
      *
      * ]
      *
-     * @throws TelegramSDKException
+     * @throws TelegramException
      *
      * @return bool
      */
@@ -266,7 +266,7 @@ trait Chat
      *
      * ]
      *
-     * @throws TelegramSDKException
+     * @throws TelegramException
      *
      * @return bool
      */
@@ -294,7 +294,7 @@ trait Chat
      *
      * ]
      *
-     * @throws TelegramSDKException
+     * @throws TelegramException
      *
      * @return bool
      */
@@ -326,7 +326,7 @@ trait Chat
      *
      * ]
      *
-     * @throws TelegramSDKException
+     * @throws TelegramException
      *
      * @return bool
      */
@@ -364,7 +364,7 @@ trait Chat
      * @var int             $until_date     (Optional). Date when restrictions will be lifted for the user, unix time. If user is restricted for more than 366 days or less than 30 seconds from the current time, they are considered to be restricted forever.
      * ]
      *
-     * @throws TelegramSDKException
+     * @throws TelegramException
      *
      * @return bool
      */
@@ -414,7 +414,7 @@ trait Chat
      *
      * ]
      *
-     * @throws TelegramSDKException
+     * @throws TelegramException
      *
      * @return bool
      */
@@ -448,7 +448,7 @@ trait Chat
      *
      * ]
      *
-     * @throws TelegramSDKException
+     * @throws TelegramException
      *
      * @return bool
      */
@@ -480,7 +480,7 @@ trait Chat
      *
      * ]
      *
-     * @throws TelegramSDKException
+     * @throws TelegramException
      *
      * @return bool
      */
@@ -509,7 +509,7 @@ trait Chat
      *
      * ]
      *
-     * @throws TelegramSDKException
+     * @throws TelegramException
      *
      * @return ChatObject
      */
@@ -537,7 +537,7 @@ trait Chat
      *
      * ]
      *
-     * @throws TelegramSDKException
+     * @throws TelegramException
      *
      * @return ChatMember[]
      */
@@ -569,7 +569,7 @@ trait Chat
      *
      * ]
      *
-     * @throws TelegramSDKException
+     * @throws TelegramException
      *
      * @return int
      */
@@ -597,7 +597,7 @@ trait Chat
      *
      * ]
      *
-     * @throws TelegramSDKException
+     * @throws TelegramException
      *
      * @return ChatMember
      */
@@ -629,7 +629,7 @@ trait Chat
      *
      * ]
      *
-     * @throws TelegramSDKException
+     * @throws TelegramException
      *
      * @return bool
      */
@@ -659,7 +659,7 @@ trait Chat
      *
      * ]
      *
-     * @throws TelegramSDKException
+     * @throws TelegramException
      *
      * @return bool
      */

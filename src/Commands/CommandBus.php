@@ -6,15 +6,15 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use InvalidArgumentException;
 use Telegram\Bot\Answers\AnswerBus;
-use Telegram\Bot\Api;
-use Telegram\Bot\Exceptions\TelegramSDKException;
+use Telegram\Bot\TelegramService;
+use Telegram\Bot\Exceptions\TelegramException;
 use Telegram\Bot\Objects\Update;
 use Telegram\Bot\Traits\Singleton;
 
 /**
  * Class CommandBus.
  */
-class CommandBus extends AnswerBus
+final class CommandBus extends AnswerBus
 {
     use Singleton;
 
@@ -31,9 +31,9 @@ class CommandBus extends AnswerBus
     /**
      * Instantiate Command Bus.
      *
-     * @param Api|null $telegram
+     * @param TelegramService|null $telegram
      */
-    public function __construct(Api $telegram = null)
+    public function __construct(TelegramService $telegram = null)
     {
         $this->telegram = $telegram;
     }
@@ -53,7 +53,7 @@ class CommandBus extends AnswerBus
      *
      * @param array $commands
      *
-     * @throws TelegramSDKException
+     * @throws TelegramException
      * @return CommandBus
      */
     public function addCommands(array $commands): self
@@ -70,7 +70,7 @@ class CommandBus extends AnswerBus
      *
      * @param CommandInterface|string $command Either an object or full path to the command class.
      *
-     * @throws TelegramSDKException
+     * @throws TelegramException
      *
      * @return CommandBus
      */
@@ -238,14 +238,14 @@ class CommandBus extends AnswerBus
      * @param $command
      *
      * @return object
-     * @throws TelegramSDKException
+     * @throws TelegramException
      */
     private function resolveCommand($command)
     {
         $command = $this->makeCommandObj($command);
 
         if (! ($command instanceof CommandInterface)) {
-            throw new TelegramSDKException(
+            throw new TelegramException(
                 sprintf(
                     'Command class "%s" should be an instance of "Telegram\Bot\Commands\CommandInterface"',
                     get_class($command)
@@ -260,21 +260,22 @@ class CommandBus extends AnswerBus
      * @param $command
      * @param $alias
      *
-     * @throws TelegramSDKException
+     * @throws TelegramException
      */
     private function checkForConflicts($command, $alias)
     {
         if (isset($this->commands[$alias])) {
-            throw new TelegramSDKException(
+            throw new TelegramException(
                 sprintf(
                     '[Error] Alias [%s] conflicts with command name of "%s" try with another name or remove this alias from the list.',
-                    $alias, get_class($command)
+                    $alias,
+                    get_class($command)
                 )
             );
         }
 
         if (isset($this->commandAliases[$alias])) {
-            throw new TelegramSDKException(
+            throw new TelegramException(
                 sprintf(
                     '[Error] Alias [%s] conflicts with another command\'s alias list: "%s", try with another name or remove this alias from the list.',
                     $alias,
@@ -288,24 +289,21 @@ class CommandBus extends AnswerBus
      * @param $command
      *
      * @return object
-     * @throws TelegramSDKException
+     * @throws TelegramException
      */
     private function makeCommandObj($command)
     {
         if (is_object($command)) {
             return $command;
         }
+
         if (! class_exists($command)) {
-            throw new TelegramSDKException(
+            throw new TelegramException(
                 sprintf(
                     'Command class "%s" not found! Please make sure the class exists.',
                     $command
                 )
             );
-        }
-
-        if ($this->telegram->hasContainer()) {
-            return $this->buildDependencyInjectedAnswer($command);
         }
 
         return new $command();

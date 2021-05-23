@@ -2,8 +2,7 @@
 
 namespace Telegram\Bot\Methods;
 
-use Telegram\Bot\Events\UpdateWasReceived;
-use Telegram\Bot\Exceptions\TelegramSDKException;
+use Telegram\Bot\Exceptions\TelegramException;
 use Telegram\Bot\FileUpload\InputFile;
 use Telegram\Bot\Objects\Update as UpdateObject;
 use Telegram\Bot\Objects\WebhookInfo;
@@ -40,25 +39,16 @@ trait Update
      *
      * ]
      *
-     * @throws TelegramSDKException
+     * @throws TelegramException
      *
      * @return UpdateObject[]
      */
-    public function getUpdates(array $params = [], $shouldEmitEvents = true): array
+    public function getUpdates(array $params = []): array
     {
         $response = $this->get('getUpdates', $params);
 
         return collect($response->getResult())
-            ->map(function ($data) use ($shouldEmitEvents) {
-                $update = new UpdateObject($data);
-
-                if ($shouldEmitEvents) {
-                    $this->emitEvent(new UpdateWasReceived($update, $this));
-                }
-
-                return $update;
-            })
-            ->all();
+            ->map(fn($data)=> new UpdateObject($data))->all();
     }
 
     /**
@@ -84,7 +74,7 @@ trait Update
      *
      * ]
      *
-     * @throws TelegramSDKException
+     * @throws TelegramException
      *
      * @return bool
      */
@@ -106,7 +96,7 @@ trait Update
      *
      * @link https://core.telegram.org/bots/api#deletewebhook
      *
-     * @throws TelegramSDKException
+     * @throws TelegramException
      * @return bool
      */
     public function deleteWebhook(): bool
@@ -119,7 +109,7 @@ trait Update
      *
      * @link https://core.telegram.org/bots/api#getwebhookinfo
      *
-     * @throws TelegramSDKException
+     * @throws TelegramException
      * @return WebhookInfo
      */
     public function getWebhookInfo(): WebhookInfo
@@ -128,21 +118,6 @@ trait Update
         $response = $this->get('getWebhookInfo');
 
         return new WebhookInfo($response->getDecodedBody());
-    }
-
-    /**
-     * Alias for getWebhookUpdate.
-     *
-     * @deprecated Call method getWebhookUpdate (note lack of letter s at end)
-     *             To be removed in next major version.
-     *
-     * @param bool $shouldEmitEvent
-     *
-     * @return UpdateObject
-     */
-    public function getWebhookUpdates($shouldEmitEvent = true): UpdateObject
-    {
-        return $this->getWebhookUpdate($shouldEmitEvent);
     }
 
     /**
@@ -155,23 +130,16 @@ trait Update
      *
      * @return UpdateObject
      */
-    public function getWebhookUpdate($shouldEmitEvent = true): UpdateObject
+    public function getWebhookUpdate(array $request): UpdateObject
     {
-        $body = json_decode(file_get_contents('php://input'), true);
-
-        $update = new UpdateObject($body);
-
-        if ($shouldEmitEvent) {
-            $this->emitEvent(new UpdateWasReceived($update, $this));
-        }
-
+        $update = new UpdateObject($request);
         return $update;
     }
 
     /**
      * Alias for deleteWebhook.
      *
-     * @throws TelegramSDKException
+     * @throws TelegramException
      *
      * @return bool
      */
@@ -183,16 +151,16 @@ trait Update
     /**
      * @param string $url
      *
-     * @throws TelegramSDKException
+     * @throws TelegramException
      */
     private function validateHookUrl(string $url)
     {
         if (filter_var($url, FILTER_VALIDATE_URL) === false) {
-            throw new TelegramSDKException('Invalid URL Provided');
+            throw new TelegramException('Invalid URL Provided');
         }
 
         if (parse_url($url, PHP_URL_SCHEME) !== 'https') {
-            throw new TelegramSDKException('Invalid URL, should be a HTTPS url.');
+            throw new TelegramException('Invalid URL, should be a HTTPS url.');
         }
     }
 

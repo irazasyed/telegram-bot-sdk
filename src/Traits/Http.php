@@ -3,7 +3,7 @@
 namespace Telegram\Bot\Traits;
 
 use Telegram\Bot\Exceptions\CouldNotUploadInputFile;
-use Telegram\Bot\Exceptions\TelegramSDKException;
+use Telegram\Bot\Exceptions\TelegramException;
 use Telegram\Bot\FileUpload\InputFile;
 use Telegram\Bot\HttpClients\HttpClientInterface;
 use Telegram\Bot\TelegramClient;
@@ -170,7 +170,7 @@ trait Http
      * @param string $endpoint
      * @param array  $params
      *
-     * @throws TelegramSDKException
+     * @throws TelegramException
      *
      * @return TelegramResponse
      */
@@ -188,7 +188,7 @@ trait Http
      * @param array  $params
      * @param bool   $fileUpload Set true if a file is being uploaded.
      *
-     * @throws TelegramSDKException
+     * @throws TelegramException
      * @return TelegramResponse
      */
     protected function post(string $endpoint, array $params = [], $fileUpload = false): TelegramResponse
@@ -294,7 +294,7 @@ trait Http
      * @param string $endpoint
      * @param array  $params
      *
-     * @throws TelegramSDKException
+     * @throws TelegramException
      *
      * @return TelegramResponse
      */

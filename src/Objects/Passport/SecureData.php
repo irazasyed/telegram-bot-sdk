@@ -13,7 +13,7 @@ use Telegram\Bot\Objects\BaseObject;
  * @property SecureValue  $address                  Optional. Credentials for encrypted residential address
  * @property SecureValue  $utilityBill              Optional. Credentials for encrypted utility bill
  * @property SecureValue  $bankStatement            Optional. Credentials for encrypted bank statement
- * @property SecureValue  $rentalAgreement        	Optional. Credentials for encrypted rental agreement
+ * @property SecureValue  $rentalAgreement          Optional. Credentials for encrypted rental agreement
  * @property SecureValue  $passportRegistration     Optional. Credentials for encrypted registration from internal passport
  * @property SecureValue  $temporaryRegistration    Optional. Credentials for encrypted temporary registration
  *

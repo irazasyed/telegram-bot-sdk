@@ -2,7 +2,7 @@
 
 namespace Telegram\Bot\Methods;
 
-use Telegram\Bot\Exceptions\TelegramSDKException;
+use Telegram\Bot\Exceptions\TelegramException;
 use Telegram\Bot\Objects\GameHighScore;
 use Telegram\Bot\Objects\Message;
 use Telegram\Bot\Traits\Http;
@@ -38,7 +38,7 @@ trait Game
      *
      * ]
      *
-     * @throws TelegramSDKException
+     * @throws TelegramException
      *
      * @return Message
      */
@@ -78,7 +78,7 @@ trait Game
      *
      * ]
      *
-     * @throws TelegramSDKException
+     * @throws TelegramException
      *
      * @return Message
      */
@@ -112,7 +112,7 @@ trait Game
      *
      * ]
      *
-     * @throws TelegramSDKException
+     * @throws TelegramException
      *
      * @return GameHighScore[]
      */

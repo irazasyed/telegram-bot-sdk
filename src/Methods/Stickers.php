@@ -2,7 +2,7 @@
 
 namespace Telegram\Bot\Methods;
 
-use Telegram\Bot\Exceptions\TelegramSDKException;
+use Telegram\Bot\Exceptions\TelegramException;
 use Telegram\Bot\FileUpload\InputFile;
 use Telegram\Bot\Objects\File;
 use Telegram\Bot\Objects\MaskPosition;
@@ -41,7 +41,7 @@ trait Stickers
      *
      * ]
      *
-     * @throws TelegramSDKException
+     * @throws TelegramException
      *
      * @return MessageObject
      */
@@ -69,7 +69,7 @@ trait Stickers
      *
      * ]
      *
-     * @throws TelegramSDKException
+     * @throws TelegramException
      *
      * @return StickerSet
      */
@@ -100,7 +100,7 @@ trait Stickers
      *
      * ]
      *
-     * @throws TelegramSDKException
+     * @throws TelegramException
      *
      * @return File
      */
@@ -142,7 +142,7 @@ trait Stickers
      *
      * ]
      *
-     * @throws TelegramSDKException
+     * @throws TelegramException
      *
      * @return bool
      */
@@ -180,7 +180,7 @@ trait Stickers
      *
      * ]
      *
-     * @throws TelegramSDKException
+     * @throws TelegramException
      *
      * @return bool
      */
@@ -210,7 +210,7 @@ trait Stickers
      *
      * ]
      *
-     * @throws TelegramSDKException
+     * @throws TelegramException
      *
      * @return bool
      */
@@ -238,7 +238,7 @@ trait Stickers
      *
      * ]
      *
-     * @throws TelegramSDKException
+     * @throws TelegramException
      *
      * @return bool
      */
@@ -270,7 +270,7 @@ trait Stickers
      *
      * ]
      *
-     * @throws TelegramSDKException
+     * @throws TelegramException
      *
      * @return bool
      */
@@ -280,5 +280,4 @@ trait Stickers
 
         return $response->getResult();
     }
-
 }
