@@ -46,21 +46,16 @@ trait CommandsHandler
      *
      * @return Update[]
      */
-    protected function useGetUpdates(): array
+    public function useGetUpdates(): array
     {
         $updates = $this->getUpdates();
-        $highestId = HIGHEST_ID;
-
-        foreach ($updates as $update) {
-            $highestId = $update->updateId;
-            $this->processCommand($update);
-        }
+        $highestId = $updates[count($updates) - 1]->updateId ?? HIGHEST_ID;
 
         //An update is considered confirmed as soon as getUpdates is called with an offset higher than it's update_id.
         if ($highestId != HIGHEST_ID) {
             $this->markUpdateAsRead($highestId);
         }
-
+        
         return $updates;
     }
 

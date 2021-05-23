@@ -19,7 +19,7 @@ class TelegramService
     }
 
     use Traits\Http;
-    // use Traits\CommandsHandler;
+    use Traits\CommandsHandler;
     use Traits\HasContainer;
 
     use Methods\Chat;
