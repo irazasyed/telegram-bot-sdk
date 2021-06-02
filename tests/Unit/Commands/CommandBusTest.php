@@ -3,7 +3,11 @@
 namespace Telegram\Bot\Tests\Unit\Commands;
 
 use Illuminate\Support\Collection;
-use PHPUnit\Framework\TestCase;
+use Telegram\Bot\Api;
+use Telegram\Bot\Commands\CommandInterface;
+use Telegram\Bot\Commands\CommandsProcessor;
+use Telegram\Bot\Objects\Update;
+use Telegram\Bot\Tests\TestCase;
 use Telegram\Bot\Commands\Command;
 use Telegram\Bot\Commands\CommandBus;
 use Telegram\Bot\Exceptions\TelegramSDKException;
@@ -13,15 +17,20 @@ class CommandBusTest extends TestCase
 {
     use CommandGenerator;
 
-    /**
-     * @var CommandBus
-     */
+    /**@var CommandBus*/
     protected $bus;
+
+    /**@var \PHPUnit\Framework\MockObject\MockObject|CommandsProcessor*/
+    private $processor;
 
     protected function setUp(): void
     {
         parent::setUp();
-        $this->bus = new CommandBus();
+        $this->processor = $this->createMock(CommandsProcessor::class);
+
+        $this->bus = new CommandBus([
+            $this->processor
+        ]);
     }
 
     /** @test it can add commands to the bus
@@ -154,41 +163,45 @@ class CommandBusTest extends TestCase
         $this->assertStringContainsString('MockCommand3', $newCommandNames);
     }
 
-    /** @test */
-    public function it_can_return_the_command_name_from_a_message_correctly_ignoring_the_slash()
-    {
-        $message01 = 'The command is /demo and is in the middle of the string.';
-        $message02 = '/beginning command is at the start of a string.';
-
-        $commandName01 = $this->bus->parseCommand($message01, 15, 5);
-        $commandName02 = $this->bus->parseCommand($message02, 0, 10);
-
-        $this->assertEquals('demo', $commandName01);
-        $this->assertEquals('beginning', $commandName02);
-    }
-
-    /** @test */
-    public function it_can_parse_a_command_from_a_group_of_bots()
-    {
-        $message01 = 'The command is /demo@MyDemo_Bot and is in the middle of the string.';
-        $message02 = '/demo@MyDemo_Bot command is at the start of a string.';
-
-        $commandName01 = $this->bus->parseCommand($message01, 15, 16);
-        $commandName02 = $this->bus->parseCommand($message02, 0, 16);
-
-        $this->assertEquals('demo', $commandName01);
-        $this->assertEquals('demo', $commandName02);
-    }
-
     /**
      * @test
      */
-    public function it_throws_an_exception_if_parsing_for_a_command_in_a_message_with_no_text()
+    public function it_should_handle_command_processors()
     {
-        $this->expectException(\InvalidArgumentException::class);
-        $message = '';
+        //Condensed update data
+        $update = new Update([
+            'message' => [
+                'text'     => 'This /demo',
+                'entities' => [
+                    [
+                        'type'   => 'bot_command',
+                        'offset' => 5,
+                        'length' => 5,
+                    ],
+                ],
+            ],
+        ]);
 
-        $this->bus->parseCommand($message, 5, 5);
+        $entity = ['abc'];
+        $api = $this->createMock(Api::class);
+
+        $command = $this->createMock(CommandInterface::class);
+        $command->expects($this->once())
+            ->method('getName')
+            ->willReturn('demo');
+
+        $command->expects($this->once())
+            ->method('make')
+            ->with($api, $update, $entity);
+
+        $this->processor->expects($this->once())
+            ->method('handle')
+            ->with($update)
+            ->willReturn(['demo' => $entity]);
+
+        $this->bus->setTelegram($api);
+        $this->bus->addCommand($command);
+        $this->bus->handler($update);
     }
 
     /**

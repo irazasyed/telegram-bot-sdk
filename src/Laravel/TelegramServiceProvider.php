@@ -5,6 +5,9 @@ namespace Telegram\Bot\Laravel;
 use Telegram\Bot\Api;
 use Telegram\Bot\BotsManager;
 use Illuminate\Support\ServiceProvider;
+use Telegram\Bot\Commands\BotCommandsProcessor;
+use Telegram\Bot\Commands\CommandBus;
+use Telegram\Bot\Commands\CommandsProcessor;
 use Telegram\Bot\Laravel\Artisan\WebhookCommand;
 use Laravel\Lumen\Application as LumenApplication;
 use Illuminate\Foundation\Application as LaravelApplication;
@@ -55,8 +58,22 @@ class TelegramServiceProvider extends ServiceProvider
     protected function registerBindings()
     {
         $this->app->bind(BotsManager::class, static function ($app) {
-            return (new BotsManager(config('telegram')))->setContainer($app);
+
+            $processors = (array)config('telegram.command_processors', [BotCommandsProcessor::class]);
+
+            $processors = array_map(function ($processor) {
+                if (is_string($processor)) {
+                    return $this->app->make($processor);
+                }
+
+                if ($processor instanceof CommandsProcessor) {
+                    return $processor;
+                }
+            }, $processors);
+
+            return (new BotsManager(new CommandBus($processors), config('telegram')))->setContainer($app);
         });
+
         $this->app->alias(BotsManager::class, 'telegram');
 
         $this->app->bind(Api::class, static function ($app) {

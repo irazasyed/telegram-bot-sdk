@@ -5,6 +5,7 @@ namespace Telegram\Bot;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Support\Arr;
 use InvalidArgumentException;
+use Telegram\Bot\Commands\CommandBus;
 use Telegram\Bot\Exceptions\TelegramSDKException;
 
 /**
@@ -21,14 +22,19 @@ class BotsManager
     /** @var Api[] The active bot instances. */
     protected $bots = [];
 
+    /** @var CommandBus The command bus */
+    protected $commandBus;
+
     /**
      * TelegramManager constructor.
      *
+     * @param CommandBus $commandBus
      * @param array $config
      */
-    public function __construct(array $config)
+    public function __construct(CommandBus $commandBus, array $config)
     {
         $this->config = $config;
+        $this->commandBus = $commandBus;
     }
 
     /**
@@ -91,12 +97,12 @@ class BotsManager
     /**
      * Reconnect to the given bot.
      *
-     * @param string $name
+     * @param string|null $name
      *
      * @throws TelegramSDKException
      * @return Api
      */
-    public function reconnect($name = null): Api
+    public function reconnect(string $name = null): Api
     {
         $name = $name ?? $this->getDefaultBotName();
         $this->disconnect($name);
@@ -107,11 +113,11 @@ class BotsManager
     /**
      * Disconnect from the given bot.
      *
-     * @param string $name
+     * @param string|null $name
      *
      * @return BotsManager
      */
-    public function disconnect($name = null): self
+    public function disconnect(string $name = null): self
     {
         $name = $name ?? $this->getDefaultBotName();
         unset($this->bots[$name]);
@@ -193,6 +199,7 @@ class BotsManager
         $token = data_get($config, 'token');
 
         $telegram = new Api(
+            clone $this->commandBus,
             $token,
             $this->getConfig('async_requests', false),
             $this->getConfig('http_client_handler', null)

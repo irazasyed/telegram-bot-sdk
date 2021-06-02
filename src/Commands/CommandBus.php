@@ -2,9 +2,6 @@
 
 namespace Telegram\Bot\Commands;
 
-use Illuminate\Support\Collection;
-use Illuminate\Support\Str;
-use InvalidArgumentException;
 use Telegram\Bot\Answers\AnswerBus;
 use Telegram\Bot\Api;
 use Telegram\Bot\Exceptions\TelegramSDKException;
@@ -18,24 +15,25 @@ class CommandBus extends AnswerBus
 {
     use Singleton;
 
-    /**
-     * @var Command[] Holds all commands.
-     */
+    /** @var Command[] Holds all commands. */
     protected $commands = [];
 
-    /**
-     * @var Command[] Holds all commands' aliases.
-     */
+    /** @var Command[] Holds all commands' aliases. */
     protected $commandAliases = [];
+
+    /** @var array|CommandsProcessor[] Processors that match messages with commands */
+    private $commandProcessors;
 
     /**
      * Instantiate Command Bus.
      *
      * @param Api|null $telegram
+     * @param CommandsProcessor[]|array $commandProcessors
      */
-    public function __construct(Api $telegram = null)
+    public function __construct(array $commandProcessors, Api $telegram = null)
     {
         $this->telegram = $telegram;
+        $this->commandProcessors = $commandProcessors;
     }
 
     /**
@@ -53,8 +51,8 @@ class CommandBus extends AnswerBus
      *
      * @param array $commands
      *
-     * @throws TelegramSDKException
      * @return CommandBus
+     * @throws TelegramSDKException
      */
     public function addCommands(array $commands): self
     {
@@ -70,17 +68,16 @@ class CommandBus extends AnswerBus
      *
      * @param CommandInterface|string $command Either an object or full path to the command class.
      *
+     * @return CommandBus
      * @throws TelegramSDKException
      *
-     * @return CommandBus
      */
     public function addCommand($command): self
     {
         $command = $this->resolveCommand($command);
 
-        /*
+        /**
          * At this stage we definitely have a proper command to use.
-         *
          * @var Command $command
          */
         $this->commands[$command->getName()] = $command;
@@ -103,11 +100,10 @@ class CommandBus extends AnswerBus
     /**
      * Remove a command from the list.
      *
-     * @param $name
-     *
+     * @param string $name
      * @return CommandBus
      */
-    public function removeCommand($name): self
+    public function removeCommand(string $name): self
     {
         unset($this->commands[$name]);
 
@@ -131,86 +127,23 @@ class CommandBus extends AnswerBus
     }
 
     /**
-     * Parse a Command for a Match.
-     *
-     * @param $text
-     * @param $offset
-     * @param $length
-     *
-     * @return string
-     */
-    public function parseCommand($text, $offset, $length): string
-    {
-        if (trim($text) === '') {
-            throw new InvalidArgumentException('Message is empty, Cannot parse for command');
-        }
-
-        $command = substr(
-            $text,
-            $offset + 1,
-            $length - 1
-        );
-
-        // When in group - Ex: /command@MyBot
-        if (Str::contains($command, '@') && Str::endsWith($command, ['bot', 'Bot'])) {
-            $command = explode('@', $command);
-            $command = $command[0];
-        }
-
-        return $command;
-    }
-
-    /**
      * Handles Inbound Messages and Executes Appropriate Command.
      *
-     * @param $update
+     * @param Update $update
      *
      * @return Update
      */
-    protected function handler(Update $update): Update
+    public function handler(Update $update): Update
     {
-        $message = $update->getMessage();
+        foreach ($this->commandProcessors as $processor) {
+            $foundCommands = $processor->handle($update);
 
-        if ($message->has('entities')) {
-            $this->parseCommandsIn($message)
-                ->each(function (array $botCommand) use ($update) {
-                    $this->process($botCommand, $update);
-                });
+            foreach ($foundCommands as $command => $entity) {
+                $this->execute($command, $update, $entity);
+            }
         }
 
         return $update;
-    }
-
-    /**
-     * Returns all bot_commands detected in the update.
-     *
-     * @param $message
-     *
-     * @return Collection
-     */
-    protected function parseCommandsIn(Collection $message): Collection
-    {
-        return collect($message->get('entities'))
-            ->filter(function ($entity) {
-                return $entity['type'] === 'bot_command';
-            });
-    }
-
-    /**
-     * Execute a bot command from the update text.
-     *
-     * @param array  $entity
-     * @param Update $update
-     */
-    protected function process($entity, Update $update)
-    {
-        $command = $this->parseCommand(
-            $update->getMessage()->text,
-            $entity['offset'],
-            $entity['length']
-        );
-
-        $this->execute($command, $update, $entity);
     }
 
     /**
