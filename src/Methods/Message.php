@@ -88,6 +88,36 @@ trait Message
     }
 
     /**
+     * Delete Message.
+     *
+     * <code>
+     * $params = [
+     *   'chat_id'                  => '',
+     *   'message_id'               => '',
+     * ];
+     * </code>
+     *
+     * @link https://core.telegram.org/bots/api#deletemessage
+     *
+     * @param array    $params                   [
+     *
+     * @var int|string $chat_id                  Required. Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @var int        $message_id               Required. Identifier of the message to delete
+     *
+     * ]
+     *
+     * @throws TelegramSDKException
+     *
+     * @return bool
+     */
+    public function deleteMessage(array $params): bool
+    {
+        $response = $this->post('deleteMessage', $params);
+
+        return $response;
+    }
+    
+    /**
      * Send Photo.
      *
      * <code>
