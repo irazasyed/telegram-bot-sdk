@@ -26,13 +26,6 @@ class TelegramApiTest extends TestCase
 {
     use GuzzleMock, CommandGenerator;
 
-    protected function tearDown(): void
-    {
-        // Prevent previous commands added to the bus lingering between
-        // tests.
-        CommandBus::destroy();
-    }
-
     /**
      * @param  GuzzleHttpClient|null  $client
      * @param  string                 $token

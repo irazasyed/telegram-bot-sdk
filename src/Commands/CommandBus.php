@@ -2,11 +2,11 @@
 
 namespace Telegram\Bot\Commands;
 
+use Closure;
 use Telegram\Bot\Answers\AnswerBus;
 use Telegram\Bot\Api;
 use Telegram\Bot\Exceptions\TelegramSDKException;
 use Telegram\Bot\Objects\Update;
-use Telegram\Bot\Traits\Singleton;
 
 /**
  * Class CommandBus.
@@ -137,7 +137,15 @@ class CommandBus extends AnswerBus
             $foundCommands = $processor->handle($update);
 
             foreach ($foundCommands as $command => $entity) {
-                $this->execute($command, $update, $entity);
+                if ($entity instanceof Closure) {
+                    $command = $entity;
+                    $entity = [];
+                }
+
+                // Stop handling commands when executed return "true"
+                if ($this->execute($command, $update, $entity) === true) {
+                    return $update;
+                }
             }
         }
 
@@ -147,22 +155,29 @@ class CommandBus extends AnswerBus
     /**
      * Execute the command.
      *
-     * @param string $name
+     * @param string|Closure $name
      * @param Update $update
-     * @param array  $entity
+     * @param array $entity
      *
-     * @return mixed
+     * @return bool If executed command return True - it means we need to stop executing other found commands
      */
-    protected function execute(string $name, Update $update, array $entity)
+    protected function execute($name, Update $update, array $entity)
     {
+        if ($name instanceof Closure) {
+            return $name($this->telegram, $update, $entity);
+        }
+
         $command = $this->commands[$name] ??
             $this->commandAliases[$name] ??
-            $this->commands['help'] ??
             collect($this->commands)->filter(function ($command) use ($name) {
                 return $command instanceof $name;
             })->first() ?? null;
 
-        return $command ? $command->make($this->telegram, $update, $entity) : false;
+        if ($command) {
+            return $command->make($this->telegram, $update, $entity);
+        }
+
+        return false;
     }
 
     /**
@@ -175,7 +190,7 @@ class CommandBus extends AnswerBus
     {
         $command = $this->makeCommandObj($command);
 
-        if (! ($command instanceof CommandInterface)) {
+        if (!($command instanceof CommandInterface)) {
             throw new TelegramSDKException(
                 sprintf(
                     'Command class "%s" should be an instance of "Telegram\Bot\Commands\CommandInterface"',
@@ -226,7 +241,7 @@ class CommandBus extends AnswerBus
         if (is_object($command)) {
             return $command;
         }
-        if (! class_exists($command)) {
+        if (!class_exists($command)) {
             throw new TelegramSDKException(
                 sprintf(
                     'Command class "%s" not found! Please make sure the class exists.',
