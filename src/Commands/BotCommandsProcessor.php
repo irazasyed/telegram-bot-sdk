@@ -28,7 +28,7 @@ class BotCommandsProcessor implements CommandsProcessor
                 })->all();
         }
 
-        return ['help' => []];
+        return [];
     }
 
     /**
