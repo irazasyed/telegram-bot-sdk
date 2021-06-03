@@ -13,8 +13,6 @@ use Telegram\Bot\Traits\Singleton;
  */
 class CommandBus extends AnswerBus
 {
-    use Singleton;
-
     /** @var Command[] Holds all commands. */
     protected $commands = [];
 
