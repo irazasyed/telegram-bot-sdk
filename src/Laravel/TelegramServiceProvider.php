@@ -61,9 +61,9 @@ class TelegramServiceProvider extends ServiceProvider
 
             $processors = (array)config('telegram.command_processors', [BotCommandsProcessor::class]);
 
-            $processors = array_map(function ($processor) {
+            $processors = array_map(function ($processor) use ($app) {
                 if (is_string($processor)) {
-                    return $this->app->make($processor);
+                    $processor = $app->make($processor);
                 }
 
                 if ($processor instanceof CommandsProcessor) {
