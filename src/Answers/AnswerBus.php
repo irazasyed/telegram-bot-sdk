@@ -57,7 +57,12 @@ abstract class AnswerBus
         $container = $this->telegram->getContainer();
         $dependencies = [];
         foreach ($params as $param) {
-            $dependencies[] = $container->make($param->getClass()->name);
+            if (version_compare(PHP_VERSION, '8.0.0') >= 0) {
+                $dependencies[] = $container->make($param->getType()->getName());
+            }
+            else{
+                $dependencies[] = $container-make($param->getClass()->name);
+            }
         }
 
         // and instantiate the object with dependencies through ReflectionClass
