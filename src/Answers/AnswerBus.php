@@ -61,7 +61,7 @@ abstract class AnswerBus
                 $dependencies[] = $container->make($param->getType()->getName());
             }
             else{
-                $dependencies[] = $container-make($param->getClass()->name);
+                $dependencies[] = $container->make($param->getClass()->name);
             }
         }
 
