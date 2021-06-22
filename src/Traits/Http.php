@@ -204,11 +204,15 @@ trait Http
      * @param array $params
      *
      * @return array
+     *
+     * If your laravel version is below 7
+     *
+     * You could use (string)$params['reply_markup'] instead of json_encode($params['reply_markup']) 
      */
     protected function replyMarkupToString(array $params): array
     {
         if (isset($params['reply_markup'])) {
-            $params['reply_markup'] = (string) $params['reply_markup'];
+            $params['reply_markup'] = json_encode($params['reply_markup']);
         }
 
         return $params;
