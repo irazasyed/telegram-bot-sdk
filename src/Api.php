@@ -316,7 +316,7 @@ class Api
      * ];
      * </code>
      *
-     * @link https://core.telegram.org/bots/api#sendmessage
+     * @link https://core.telegram.org/bots/api#deletemessage
      *
      * @param  array  $params
      *
