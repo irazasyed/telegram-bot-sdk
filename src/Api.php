@@ -307,6 +307,32 @@ class Api
     }
 
     /**
+     * Delete message
+     *
+     * <code>
+     * $params = [
+     *   'chat_id'                  => '',
+     *   'message_id'               => '',
+     * ];
+     * </code>
+     *
+     * @link https://core.telegram.org/bots/api#sendmessage
+     *
+     * @param  array  $params
+     *
+     * @var int|string $params ['chat_id']
+     * @var int $params ['message_id']
+     *
+     * @return Message
+     */
+    public function deleteMessage(array $params)
+    {
+        $response = $this->post('sendMessage', $params);
+
+        return new Message($response->getDecodedBody());
+    }
+
+    /**
      * Forward messages of any kind.
      *
      * <code>
