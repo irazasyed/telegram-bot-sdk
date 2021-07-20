@@ -201,4 +201,16 @@ return [
         // 'stop' => Acme\Project\Commands\StopCommand::class,
         // 'status' => Acme\Project\Commands\StatusCommand::class,
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Processors to handle commands
+    |--------------------------------------------------------------------------
+    |
+    | Processors let you match commands with telegram messages by your own rules.
+    |
+    */
+    'command_processors'           => [
+        \Telegram\Bot\Commands\BotCommandsProcessor::class
+    ]
 ];

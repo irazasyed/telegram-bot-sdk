@@ -2,7 +2,7 @@
 
 namespace Telegram\Bot\Tests\Unit\Commands;
 
-use PHPUnit\Framework\TestCase;
+use Telegram\Bot\Tests\TestCase;
 use Telegram\Bot\Api;
 use Telegram\Bot\Commands\Command;
 use Telegram\Bot\Objects\Update;

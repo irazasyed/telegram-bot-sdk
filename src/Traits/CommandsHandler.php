@@ -10,6 +10,9 @@ use Telegram\Bot\Commands\CommandBus;
  */
 trait CommandsHandler
 {
+    /** @var CommandBus */
+    protected $commandBus;
+
     /**
      * Return Command Bus.
      *
@@ -17,7 +20,7 @@ trait CommandsHandler
      */
     protected function getCommandBus(): CommandBus
     {
-        return CommandBus::Instance()->setTelegram($this);
+        return $this->commandBus;
     }
 
     /**

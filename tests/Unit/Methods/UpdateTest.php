@@ -2,7 +2,7 @@
 
 namespace Telegram\Bot\Tests\Unit\Methods;
 
-use PHPUnit\Framework\TestCase;
+use Telegram\Bot\Tests\TestCase;
 use Telegram\Bot\Exceptions\TelegramSDKException;
 use Telegram\Bot\Methods\Update;
 

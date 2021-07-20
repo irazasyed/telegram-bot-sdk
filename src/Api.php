@@ -4,6 +4,7 @@ namespace Telegram\Bot;
 
 use BadMethodCallException;
 use Illuminate\Support\Traits\Macroable;
+use Telegram\Bot\Commands\CommandBus;
 use Telegram\Bot\Exceptions\TelegramSDKException;
 use Telegram\Bot\HttpClients\HttpClientInterface;
 
@@ -45,14 +46,18 @@ class Api
      * Instantiates a new Telegram super-class object.
      *
      *
+     * @param CommandBus               $commandBus        The Telegram Bot API Access Token.
      * @param string                   $token             The Telegram Bot API Access Token.
      * @param bool                     $async             (Optional) Indicates if the request to Telegram will be asynchronous (non-blocking).
      * @param HttpClientInterface|null $httpClientHandler (Optional) Custom HTTP Client Handler.
      *
      * @throws TelegramSDKException
      */
-    public function __construct($token = null, $async = false, $httpClientHandler = null)
+    public function __construct(CommandBus $commandBus, $token = null, $async = false, $httpClientHandler = null)
     {
+        $commandBus->setTelegram($this);
+        $this->commandBus = $commandBus;
+
         $this->accessToken = $token ?? getenv(static::BOT_TOKEN_ENV_NAME);
         $this->validateAccessToken();
 

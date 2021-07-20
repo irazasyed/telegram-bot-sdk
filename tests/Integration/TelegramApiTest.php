@@ -6,7 +6,7 @@ use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Stream;
 use function GuzzleHttp\Psr7\stream_for;
 use League\Event\Emitter;
-use PHPUnit\Framework\TestCase;
+use Telegram\Bot\Tests\TestCase;
 use Prophecy\Argument;
 use Telegram\Bot\Api;
 use Telegram\Bot\Commands\CommandBus;
@@ -26,13 +26,6 @@ class TelegramApiTest extends TestCase
 {
     use GuzzleMock, CommandGenerator;
 
-    protected function tearDown(): void
-    {
-        // Prevent previous commands added to the bus lingering between
-        // tests.
-        CommandBus::destroy();
-    }
-
     /**
      * @param  GuzzleHttpClient|null  $client
      * @param  string                 $token
@@ -43,7 +36,7 @@ class TelegramApiTest extends TestCase
      */
     protected function getApi($client = null, $token = 'TELEGRAM_TOKEN', $async = false)
     {
-        return new Api($token, $async, $client);
+        return new Api(new CommandBus([]), $token, $async, $client);
     }
 
     /**

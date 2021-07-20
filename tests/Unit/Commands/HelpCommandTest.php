@@ -2,7 +2,7 @@
 
 namespace Telegram\Bot\Tests\Unit\Commands;
 
-use PHPUnit\Framework\TestCase;
+use Telegram\Bot\Tests\TestCase;
 use Prophecy\Argument;
 use Telegram\Bot\Api;
 use Telegram\Bot\Commands\HelpCommand;

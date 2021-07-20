@@ -2,7 +2,7 @@
 
 namespace Telegram\Bot\Tests\Unit\Traits;
 
-use PHPUnit\Framework\TestCase;
+use Telegram\Bot\Tests\TestCase;
 use Telegram\Bot\Traits\Validator;
 
 class ValidatorTest extends TestCase
