@@ -20,6 +20,19 @@ trait Validator
     protected function hasFileId(string $inputFileField, array $params): bool
     {
         return isset($params[$inputFileField]) && $this->isFileId($params[$inputFileField]);
+	}
+
+    /**
+     * Determine given param in params array is a URL.
+     *
+     * @param string $inputFileField
+     * @param array  $params
+     *
+     * @return bool
+     */
+    protected function hasUrl(string $inputFileField, array $params): bool
+    {
+        return isset($params[$inputFileField]) && $this->isUrl($params[$inputFileField]);
     }
 
     /**

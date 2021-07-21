@@ -233,7 +233,7 @@ trait Http
             throw CouldNotUploadInputFile::missingParam($inputFileField);
         }
 
-        if ($this->hasFileId($inputFileField, $params)) {
+        if ($this->hasFileId($inputFileField, $params) || $this->hasUrl($inputFileField, $params)) {
             return $this->post($endpoint, $params);
         }
 
