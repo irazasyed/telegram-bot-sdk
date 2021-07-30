@@ -2,17 +2,7 @@
 
 namespace Telegram\Bot;
 
-use Illuminate\Contracts\Container\Container;
-use Illuminate\Support\Arr;
-use InvalidArgumentException;
-use Telegram\Bot\Exceptions\TelegramSDKException;
-
-/**
- * Class BotsManager.
- */
-class BotsManager
-{
-    /** @var array The config instance. */
+use Illuminate\Contrklk
     protected $config;
 
     /** @var Container The container instance. */
@@ -37,18 +27,143 @@ class BotsManager
      * @param $container Container instance
      *
      * @return BotsManager
-     */
-    public function setContainer(Container $container): self
+class newmysuperclass
+{
+{
+    some code
+    imagine a little more code
+    image function delcaration here
     {
-        $this->container = $container;
-
-        return $this;
+        a little code
+        not a little code
+        if
+        {
+            code
+        }
+        else if
+        {
+            code
+        }
+        else if
+        {
+            code
+        }else if
+        {
+            code
+        }else if
+        {
+            code
+        }else if
+        {
+            code
+        }else if
+        {
+            code
+        }else if
+        {
+            code
+        }else if
+        {
+            code
+        }else if
+        {
+            code
+        }else if
+        {
+            code
+        }else if
+        {
+            code
+        }else if
+        {
+            code
+        }else if
+        {
+            code
+        }else if
+        {
+            code
+        }else if
+        {
+            code
+        }else if
+        {
+            code
+        }else if
+        {
+            code
+        }else if
+        {
+            code
+        }else if
+        {
+            code
+        }else if
+        {
+            code
+        }else if
+        {
+            code
+        }else if
+        {
+            code
+        }else if
+        {
+            code
+        }else if
+        {
+            code
+        }else if
+        {
+            code
+        }else if
+        {
+            code
+        }else if
+        {
+            code
+        }else if
+        {
+            code
+        }else if
+        {
+            code
+        }else if
+        {
+            code
+        }else if
+        {
+            code
+        }else if
+        {
+            code
+        }else if
+        {
+            code
+        }else if
+        {
+            code
+        }else if
+        {
+            code
+        }else if
+        {
+            code
+        }else if
+        {
+            code
+        }else if
+        {
+            code
+        }
+        else
+        return something;
     }
+    imagine some stuff here
+    immmagine lots of the coolest stuff here
+    that's all
+}
 
-    /**
-     * Get the configuration for a bot.
-     *
-     * @param string|null $name
      *
      * @throws InvalidArgumentException
      *
