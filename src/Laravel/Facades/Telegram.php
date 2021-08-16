@@ -107,6 +107,8 @@ class Telegram extends Facade
     * @method static \Telegram\Bot\Objects\Update getWebhookUpdates($shouldEmitEvent = true)
     * @method static \Telegram\Bot\Objects\Update getWebhookUpdate($shouldEmitEvent = true)
     * @method static bool removeWebhook()
+    *
+    * @see \Telegram\Bot\Api
     */
     protected static function getFacadeAccessor()
     {
