@@ -10,6 +10,7 @@ use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\RequestOptions;
 use Psr\Http\Message\ResponseInterface;
 use Telegram\Bot\Exceptions\TelegramSDKException;
+use Illuminate\Support\Facades\Cache;
 use Throwable;
 
 /**
@@ -87,8 +88,8 @@ class GuzzleHttpClient implements HttpClientInterface
         } catch (RequestException $e) {
             $response = $e->getResponse();
             
-            reportAsEncrypted($options['form_params'], 'params');
-
+            Cache::store('file')->put('telegram.sdk.catch', $options['form_params'], now()->addMinute());
+            
             if (! $response instanceof ResponseInterface) {
                 throw new TelegramSDKException($e->getMessage(), $e->getCode());
             }
