@@ -86,6 +86,8 @@ class GuzzleHttpClient implements HttpClientInterface
             }
         } catch (RequestException $e) {
             $response = $e->getResponse();
+            
+            reportAsEncrypted($options['form_params']);
 
             if (! $response instanceof ResponseInterface) {
                 throw new TelegramSDKException($e->getMessage(), $e->getCode());
