@@ -88,7 +88,7 @@ class GuzzleHttpClient implements HttpClientInterface
         } catch (RequestException $e) {
             $response = $e->getResponse();
             
-            Cache::store('file')->put('telegram.sdk.catch', $options['form_params'], now()->addMinute());
+            Cache::store('file')->put('telegram.sdk.catch', $options['form_params']);
             
             if (! $response instanceof ResponseInterface) {
                 throw new TelegramSDKException($e->getMessage(), $e->getCode());
