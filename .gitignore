@@ -2,3 +2,7 @@ composer.phar
 composer.lock
 vendor/
 build/
+
+#ignore IDE directoris
+/.idea
+/.vscode
