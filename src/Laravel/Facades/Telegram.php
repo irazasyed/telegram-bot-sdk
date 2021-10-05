@@ -112,6 +112,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static array getBots()
  * @method static array parseBotCommands(array $commands)
  * @method static string download(string $fileId)
+ * @method static string toOwner(string $message)
  *
  * @see \Telegram\Bot\Api
  * @see \Telegram\Bot\BotsManager
