@@ -338,11 +338,6 @@ trait Http
         if (! isset($params[$inputFileField])) {
             throw CouldNotUploadInputFile::missingParam($inputFileField);
         }
-
-        // All file-paths, urls, or file resources should be provided by using the InputFile object
-        if ((! $params[$inputFileField] instanceof InputFile) || (is_string($params[$inputFileField]) && ! $this->is_json($params[$inputFileField]))) {
-            throw CouldNotUploadInputFile::inputFileParameterShouldBeInputFileEntity($inputFileField);
-        }
     }
 
     /**
