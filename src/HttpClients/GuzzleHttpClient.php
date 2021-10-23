@@ -8,7 +8,6 @@ use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\RequestOptions;
-use Laravel\Octane\Facades\Octane;
 use Psr\Http\Message\ResponseInterface;
 use Telegram\Bot\Exceptions\TelegramSDKException;
 use Illuminate\Support\Facades\Cache;
@@ -74,18 +73,9 @@ class GuzzleHttpClient implements HttpClientInterface
         array $headers = [],
         array $options = [],
         $isAsyncRequest = false
-    )
-    {
+    ) {
         $body = $options['body'] ?? null;
         $options = $this->getOptions($headers, $body, $options, $isAsyncRequest);
-
-        try {
-            Octane::concurrently([
-                fn() => $this->getClient()->requestAsync($method, $url, $options)
-            ], 100);
-        } catch (Throwable $e) {
-            return true;
-        }
 
         try {
             $response = $this->getClient()->requestAsync($method, $url, $options);
@@ -97,9 +87,9 @@ class GuzzleHttpClient implements HttpClientInterface
             }
         } catch (RequestException $e) {
             $response = $e->getResponse();
-
+            
             Cache::store('file')->put('telegram.sdk.catch', $options);
-
+            
             if (! $response instanceof ResponseInterface) {
                 throw new TelegramSDKException($e->getMessage(), $e->getCode());
             }
@@ -114,7 +104,7 @@ class GuzzleHttpClient implements HttpClientInterface
      * @param array $headers
      * @param       $body
      * @param array $options
-     * @param bool $isAsyncRequest
+     * @param bool  $isAsyncRequest
      *
      * @return array
      */
@@ -124,14 +114,13 @@ class GuzzleHttpClient implements HttpClientInterface
         $options,
         $isAsyncRequest = false,
         $proxy = null
-    ): array
-    {
+    ): array {
         $default_options = [
-            RequestOptions::HEADERS => $headers,
-            RequestOptions::BODY => $body,
-            RequestOptions::TIMEOUT => $this->getTimeOut(),
+            RequestOptions::HEADERS         => $headers,
+            RequestOptions::BODY            => $body,
+            RequestOptions::TIMEOUT         => $this->getTimeOut(),
             RequestOptions::CONNECT_TIMEOUT => $this->getConnectTimeOut(),
-            RequestOptions::SYNCHRONOUS => ! $isAsyncRequest,
+            RequestOptions::SYNCHRONOUS     => ! $isAsyncRequest,
         ];
 
         if ($proxy !== null) {
