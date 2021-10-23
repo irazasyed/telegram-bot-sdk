@@ -82,7 +82,7 @@ class GuzzleHttpClient implements HttpClientInterface
         try {
             Octane::concurrently([
                 fn() => $this->getClient()->requestAsync($method, $url, $options)
-            ]);
+            ], 100);
         } catch (Throwable $e) {
             return true;
         }
