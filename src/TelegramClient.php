@@ -78,10 +78,6 @@ class TelegramClient
                 $options,
                 $isAsyncRequest
             );
-        
-        if ($rawResponse === true) {
-            return;
-        }
 
         $returnResponse = $this->getResponse($request, $rawResponse);
 
