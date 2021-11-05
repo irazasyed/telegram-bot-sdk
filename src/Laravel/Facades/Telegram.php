@@ -68,6 +68,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static editMessageLiveLocation(array $params)
  * @method static stopMessageLiveLocation(array $params)
  * @method static \Telegram\Bot\Objects\Message sendMessage(array $params)
+ * @method static int copyMessage(array $params)
  * @method static \Telegram\Bot\Objects\Message forwardMessage(array $params)
  * @method static \Telegram\Bot\Objects\Message sendPhoto(array $params)
  * @method static \Telegram\Bot\Objects\Message sendAudio(array $params)
@@ -112,7 +113,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static array getBots()
  * @method static array parseBotCommands(array $commands)
  * @method static string download(string $fileId)
- * @method static \Telegram\Bot\Objects\Message toOwner(mixed $message, string $header = ''): 
+ * @method static \Telegram\Bot\Objects\Message toOwner(mixed $message, string $header = ''):
  *
  * @see \Telegram\Bot\Api
  * @see \Telegram\Bot\BotsManager
