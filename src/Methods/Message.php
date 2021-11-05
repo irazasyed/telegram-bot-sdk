@@ -60,11 +60,11 @@ trait Message
      *
      * @return MessageObject
      */
-    public function copyMessage(array $params): MessageObject
+    public function copyMessage(array $params)
     {
         $response = $this->post('copyMessage', $params);
 
-        return new MessageObject($response->getDecodedBody());
+        return $response->getResult()['message_id'];
     }
 
     /**
