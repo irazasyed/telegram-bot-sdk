@@ -54,6 +54,20 @@ trait Message
     }
 
     /**
+     * Copy and send a message
+     *
+     * @throws TelegramSDKException
+     *
+     * @return MessageObject
+     */
+    public function copyMessage(array $params): MessageObject
+    {
+        $response = $this->post('copyMessage', $params);
+
+        return new MessageObject($response->getDecodedBody());
+    }
+
+    /**
      * Forward messages of any kind.
      *
      * <code>
