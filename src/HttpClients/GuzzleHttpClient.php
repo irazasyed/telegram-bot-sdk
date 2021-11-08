@@ -93,8 +93,6 @@ class GuzzleHttpClient implements HttpClientInterface
 
             Cache::store('file')->put('telegram.sdk.catch', $options);
 
-            rescue(fn() => $this->dispatchLaterIfRateLimited($response, $method, $url, $options));
-
             if (! $response instanceof ResponseInterface) {
                 throw new TelegramSDKException($e->getMessage(), $e->getCode());
             }
@@ -182,16 +180,4 @@ class GuzzleHttpClient implements HttpClientInterface
         return $this->client;
     }
 
-    private function dispatchLaterIfRateLimited($response, $method, $url, $options)
-    {
-        if ($later = Str::match('~retry after (\d+)~', $response->getBody())) {
-            dispatch(function () use ($method, $url, $options) {
-                (new Client())
-                    ->requestAsync($method, $url, $options)
-                    ->then();
-            })
-                ->delay($later + 60)
-                ->onQueue('first');
-        }
-    }
 }
