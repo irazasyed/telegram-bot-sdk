@@ -7,7 +7,9 @@ use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Promise\PromiseInterface;
+use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\RequestOptions;
+use Illuminate\Support\Str;
 use Psr\Http\Message\ResponseInterface;
 use Telegram\Bot\Exceptions\TelegramSDKException;
 use Illuminate\Support\Facades\Cache;
@@ -73,7 +75,8 @@ class GuzzleHttpClient implements HttpClientInterface
         array $headers = [],
         array $options = [],
         $isAsyncRequest = false
-    ) {
+    )
+    {
         $body = $options['body'] ?? null;
         $options = $this->getOptions($headers, $body, $options, $isAsyncRequest);
 
@@ -87,9 +90,11 @@ class GuzzleHttpClient implements HttpClientInterface
             }
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            
+
             Cache::store('file')->put('telegram.sdk.catch', $options);
-            
+
+            rescue(fn() => $this->dispatchLaterIfRateLimited($response, $method, $url, $options));
+
             if (! $response instanceof ResponseInterface) {
                 throw new TelegramSDKException($e->getMessage(), $e->getCode());
             }
@@ -104,7 +109,7 @@ class GuzzleHttpClient implements HttpClientInterface
      * @param array $headers
      * @param       $body
      * @param array $options
-     * @param bool  $isAsyncRequest
+     * @param bool $isAsyncRequest
      *
      * @return array
      */
@@ -114,13 +119,14 @@ class GuzzleHttpClient implements HttpClientInterface
         $options,
         $isAsyncRequest = false,
         $proxy = null
-    ): array {
+    ): array
+    {
         $default_options = [
-            RequestOptions::HEADERS         => $headers,
-            RequestOptions::BODY            => $body,
-            RequestOptions::TIMEOUT         => $this->getTimeOut(),
+            RequestOptions::HEADERS => $headers,
+            RequestOptions::BODY => $body,
+            RequestOptions::TIMEOUT => $this->getTimeOut(),
             RequestOptions::CONNECT_TIMEOUT => $this->getConnectTimeOut(),
-            RequestOptions::SYNCHRONOUS     => ! $isAsyncRequest,
+            RequestOptions::SYNCHRONOUS => ! $isAsyncRequest,
         ];
 
         if ($proxy !== null) {
@@ -174,5 +180,18 @@ class GuzzleHttpClient implements HttpClientInterface
     private function getClient(): Client
     {
         return $this->client;
+    }
+
+    private function dispatchLaterIfRateLimited($response, $method, $url, $options)
+    {
+        if ($later = Str::match('~retry after (\d+)~', $response->getBody())) {
+            dispatch(function () use ($method, $url, $options) {
+                (new Client())
+                    ->requestAsync($method, $url, $options)
+                    ->then();
+            })
+                ->delay($later + 60)
+                ->onQueue('first');
+        }
     }
 }
