@@ -115,6 +115,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static string download(string $fileId)
  * @method static \Telegram\Bot\Objects\Message toOwner(mixed $message, string $header = ''):
  * @method static string deepLink(string $input):
+ * @method static int randomChatId():
  *
  * @see \Telegram\Bot\Api
  * @see \Telegram\Bot\BotsManager
