@@ -4,6 +4,7 @@ namespace Telegram\Bot\Laravel\Facades;
 
 use Telegram\Bot\BotsManager;
 use Illuminate\Support\Facades\Facade;
+use Telegram\Bot\Objects\Update;
 
 /**
  * @method static \Telegram\Bot\BotsManager manager($config)
@@ -116,7 +117,8 @@ use Illuminate\Support\Facades\Facade;
  * @method static \Telegram\Bot\Objects\Message toOwner(mixed $message, string $header = '')
  * @method static string deepLink(string $input)
  * @method static int randomChatId()
- * @method static array getUpdates(array $params = [], $shouldEmitEvents = true)
+ * @method static array<Update> getUpdates(array $params = [], $shouldEmitEvents = true)
+ *
  * @see \Telegram\Bot\Api
  * @see \Telegram\Bot\BotsManager
  */
