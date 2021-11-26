@@ -10,6 +10,8 @@ use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\RequestOptions;
 use App\Exceptions\TelegramRateLimitedException;
+use App\Exceptions\TelegramUserBlockedTheBotException;
+use App\Exceptions\TelegramUserDeactivatedException;
 use Illuminate\Support\Str;
 use Psr\Http\Message\ResponseInterface;
 use Telegram\Bot\Exceptions\TelegramSDKException;
@@ -92,10 +94,18 @@ class GuzzleHttpClient implements HttpClientInterface
         } catch (RequestException $e) {
             $response = $e->getResponse();
             
-            if ($retry = Str::match('~retry after (\d+)~', $response->getBody())) {
+            if ($retry = Str::match('~retry after (\d+)~', $body = $response->getBody())) {
                 throw new TelegramRateLimitedException($retry, 'Too many requests');
             }
 
+            if (str_contains($body, 'blocked by the user')) {
+                throw new TelegramUserBlockedTheBotException($options['form_params']['chat_id'], 'User blocked the Bot');
+            }
+
+            if (str_contains($body, 'user is deactivated')) {
+                throw new TelegramUserDeactivatedException($options['form_params']['chat_id'], 'User is deactivated');
+            }
+            
             Cache::store('file')->put('telegram.sdk.catch', $options);
 
             if (! $response instanceof ResponseInterface) {
