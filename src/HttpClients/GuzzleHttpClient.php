@@ -9,6 +9,7 @@ use GuzzleHttp\Promise;
 use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\RequestOptions;
+use App\Exceptions\TelegramRateLimitedException;
 use Illuminate\Support\Str;
 use Psr\Http\Message\ResponseInterface;
 use Telegram\Bot\Exceptions\TelegramSDKException;
@@ -90,6 +91,10 @@ class GuzzleHttpClient implements HttpClientInterface
             }
         } catch (RequestException $e) {
             $response = $e->getResponse();
+            
+            if ($retry = Str::match('~retry after (\d+)~', $response->getBody())) {
+                throw new TelegramRateLimitedException($retry, 'Too many requests');
+            }
 
             Cache::store('file')->put('telegram.sdk.catch', $options);
 
