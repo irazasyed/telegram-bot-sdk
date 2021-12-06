@@ -93,18 +93,17 @@ class GuzzleHttpClient implements HttpClientInterface
             }
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            $userId = $options['form_params']['chat_id'] ?? $options['multipart'][0]['contents'] ?? null;
 
             if ($retry = Str::match('~retry after (\d+)~', $body = $response->getBody())) {
                 throw new TelegramRateLimitedException($retry, 'Too many requests');
             }
 
             if (str_contains($body, 'blocked by the user')) {
-                throw new TelegramUserBlockedTheBotException($userId, 'User blocked the Bot');
+                throw new TelegramUserBlockedTheBotException($e->getMessage());
             }
 
             if (str_contains($body, 'user is deactivated')) {
-                throw new TelegramUserDeactivatedException($userId, 'User is deactivated');
+                throw new TelegramUserDeactivatedException($e->getMessage());
             }
 
             array_push($options, $url);
