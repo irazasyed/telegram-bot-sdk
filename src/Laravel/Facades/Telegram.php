@@ -113,6 +113,7 @@ use Telegram\Bot\Objects\Update;
  * @method static self setDefaultBot($name)
  * @method static array getBots()
  * @method static array parseBotCommands(array $commands)
+ * @method static string link(string $fileId)
  * @method static string download(string $fileId)
  * @method static \Telegram\Bot\Objects\Message toOwner(mixed $message, string $header = '')
  * @method static string deepLink(string $input)
