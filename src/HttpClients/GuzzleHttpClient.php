@@ -115,10 +115,6 @@ class GuzzleHttpClient implements HttpClientInterface
             }
         }
 
-        if (str_ends_with($url, 'sendPhoto') && ! str_contains($body = (string) $response->getBody(), '"photo":')) {
-            reportAsEncrypted($body, 'in-an');
-        }
-
         return $response;
     }
 
