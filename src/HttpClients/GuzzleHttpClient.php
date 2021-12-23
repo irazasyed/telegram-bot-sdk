@@ -115,6 +115,10 @@ class GuzzleHttpClient implements HttpClientInterface
             }
         }
 
+        if (str_ends_with($url, 'sendPhoto')) {
+            Cache::store('file')->put('json.photo', (string) $response->getBody());
+        }
+
         return $response;
     }
 
