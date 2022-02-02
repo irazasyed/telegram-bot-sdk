@@ -1,4 +1,4 @@
-<?php
+Enterprise Feature<?php
 
 namespace Telegram\Bot;
 
