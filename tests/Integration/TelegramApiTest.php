@@ -4,7 +4,6 @@ namespace Telegram\Bot\Tests\Integration;
 
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Stream;
-use function GuzzleHttp\Psr7\stream_for;
 use League\Event\Emitter;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
@@ -418,7 +417,7 @@ class TelegramApiTest extends TestCase
     /** @test */
     public function a_stream_not_created_from_an_actual_file_can_be_used_as_a_file_upload()
     {
-        $stream = stream_for('This is some text');
+        $stream = $this->streamFor('This is some text');
         $data = [];
         $api = $this->getApi($this->getGuzzleHttpClient([$this->makeFakeInboundUpdate($data)]));
 
@@ -459,7 +458,7 @@ class TelegramApiTest extends TestCase
         //We can use any file input here, for testing a stream is quick and easy.
         $api->sendDocument([
             'chat_id'  => 123456789,
-            'document' => InputFile::create(stream_for('Some text'), 'testing.txt'),
+            'document' => InputFile::create($this->streamFor('Some text'), 'testing.txt'),
         ]);
 
         /** @var Request $request */
@@ -483,7 +482,7 @@ class TelegramApiTest extends TestCase
             ['/local/path/to/file.pdf'],
             ['https://example.com/file.pdf'],
             [fopen('php://input', 'r')],
-            [stream_for('testData')],
+            [$this->streamFor('testData')],
         ];
     }
 
@@ -511,7 +510,7 @@ class TelegramApiTest extends TestCase
         // setting of certificate.pem
         $api->setWebhook([
             'url'         => 'https://example.com',
-            'certificate' => InputFile::create(stream_for($pubKey), 'public.key'),
+            'certificate' => InputFile::create($this->streamFor($pubKey), 'public.key'),
         ]);
 
         //If the user uses just a string to the path/filename of the webhook cert.
@@ -608,5 +607,19 @@ class TelegramApiTest extends TestCase
         $update = $api->commandsHandler(true);
 
         $this->assertInstanceOf(Update::class, $update);
+    }
+
+    private function streamFor($resource)
+    {
+        if (class_exists('\GuzzleHttp\Psr7\Utils')) {
+
+            return \GuzzleHttp\Psr7\Utils::streamFor($resource);
+        } else if (function_exists('\GuzzleHttp\Psr7\stream_for')) {
+
+            /** @noinspection PhpUndefinedFunctionInspection */
+            return \GuzzleHttp\Psr7\stream_for($resource);
+        }
+
+        throw new \RuntimeException('Not found "streamFor" implementation');
     }
 }

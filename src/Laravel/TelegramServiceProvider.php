@@ -54,7 +54,7 @@ class TelegramServiceProvider extends ServiceProvider
      */
     protected function registerBindings()
     {
-        $this->app->bind(BotsManager::class, static function ($app) {
+        $this->app->singleton(BotsManager::class, static function ($app) {
             return (new BotsManager(config('telegram')))->setContainer($app);
         });
         $this->app->alias(BotsManager::class, 'telegram');

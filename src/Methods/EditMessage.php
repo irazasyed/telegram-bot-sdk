@@ -3,7 +3,7 @@
 namespace Telegram\Bot\Methods;
 
 use Telegram\Bot\Exceptions\TelegramSDKException;
-use Telegram\Bot\Objects\Inputmedia\InputMedia;
+use Telegram\Bot\Objects\InputMedia\InputMedia;
 use Telegram\Bot\Objects\Message;
 use Telegram\Bot\Objects\Poll;
 use Telegram\Bot\Traits\Http;

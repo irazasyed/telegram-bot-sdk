@@ -2,6 +2,7 @@
 
 namespace Telegram\Bot\Methods;
 
+use Psr\Http\Message\RequestInterface;
 use Telegram\Bot\Events\UpdateWasReceived;
 use Telegram\Bot\Exceptions\TelegramSDKException;
 use Telegram\Bot\FileUpload\InputFile;
@@ -149,15 +150,15 @@ trait Update
      * Returns a webhook update sent by Telegram.
      * Works only if you set a webhook.
      *
+     * @param bool $shouldEmitEvent
+     * @param RequestInterface|null $request
+     * @return UpdateObject
      * @see setWebhook
      *
-     * @param bool $shouldEmitEvent
-     *
-     * @return UpdateObject
      */
-    public function getWebhookUpdate($shouldEmitEvent = true): UpdateObject
+    public function getWebhookUpdate($shouldEmitEvent = true, ?RequestInterface $request = null): UpdateObject
     {
-        $body = json_decode(file_get_contents('php://input'), true);
+        $body = $this->getRequestBody($request);
 
         $update = new UpdateObject($body);
 
@@ -203,5 +204,20 @@ trait Update
         }
 
         return InputFile::create($certificate, 'certificate.pem');
+    }
+
+    /**
+     * @param RequestInterface|null $request
+     * @return mixed
+     */
+    private function getRequestBody(?RequestInterface $request)
+    {
+        if ($request instanceof RequestInterface) {
+            $rawBody = (string) $request->getBody();
+        } else {
+            $rawBody = file_get_contents('php://input');
+        }
+
+        return json_decode($rawBody, true);
     }
 }
