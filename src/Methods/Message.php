@@ -645,4 +645,51 @@ trait Message
 
         throw new TelegramSDKException('Invalid Action! Accepted value: '.implode(', ', $validActions));
     }
+       /**
+     * copy a message .
+     *
+     * <code>
+     * $params = [
+     *   'chat_id'                      => '',
+     *   'from_chat_id'                 => '',
+     *   'message_id'                   => '',
+     *   'caption'                      => '',
+     *   'parse_mode'                   => '',
+     *   'caption_entities'             => '',
+     *   'disable_notification'         => '',
+     *   'protect_content'              => '',
+     *   'reply_to_message_id'          => '',
+     *   'allow_sending_without_reply'  => '',
+     *   'reply_markup'                 => '',
+     * ];
+     * </code>
+     *
+     * @link https://core.telegram.org/bots/api#copyMessage
+     *
+     * @param array    $params                   [
+     *
+     * @var int|string $chat_id                     Required. Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @var int|string $from_chat_id                Required. Unique identifier for the chat where the original message was sent (or channel username in the format @channelusername)
+     * @var int        $message_id                  Required. Message identifier in the chat specified in from_chat_id
+     * @var string     $caption                     Optional. Photo caption (may also be used when resending photos by file_id), 0-200 characters
+     * @var string     $parse_mode                  Optional. Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
+     * @var bool       $caption_entities            Optional. A JSON-serialized list of special entities that appear in the new caption, which can be specified instead of parse_mode
+     * @var bool       $disable_notification        Optional. Sends the message silently. iOS users will not receive a notification, Android users will receive a notification with no sound.
+     * @var bool       $protect_content             Optional. Protects the contents of the sent message from forwarding and saving
+     * @var int        $reply_to_message_id         Optional. If the message is a reply, ID of the original message
+     * @var bool       $allow_sending_without_reply Optional. Pass True, if the message should be sent even if the specified replied-to message is not found
+     * @var string     $reply_markup                Optional. Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.
+     *
+     * ]
+     *
+     * @throws \Telegram\Bot\Exceptions\TelegramSDKException
+     *
+     * @return MessageObject
+     */
+    public function copyMessage(array $params): MessageObject
+    {
+        $response = $this->post('copyMessage', $params);
+
+        return new MessageObject($response->getDecodedBody());
+    }
 }
