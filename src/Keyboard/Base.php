@@ -7,6 +7,10 @@ use Illuminate\Support\Str;
 
 /**
  * Class Base.
+ *
+ * @template TKey of array-key
+ * @template TValue
+ * @extends Collection<TKey, TValue>
  */
 class Base extends Collection
 {

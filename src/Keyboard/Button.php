@@ -12,6 +12,10 @@ namespace Telegram\Bot\Keyboard;
  * @method $this setSwitchInlineQuery($string)  (Inline Button Only) Optional. If set, pressing the button will prompt the user to select one of their chats, open that chat and insert the bot‘s username and the specified inline query in the input field. Can be empty, in which case just the bot’s username will be inserted.
  * @method $this setSwitchInlineQueryCurrentChat($string)  (Inline Button Only) Optional. If set, pressing the button will insert the bot‘s username and the specified inline query in the current chat's input field. Can be empty, in which case only the bot’s username will be inserted.
  * @method $this setCallbackGame($string)  (Inline Button Only) Optional. Description of the game that will be launched when the user presses the button.
+ *
+ * @template TKey of array-key
+ * @template TValue
+ * @extends Base<TKey, TValue>
  */
 class Button extends Base
 {
