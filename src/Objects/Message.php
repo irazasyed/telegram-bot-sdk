@@ -128,6 +128,7 @@ class Message extends BaseObject
             'photo',
             'sticker',
             'video',
+            'video_note',
             'voice',
             'contact',
             'location',
