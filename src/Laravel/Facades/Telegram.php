@@ -119,6 +119,7 @@ use Telegram\Bot\Objects\Update;
  * @method static string deepLink(string $input)
  * @method static int randomChatId()
  * @method static Update[] getUpdates(array $params = [], $shouldEmitEvents = true)
+ * @method static bool isSubscribedTo(int $channelId, int $chatId)
  *
  * @see \Telegram\Bot\Api
  * @see \Telegram\Bot\BotsManager
