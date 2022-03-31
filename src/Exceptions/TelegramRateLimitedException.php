@@ -7,7 +7,7 @@ use Throwable;
 class TelegramRateLimitedException extends TelegramSDKException
 {
     /**
-     * Throttled time value
+     * Threshold time value
      *
      * @var int
      */
@@ -15,7 +15,7 @@ class TelegramRateLimitedException extends TelegramSDKException
 
     public function __construct($message, int $value, $code = 429, Throwable $previous = null)
     {
-        $this->setValue($value);
+        $this->setThresholdValue($value);
 
         parent::__construct($message, $code, $previous);
     }
@@ -23,7 +23,7 @@ class TelegramRateLimitedException extends TelegramSDKException
     /**
      * @return int
      */
-    public function getValue(): int
+    public function getThresholdValue(): int
     {
         return $this->value;
     }
@@ -31,7 +31,7 @@ class TelegramRateLimitedException extends TelegramSDKException
     /**
      * @param int $value
      */
-    public function setValue(int $value): void
+    public function setThresholdValue(int $value): void
     {
         $this->value = $value;
     }
