@@ -9,6 +9,7 @@ use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\RequestOptions;
+use GuzzleHttp\Psr7\Response;
 use Psr\Http\Client\RequestExceptionInterface;
 use Psr\Http\Message\ResponseInterface;
 use Telegram\Bot\Exceptions\TelegramSDKException;
@@ -94,7 +95,7 @@ class GuzzleHttpClient implements HttpClientInterface
             if ($e instanceof RequestExceptionInterface || $e instanceof RequestException) {
                 $response = $e->getResponse();
                 
-                $this->throwRelatedForbiddenExeptionIfNeeded($response);
+                $this->throwRelatedForbiddenExceptionIfNeeded($response);
             }
 
             if (! $response instanceof ResponseInterface) {
@@ -192,7 +193,7 @@ class GuzzleHttpClient implements HttpClientInterface
      * @throws TelegramUserBlockedException
      * @throws TelegramUserDeactivatedException
      */
-    private function throwRelatedForbiddenExeptionIfNeeded(Response $response)
+    private function throwRelatedForbiddenExceptionIfNeeded(Response $response)
     {
         if ($response->getStatusCode() === 403) {
             $description = json_decode($response->getBody(), true)['description'];
