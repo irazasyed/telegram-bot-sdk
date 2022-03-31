@@ -21,6 +21,7 @@ use Telegram\Bot\TelegramResponse;
 use Telegram\Bot\Tests\Traits\CommandGenerator;
 use Telegram\Bot\Tests\Traits\GuzzleMock;
 use Telegram\Bot\Exceptions\TelegramUserBlockedException;
+use Telegram\Bot\Exceptions\TelegramRateLimitedException;
 use Telegram\Bot\Exceptions\TelegramUserDeactivatedException;
 
 class TelegramApiTest extends TestCase
@@ -353,6 +354,22 @@ class TelegramApiTest extends TestCase
     {
         $this->expectException(TelegramUserBlockedException::class);
         $badUpdateReply = $this->makeFakeServerErrorResponse(403, 'Forbidden: bot was blocked by the user', 403);
+        $api = $this->getApi($this->getGuzzleHttpClient([$badUpdateReply]));
+
+        $api->getUpdates();
+    }
+
+    /** @test */
+    public function it_throw_correct_exception_when_telegram_rate_limited()
+    {
+        $option = [
+            "parameters" => [
+                "retry_after" => 236
+            ]
+        ];
+
+        $this->expectException(TelegramRateLimitedException::class);
+        $badUpdateReply = $this->makeFakeServerErrorResponse(429, 'Too Many Requests: retry after 236', 429, [], $option);
         $api = $this->getApi($this->getGuzzleHttpClient([$badUpdateReply]));
 
         $api->getUpdates();
