@@ -20,6 +20,8 @@ use Telegram\Bot\Objects\Update;
 use Telegram\Bot\TelegramResponse;
 use Telegram\Bot\Tests\Traits\CommandGenerator;
 use Telegram\Bot\Tests\Traits\GuzzleMock;
+use Telegram\Bot\Exceptions\TelegramUserBlockedException;
+use Telegram\Bot\Exceptions\TelegramUserDeactivatedException;
 
 class TelegramApiTest extends TestCase
 {
@@ -334,6 +336,26 @@ class TelegramApiTest extends TestCase
         }
 
         $this->fail('Should have caught an exception because the update waiting for us was not ok.');
+    }
+
+    /** @test */
+    public function it_throw_correct_exception_when_user_deactivated()
+    {
+        $this->expectException(TelegramUserDeactivatedException::class);
+        $badUpdateReply = $this->makeFakeServerErrorResponse(403, 'Forbidden: user is deactivated', 403);
+        $api = $this->getApi($this->getGuzzleHttpClient([$badUpdateReply]));
+
+        $api->getUpdates();
+    }
+
+    /** @test */
+    public function it_throw_correct_exception_when_user_blocked_the_blot()
+    {
+        $this->expectException(TelegramUserBlockedException::class);
+        $badUpdateReply = $this->makeFakeServerErrorResponse(403, 'Forbidden: bot was blocked by the user', 403);
+        $api = $this->getApi($this->getGuzzleHttpClient([$badUpdateReply]));
+
+        $api->getUpdates();
     }
 
     /**
