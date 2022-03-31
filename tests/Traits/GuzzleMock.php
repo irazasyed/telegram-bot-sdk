@@ -84,16 +84,18 @@ trait GuzzleMock
         return collect($this->history);
     }
 
-    protected function makeFakeServerErrorResponse($error_code, $description, $status_code = 200, $headers = [])
+    protected function makeFakeServerErrorResponse($error_code, $description, $status_code = 200, $headers = [], array $options = null)
     {
+        $params = array_merge([
+            'ok'          => false,
+            'error_code'  => $error_code,
+            'description' => "$description",
+        ], $options);
+            
         return new Response(
             $status_code,
             $headers,
-            json_encode([
-                'ok'          => false,
-                'error_code'  => $error_code,
-                'description' => "$description",
-            ])
+            json_encode($params)
         );
     }
 
