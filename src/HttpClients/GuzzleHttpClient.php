@@ -13,6 +13,8 @@ use Psr\Http\Client\RequestExceptionInterface;
 use Psr\Http\Message\ResponseInterface;
 use Telegram\Bot\Exceptions\TelegramSDKException;
 use Throwable;
+use Telegram\Bot\Exceptions\TelegramUserBlockedException;
+use Telegram\Bot\Exceptions\TelegramUserDeactivatedException;
 
 /**
  * Class GuzzleHttpClient.
@@ -90,6 +92,18 @@ class GuzzleHttpClient implements HttpClientInterface
             $response = null;
             if ($e instanceof RequestExceptionInterface || $e instanceof RequestException) {
                 $response = $e->getResponse();
+                
+                if ($response->getStatusCode() === 403) {
+                    $description = json_decode($response->getBody(), true)['description'];
+
+                    if (Str::contains($description, 'bot was blocked by the user')) {
+                        throw new TelegramUserBlockedException($description);
+                    }
+
+                    if (Str::contains($description, 'user is deactivated')) {
+                        throw new TelegramUserDeactivatedException($description);
+                    }
+                }
             }
 
             if (! $response instanceof ResponseInterface) {
