@@ -13,6 +13,7 @@ use Psr\Http\Client\RequestExceptionInterface;
 use Psr\Http\Message\ResponseInterface;
 use Telegram\Bot\Exceptions\TelegramSDKException;
 use Throwable;
+use Illuminate\Support\Str;
 use Telegram\Bot\Exceptions\TelegramUserBlockedException;
 use Telegram\Bot\Exceptions\TelegramUserDeactivatedException;
 
