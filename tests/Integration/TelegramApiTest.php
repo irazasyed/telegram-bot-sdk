@@ -374,6 +374,25 @@ class TelegramApiTest extends TestCase
 
         $api->getUpdates();
     }
+    
+    /** @test */
+    public function it_should_get_the_threshold_value_when_rate_limited()
+    {
+        try {
+            $option = [
+                "parameters" => [
+                    "retry_after" => 236
+                ]
+            ];
+
+            $badUpdateReply = $this->makeFakeServerErrorResponse(429, 'Too Many Requests: retry after 236', 429, [], $option);
+            $api = $this->getApi($this->getGuzzleHttpClient([$badUpdateReply]));
+
+            $api->getUpdates();
+        } catch (TelegramRateLimitedException $e) {
+            $this->assertSame($e->getValue(), 236);
+        }
+    }
 
     /**
      * @test
