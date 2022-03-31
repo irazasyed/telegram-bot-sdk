@@ -94,17 +94,7 @@ class GuzzleHttpClient implements HttpClientInterface
             if ($e instanceof RequestExceptionInterface || $e instanceof RequestException) {
                 $response = $e->getResponse();
                 
-                if ($response->getStatusCode() === 403) {
-                    $description = json_decode($response->getBody(), true)['description'];
-
-                    if (Str::contains($description, 'bot was blocked by the user')) {
-                        throw new TelegramUserBlockedException($description);
-                    }
-
-                    if (Str::contains($description, 'user is deactivated')) {
-                        throw new TelegramUserDeactivatedException($description);
-                    }
-                }
+                $this->throwRelatedForbiddenExeptionIfNeeded($response);
             }
 
             if (! $response instanceof ResponseInterface) {
@@ -191,5 +181,29 @@ class GuzzleHttpClient implements HttpClientInterface
     private function getClient(): Client
     {
         return $this->client;
+    }
+    
+    
+    /**
+     * Determine if the user deactivated or blocked the bot then throw related exception
+     * 
+     * @param Response $response
+     * @return void
+     * @throws TelegramUserBlockedException
+     * @throws TelegramUserDeactivatedException
+     */
+    private function throwRelatedForbiddenExeptionIfNeeded(Response $response)
+    {
+        if ($response->getStatusCode() === 403) {
+            $description = json_decode($response->getBody(), true)['description'];
+
+            if (Str::contains($description, 'bot was blocked by the user')) {
+                throw new TelegramUserBlockedException($description);
+            }
+
+            if (Str::contains($description, 'user is deactivated')) {
+                throw new TelegramUserDeactivatedException($description);
+            }
+        }
     }
 }
