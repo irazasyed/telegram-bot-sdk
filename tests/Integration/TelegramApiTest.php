@@ -390,7 +390,7 @@ class TelegramApiTest extends TestCase
 
             $api->getUpdates();
         } catch (TelegramRateLimitedException $e) {
-            $this->assertSame($e->getValue(), 236);
+            $this->assertSame($e->getThresholdValue(), 236);
         }
     }
 
