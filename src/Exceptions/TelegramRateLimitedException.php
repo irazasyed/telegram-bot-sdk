@@ -7,7 +7,7 @@ use Throwable;
 class TelegramRateLimitedException extends TelegramSDKException
 {
     /**
-     * Threshold time value
+     * Threshold value
      *
      * @var int
      */
