@@ -16,6 +16,7 @@ use Telegram\Bot\Exceptions\TelegramSDKException;
 use Throwable;
 use Illuminate\Support\Str;
 use Telegram\Bot\Exceptions\TelegramUserBlockedException;
+use Telegram\Bot\Exceptions\TelegramRateLimitedException;
 use Telegram\Bot\Exceptions\TelegramUserDeactivatedException;
 
 /**
@@ -190,13 +191,15 @@ class GuzzleHttpClient implements HttpClientInterface
      * 
      * @param Response $response
      * @return void
-     * @throws TelegramUserBlockedException
-     * @throws TelegramUserDeactivatedException
+     * @throws TelegramUserDeactivatedException|TelegramRateLimitedException|TelegramUserBlockedException
      */
     private function throwRelatedForbiddenExceptionIfNeeded(Response $response)
     {
-        if ($response->getStatusCode() === 403) {
-            $description = json_decode($response->getBody(), true)['description'];
+        $code = $response->getStatusCode();
+        $data = json_decode($response->getBody(), true);
+
+        if ($code === 403) {
+            $description = $data['description'];
 
             if (Str::contains($description, 'bot was blocked by the user')) {
                 throw new TelegramUserBlockedException($description);
@@ -205,6 +208,10 @@ class GuzzleHttpClient implements HttpClientInterface
             if (Str::contains($description, 'user is deactivated')) {
                 throw new TelegramUserDeactivatedException($description);
             }
+        }
+
+        if ($code === 429) {
+            throw new TelegramRateLimitedException($data['description'], $data['parameters']['retry_after']);
         }
     }
 }
