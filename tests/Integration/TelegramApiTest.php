@@ -349,7 +349,7 @@ class TelegramApiTest extends TestCase
     }
 
     /** @test */
-    public function it_throw_correct_exception_when_user_blocked_the_blot()
+    public function it_throw_correct_exception_when_user_blocked_the_bot()
     {
         $this->expectException(TelegramUserBlockedException::class);
         $badUpdateReply = $this->makeFakeServerErrorResponse(403, 'Forbidden: bot was blocked by the user', 403);
