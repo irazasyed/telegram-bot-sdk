@@ -23,6 +23,9 @@ trait Http
     /** @var TelegramClient The Telegram client service. */
     protected $client = null;
 
+    /** @var string|null Telegram Bot API Server URL. */
+    protected $botServerUrl = null;
+
     /** @var HttpClientInterface|null Http Client Handler */
     protected $httpClientHandler = null;
 
@@ -37,6 +40,35 @@ trait Http
 
     /** @var TelegramResponse|null Stores the last request made to Telegram Bot API. */
     protected $lastResponse;
+
+    /**
+     * Using a Local Bot API Server
+     *
+     * The Bot API server source code is available at telegram-bot-api. You can run it locally and send the requests to
+     * your own server instead of https://api.telegram.org. If you switch to a local Bot API server, your bot will be
+     * able to:
+     * - Download files without a size limit.
+     * - Upload files up to 2000 MB.
+     * - Upload files using their local path and the file URI scheme.
+     * - Use an HTTP URL for the webhook.
+     * - Use any local IP address for the webhook.
+     * - Use any port for the webhook.
+     * - Set max_webhook_connections up to 100000.
+     * - Receive the absolute local path as a value of the file_path field without the need to download the file after a
+     * getFile request.
+     *
+     * @link https://core.telegram.org/bots/api#using-a-local-bot-api-server
+     *
+     * @param string $botServerUrl
+     *
+     * @return $this
+     */
+    public function setBotServerUrl(string $botServerUrl): self
+    {
+        $this->botServerUrl = $botServerUrl;
+
+        return $this;
+    }
 
     /**
      * Set Http Client Handler.
@@ -60,7 +92,7 @@ trait Http
     protected function getClient(): TelegramClient
     {
         if ($this->client === null) {
-            $this->client = new TelegramClient($this->httpClientHandler);
+            $this->client = new TelegramClient($this->httpClientHandler, $this->botServerUrl);
         }
 
         return $this->client;

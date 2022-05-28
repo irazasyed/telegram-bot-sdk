@@ -13,20 +13,23 @@ use Telegram\Bot\HttpClients\HttpClientInterface;
  */
 class TelegramClient
 {
-    /** @var string Telegram Bot API URL. */
-    const BASE_BOT_URL = 'https://api.telegram.org/bot';
-
     /** @var HttpClientInterface|null HTTP Client. */
     protected $httpClientHandler;
+
+    /** @var string Telegram Bot API Server URL. */
+    protected $botServerUrl;
 
     /**
      * Instantiates a new TelegramClient object.
      *
      * @param HttpClientInterface|null $httpClientHandler
+     * @param string|null              $botServerUrl
      */
-    public function __construct(HttpClientInterface $httpClientHandler = null)
+    public function __construct(HttpClientInterface $httpClientHandler = null, string $botServerUrl = null)
     {
         $this->httpClientHandler = $httpClientHandler ?? new GuzzleHttpClient();
+
+        $this->botServerUrl = $botServerUrl ?? 'https://api.telegram.org/bot';
     }
 
     /**
@@ -97,7 +100,7 @@ class TelegramClient
      */
     public function prepareRequest(TelegramRequest $request): array
     {
-        $url = $this->getBaseBotUrl().$request->getAccessToken().'/'.$request->getEndpoint();
+        $url = $this->getBotServerUrl().$request->getAccessToken().'/'.$request->getEndpoint();
 
         return [
             $url,
@@ -108,13 +111,13 @@ class TelegramClient
     }
 
     /**
-     * Returns the base Bot URL.
+     * Returns the base Telegram Bot API Server URL.
      *
      * @return string
      */
-    public function getBaseBotUrl(): string
+    public function getBotServerUrl(): string
     {
-        return static::BASE_BOT_URL;
+        return $this->botServerUrl;
     }
 
     /**

@@ -14,28 +14,36 @@ return [
     |
     | - name: The *personal* name you would like to refer to your bot as.
     |
-    |       - username: Your Telegram Bot's Username.
-    |                       Example: (string) 'BotFather'.
+    |       - username:            Your Telegram Bot's Username.
+    |                              Example: (string) 'BotFather'.
     |
-    |       - token:    Your Telegram Bot's Access Token.
-                        Refer for more details: https://core.telegram.org/bots#botfather
-    |                   Example: (string) '123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11'.
+    |       - token:               Your Telegram Bot's Access Token.
+    |                              Refer for more details: https://core.telegram.org/bots#botfather
+    |                              Example: (string) '123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11'.
     |
-    |       - commands: (Optional) Commands to register for this bot,
-    |                   Supported Values: "Command Group Name", "Shared Command Name", "Full Path to Class".
-    |                   Default: Registers Global Commands.
-    |                   Example: (array) [
-    |                       'admin', // Command Group Name.
-    |                       'status', // Shared Command Name.
-    |                       Acme\Project\Commands\BotFather\HelloCommand::class,
-    |                       Acme\Project\Commands\BotFather\ByeCommand::class,
-    |             ]
+    |       - telegram_bot_server: (Optional) Using a Local Bot API Server
+    |                              The Bot API server source code is available at telegram-bot-api. You can run it
+    |                              locally and send the requests to your own server instead of https://api.telegram.org.
+    |                              Refer for more details: https://core.telegram.org/bots/api#webhookinfo
+    |                              Example: (string) 'http://localhost:8081/bot'.
+    |                              Example if you are using docker: (string) 'http://container-name:8081/bot'.
+    |
+    |       - commands:            (Optional) Commands to register for this bot,
+    |                              Supported Values: "Command Group Name", "Shared Command Name", "Full Path to Class".
+    |                              Default: Registers Global Commands.
+    |                              Example: (array) [
+    |                                  'admin', // Command Group Name.
+    |                                  'status', // Shared Command Name.
+    |                                  Acme\Project\Commands\BotFather\HelloCommand::class,
+    |                                  Acme\Project\Commands\BotFather\ByeCommand::class,
+    |                              ]
     */
     'bots'                         => [
         'mybot' => [
             'username'            => 'TelegramBot',
             'token'               => env('TELEGRAM_BOT_TOKEN', 'YOUR-BOT-TOKEN'),
             'certificate_path'    => env('TELEGRAM_CERTIFICATE_PATH', 'YOUR-CERTIFICATE-PATH'),
+            'telegram_bot_server' => env('TELEGRAM_BOT_SERVER_URL', 'YOUR-TELEGRAM-BOT-SERVER-URL'),
             'webhook_url'         => env('TELEGRAM_WEBHOOK_URL', 'YOUR-BOT-WEBHOOK-URL'),
             'commands'            => [
                 //Acme\Project\Commands\MyTelegramBot\BotCommand::class
