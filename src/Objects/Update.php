@@ -97,6 +97,10 @@ class Update extends BaseObject
             'shipping_query',
             'pre_checkout_query',
             'poll',
+            'poll_answer',
+            'my_chat_member',
+            'chat_member',
+            'chat_join_request',
         ];
 
         return $this->keys()
