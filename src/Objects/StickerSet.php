@@ -20,7 +20,7 @@ class StickerSet extends BaseObject
     public function relations()
     {
         return [
-            'stickers' => Sticker::class,
+            'stickers' => [Sticker::class],
             'thumb'    => PhotoSize::class,
         ];
     }

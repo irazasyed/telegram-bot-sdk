@@ -26,11 +26,11 @@ class EncryptedPassportElement extends BaseObject
     public function relations()
     {
         return [
-            'files'        => PassportFile::class,
+            'files'        => [PassportFile::class],
             'front_side'   => PassportFile::class,
             'reverse_side' => PassportFile::class,
             'selfie'       => PassportFile::class,
-            'translation'  => PassportFile::class,
+            'translation'  => [PassportFile::class],
         ];
     }
 }

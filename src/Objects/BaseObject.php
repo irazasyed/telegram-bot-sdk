@@ -60,7 +60,7 @@ abstract class BaseObject extends Collection
 
         $relations = $this->relations();
         if (isset($relations[$property])) {
-            return $relations[$property]::make($value);
+            return $this->getRelationValue($property, $value);
         }
 
         /** @var BaseObject $class */
@@ -75,6 +75,34 @@ abstract class BaseObject extends Collection
         }
 
         return $value;
+    }
+
+    /**
+     * @param string $relationName
+     * @param array  $relationRawData
+     * @return array|\Illuminate\Support\Enumerable|\Illuminate\Support\Traits\EnumeratesValues|\Telegram\Bot\Objects\BaseObject
+     */
+    protected function getRelationValue(string $relationName, iterable $relationRawData)
+    {
+        /** @var class-string<\Telegram\Bot\Objects\BaseObject>|list<class-string<\Telegram\Bot\Objects\BaseObject>> $relation */
+        $relation = $this->relations()[$relationName];
+
+        if (is_string($relation) && class_exists($relation)) {
+            return $relation::make($relationRawData);
+        }
+
+        $isOneToManyRelation = is_array($relation);
+        if ($isOneToManyRelation) {
+            /** @var class-string<\Telegram\Bot\Objects\BaseObject> $clasString */
+            $clasString = $relation[0];
+            $relatedObjects = Collection::make(); // @todo array type can be used in v4
+            foreach ($relationRawData as $singleObjectRawData) {
+                $relatedObjects[] = $clasString::make($singleObjectRawData);
+            }
+            return $relatedObjects;
+        }
+
+        throw new \InvalidArgumentException("Unknown type of the relationship data for the $relationName relation.");
     }
 
     /**

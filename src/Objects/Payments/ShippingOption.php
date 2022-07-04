@@ -19,7 +19,7 @@ class ShippingOption extends BaseObject
     public function relations()
     {
         return [
-            'prices' => LabeledPrice::class,
+            'prices' => [LabeledPrice::class],
         ];
     }
 }

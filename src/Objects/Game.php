@@ -24,8 +24,8 @@ class Game extends BaseObject
     public function relations()
     {
         return [
-            'photo'         => PhotoSize::class,
-            'text_entities' => MessageEntity::class,
+            'photo'         => [PhotoSize::class],
+            'text_entities' => [MessageEntity::class],
             'animation'     => Animation::class,
         ];
     }
