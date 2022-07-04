@@ -22,8 +22,8 @@ use Telegram\Bot\Objects\InlineQuery\InlineBaseObject;
  * @method $this setLongitude(float)            Longitude of the location in degrees
  * @method $this setTitle(string)               Name of the venue
  * @method $this setAddress(string)             Address of the venue
- * @method $this setFoursquareIdTitle(string)   Optional. Foursquare identifier of the venue, if known
- * @method $this setFoursquareType(string)      Optional. Foursquare type of the venue, if known. (For example, “arts_entertainment/default”, “arts_entertainment/aquarium” or “food/icecream”.)
+ * @method $this setFoursquareIdTitle(string)   (Optional). Foursquare identifier of the venue, if known
+ * @method $this setFoursquareType(string)      (Optional). Foursquare type of the venue, if known. (For example, “arts_entertainment/default”, “arts_entertainment/aquarium” or “food/icecream”.)
  */
 class InputVenueMessageContent extends InlineBaseObject
 {

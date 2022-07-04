@@ -10,25 +10,17 @@ use Telegram\Bot\Objects\Payments\ShippingQuery;
  * Class Update.
  *
  *
- * @property int                $updateId               The update's unique identifier. Update identifiers start from a
- *                                                      certain positive number and increase sequentially.
- * @property Message|null $message (Optional). New incoming message of any kind - text, photo,
- *                                                      sticker, etc.
- * @property EditedMessage|null $editedMessage (Optional). New version of a message that is known to the bot
- *                                                      and was edited.
- * @property Message|null $channelPost (Optional).Optional. New incoming channel post of any kind — text,
- *                                                      photo, sticker, etc.
- * @property EditedMessage|null $editedChannelPost (Optional). New version of a channel post that is known to the
- *                                                      bot and was edited sticker, etc.
- * @property InlineQuery|null $inlineQuery (Optional). New incoming inline query.
- * @property ChosenInlineResult|null $chosenInlineResult (Optional). A result of an inline query that was chosen by the
- *                                                      user and sent to their chat partner.
- * @property CallbackQuery|null $callbackQuery (Optional). Incoming callback query.
- * @property ShippingQuery|null $shippingQuery (Optional). New incoming shipping query. Only for invoices with
- *                                                      flexible price
- * @property PreCheckoutQuery|null $preCheckoutQuery (Optional). New incoming pre-checkout query. Contains full
- *                                                      information about checkout
- * @property Poll|null $poll (Optional). Optional. New poll state. Bots receive only updates about stopped polls and polls, which are sent by the bot
+ * @property int                     $updateId               The update's unique identifier. Update identifiers start from a certain positive number and increase sequentially.
+ * @property Message|null            $message                (Optional). New incoming message of any kind - text, photo, sticker, etc.
+ * @property EditedMessage|null      $editedMessage          (Optional). New version of a message that is known to the bot and was edited.
+ * @property Message|null            $channelPost            (Optional). New incoming channel post of any kind — text, photo, sticker, etc.
+ * @property EditedMessage|null      $editedChannelPost      (Optional). New version of a channel post that is known to the bot and was edited sticker, etc.
+ * @property InlineQuery|null        $inlineQuery            (Optional). New incoming inline query.
+ * @property ChosenInlineResult|null $chosenInlineResult     (Optional). A result of an inline query that was chosen by the user and sent to their chat partner.
+ * @property CallbackQuery|null      $callbackQuery          (Optional). Incoming callback query.
+ * @property ShippingQuery|null      $shippingQuery          (Optional). New incoming shipping query. Only for invoices with flexible price
+ * @property PreCheckoutQuery|null   $preCheckoutQuery       (Optional). New incoming pre-checkout query. Contains full information about checkout
+ * @property Poll|null               $poll                   (Optional). New poll state. Bots receive only updates about stopped polls and polls, which are sent by the bot
  *
  * @link https://core.telegram.org/bots/api#update
  */
