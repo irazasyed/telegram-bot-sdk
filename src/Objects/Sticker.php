@@ -11,11 +11,11 @@ namespace Telegram\Bot\Objects;
  * @property int          $width               Sticker width.
  * @property int          $height              Sticker height.
  * @property bool         $isAnimated          True, if the sticker is animated.
- * @property PhotoSize    $thumb               (Optional). Sticker thumbnail in .webp or .jpg format.
- * @property string       $emoji               (Optional). Emoji associated with the sticker
- * @property string       $setName             (Optional). Name of the sticker set to which the sticker belongs
- * @property MaskPosition $maskPosition        (Optional). For mask stickers, the position where the mask should be placed
- * @property int          $fileSize            (Optional). File size.
+ * @property PhotoSize|null $thumb (Optional). Sticker thumbnail in .webp or .jpg format.
+ * @property string|null $emoji (Optional). Emoji associated with the sticker
+ * @property string|null $setName (Optional). Name of the sticker set to which the sticker belongs
+ * @property MaskPosition|null $maskPosition (Optional). For mask stickers, the position where the mask should be placed
+ * @property int|null $fileSize (Optional). File size.
  */
 class Sticker extends BaseObject
 {
