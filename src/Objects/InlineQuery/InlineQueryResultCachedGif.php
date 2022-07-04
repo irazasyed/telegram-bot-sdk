@@ -19,7 +19,7 @@ namespace Telegram\Bot\Objects\InlineQuery;
  *
  * @link https://core.telegram.org/bots/api#inlinequeryresultcachedgif
  *
- * @method self setId(string)                     Unique identifier for this result, 1-64 bytes
+ * @method $this setId(string)                     Unique identifier for this result, 1-64 bytes
  * @method $this setGifFileId(string)              A valid file identifier for the GIF file
  * @method $this setTitle(string)                  (Optional). Title for the result
  * @method $this setCaption(string)                (Optional). Caption of the GIF file to be sent, 0-200 characters

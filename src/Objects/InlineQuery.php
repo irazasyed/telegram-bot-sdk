@@ -22,7 +22,7 @@ class InlineQuery extends BaseObject
     public function relations()
     {
         return [
-            'from' => User::class,
+            'from'     => User::class,
             'location' => Location::class,
         ];
     }
