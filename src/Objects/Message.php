@@ -24,13 +24,13 @@ use Telegram\Bot\Objects\Payments\SuccessfulPayment;
  * @property string|null            $mediaGroupId           (Optional). The unique identifier of a media message group this message belongs to
  * @property string|null            $authorSignature        (Optional). Signature of the post author for messages in channels
  * @property string|null            $text                   (Optional). For text messages, the actual UTF-8 text of the message, 0-4096 characters.
- * @property MessageEntity[]        $entities               (Optional). For text messages, special entities like usernames, URLs, bot commands, etc. that appear in the text.
- * @property MessageEntity[]        $captionEntities        (Optional). For messages with a caption, special entities like usernames, URLs, bot commands, etc. that appear in the caption.
+ * @property MessageEntity[]|null   $entities               (Optional). For text messages, special entities like usernames, URLs, bot commands, etc. that appear in the text.
+ * @property MessageEntity[]|null   $captionEntities        (Optional). For messages with a caption, special entities like usernames, URLs, bot commands, etc. that appear in the caption.
  * @property Audio|null             $audio                  (Optional). Message is an audio file, information about the file.
  * @property Document|null          $document               (Optional). Message is a general file, information about the file.
  * @property Animation|null         $animation              (Optional). Message is an animation, information about the animation. For backward compatibility, when this field is set, the document field will also be set
  * @property Game|null              $game                   (Optional). Message is a game, information about the game.
- * @property PhotoSize[]            $photo                  (Optional). Message is a photo, available sizes of the photo.
+ * @property PhotoSize[]|null       $photo                  (Optional). Message is a photo, available sizes of the photo.
  * @property Sticker|null           $sticker                (Optional). Message is a sticker, information about the sticker.
  * @property Video|null             $video                  (Optional). Message is a video, information about the video.
  * @property Voice|null             $voice                  (Optional). Message is a voice message, information about the file.
@@ -40,10 +40,10 @@ use Telegram\Bot\Objects\Payments\SuccessfulPayment;
  * @property Location|null          $location               (Optional). Message is a shared location, information about the location.
  * @property Venue|null             $venue                  (Optional). Message is a venue, information about the venue.
  * @property Poll|null              $poll                   (Optional). Message is a native poll, information about the poll
- * @property User[]                 $newChatMembers         (Optional). New members that were added to the group or supergroup and information about them (the bot itself may be one of these members).
+ * @property User[]|null            $newChatMembers         (Optional). New members that were added to the group or supergroup and information about them (the bot itself may be one of these members).
  * @property User|null              $leftChatMember         (Optional). A member was removed from the group, information about them (this member may be the bot itself).
  * @property string|null            $newChatTitle           (Optional). A chat title was changed to this value.
- * @property PhotoSize[]            $newChatPhoto           (Optional). A chat photo was change to this value.
+ * @property PhotoSize[]|null       $newChatPhoto           (Optional). A chat photo was change to this value.
  * @property bool|null              $deleteChatPhoto        (Optional). Service message: the chat photo was deleted.
  * @property bool|null              $groupChatCreated       (Optional). Service message: the group has been created.
  * @property bool|null              $supergroupChatCreated  (Optional). Service message: the super group has been created.
