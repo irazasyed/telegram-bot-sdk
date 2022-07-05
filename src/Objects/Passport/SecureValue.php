@@ -26,8 +26,8 @@ class SecureValue extends BaseObject
             'front_side'   => FileCredentials::class,
             'reverse_side' => FileCredentials::class,
             'selfie'       => FileCredentials::class,
-            'translation'  => FileCredentials::class,
-            'files'        => FileCredentials::class,
+            'translation'  => [FileCredentials::class],
+            'files'        => [FileCredentials::class],
         ];
     }
 }

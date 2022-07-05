@@ -17,7 +17,7 @@ class UserProfilePhotos extends BaseObject
     public function relations()
     {
         return [
-            'photos' => PhotoSize::class,
+            'photos' => [PhotoSize::class],
         ];
     }
 }
