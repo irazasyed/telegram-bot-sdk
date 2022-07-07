@@ -13,14 +13,15 @@
     }
   ],
   "require": {
-    "php": "^7.2 || ^8.0",
+    "php": ">=7.3",
+    "ext-json": "*",
     "guzzlehttp/guzzle": "^6.3 || ^7.0.1",
     "guzzlehttp/psr7": "^1.4 || ^2",
     "illuminate/support": "5.5 - 9",
     "league/event": "^2.1"
   },
   "require-dev": {
-    "phpunit/phpunit": "^8.5 || ^9.0"
+    "phpunit/phpunit": "^9.5"
   },
   "autoload": {
     "psr-4": {
@@ -54,7 +55,10 @@
   },
   "config": {
     "preferred-install": "dist",
-    "sort-packages": true
+    "sort-packages": true,
+    "allow-plugins": {
+      "kylekatarnls/update-helper": true
+    }
   },
   "minimum-stability": "dev",
   "prefer-stable": true
