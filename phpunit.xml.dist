@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit bootstrap="vendor/autoload.php"
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd"
+         bootstrap="vendor/autoload.php"
          backupGlobals="false"
          backupStaticAttributes="false"
          colors="true"
@@ -9,17 +11,17 @@
          convertWarningsToExceptions="true"
          processIsolation="false"
          stopOnFailure="false">
+    <coverage>
+        <include>
+            <directory suffix=".php">src/</directory>
+        </include>
+        <exclude>
+            <directory suffix=".php">src/Laravel/config/</directory>
+        </exclude>
+    </coverage>
     <testsuites>
-        <testsuite name="Telegram Bot PHP SDK Test Suite">
-            <directory suffix="Test.php">tests/</directory>
+        <testsuite name="Telegram Bot SDK Test Suite">
+            <directory suffix="Test.php">tests</directory>
         </testsuite>
     </testsuites>
-    <filter>
-        <whitelist>
-            <directory suffix=".php">src/</directory>
-            <exclude>
-                <directory suffix=".php">src/Laravel/config/</directory>
-            </exclude>
-        </whitelist>
-    </filter>
 </phpunit>
