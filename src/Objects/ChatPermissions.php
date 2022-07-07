@@ -23,8 +23,6 @@ class ChatPermissions extends BaseObject
      */
     public function relations()
     {
-        return [
-            'user' => User::class,
-        ];
+        return [];
     }
 }

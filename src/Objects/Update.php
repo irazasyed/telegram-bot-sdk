@@ -41,20 +41,20 @@ class Update extends BaseObject
     public function relations()
     {
         return [
-            'message' => Message::class,
-            'edited_message' => EditedMessage::class,
-            'channel_post' => Message::class,
-            'edited_channel_post' => EditedMessage::class,
-            'inline_query' => InlineQuery::class,
-            'chosen_inline_result' => ChosenInlineResult::class,
-            'callback_query' => CallbackQuery::class,
-            'shipping_query' => ShippingQuery::class,
-            'pre_checkout_query' => PreCheckoutQuery::class,
-            'poll' => Poll::class,
-            'poll_answer' => PollAnswer::class,
-            'my_chat_member' => ChatMemberUpdated::class,
-            'chat_member' => ChatMemberUpdated::class,
-            'chat_join_request' => ChatJoinRequest::class,
+            'message'               => Message::class,
+            'edited_message'        => EditedMessage::class,
+            'channel_post'          => Message::class,
+            'edited_channel_post'   => EditedMessage::class,
+            'inline_query'          => InlineQuery::class,
+            'chosen_inline_result'  => ChosenInlineResult::class,
+            'callback_query'        => CallbackQuery::class,
+            'shipping_query'        => ShippingQuery::class,
+            'pre_checkout_query'    => PreCheckoutQuery::class,
+            'poll'                  => Poll::class,
+            'poll_answer'           => PollAnswer::class,
+            'my_chat_member'        => ChatMemberUpdated::class,
+            'chat_member'           => ChatMemberUpdated::class,
+            'chat_join_request'     => ChatJoinRequest::class,
         ];
     }
 
@@ -129,7 +129,7 @@ class Update extends BaseObject
     /**
      * Get the message contained in the Update.
      *
-     * @return Message|EditedMessage|Collection
+     * @return Message|InlineQuery|ChosenInlineResult|CallbackQuery|ShippingQuery|PreCheckoutQuery|Poll|PollAnswer|Collection
      */
     public function getMessage(): Collection
     {
