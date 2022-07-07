@@ -111,7 +111,7 @@ trait CommandsHandler
      *
      * @param string $name   Command Name
      * @param Update $update Update Object
-     * @param null   $entity
+     * @param array|null $entity
      *
      * @return mixed
      */
