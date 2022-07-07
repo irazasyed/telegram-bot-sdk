@@ -164,6 +164,17 @@ class Update extends BaseObject
     }
 
     /**
+     * Borrowed from {@see \Telegram\Bot\Objects\Update::getMessage()} from SDK v4.
+     * Get the message contained in the Update.
+     *
+     * @return Message|InlineQuery|ChosenInlineResult|CallbackQuery|ShippingQuery|PreCheckoutQuery|Poll|PollAnswer
+     */
+    public function getRelatedObject()
+    {
+        return $this->{$this->objectType()};
+    }
+
+    /**
      * Get chat object (if exists).
      *
      * @return Chat|Collection
@@ -176,6 +187,7 @@ class Update extends BaseObject
     }
 
     /**
+     * @deprecated This method will be removed in SDK v4
      * Is there a command entity in this update object.
      *
      * @return bool
