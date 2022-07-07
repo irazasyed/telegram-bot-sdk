@@ -21,7 +21,7 @@
     "league/event": "^2.1"
   },
   "require-dev": {
-    "phpunit/phpunit": "^9.0 || ^10.0"
+    "phpunit/phpunit": "^9.5"
   },
   "autoload": {
     "psr-4": {
