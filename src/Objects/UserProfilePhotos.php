@@ -5,6 +5,7 @@ namespace Telegram\Bot\Objects;
 /**
  * Class UserProfilePhotos.
  *
+ * @link https://core.telegram.org/bots/api#userprofilephotos
  *
  * @property int         $totalCount     Total number of profile pictures the target user has.
  * @property PhotoSize[] $photos         Requested profile pictures (in up to 4 sizes each).

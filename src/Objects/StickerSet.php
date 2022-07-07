@@ -5,6 +5,8 @@ namespace Telegram\Bot\Objects;
 /**
  * Class StickerSet.
  *
+ * @link https://core.telegram.org/bots/api#stickerset
+ *
  * @property string         $name               Sticker set name
  * @property string         $title              Sticker set title
  * @property bool           $isAnimated         True, if the sticker set contains animated stickers
