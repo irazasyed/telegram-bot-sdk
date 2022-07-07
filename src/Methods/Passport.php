@@ -9,9 +9,9 @@ trait Passport
      *
      * <code>
      * $params = [
-     *   'user_id'                 => '',
-     *   'errors'                  => '',
-     * ];
+     *      'user_id'     => '',  // int                    - Required. User identifier
+     *      'errors'      => '',  // PassportElementError[] - Required. A JSON-serialized array describing the errors
+     * ]
      * </code>
      *
      * @link https://core.telegram.org/bots/api#setpassportdataerrors
