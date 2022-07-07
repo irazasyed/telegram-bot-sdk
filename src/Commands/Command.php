@@ -5,6 +5,7 @@ namespace Telegram\Bot\Commands;
 use Illuminate\Support\Collection;
 use Telegram\Bot\Answers\Answerable;
 use Telegram\Bot\Api;
+use Telegram\Bot\Objects\MessageEntity;
 use Telegram\Bot\Objects\Update;
 
 /**
@@ -352,8 +353,8 @@ abstract class Command implements CommandInterface
             collect() :
             $message
                 ->get('entities', collect())
-                ->filter(function ($entity) {
-                    return $entity['type'] === 'bot_command';
+                ->filter(function (MessageEntity $entity) {
+                    return $entity->type === 'bot_command';
                 })
                 ->pluck('offset');
     }

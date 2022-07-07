@@ -8,6 +8,7 @@ use InvalidArgumentException;
 use Telegram\Bot\Answers\AnswerBus;
 use Telegram\Bot\Api;
 use Telegram\Bot\Exceptions\TelegramSDKException;
+use Telegram\Bot\Objects\MessageEntity;
 use Telegram\Bot\Objects\Update;
 use Telegram\Bot\Traits\Singleton;
 
@@ -173,8 +174,11 @@ class CommandBus extends AnswerBus
 
         if ($message->has('entities')) {
             $this->parseCommandsIn($message)
-                ->each(function (array $botCommand) use ($update) {
-                    $this->process($botCommand, $update);
+                ->each(function ($botCommandEntity) use ($update) {
+                    $botCommandAsArray = $botCommandEntity instanceof MessageEntity
+                        ? $botCommandEntity->all()
+                        : $botCommandEntity;
+                    $this->process($botCommandAsArray, $update);
                 });
         }
 
@@ -186,13 +190,13 @@ class CommandBus extends AnswerBus
      *
      * @param $message
      *
-     * @return Collection
+     * @return Collection<int, MessageEntity>
      */
     protected function parseCommandsIn(Collection $message): Collection
     {
-        return collect($message->get('entities'))
-            ->filter(function ($entity) {
-                return $entity['type'] === 'bot_command';
+        return Collection::wrap($message->get('entities'))
+            ->filter(function (MessageEntity $entity) {
+                return $entity->type === 'bot_command';
             });
     }
 
