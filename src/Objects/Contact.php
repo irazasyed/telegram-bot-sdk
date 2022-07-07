@@ -5,6 +5,7 @@ namespace Telegram\Bot\Objects;
 /**
  * Class Contact.
  *
+ * @link https://core.telegram.org/bots/api#contact
  *
  * @property string      $phoneNumber    Contact's phone number.
  * @property string      $firstName      Contact's first name.

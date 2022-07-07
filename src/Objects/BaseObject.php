@@ -157,6 +157,46 @@ abstract class BaseObject extends Collection
     }
 
     /**
+     * Detect type based on fields.
+     *
+     * @return string|null
+     */
+    public function objectType(): ?string
+    {
+        return null;
+    }
+
+    /**
+     * Determine if the object is of given type.
+     *
+     * @param string $type
+     *
+     * @return bool
+     */
+    public function isType($type)
+    {
+        if ($this->offsetExists($type)) {
+            return true;
+        }
+
+        return $this->objectType() === $type;
+    }
+
+    /**
+     * Determine the type by given types.
+     *
+     * @param array $types
+     *
+     * @return string|null
+     */
+    protected function findType(array $types): ?string
+    {
+        $this->keys()
+            ->intersect($types)
+            ->pop();
+    }
+
+    /**
      * Magic method to get properties dynamically.
      *
      * @param $name

@@ -2,10 +2,13 @@
 
 namespace Telegram\Bot\Traits;
 
+use InvalidArgumentException;
 use Telegram\Bot\Exceptions\CouldNotUploadInputFile;
 use Telegram\Bot\Exceptions\TelegramSDKException;
 use Telegram\Bot\FileUpload\InputFile;
 use Telegram\Bot\HttpClients\HttpClientInterface;
+use Telegram\Bot\Objects\BaseObject;
+use Telegram\Bot\Objects\File;
 use Telegram\Bot\TelegramClient;
 use Telegram\Bot\TelegramRequest;
 use Telegram\Bot\TelegramResponse;
@@ -74,6 +77,45 @@ trait Http
     public function getLastResponse()
     {
         return $this->lastResponse;
+    }
+
+    /**
+     * Download a file from Telegram server by file ID.
+     *
+     * @param File|BaseObject|string $file     Telegram File Instance / File Response Object or File ID.
+     * @param string                 $filename Absolute path to dir or filename to save as.
+     *
+     * @throws TelegramSDKException
+     *
+     * @return string
+     */
+    public function downloadFile($file, string $filename): string
+    {
+        $originalFilename = null;
+        if (! $file instanceof File) {
+            if ($file instanceof BaseObject) {
+                $originalFilename = $file->get('file_name');
+
+                // Try to get file_id from the object or default to the original param.
+                $file = $file->get('file_id');
+            }
+
+            if (! is_string($file)) {
+                throw new InvalidArgumentException(
+                    'Invalid $file param provided. Please provide one of file_id, File or Response object containing file_id'
+                );
+            }
+
+            $file = $this->getFile(['file_id' => $file]);
+        }
+
+        // No filename provided.
+        if (pathinfo($filename, PATHINFO_EXTENSION) === '') {
+            // Attempt to use the original file name if there is one or fallback to the file_path filename.
+            $filename .= DIRECTORY_SEPARATOR . ($originalFilename ?: basename($file->file_path));
+        }
+
+        return $this->getClient()->download($file->file_path, $filename);
     }
 
     /**

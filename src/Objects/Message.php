@@ -95,8 +95,12 @@ class Message extends BaseObject
             'pinned_message'     => self::class,
             'invoice'            => Invoice::class,
             'successful_payment' => SuccessfulPayment::class,
-            'passport'           => PassportData::class,
+            'passport_data'      => PassportData::class,
             'sender_chat'        => Chat::class,
+            'proximity_alert_triggered'       => ProximityAlertTriggered::class,
+            'voice_chat_started'              => VoiceChatStarted::class,
+            'voice_chat_ended'                => VoiceChatEnded::class,
+            'voice_chat_participants_invited' => VoiceChatParticipantsInvited::class,
         ];
     }
 
@@ -121,6 +125,17 @@ class Message extends BaseObject
      *
      * @return string|null
      */
+    public function objectType(): ?string
+    {
+        return $this->detectType();
+    }
+
+    /**
+     * Detect type based on properties.
+     * @deprecated Will be removed in v4.0, please use {@see \Telegram\Bot\Objects\Message::objectType} instead.
+     *
+     * @return string|null
+     */
     public function detectType()
     {
         $types = [
@@ -128,7 +143,6 @@ class Message extends BaseObject
             'audio',
             'animation',
             'dice',
-            'invoice',
             'document',
             'game',
             'photo',
@@ -152,11 +166,16 @@ class Message extends BaseObject
             'migrate_to_chat_id',
             'migrate_from_chat_id',
             'pinned_message',
+            'invoice',
+            'successful_payment',
+            'passport_data',
+            'proximity_alert_triggered',
+            'voice_chat_started',
+            'voice_chat_ended',
+            'voice_chat_participants_invited',
         ];
 
-        return $this->keys()
-            ->intersect($types)
-            ->pop();
+        return $this->findType($types);
     }
 
     /**

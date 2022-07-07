@@ -5,6 +5,7 @@ namespace Telegram\Bot\Objects;
 /**
  * Class Document.
  *
+ * @link https://core.telegram.org/bots/api#document
  *
  * @property string         $fileId           Unique file identifier.
  * @property string         $fileUniqueId     Unique identifier for this file, which is supposed to be the same over time and for different bots. Can't be used to download or reuse the file.

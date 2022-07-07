@@ -5,6 +5,8 @@ namespace Telegram\Bot\Objects;
 /**
  * Class ChatPermissions.
  *
+ * @link https://core.telegram.org/bots/api#chatpermissions
+ *
  * @property bool|null $canSendMessages       (Optional). True, if the user is allowed to send text messages, contacts, locations and venues
  * @property bool|null $canSendMediaMessages  (Optional). True, if the user is allowed to send audios, documents, photos, videos, video notes and voice notes, implies can_send_messages
  * @property bool|null $canSendPolls          (Optional). True, if the user is allowed to send polls, implies can_send_messages
@@ -21,8 +23,6 @@ class ChatPermissions extends BaseObject
      */
     public function relations()
     {
-        return [
-            'user' => User::class,
-        ];
+        return [];
     }
 }

@@ -3,9 +3,7 @@
 namespace Telegram\Bot\Methods;
 
 use Telegram\Bot\Exceptions\TelegramSDKException;
-use Telegram\Bot\FileUpload\InputFile;
 use Telegram\Bot\Objects\File;
-use Telegram\Bot\Objects\MaskPosition;
 use Telegram\Bot\Objects\Message as MessageObject;
 use Telegram\Bot\Objects\StickerSet;
 use Telegram\Bot\Traits\Http;
@@ -21,25 +19,19 @@ trait Stickers
      *
      * <code>
      * $params = [
-     *   'chat_id'              => '',
-     *   'sticker'              => InputFile::create($resourceOrFile, $filename),
-     *   'disable_notification' => '',
-     *   'reply_to_message_id'  => '',
-     *   'reply_markup'         => '',
-     * ];
+     *       'chat_id'                      => '',                      // int|string       - Required. Unique identifier for the target chat or username of the target channel (in the format "@channelusername")
+     *       'sticker'                      => InputFile::file($file),  // InputFile|string - Required. Sticker to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a .webp file from the Internet, or upload a new one using multipart/form-data.
+     *       'disable_notification'         => '',                      // bool             - (Optional). Sends the message silently. iOS users will not receive a notification, Android users will receive a notification with no sound.
+     *       'protect_content'              => '',                      // bool             - (Optional). Protects the contents of the sent message from forwarding and saving
+     *       'reply_to_message_id'          => '',                      // int              - (Optional). If the message is a reply, ID of the original message
+     *       'allow_sending_without_reply   => '',                      // bool             - (Optional). Pass True, if the message should be sent even if the specified replied-to message is not found
+     *       'reply_markup'                 => '',                      // string           - (Optional). Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.
+     * ]
      * </code>
      *
      * @link https://core.telegram.org/bots/api#sendsticker
      *
-     * @param array          $params               [
-     *
-     * @var int|string       $chat_id              Required. Unique identifier for the target chat or username of the target channel (in the format @channelusername)
-     * @var InputFile|string $sticker              Required. Sticker to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a .webp file from the Internet, or upload a new one using multipart/form-data.
-     * @var bool             $disable_notification Optional. Sends the message silently. iOS users will not receive a notification, Android users will receive a notification with no sound.
-     * @var int              $reply_to_message_id  Optional. If the message is a reply, ID of the original message
-     * @var string           $reply_markup         Optional. Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.
-     *
-     * ]
+     * @param array $params
      *
      * @throws TelegramSDKException
      *
@@ -57,17 +49,13 @@ trait Stickers
      *
      * <code>
      * $params = [
-     *   'name'              => '',
-     * ];
+     *       'name'  => '',  // string - Required. Name of the sticker set
+     * ]
      * </code>
      *
      * @link https://core.telegram.org/bots/api#getstickerset
      *
-     * @param array $params [
-     *
-     * @var string  $name   Required. Name of the sticker set
-     *
-     * ]
+     * @param array $params
      *
      * @throws TelegramSDKException
      *
@@ -86,19 +74,14 @@ trait Stickers
      *
      * <code>
      * $params = [
-     *   'user_id'              => '',
-     *   'png_sticker'          => InputFile::create($resourceOrFile, $filename),
-     * ];
+     *       'user_id'      => '',                      // int       - Required. Unique identifier for the target chat or username of the target channel (in the format "@channelusername")
+     *       'png_sticker'  => InputFile::file($file),  // InputFile - Required. Png image with the sticker, must be up to 512 kilobytes in size, dimensions must not exceed 512px, and either width or height must be exactly 512px.
+     * ]
      * </code>
      *
      * @link https://core.telegram.org/bots/api#uploadstickerfile
      *
-     * @param array   $params      [
-     *
-     * @var int       $user_id     Required. Unique identifier for the target chat or username of the target channel (in the format @channelusername)
-     * @var InputFile $png_sticker Required. Png image with the sticker, must be up to 512 kilobytes in size, dimensions must not exceed 512px, and either width or height must be exactly 512px.
-     *
-     * ]
+     * @param array $params
      *
      * @throws TelegramSDKException
      *
@@ -116,31 +99,20 @@ trait Stickers
      *
      * <code>
      * $params = [
-     *   'user_id'           => '',
-     *   'name'              => '',
-     *   'title'             => '',
-     *   'png_sticker'       => '',
-     *   'tgs_sticker'       => '',
-     *   'emojis'            => '',
-     *   'contains_masks'    => '',
-     *   'mask_position'     => '',
-     * ];
+     *       'user_id'         => '',                           // int              - Required. User identifier of created sticker set owner
+     *       'name'            => '',                           // string           - Required. Short name of sticker set, to be used in t.me/addstickers/ URLs (e.g., animals). Can contain only english letters, digits and underscores. Must begin with a letter, can't contain consecutive underscores and must end in “_by_<bot username>”. <bot_username> is case insensitive. 1-64 characters.
+     *       'title'           => '',                           // string           - Required. Sticker set title, 1-64 characters
+     *       'png_sticker'     => InputFile::file($file),       // InputFile|string - (Optional). Png image with the sticker, must be up to 512 kilobytes in size, dimensions must not exceed 512px, and either width or height must be exactly 512px. Pass a file_id as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data.
+     *       'tgs_sticker'     => InputFile::file($file),       // InputFile        - (Optional). TGS animation with the sticker, uploaded using multipart/form-data. See https://core.telegram.org/animated_stickers#technical-requirements for technical requirements
+     *       'emojis'          => '',                           // string           - Required. One or more emoji corresponding to the sticker
+     *       'contains_masks'  => '',                           // bool             - (Optional). Pass True, if a set of mask stickers should be created
+     *       'mask_position'   => MaskPosition::make($fields),  // MaskPosition     - (Optional). A JSON-serialized object for position where the mask should be placed on faces
+     * ]
      * </code>
      *
      * @link https://core.telegram.org/bots/api#createnewstickerset
      *
-     * @param array          $params         [
-     *
-     * @var int              $user_id        Required. User identifier of created sticker set owner
-     * @var string           $name           Required. Short name of sticker set, to be used in t.me/addstickers/ URLs (e.g., animals). Can contain only english letters, digits and underscores. Must begin with a letter, can't contain consecutive underscores and must end in “_by_<bot username>”. <bot_username> is case insensitive. 1-64 characters.
-     * @var string           $title          Required. Sticker set title, 1-64 characters
-     * @var InputFile|string $png_sticker    (Optional). Png image with the sticker, must be up to 512 kilobytes in size, dimensions must not exceed 512px, and either width or height must be exactly 512px. Pass a file_id as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data.
-     * @var InputFile        $tgs_sticker    (Optional). TGS animation with the sticker, uploaded using multipart/form-data. See https://core.telegram.org/animated_stickers#technical-requirements for technical requirements
-     * @var string           $emojis         Required. One or more emoji corresponding to the sticker
-     * @var bool             $contains_masks (Optional). Pass True, if a set of mask stickers should be created
-     * @var MaskPosition     $mask_position  (Optional). A JSON-serialized object for position where the mask should be placed on faces
-     *
-     * ]
+     * @param array $params
      *
      * @throws TelegramSDKException
      *
@@ -148,9 +120,7 @@ trait Stickers
      */
     public function createNewStickerSet(array $params): bool
     {
-        $response = $this->uploadFile('createNewStickerSet', $params, 'png_sticker');
-
-        return $response->getResult();
+        return $this->uploadFile('createNewStickerSet', $params, 'png_sticker')->getResult();
     }
 
     /**
@@ -158,27 +128,18 @@ trait Stickers
      *
      * <code>
      * $params = [
-     *   'user_id'           => '',
-     *   'name'              => '',
-     *   'png_sticker'       => '',
-     *   'tgs_sticker'       => '',
-     *   'emojis'            => '',
-     *   'mask_position'     => '',
-     * ];
+     *       'user_id'        => '',                           // int              - Required. User identifier of sticker set owner
+     *       'name'           => '',                           // string           - Required. Sticker set name
+     *       'png_sticker'    => InputFile::file($file),       // InputFile|string - Required. Png image with the sticker, must be up to 512 kilobytes in size, dimensions must not exceed 512px, and either width or height must be exactly 512px. Pass a file_id as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data.
+     *       'tgs_sticker'    => InputFile::file($file),       // InputFile        - (Optional). TGS animation with the sticker, uploaded using multipart/form-data. See https://core.telegram.org/animated_stickers#technical-requirements for technical requirements
+     *       'emojis'         => '',                           // string           - Required. One or more emoji corresponding to the sticker
+     *       'mask_position'  => MaskPosition::make($fields),  // MaskPosition     - (Optional). A JSON-serialized object for position where the mask should be placed on faces
+     * ]
      * </code>
      *
      * @link https://core.telegram.org/bots/api#addstickertoset
      *
-     * @param array          $params        [
-     *
-     * @var int              $user_id       Required. User identifier of sticker set owner
-     * @var string           $name          Required. Sticker set name
-     * @var InputFile|string $png_sticker   Required. Png image with the sticker, must be up to 512 kilobytes in size, dimensions must not exceed 512px, and either width or height must be exactly 512px. Pass a file_id as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data.
-     * @var InputFile        $tgs_sticker   (Optional). TGS animation with the sticker, uploaded using multipart/form-data. See https://core.telegram.org/animated_stickers#technical-requirements for technical requirements
-     * @var string           $emojis        Required. One or more emoji corresponding to the sticker
-     * @var MaskPosition     $mask_position (Optional). A JSON-serialized object for position where the mask should be placed on faces
-     *
-     * ]
+     * @param array $params
      *
      * @throws TelegramSDKException
      *
@@ -186,9 +147,7 @@ trait Stickers
      */
     public function addStickerToSet(array $params): bool
     {
-        $response = $this->uploadFile('addStickerToSet', $params, 'png_sticker');
-
-        return $response->getResult();
+        return $this->uploadFile('addStickerToSet', $params, 'png_sticker')->getResult();
     }
 
     /**
@@ -196,19 +155,14 @@ trait Stickers
      *
      * <code>
      * $params = [
-     *   'sticker'              => '',
-     *   'position'             => '',
-     * ];
+     *       'sticker'   => '',  // string - Required. File identifier of the sticker
+     *       'position'  => '',  // string - Required. New sticker position in the set, zero-based.
+     * ]
      * </code>
      *
      * @link https://core.telegram.org/bots/api#setstickerpositioninset
      *
-     * @param array $params   [
-     *
-     * @var string  $sticker  Required. File identifier of the sticker
-     * @var string  $position Required. New sticker position in the set, zero-based.
-     *
-     * ]
+     * @param array $params
      *
      * @throws TelegramSDKException
      *
@@ -216,9 +170,7 @@ trait Stickers
      */
     public function setStickerPositionInSet(array $params): bool
     {
-        $response = $this->post('setStickerPositionInSet', $params);
-
-        return $response->getResult();
+        return $this->post('setStickerPositionInSet', $params)->getResult();
     }
 
     /**
@@ -226,17 +178,13 @@ trait Stickers
      *
      * <code>
      * $params = [
-     *   'sticker'              => '',
-     * ];
+     *       'sticker'  => '',  // string - Required. File identifier of the sticker
+     * ]
      * </code>
      *
      * @link https://core.telegram.org/bots/api#deletestickerfromset
      *
-     * @param array $params   [
-     *
-     * @var string  $sticker  Required. File identifier of the sticker
-     *
-     * ]
+     * @param array $params
      *
      * @throws TelegramSDKException
      *
@@ -244,9 +192,7 @@ trait Stickers
      */
     public function deleteStickerFromSet(array $params): bool
     {
-        $response = $this->post('deleteStickerFromSet', $params);
-
-        return $response->getResult();
+        return $this->post('deleteStickerFromSet', $params)->getResult();
     }
 
     /**
@@ -254,21 +200,15 @@ trait Stickers
      *
      * <code>
      * $params = [
-     *   'name'          => '',
-     *   'user_id'       => '',
-     *   'thumb'         => '',
-     * ];
-     * </code>
+     *       'name'     => '',                      // string           - Required. Sticker set name
+     *       'user_id'  => '',                      // int              - Required. User identifier of sticker set owner
+     *       'thumb'    => InputFile::file($file),  // InputFile|string - (Optional). A PNG image with the thumbnail, must be up to 128 kilobytes in size and have width and height exactly 100px, or a TGS animation with the thumbnail up to 32 kilobytes in size; see https://core.telegram.org/animated_stickers#technical-requirements for animated sticker technical requirements. Pass a file_id as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. More info on Sending Files ». Animated sticker set thumbnail can't be uploaded via HTTP URL
+     * ]
      *
      * @link https://core.telegram.org/bots/api#setstickersetthumb
+     * </code>
      *
-     * @param array          $params        [
-     *
-     * @var string           $name          Required. Sticker set name
-     * @var int              $user_id       Required. User identifier of sticker set owner
-     * @var InputFile|string $thumb         (Optional). A PNG image with the thumbnail, must be up to 128 kilobytes in size and have width and height exactly 100px, or a TGS animation with the thumbnail up to 32 kilobytes in size; see https://core.telegram.org/animated_stickers#technical-requirements for animated sticker technical requirements. Pass a file_id as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. More info on Sending Files ». Animated sticker set thumbnail can't be uploaded via HTTP URL
-     *
-     * ]
+     * @param array $params
      *
      * @throws TelegramSDKException
      *
@@ -276,9 +216,6 @@ trait Stickers
      */
     public function setStickerSetThumb(array $params): bool
     {
-        $response = $this->uploadFile('setStickerSetThumb', $params, 'thumb');
-
-        return $response->getResult();
+        return $this->uploadFile('setStickerSetThumb', $params, 'thumb')->getResult();
     }
-
 }
