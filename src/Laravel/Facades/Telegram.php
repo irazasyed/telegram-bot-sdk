@@ -7,6 +7,13 @@ use Illuminate\Support\Facades\Facade;
 
 /**
  * Class Telegram.
+ *
+ * @method static bool getBots(string $name):list<\Telegram\Bot\Api>
+ * @method static bool bot(string|null $name):\Telegram\Bot\Api
+ * @method static bool reconnect(string|null $name):\Telegram\Bot\Api
+ * @method static bool disconnect(string|null $name):\Telegram\Bot\BotsManager
+ *
+ * @see \Telegram\Bot\BotsManager
  */
 class Telegram extends Facade
 {
