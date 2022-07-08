@@ -61,6 +61,7 @@ jobs:
           php-version: ${{ matrix.php }}
           extensions: ${{ env.EXTENSIONS }}
           coverage: none #pcov
+          tools: cs2pr
 
       - name: Get composer cache directory
         id: composer-cache
