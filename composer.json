@@ -15,8 +15,8 @@
   "require": {
     "php": ">=7.3",
     "ext-json": "*",
-    "guzzlehttp/guzzle": "^6.3 || ^7.0.1",
-    "guzzlehttp/psr7": "^1.4 || ^2",
+    "guzzlehttp/guzzle": "^6.5.8 || ^7.4.5",
+    "guzzlehttp/psr7": "^1.9 || ^2.2",
     "illuminate/support": "5.5 - 9",
     "league/event": "^2.1"
   },
