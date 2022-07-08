@@ -60,6 +60,7 @@ class Update extends BaseObject
     }
 
     /**
+     * @deprecated Will be removed in SDK v4
      * Get recent message.
      *
      * @return Update

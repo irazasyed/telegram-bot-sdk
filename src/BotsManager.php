@@ -213,6 +213,8 @@ class BotsManager
     }
 
     /**
+     * @deprecated Will be removed in SDK v4
+     * @internal
      * Builds the list of commands for the given commands array.
      *
      * @param array $commands
