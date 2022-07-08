@@ -68,7 +68,8 @@ class CommandBusTest extends TestCase
     public function it_throws_an_exception_if_command_is_not_an_instance_of_command_interface()
     {
         $this->expectException(TelegramSDKException::class);
-        $this->bus->addCommand(new class() {
+        $this->bus->addCommand(
+            new class() {
         }
         );
     }

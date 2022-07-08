@@ -252,7 +252,8 @@ class BotsManager
             // and resolve the full class name.
             if (isset($commandGroups[$command])) {
                 $results = array_merge(
-                    $results, $this->parseCommands($commandGroups[$command])
+                    $results,
+                    $this->parseCommands($commandGroups[$command])
                 );
 
                 continue;

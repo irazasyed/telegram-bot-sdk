@@ -18,7 +18,7 @@ class InputFileTest extends TestCase
     {
         parent::setUp();
         $this->tempPath = sys_get_temp_dir();
-        $this->tempFileName = $this->tempPath.'/TestFile.tmp';
+        $this->tempFileName = $this->tempPath . '/TestFile.tmp';
         $this->tempFileResource = fopen($this->tempFileName, 'w+');
         $this->tempStream = new LazyOpenStream($this->tempFileName, 'r');
     }

@@ -2,8 +2,8 @@
 
 namespace Telegram\Bot\Laravel\Facades;
 
-use Telegram\Bot\BotsManager;
 use Illuminate\Support\Facades\Facade;
+use Telegram\Bot\BotsManager;
 
 /**
  * Class Telegram.

@@ -23,7 +23,8 @@ use Telegram\Bot\Tests\Traits\GuzzleMock;
 
 class TelegramApiTest extends TestCase
 {
-    use GuzzleMock, CommandGenerator;
+    use GuzzleMock;
+    use CommandGenerator;
 
     protected function tearDown(): void
     {
@@ -612,10 +613,8 @@ class TelegramApiTest extends TestCase
     private function streamFor($resource)
     {
         if (class_exists('\GuzzleHttp\Psr7\Utils')) {
-
             return \GuzzleHttp\Psr7\Utils::streamFor($resource);
-        } else if (function_exists('\GuzzleHttp\Psr7\stream_for')) {
-
+        } elseif (function_exists('\GuzzleHttp\Psr7\stream_for')) {
             /** @noinspection PhpUndefinedFunctionInspection */
             return \GuzzleHttp\Psr7\stream_for($resource);
         }

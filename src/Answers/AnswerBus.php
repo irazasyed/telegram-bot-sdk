@@ -59,8 +59,7 @@ abstract class AnswerBus
         foreach ($params as $param) {
             if (version_compare(PHP_VERSION, '8.0.0') >= 0) {
                 $dependencies[] = $container->make($param->getType()->getName());
-            }
-            else{
+            } else {
                 $dependencies[] = $container->make($param->getClass()->name);
             }
         }

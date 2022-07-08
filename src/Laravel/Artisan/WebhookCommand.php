@@ -156,7 +156,7 @@ class WebhookCommand extends Command
         })->toArray();
 
         $this->table([
-            [new TableCell('Bot: '.$bot, ['colspan' => 2])],
+            [new TableCell('Bot: ' . $bot, ['colspan' => 2])],
             ['Key', 'Info'],
         ], $rows);
     }

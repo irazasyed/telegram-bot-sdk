@@ -272,7 +272,8 @@ class CommandBus extends AnswerBus
             throw new TelegramSDKException(
                 sprintf(
                     '[Error] Alias [%s] conflicts with command name of "%s" try with another name or remove this alias from the list.',
-                    $alias, get_class($command)
+                    $alias,
+                    get_class($command)
                 )
             );
         }

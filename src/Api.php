@@ -18,22 +18,25 @@ class Api
         __call as macroCall;
     }
 
-    use Events\EmitsEvents,
-        Traits\Http,
-        Traits\CommandsHandler,
-        Traits\HasContainer;
-    use Methods\Chat,
-        Methods\Commands,
-        Methods\EditMessage,
-        Methods\Game,
-        Methods\Get,
-        Methods\Location,
-        Methods\Message,
-        Methods\Passport,
-        Methods\Payments,
-        Methods\Query,
-        Methods\Stickers,
-        Methods\Update;
+    use Events\EmitsEvents;
+
+    use Traits\Http;
+
+    use Traits\CommandsHandler;
+
+    use Traits\HasContainer;
+    use Methods\Chat;
+    use Methods\Commands;
+    use Methods\EditMessage;
+    use Methods\Game;
+    use Methods\Get;
+    use Methods\Location;
+    use Methods\Message;
+    use Methods\Passport;
+    use Methods\Payments;
+    use Methods\Query;
+    use Methods\Stickers;
+    use Methods\Update;
 
     /** @var string Version number of the Telegram Bot PHP SDK. */
     const VERSION = '3.0.0';

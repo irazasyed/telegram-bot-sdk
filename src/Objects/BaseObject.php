@@ -64,7 +64,7 @@ abstract class BaseObject extends Collection
         }
 
         /** @var BaseObject $class */
-        $class = 'Telegram\Bot\Objects\\'.Str::studly($property);
+        $class = 'Telegram\Bot\Objects\\' . Str::studly($property);
 
         if (class_exists($class)) {
             return $class::make($value);

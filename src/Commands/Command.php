@@ -349,7 +349,7 @@ abstract class Command implements CommandInterface
         $message = $this->getUpdate()
             ->getMessage();
 
-        return !$message->hasCommand() ?
+        return ! $message->hasCommand() ?
             collect() :
             $message
                 ->get('entities', collect())
