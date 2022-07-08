@@ -79,4 +79,7 @@ jobs:
           composer update --${{ matrix.dependency-version }} --prefer-dist --no-interaction --no-suggest --ignore-platform-req=php
 
       - name: Execute tests
-        run: vendor/bin/phpunit
+        run: composer test
+
+      - name: Check .php files for syntax errors
+        run: composer php:syntax -- --checkstyle | cs2pr

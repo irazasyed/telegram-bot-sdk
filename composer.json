@@ -21,6 +21,7 @@
     "league/event": "^2.1"
   },
   "require-dev": {
+    "php-parallel-lint/php-parallel-lint": "^1.3",
     "phpunit/phpunit": "^9.5"
   },
   "autoload": {
@@ -38,6 +39,7 @@
     "illuminate/container": "Hold dependencies to be injected in commands constructors"
   },
   "scripts": {
+    "php:syntax": "parallel-lint . --blame --colors --exclude vendor",
     "test": "phpunit"
   },
   "extra": {
