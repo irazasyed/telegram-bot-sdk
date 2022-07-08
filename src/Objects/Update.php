@@ -92,7 +92,7 @@ class Update extends BaseObject
      */
     public function objectType(): ?string
     {
-        return $this->updateType ??= $this->except('update_id')
+        return $this->updateType ?: $this->except('update_id')
             ->keys()
             ->first();
     }
