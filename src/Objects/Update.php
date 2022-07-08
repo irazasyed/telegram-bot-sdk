@@ -7,7 +7,7 @@ use Telegram\Bot\Objects\Payments\PreCheckoutQuery;
 use Telegram\Bot\Objects\Payments\ShippingQuery;
 use Telegram\Bot\Objects\Updates\ChatJoinRequest;
 use Telegram\Bot\Objects\Updates\ChatMemberUpdated;
-use Telegram\Bot\Objects\Updates\PollAnswer;
+use Telegram\Bot\Objects\PollAnswer;
 
 /**
  * Class Update.
