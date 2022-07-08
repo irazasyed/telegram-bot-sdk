@@ -33,7 +33,8 @@ use Telegram\Bot\Objects\Updates\PollAnswer;
  */
 class Update extends BaseObject
 {
-    protected ?string $updateType = null;
+    /** @var string|null Cached type of thr Update () */
+    protected $updateType = null;
 
     /**
      * {@inheritdoc}
@@ -91,7 +92,7 @@ class Update extends BaseObject
      */
     public function objectType(): ?string
     {
-        return $this->updateType ??= $this->except('update_id')
+        return $this->updateType ?: $this->except('update_id')
             ->keys()
             ->first();
     }
