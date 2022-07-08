@@ -33,7 +33,8 @@ use Telegram\Bot\Objects\Updates\PollAnswer;
  */
 class Update extends BaseObject
 {
-    protected ?string $updateType = null;
+    /** @var string|null Cached type of thr Update () */
+    protected $updateType = null;
 
     /**
      * {@inheritdoc}
