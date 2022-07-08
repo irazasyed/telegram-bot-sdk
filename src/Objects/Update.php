@@ -5,9 +5,6 @@ namespace Telegram\Bot\Objects;
 use Illuminate\Support\Collection;
 use Telegram\Bot\Objects\Payments\PreCheckoutQuery;
 use Telegram\Bot\Objects\Payments\ShippingQuery;
-use Telegram\Bot\Objects\Updates\ChatJoinRequest;
-use Telegram\Bot\Objects\Updates\ChatMemberUpdated;
-use Telegram\Bot\Objects\Updates\PollAnswer;
 
 /**
  * Class Update.
