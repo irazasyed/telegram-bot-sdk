@@ -87,7 +87,10 @@ abstract class BaseObject extends Collection
         /** @var class-string<\Telegram\Bot\Objects\BaseObject>|list<class-string<\Telegram\Bot\Objects\BaseObject>> $relation */
         $relation = $this->relations()[$relationName];
 
-        if (is_string($relation) && class_exists($relation)) {
+        if (is_string($relation)) {
+            if (! class_exists($relation)) {
+                throw new \InvalidArgumentException("Could not load “{$relationName}” relation: class “{$relation}” not found.");
+            }
             return $relation::make($relationRawData);
         }
 
@@ -102,7 +105,7 @@ abstract class BaseObject extends Collection
             return $relatedObjects;
         }
 
-        throw new \InvalidArgumentException("Unknown type of the relationship data for the $relationName relation.");
+        throw new \InvalidArgumentException("Unknown type of the relationship data for the “{$relationName}” relation.");
     }
 
     /**
