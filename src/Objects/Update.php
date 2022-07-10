@@ -187,6 +187,10 @@ class Update extends BaseObject
      */
     public function getChat(): Collection
     {
+        if ($this->has('my_chat_member')) { // message is not available in such case
+            return $this->myChatMember->chat;
+        }
+
         $message = $this->getMessage();
 
         return $message->has('chat') ? $message->get('chat') : collect();
