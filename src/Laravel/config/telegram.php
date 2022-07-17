@@ -14,9 +14,6 @@ return [
     |
     | - name: The *personal* name you would like to refer to your bot as.
     |
-    |       - username: Your Telegram Bot's Username.
-    |                       Example: (string) 'BotFather'.
-    |
     |       - token:    Your Telegram Bot's Access Token.
                         Refer for more details: https://core.telegram.org/bots#botfather
     |                   Example: (string) '123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11'.
@@ -33,7 +30,6 @@ return [
     */
     'bots'                         => [
         'mybot' => [
-            'username'            => 'TelegramBot',
             'token'               => env('TELEGRAM_BOT_TOKEN', 'YOUR-BOT-TOKEN'),
             'certificate_path'    => env('TELEGRAM_CERTIFICATE_PATH', 'YOUR-CERTIFICATE-PATH'),
             'webhook_url'         => env('TELEGRAM_WEBHOOK_URL', 'YOUR-BOT-WEBHOOK-URL'),
@@ -43,7 +39,6 @@ return [
         ],
 
         //        'mySecondBot' => [
-        //            'username'  => 'AnotherTelegram_Bot',
         //            'token' => '123456:abc',
         //        ],
     ],
