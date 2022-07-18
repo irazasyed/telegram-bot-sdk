@@ -9,6 +9,8 @@ use Telegram\Bot\Exceptions\TelegramSDKException;
 
 /**
  * Class BotsManager.
+ *
+ * @mixin \Telegram\Bot\Api
  */
 class BotsManager
 {
