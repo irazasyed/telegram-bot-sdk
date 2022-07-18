@@ -241,14 +241,12 @@ class CommandBus extends AnswerBus
     /**
      * @param $command
      *
-     * @return object
+     * @return CommandInterface
      * @throws TelegramSDKException
      */
-    private function resolveCommand($command)
+    private function resolveCommand($command): CommandInterface
     {
-        $command = $this->makeCommandObj($command);
-
-        if (! ($command instanceof CommandInterface)) {
+        if (! is_a($command, CommandInterface::class, true)) {
             throw new TelegramSDKException(
                 sprintf(
                     'Command class "%s" should be an instance of "Telegram\Bot\Commands\CommandInterface"',
@@ -257,7 +255,19 @@ class CommandBus extends AnswerBus
             );
         }
 
-        return $command;
+        if (is_object($command)) {
+            $commandInstance = $command;
+        } else {
+            $commandInstance = $this->telegram->hasContainer()
+                ? $this->buildDependencyInjectedAnswer($command)
+                : new $command();
+        }
+
+        if ($commandInstance instanceof Command && $this->telegram) {
+            $commandInstance->setTelegram($this->telegram);
+        }
+
+        return $commandInstance;
     }
 
     /**
