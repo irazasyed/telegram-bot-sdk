@@ -106,7 +106,7 @@ abstract class Command implements CommandInterface
     /**
      * Set Command Description.
      *
-     * @param $description
+     * @param string $description
      *
      * @return Command
      */

@@ -64,7 +64,7 @@ class TelegramRequest
     /**
      * Make this request asynchronous (non-blocking).
      *
-     * @param $isAsyncRequest
+     * @param bool $isAsyncRequest
      *
      * @return TelegramRequest
      */

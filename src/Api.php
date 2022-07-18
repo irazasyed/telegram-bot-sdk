@@ -70,7 +70,7 @@ class Api
      * @deprecated This method will be removed in SDK v4.
      * Invoke Bots Manager.
      *
-     * @param $config
+     * @param array $config
      *
      * @return BotsManager
      */
