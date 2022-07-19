@@ -18,7 +18,7 @@ trait CommandGenerator
 
         return collect($range)
             ->map(function (int $instanceNumber) {
-                return new class ($instanceNumber) extends Command {
+                return new class($instanceNumber) extends Command {
                     private $instanceNumber;
 
                     public function __construct(int $instanceNumber)
