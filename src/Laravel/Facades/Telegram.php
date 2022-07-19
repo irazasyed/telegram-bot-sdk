@@ -8,12 +8,12 @@ use Telegram\Bot\BotsManager;
 /**
  * Class Telegram.
  *
- * @method static bool getBots(string $name):list<\Telegram\Bot\Api>
- * @method static bool bot(string|null $name):\Telegram\Bot\Api
- * @method static bool reconnect(string|null $name):\Telegram\Bot\Api
- * @method static bool disconnect(string|null $name):\Telegram\Bot\BotsManager
+ * @method static list<\Telegram\Bot\Api> getBots(string $name)
+ * @method static \Telegram\Bot\Api bot(string|null $name)
+ * @method static \Telegram\Bot\Api reconnect(string|null $name)
+ * @method static \Telegram\Bot\BotsManager disconnect(string|null $name)
  *
- * @see \Telegram\Bot\BotsManager
+ * @mixin \Telegram\Bot\BotsManager
  */
 class Telegram extends Facade
 {

@@ -132,7 +132,7 @@ class TelegramClient
 
     /**
      * @param TelegramRequest $request
-     * @param $method
+     * @param string $method
      *
      * @return array
      */

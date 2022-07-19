@@ -85,6 +85,8 @@ trait EmitsEvents
 
     /**
      * @param $event
+     *
+     * @return void
      */
     private function validateEvent($event)
     {

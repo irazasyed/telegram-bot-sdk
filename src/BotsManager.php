@@ -9,6 +9,8 @@ use Telegram\Bot\Exceptions\TelegramSDKException;
 
 /**
  * Class BotsManager.
+ *
+ * @mixin \Telegram\Bot\Api
  */
 class BotsManager
 {
@@ -18,7 +20,7 @@ class BotsManager
     /** @var Container The container instance. */
     protected $container;
 
-    /** @var Api[] The active bot instances. */
+    /** @var array<string, Api> The active bot instances. */
     protected $bots = [];
 
     /**
@@ -34,7 +36,7 @@ class BotsManager
     /**
      * Set the IoC Container.
      *
-     * @param $container Container instance
+     * @param Container $container Container instance
      *
      * @return BotsManager
      */
@@ -72,7 +74,7 @@ class BotsManager
     /**
      * Get a bot instance.
      *
-     * @param string $name
+     * @param string|null $name
      *
      * @throws TelegramSDKException
      * @return Api
@@ -91,7 +93,7 @@ class BotsManager
     /**
      * Reconnect to the given bot.
      *
-     * @param string $name
+     * @param string|null $name
      *
      * @throws TelegramSDKException
      * @return Api
@@ -107,7 +109,7 @@ class BotsManager
     /**
      * Disconnect from the given bot.
      *
-     * @param string $name
+     * @param string|null $name
      *
      * @return BotsManager
      */
@@ -159,7 +161,7 @@ class BotsManager
     /**
      * Return all of the created bots.
      *
-     * @return Api[]
+     * @return array<string, Api>
      */
     public function getBots(): array
     {
@@ -217,7 +219,7 @@ class BotsManager
      * @internal
      * Builds the list of commands for the given commands array.
      *
-     * @param array $commands
+     * @param list<string|class-string<\Telegram\Bot\Commands\CommandInterface>> $commands A list of command names or FQCNs of CommandInterface instances.
      *
      * @return array An array of commands which includes global and bot specific commands.
      */
@@ -232,16 +234,12 @@ class BotsManager
     /**
      * Parse an array of commands and build a list.
      *
-     * @param array $commands
+     * @param list<string|class-string<\Telegram\Bot\Commands\CommandInterface>> $commands
      *
      * @return array
      */
     protected function parseCommands(array $commands): array
     {
-        if (! is_array($commands)) {
-            return $commands;
-        }
-
         $commandGroups = $this->getConfig('command_groups');
         $sharedCommands = $this->getConfig('shared_commands');
 

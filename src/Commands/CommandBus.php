@@ -20,12 +20,12 @@ class CommandBus extends AnswerBus
     use Singleton;
 
     /**
-     * @var Command[] Holds all commands.
+     * @var array<string, Command> Holds all commands. Keys are command names (without leading slashes).
      */
     protected $commands = [];
 
     /**
-     * @var Command[] Holds all commands' aliases.
+     * @var array<string, Command> Holds all commands' aliases. Keys are command names (without leading slashes).
      */
     protected $commandAliases = [];
 
@@ -42,7 +42,7 @@ class CommandBus extends AnswerBus
     /**
      * Returns the list of commands.
      *
-     * @return array
+     * @return array<string, Command>
      */
     public function getCommands(): array
     {
@@ -52,7 +52,7 @@ class CommandBus extends AnswerBus
     /**
      * Add a list of commands.
      *
-     * @param array $commands
+     * @param list<CommandInterface|class-string<CommandInterface>> $commands
      *
      * @throws TelegramSDKException
      * @return CommandBus
@@ -69,7 +69,7 @@ class CommandBus extends AnswerBus
     /**
      * Add a command to the commands list.
      *
-     * @param CommandInterface|string $command Either an object or full path to the command class.
+     * @param CommandInterface|class-string<CommandInterface> $command Either an object or fully qualified class name (FQCN) of the command class.
      *
      * @throws TelegramSDKException
      *
@@ -104,7 +104,7 @@ class CommandBus extends AnswerBus
     /**
      * Remove a command from the list.
      *
-     * @param $name
+     * @param string $name Command's name without leading slash
      *
      * @return CommandBus
      */
@@ -118,7 +118,7 @@ class CommandBus extends AnswerBus
     /**
      * Removes a list of commands.
      *
-     * @param array $names
+     * @param list<string> $names Command names
      *
      * @return CommandBus
      */
@@ -134,11 +134,11 @@ class CommandBus extends AnswerBus
     /**
      * Parse a Command for a Match.
      *
-     * @param $text
-     * @param $offset
-     * @param $length
+     * @param string $text Command name with a leading slash
+     * @param int $offset
+     * @param int $length
      *
-     * @return string
+     * @return string Telegram command name (without leading slash)
      */
     public function parseCommand($text, $offset, $length): string
     {
@@ -146,6 +146,7 @@ class CommandBus extends AnswerBus
             throw new InvalidArgumentException('Message is empty, Cannot parse for command');
         }
 
+        // remove leading slash
         $command = substr(
             $text,
             $offset + 1,
@@ -164,7 +165,7 @@ class CommandBus extends AnswerBus
     /**
      * Handles Inbound Messages and Executes Appropriate Command.
      *
-     * @param $update
+     * @param Update $update
      *
      * @return Update
      */
@@ -188,7 +189,7 @@ class CommandBus extends AnswerBus
     /**
      * Returns all bot_commands detected in the update.
      *
-     * @param $message
+     * @param \Telegram\Bot\Objects\Message|Collection $message
      *
      * @return Collection<int, MessageEntity>
      */
@@ -203,7 +204,7 @@ class CommandBus extends AnswerBus
     /**
      * Execute a bot command from the update text.
      *
-     * @param array  $entity
+     * @param array<string, mixed> $entity {@see \Telegram\Bot\Objects\MessageEntity} object attributes.
      * @param Update $update
      */
     protected function process($entity, Update $update)
@@ -220,9 +221,9 @@ class CommandBus extends AnswerBus
     /**
      * Execute the command.
      *
-     * @param string $name
+     * @param string $name Telegram command name without leading slash
      * @param Update $update
-     * @param array  $entity
+     * @param array<string, mixed> $entity
      *
      * @return mixed
      */
@@ -239,7 +240,7 @@ class CommandBus extends AnswerBus
     }
 
     /**
-     * @param $command
+     * @param CommandInterface|class-string<CommandInterface> $command
      *
      * @return CommandInterface
      * @throws TelegramSDKException
@@ -272,9 +273,10 @@ class CommandBus extends AnswerBus
     }
 
     /**
-     * @param $command
-     * @param $alias
+     * @param CommandInterface $command
+     * @param string $alias
      *
+     * @return void
      * @throws TelegramSDKException
      */
     private function checkForConflicts($command, $alias)

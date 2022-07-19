@@ -107,6 +107,7 @@ trait CommandsHandler
     }
 
     /**
+     * @deprecated This method will be protected and signature will be changed in SDK v4.
      * Helper to Trigger Commands.
      *
      * @param string $name   Command Name
