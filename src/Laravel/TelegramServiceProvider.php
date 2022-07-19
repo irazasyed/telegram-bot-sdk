@@ -2,6 +2,7 @@
 
 namespace Telegram\Bot\Laravel;
 
+use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Foundation\Application as LaravelApplication;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Lumen\Application as LumenApplication;
@@ -12,7 +13,7 @@ use Telegram\Bot\Laravel\Artisan\WebhookCommand;
 /**
  * Class TelegramServiceProvider.
  */
-class TelegramServiceProvider extends ServiceProvider
+class TelegramServiceProvider extends ServiceProvider implements DeferrableProvider
 {
     /**
      * Register the service provider.

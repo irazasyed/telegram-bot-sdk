@@ -194,7 +194,7 @@ abstract class BaseObject extends Collection
      */
     protected function findType(array $types): ?string
     {
-        $this->keys()
+        return $this->keys()
             ->intersect($types)
             ->pop();
     }
