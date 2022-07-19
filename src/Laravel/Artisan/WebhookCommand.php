@@ -18,9 +18,9 @@ class WebhookCommand extends Command
      * @var string
      */
     protected $signature = 'telegram:webhook {bot? : The bot name defined in the config file}
-                {--all : To perform actions on all your bots.} 
-                {--setup : To declare your webhook on Telegram servers. So they can call you.} 
-                {--remove : To remove your already declared webhook on Telegram servers.} 
+                {--all : To perform actions on all your bots.}
+                {--setup : To declare your webhook on Telegram servers. So they can call you.}
+                {--remove : To remove your already declared webhook on Telegram servers.}
                 {--info : To get the information about your current webhook on Telegram servers.}';
     /**
      * The console command description.
@@ -126,7 +126,7 @@ class WebhookCommand extends Command
 
         if ($this->hasArgument('bot') && ! $this->option('all')) {
             $response = $this->telegram->getWebhookInfo();
-            $this->makeWebhookInfoResponse($response, $this->config['username']);
+            $this->makeWebhookInfoResponse($response, $this->argument('bot'));
 
             return;
         }
@@ -135,7 +135,7 @@ class WebhookCommand extends Command
             $bots = $this->botsManager->getConfig('bots');
             collect($bots)->each(function ($bot, $key) {
                 $response = $this->botsManager->bot($key)->getWebhookInfo();
-                $this->makeWebhookInfoResponse($response, $bot['username']);
+                $this->makeWebhookInfoResponse($response, $key);
             });
         }
     }
