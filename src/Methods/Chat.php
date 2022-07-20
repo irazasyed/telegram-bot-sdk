@@ -6,6 +6,7 @@ use Telegram\Bot\Exceptions\TelegramSDKException;
 use Telegram\Bot\Objects\Chat as ChatObject;
 use Telegram\Bot\Objects\ChatMember;
 use Telegram\Bot\Traits\Http;
+use Telegram\Bot\Objects\ChatInviteLink;
 
 /**
  * Class Chat.
@@ -131,7 +132,7 @@ trait Chat
      * @throws TelegramSDKException
      * @return ChatInviteLink
      */
-    public function createChatInviteLink(array $params): ChatInviteLink
+    public function createChatInviteLink(array $params): array
     {
         return $this->post('createChatInviteLink', $params)->getResult();
     }
