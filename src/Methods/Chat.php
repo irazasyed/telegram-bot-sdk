@@ -132,9 +132,9 @@ trait Chat
      * @throws TelegramSDKException
      * @return ChatInviteLink
      */
-    public function createChatInviteLink(array $params): array
+    public function createChatInviteLink(array $params): ChatInviteLink
     {
-        return $this->post('createChatInviteLink', $params)->getResult();
+        return new ChatInviteLink($this->post('createChatInviteLink', $params)->getDecodedBody());
     }
 
     /**
