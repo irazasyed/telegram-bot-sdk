@@ -147,6 +147,8 @@ class Update extends BaseObject
                 return $this->editedChannelPost;
             case 'inline_query':
                 return $this->inlineQuery;
+            case 'chat_join_request':
+                return $this->chatJoinRequest;
             case 'chosen_inline_result':
                 return $this->chosenInlineResult;
             case 'callback_query':
