@@ -19,6 +19,17 @@ Telegram Bot API - PHP SDK
 >
 > To get started writing your bots using this SDK, Please refer the [documentation][link-docs].
 
+## Supported Versions
+
+Only the latest released version of SDK is supported.
+To facilitate upgrades we almost never make backwards-incompatible changes.
+
+| Version | Supported                           | Documentation         |
+|---------|-------------------------------------|-----------------------|
+| 2.x     | ❌ (security fixes only)             | ✅ [docs][link-docs]   |
+| 3.x     | ✅ (current)                         | ❌                     |
+| 4.x     | ✅ ([in development][link-new-repo]) | ❌                     |
+
 ## Documentation
 
 Documentation for the SDK can be found on the [website][link-docs].
@@ -60,6 +71,7 @@ This project is released under the [BSD 3-Clause][link-license] License.
 
 [link-author]: https://github.com/irazasyed
 [link-repo]: https://github.com/irazasyed/telegram-bot-sdk
+[link-new-repo]: https://github.com/telegram-bot-sdk/telegram-bot-sdk
 [link-issues]: https://github.com/irazasyed/telegram-bot-sdk/issues
 [link-contributors]: https://github.com/irazasyed/telegram-bot-sdk/contributors
 [link-docs]: https://telegram-bot-sdk.readme.io/docs
