@@ -10,8 +10,11 @@ class UpdateEvent extends AbstractEvent
 {
     public const NAME = 'update';
 
-    public Api $telegram;
-    public Update $update;
+    /** @var \Telegram\Bot\Api */
+    public $telegram;
+
+    /** @var \Telegram\Bot\Objects\Update */
+    public $update;
 
     public function __construct(Api $telegram, Update $update)
     {
