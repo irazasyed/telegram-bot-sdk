@@ -9,6 +9,7 @@ use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Telegram\Bot\Api;
 use Telegram\Bot\Commands\CommandBus;
+use Telegram\Bot\Events\UpdateEvent;
 use Telegram\Bot\Events\UpdateWasReceived;
 use Telegram\Bot\Exceptions\CouldNotUploadInputFile;
 use Telegram\Bot\Exceptions\TelegramResponseException;
@@ -44,6 +45,12 @@ class TelegramApiTest extends TestCase
     protected function getApi($client = null, $token = 'TELEGRAM_TOKEN', $async = false)
     {
         return new Api($token, $async, $client);
+    }
+
+    /** Create Request to emulate income Request from Telegram. */
+    private function createIncomeWebhookRequestInstance(array $updateData): Request
+    {
+        return new Request('POST', 'any', [], json_encode($updateData, \JSON_THROW_ON_ERROR));
     }
 
     /**
@@ -543,7 +550,27 @@ class TelegramApiTest extends TestCase
         //We can't pass test data to the webhook because it relies on the read only stream php://input
         $this->assertEmpty($update);
         $this->assertInstanceOf(Update::class, $update);
-        $emitter->emit(Argument::type(UpdateWasReceived::class))->shouldHaveBeenCalled();
+        $emitter->emit(Argument::type(UpdateWasReceived::class))->shouldHaveBeenCalledOnce();
+    }
+
+    /** @test */
+    public function it_emits_3_events_of_update_event_type()
+    {
+        $emitter = $this->prophesize(Emitter::class);
+
+        $api = $this->getApi();
+        $api->setEventEmitter($emitter->reveal());
+
+        $incomeWebhookRequest = $this->createIncomeWebhookRequestInstance([
+            'message' => [ // to help SDK to detect Update of "message" type and send 2nd event (with name "message")
+                'text' => 'any', // to help SDK to detect message type and send 3rd event (with name "message.text")
+            ],
+        ]);
+
+        $update = $api->getWebhookUpdate(true, $incomeWebhookRequest);
+
+        $this->assertInstanceOf(Update::class, $update);
+        $emitter->emit(Argument::type(UpdateEvent::class))->shouldHaveBeenCalledTimes(3);
     }
 
     /** @test */
