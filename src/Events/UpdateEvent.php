@@ -6,7 +6,7 @@ use League\Event\AbstractEvent;
 use Telegram\Bot\Api;
 use Telegram\Bot\Objects\Update;
 
-class UpdateEvent extends AbstractEvent
+final class UpdateEvent extends AbstractEvent
 {
     public const NAME = 'update';
 
