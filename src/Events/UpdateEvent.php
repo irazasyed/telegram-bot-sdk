@@ -16,33 +16,33 @@ class UpdateEvent extends AbstractEvent
     /** @var \Telegram\Bot\Objects\Update */
     public $update;
 
+    /**
+     * @deprecated Will be removed in SDK v4
+     * @var string|null
+     */
+    private $eventName = null;
+
     public function __construct(Api $telegram, Update $update)
     {
         $this->telegram = $telegram;
         $this->update = $update;
     }
 
+    /** @inheritDoc */
+    public function getName()
+    {
+        return $this->eventName ?: get_class($this);
+    }
+
     /**
      * @internal
      * @deprecated Will be removed in SDK v4
      */
-    public function cloneWithCustomName(string $eventName): self
+    public function cloneWithCustomName(string $eventName): UpdateEvent
     {
-        return new class ($this->telegram, $this->update, $eventName) extends UpdateEvent {
-            /** @var string */
-            private $eventName;
+        $event = new self($this->telegram, $this->update);
+        $event->eventName = $eventName;
 
-            public function __construct(Api $telegram, Update $update, string $eventName)
-            {
-                $this->eventName = $eventName;
-                parent::__construct($telegram, $update);
-            }
-
-            /** @inheritDoc */
-            public function getName(): string
-            {
-                return $this->eventName;
-            }
-        };
+        return $event;
     }
 }
