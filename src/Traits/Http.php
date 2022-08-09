@@ -3,6 +3,8 @@
 namespace Telegram\Bot\Traits;
 
 use InvalidArgumentException;
+use Telegram\Bot\Events\ApiResponseReceived;
+use Telegram\Bot\Events\ApiRequestSending;
 use Telegram\Bot\Exceptions\CouldNotUploadInputFile;
 use Telegram\Bot\Exceptions\TelegramSDKException;
 use Telegram\Bot\FileUpload\InputFile;
@@ -344,7 +346,17 @@ trait Http
     {
         $telegramRequest = $this->resolveTelegramRequest($method, $endpoint, $params);
 
-        return $this->lastResponse = $this->getClient()->sendRequest($telegramRequest);
+        if (method_exists($this, 'emitEvent')) {
+            $this->emitEvent(new ApiRequestSending($telegramRequest));
+        }
+
+        $response = $this->getClient()->sendRequest($telegramRequest);
+
+        if (method_exists($this, 'emitEvent')) {
+            $this->emitEvent(new ApiResponseReceived($response));
+        }
+
+        return $this->lastResponse = $response;
     }
 
     /**
