@@ -162,7 +162,7 @@ trait Chat
      */
     public function editChatInviteLink(array $params): ChatInviteLink
     {
-        return $this->post('editChatInviteLink', $params)->getResult();
+        return new ChatInviteLink($this->post('editChatInviteLink', $params)->getDecodedBody());
     }
 
     /**
@@ -186,7 +186,7 @@ trait Chat
      */
     public function revokeChatInviteLink(array $params): ChatInviteLink
     {
-        return $this->post('revokeChatInviteLink', $params)->getResult();
+        return new ChatInviteLink($this->post('revokeChatInviteLink', $params)->getDecodedBody());
     }
 
     /**
