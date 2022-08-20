@@ -234,15 +234,14 @@ trait Update
 
         $eventEmitter = $this->eventEmitter;
 
-        $event = new UpdateEvent($this, $update);
-
-        $eventEmitter->emit(UpdateEvent::NAME, $event);
+        $eventEmitter->emit(new UpdateEvent($this, $update));
         $updateType = $update->objectType();
         if (is_string($updateType)) {
-            $eventEmitter->emit($update->objectType(), $event);
+            $eventEmitter->emit(new UpdateEvent($this, $update, $updateType));
 
-            if (null !== $update->getMessage()->objectType()) {
-                $eventEmitter->emit($update->objectType() . '.' . $update->getMessage()->objectType(), $event);
+            $messageType = $update->getMessage()->objectType();
+            if (null !== $messageType) {
+                $eventEmitter->emit(new UpdateEvent($this, $update, "$updateType.$messageType"));
             }
         }
     }
