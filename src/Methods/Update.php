@@ -236,13 +236,13 @@ trait Update
 
         $event = new UpdateEvent($this, $update);
 
-        $eventEmitter->emit($event->cloneWithCustomName(UpdateEvent::NAME));
+        $eventEmitter->emit(UpdateEvent::NAME, $event);
         $updateType = $update->objectType();
         if (is_string($updateType)) {
-            $eventEmitter->emit($event->cloneWithCustomName($updateType));
+            $eventEmitter->emit($update->objectType(), $event);
 
             if (null !== $update->getMessage()->objectType()) {
-                $eventEmitter->emit($event->cloneWithCustomName($updateType . '.' . $update->getMessage()->objectType()));
+                $eventEmitter->emit($update->objectType() . '.' . $update->getMessage()->objectType(), $event);
             }
         }
     }

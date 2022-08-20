@@ -4,7 +4,9 @@ namespace Telegram\Bot\Tests\Integration;
 
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Stream;
+use League\Event\AbstractListener;
 use League\Event\Emitter;
+use League\Event\EventInterface;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Telegram\Bot\Api;
@@ -556,10 +558,12 @@ class TelegramApiTest extends TestCase
     /** @test */
     public function it_emits_3_events_of_update_event_type()
     {
-        $emitter = $this->prophesize(Emitter::class);
+        $emitter = new Emitter();
+        $listener = $this->createSpyListener();
+        $emitter->addListener('*', $listener);
 
         $api = $this->getApi();
-        $api->setEventEmitter($emitter->reveal());
+        $api->setEventEmitter($emitter);
 
         $incomeWebhookRequest = $this->createIncomeWebhookRequestInstance([
             'message' => [ // to help SDK to detect Update of "message" type and send 2nd event (with name "message")
@@ -567,10 +571,15 @@ class TelegramApiTest extends TestCase
             ],
         ]);
 
-        $update = $api->getWebhookUpdate(true, $incomeWebhookRequest);
+        $api->getWebhookUpdate(true, $incomeWebhookRequest);
+        $allEvents = $listener->events;
 
-        $this->assertInstanceOf(Update::class, $update);
-        $emitter->emit(Argument::type(UpdateEvent::class))->shouldHaveBeenCalledTimes(3);
+        $this->assertArrayHasKey(UpdateEvent::NAME, $allEvents);
+        $this->assertArrayHasKey('message', $allEvents);
+        $this->assertArrayHasKey('message.text', $allEvents);
+        $this->assertCount(1, $allEvents[UpdateEvent::NAME]);
+        $this->assertCount(1, $allEvents['message']);
+        $this->assertCount(1, $allEvents['message.text']);
     }
 
     /** @test */
@@ -647,5 +656,18 @@ class TelegramApiTest extends TestCase
         }
 
         throw new \RuntimeException('Not found "streamFor" implementation');
+    }
+
+    private function createSpyListener(): \League\Event\ListenerInterface
+    {
+        return new class extends AbstractListener {
+            /** @var array<string, list<mixed>> */
+            public $events = [];
+
+            public function handle(EventInterface $event)
+            {
+                $this->events[$event->getName()][] = func_get_args();
+            }
+        };
     }
 }

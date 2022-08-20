@@ -33,16 +33,4 @@ final class UpdateEvent extends AbstractEvent
     {
         return $this->eventName ?: get_class($this);
     }
-
-    /**
-     * @internal
-     * @deprecated Will be removed in SDK v4
-     */
-    public function cloneWithCustomName(string $eventName): UpdateEvent
-    {
-        $event = new self($this->telegram, $this->update);
-        $event->eventName = $eventName;
-
-        return $event;
-    }
 }
