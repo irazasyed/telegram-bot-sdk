@@ -12,10 +12,6 @@ use Telegram\Bot\Traits\Http;
  */
 trait Query
 {
-    // TODO
-    // Check these methods. They should possibly return the result of the query,
-    // not just a hard coded bool value.
-
     /**
      * Send answers to callback queries sent from inline keyboards.
      *
@@ -31,7 +27,7 @@ trait Query
      * ]
      * </code>
      *
-     * @link https://core.telegram.org/bots/api#answerCallbackQuery
+     * @link https://core.telegram.org/bots/api#answercallbackquery
      *
      * @param array $params
      *
@@ -63,7 +59,7 @@ trait Query
      * ]
      * </code>
      *
-     * @link https://core.telegram.org/bots/api#answerCallbackQuery
+     * @link https://core.telegram.org/bots/api#answerinlinequery
      *
      * @param array $params
      *

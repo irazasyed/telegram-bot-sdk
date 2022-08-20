@@ -2,7 +2,7 @@
 
 namespace Telegram\Bot\Events;
 
-use League\Event\Emitter;
+use League\Event\EmitterInterface;
 use League\Event\EventInterface;
 
 /**
@@ -10,7 +10,7 @@ use League\Event\EventInterface;
  */
 trait EmitsEvents
 {
-    /** @var Emitter */
+    /** @var EmitterInterface */
     protected $eventEmitter;
 
     /**
@@ -62,9 +62,9 @@ trait EmitsEvents
     /**
      * Returns an event emitter.
      *
-     * @return Emitter
+     * @return EmitterInterface
      */
-    public function getEventEmitter(): Emitter
+    public function getEventEmitter(): EmitterInterface
     {
         return $this->eventEmitter;
     }
@@ -72,7 +72,7 @@ trait EmitsEvents
     /**
      * Set an event emitter.
      *
-     * @param Emitter $eventEmitter
+     * @param EmitterInterface $eventEmitter
      *
      * @return $this
      */
