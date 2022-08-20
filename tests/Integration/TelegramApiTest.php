@@ -4,11 +4,14 @@ namespace Telegram\Bot\Tests\Integration;
 
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Stream;
+use League\Event\AbstractListener;
 use League\Event\Emitter;
+use League\Event\EventInterface;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Telegram\Bot\Api;
 use Telegram\Bot\Commands\CommandBus;
+use Telegram\Bot\Events\UpdateEvent;
 use Telegram\Bot\Events\UpdateWasReceived;
 use Telegram\Bot\Exceptions\CouldNotUploadInputFile;
 use Telegram\Bot\Exceptions\TelegramResponseException;
@@ -44,6 +47,12 @@ class TelegramApiTest extends TestCase
     protected function getApi($client = null, $token = 'TELEGRAM_TOKEN', $async = false)
     {
         return new Api($token, $async, $client);
+    }
+
+    /** Create Request to emulate income Request from Telegram. */
+    private function createIncomeWebhookRequestInstance(array $updateData): Request
+    {
+        return new Request('POST', 'any', [], json_encode($updateData, \JSON_THROW_ON_ERROR));
     }
 
     /**
@@ -543,7 +552,34 @@ class TelegramApiTest extends TestCase
         //We can't pass test data to the webhook because it relies on the read only stream php://input
         $this->assertEmpty($update);
         $this->assertInstanceOf(Update::class, $update);
-        $emitter->emit(Argument::type(UpdateWasReceived::class))->shouldHaveBeenCalled();
+        $emitter->emit(Argument::type(UpdateWasReceived::class))->shouldHaveBeenCalledOnce();
+    }
+
+    /** @test */
+    public function it_emits_3_events_of_update_event_type()
+    {
+        $emitter = new Emitter();
+        $listener = $this->createSpyListener();
+        $emitter->addListener('*', $listener);
+
+        $api = $this->getApi();
+        $api->setEventEmitter($emitter);
+
+        $incomeWebhookRequest = $this->createIncomeWebhookRequestInstance([
+            'message' => [ // to help SDK to detect Update of "message" type and send 2nd event (with name "message")
+                'text' => 'any', // to help SDK to detect message type and send 3rd event (with name "message.text")
+            ],
+        ]);
+
+        $api->getWebhookUpdate(true, $incomeWebhookRequest);
+        $allEvents = $listener->events;
+
+        $this->assertArrayHasKey(UpdateEvent::NAME, $allEvents);
+        $this->assertArrayHasKey('message', $allEvents);
+        $this->assertArrayHasKey('message.text', $allEvents);
+        $this->assertCount(1, $allEvents[UpdateEvent::NAME]);
+        $this->assertCount(1, $allEvents['message']);
+        $this->assertCount(1, $allEvents['message.text']);
     }
 
     /** @test */
@@ -620,5 +656,18 @@ class TelegramApiTest extends TestCase
         }
 
         throw new \RuntimeException('Not found "streamFor" implementation');
+    }
+
+    private function createSpyListener(): \League\Event\ListenerInterface
+    {
+        return new class extends AbstractListener {
+            /** @var array<string, list<\League\Event\EventInterface>> */
+            public $events = [];
+
+            public function handle(EventInterface $event)
+            {
+                $this->events[$event->getName()][] = $event;
+            }
+        };
     }
 }

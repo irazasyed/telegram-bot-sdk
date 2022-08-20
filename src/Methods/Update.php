@@ -2,7 +2,9 @@
 
 namespace Telegram\Bot\Methods;
 
+use League\Event\EmitterInterface;
 use Psr\Http\Message\RequestInterface;
+use Telegram\Bot\Events\UpdateEvent;
 use Telegram\Bot\Events\UpdateWasReceived;
 use Telegram\Bot\Exceptions\TelegramSDKException;
 use Telegram\Bot\FileUpload\InputFile;
@@ -56,6 +58,7 @@ trait Update
                 if ($shouldEmitEvents) {
                     $this->emitEvent(new UpdateWasReceived($update, $this));
                 }
+                $this->dispatchUpdateEvent($update);
 
                 return $update;
             })
@@ -165,6 +168,7 @@ trait Update
         if ($shouldEmitEvent) {
             $this->emitEvent(new UpdateWasReceived($update, $this));
         }
+        $this->dispatchUpdateEvent($update);
 
         return $update;
     }
@@ -219,5 +223,26 @@ trait Update
         }
 
         return json_decode($rawBody, true);
+    }
+
+    /** Dispatch Update Event. */
+    private function dispatchUpdateEvent(UpdateObject $update): void
+    {
+        if (! property_exists($this, 'eventEmitter') || ! $this->eventEmitter instanceof EmitterInterface) {
+            return;
+        }
+
+        $eventEmitter = $this->eventEmitter;
+
+        $eventEmitter->emit(new UpdateEvent($this, $update));
+        $updateType = $update->objectType();
+        if (is_string($updateType)) {
+            $eventEmitter->emit(new UpdateEvent($this, $update, $updateType));
+
+            $messageType = $update->getMessage()->objectType();
+            if (null !== $messageType) {
+                $eventEmitter->emit(new UpdateEvent($this, $update, "$updateType.$messageType"));
+            }
+        }
     }
 }
