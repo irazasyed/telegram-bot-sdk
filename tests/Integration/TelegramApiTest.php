@@ -661,12 +661,12 @@ class TelegramApiTest extends TestCase
     private function createSpyListener(): \League\Event\ListenerInterface
     {
         return new class extends AbstractListener {
-            /** @var array<string, list<mixed>> */
+            /** @var array<string, list<\League\Event\EventInterface>> */
             public $events = [];
 
             public function handle(EventInterface $event)
             {
-                $this->events[$event->getName()][] = func_get_args();
+                $this->events[$event->getName()][] = $event;
             }
         };
     }
