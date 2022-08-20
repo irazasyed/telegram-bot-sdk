@@ -660,7 +660,7 @@ class TelegramApiTest extends TestCase
 
     private function createSpyListener(): \League\Event\ListenerInterface
     {
-        return new class extends AbstractListener {
+        return new class() extends AbstractListener {
             /** @var array<string, list<\League\Event\EventInterface>> */
             public $events = [];
 
