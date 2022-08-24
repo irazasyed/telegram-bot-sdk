@@ -23,7 +23,7 @@ class ShippingQuery extends BaseObject
     public function relations()
     {
         return [
-            'from'             => User::class,
+            'from' => User::class,
             'shipping_address' => ShippingAddress::class,
         ];
     }

@@ -29,11 +29,10 @@ trait Query
      *
      * @link https://core.telegram.org/bots/api#answercallbackquery
      *
-     * @param array $params
+     * @param  array  $params
+     * @return bool
      *
      * @throws TelegramSDKException
-     *
-     * @return bool
      */
     public function answerCallbackQuery(array $params): bool
     {
@@ -61,11 +60,10 @@ trait Query
      *
      * @link https://core.telegram.org/bots/api#answerinlinequery
      *
-     * @param array $params
+     * @param  array  $params
+     * @return bool
      *
      * @throws TelegramSDKException
-     *
-     * @return bool
      */
     public function answerInlineQuery(array $params): bool
     {

@@ -70,8 +70,7 @@ class Emojify
     /**
      * Set File Path to Emoji Map File.
      *
-     * @param string $emojiMapFile
-     *
+     * @param  string  $emojiMapFile
      * @return Emojify
      */
     public function setEmojiMapFile($emojiMapFile)
@@ -86,7 +85,6 @@ class Emojify
      * Translate Word to Emoji.
      *
      * @param $text
-     *
      * @return mixed
      */
     public function toEmoji($text)
@@ -98,7 +96,6 @@ class Emojify
      * Alias of toEmoji().
      *
      * @param $text
-     *
      * @return mixed
      */
     public static function text($text)
@@ -110,7 +107,6 @@ class Emojify
      * Translate Emoji to Word.
      *
      * @param $text
-     *
      * @return mixed
      */
     public function toWord($text)
@@ -122,7 +118,6 @@ class Emojify
      * Alias of toWord().
      *
      * @param $text
-     *
      * @return mixed
      */
     public static function translate($text)
@@ -133,11 +128,10 @@ class Emojify
     /**
      * Replace.
      *
-     * @param        $line
-     * @param        $replace
-     * @param bool   $toWord
-     * @param string $delimiter
-     *
+     * @param    $line
+     * @param    $replace
+     * @param  bool  $toWord
+     * @param  string  $delimiter
      * @return mixed
      */
     protected function replace($line, $replace, $toWord = false, $delimiter = ':')
@@ -156,13 +150,12 @@ class Emojify
      * @param $line
      * @param $replace
      * @param $delimiter
-     *
      * @return mixed
      */
     protected function wordToEmojiReplace($line, $replace, $delimiter)
     {
         foreach ($replace as $key => $value) {
-            $line = str_replace($delimiter . $key . $delimiter, $value, $line);
+            $line = str_replace($delimiter.$key.$delimiter, $value, $line);
         }
 
         return $line;
@@ -174,13 +167,12 @@ class Emojify
      * @param $line
      * @param $replace
      * @param $delimiter
-     *
      * @return mixed
      */
     protected function emojiToWordReplace($line, $replace, $delimiter)
     {
         foreach ($replace as $key => $value) {
-            $line = str_replace($key, $delimiter . $value . $delimiter, $line);
+            $line = str_replace($key, $delimiter.$value.$delimiter, $line);
         }
 
         return $line;
@@ -189,14 +181,14 @@ class Emojify
     /**
      * Get Emoji Map Array.
      *
-     * @throws TelegramEmojiMapFileNotFoundException
-     *
      * @return array
+     *
+     * @throws TelegramEmojiMapFileNotFoundException
      */
     protected function getEmojiMap()
     {
         if (! isset($this->emojiMapFile)) {
-            $this->emojiMapFile = realpath(__DIR__ . self::DEFAULT_EMOJI_MAP_FILE);
+            $this->emojiMapFile = realpath(__DIR__.self::DEFAULT_EMOJI_MAP_FILE);
         }
 
         if (! file_exists($this->emojiMapFile)) {

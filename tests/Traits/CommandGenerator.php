@@ -8,8 +8,7 @@ use Telegram\Bot\Commands\Command;
 trait CommandGenerator
 {
     /**
-     * @param int $numberRequired
-     *
+     * @param  int  $numberRequired
      * @return Collection
      */
     private function commandGenerator($numberRequired)
@@ -18,7 +17,8 @@ trait CommandGenerator
 
         return collect($range)
             ->map(function (int $instanceNumber) {
-                return new class($instanceNumber) extends Command {
+                return new class($instanceNumber) extends Command
+                {
                     private $instanceNumber;
 
                     public function __construct(int $instanceNumber)

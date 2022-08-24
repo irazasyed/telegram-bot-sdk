@@ -12,6 +12,7 @@ final class UpdateEvent extends AbstractEvent
 
     /**
      * @deprecated Will be removed in SDK v4
+     *
      * @var string
      */
     private $name;
@@ -29,7 +30,7 @@ final class UpdateEvent extends AbstractEvent
         $this->name = $name;
     }
 
-    /** @inheritDoc */
+    /** {@inheritDoc} */
     public function getName(): string
     {
         return $this->name;

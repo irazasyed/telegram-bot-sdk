@@ -23,7 +23,7 @@ class StickerSet extends BaseObject
     {
         return [
             'stickers' => [Sticker::class],
-            'thumb'    => PhotoSize::class,
+            'thumb' => PhotoSize::class,
         ];
     }
 }

@@ -34,8 +34,8 @@ trait CommandsHandler
     /**
      * Processes Inbound Commands.
      *
-     * @param bool $webhook
-     * @param RequestInterface|null $request
+     * @param  bool  $webhook
+     * @param  RequestInterface|null  $request
      * @return Update|Update[]
      */
     public function commandsHandler(bool $webhook = false, ?RequestInterface $request = null)
@@ -46,7 +46,7 @@ trait CommandsHandler
     /**
      * Process the update object for a command from your webhook.
      *
-     * @param RequestInterface|null $request
+     * @param  RequestInterface|null  $request
      * @return Update
      */
     protected function useWebHook(?RequestInterface $request = null): Update
@@ -84,7 +84,6 @@ trait CommandsHandler
      * Mark updates as read.
      *
      * @param $highestId
-     *
      * @return Update[]
      */
     protected function markUpdateAsRead($highestId): array
@@ -99,7 +98,7 @@ trait CommandsHandler
     /**
      * Check update object for a command and process.
      *
-     * @param Update $update
+     * @param  Update  $update
      */
     public function processCommand(Update $update)
     {
@@ -110,15 +109,14 @@ trait CommandsHandler
      * @deprecated This method will be protected and signature will be changed in SDK v4.
      * Helper to Trigger Commands.
      *
-     * @param string $name   Command Name
-     * @param Update $update Update Object
-     * @param array|null $entity
-     *
+     * @param  string  $name   Command Name
+     * @param  Update  $update Update Object
+     * @param  array|null  $entity
      * @return mixed
      */
     public function triggerCommand(string $name, Update $update, $entity = null)
     {
-        $entity = $entity ?? ['offset' => 0, 'length' => strlen($name) + 1, 'type' => "bot_command"];
+        $entity = $entity ?? ['offset' => 0, 'length' => strlen($name) + 1, 'type' => 'bot_command'];
 
         return $this->getCommandBus()->execute(
             $name,

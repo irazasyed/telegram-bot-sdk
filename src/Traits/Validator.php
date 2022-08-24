@@ -12,9 +12,8 @@ trait Validator
     /**
      * Determine given param in params array is a file id.
      *
-     * @param string $inputFileField
-     * @param array  $params
-     *
+     * @param  string  $inputFileField
+     * @param  array  $params
      * @return bool
      */
     protected function hasFileId(string $inputFileField, array $params): bool
@@ -26,7 +25,6 @@ trait Validator
      * Determine if given contents are an instance of InputFile.
      *
      * @param $contents
-     *
      * @return bool
      */
     protected function isInputFile($contents): bool
@@ -37,8 +35,7 @@ trait Validator
     /**
      * Determine the given string is a file id.
      *
-     * @param string $value
-     *
+     * @param  string  $value
      * @return bool
      */
     protected function isFileId($value): bool
@@ -53,8 +50,7 @@ trait Validator
     /**
      * Determine given string is a URL.
      *
-     * @param string $value A filename or URL to a sticker
-     *
+     * @param  string  $value A filename or URL to a sticker
      * @return bool
      */
     protected function isUrl($value): bool
@@ -65,7 +61,7 @@ trait Validator
     /**
      * Determine given string is a json object.
      *
-     * @param string $string A json string
+     * @param  string  $string A json string
      * @return bool
      */
     protected function is_json($string): bool

@@ -17,9 +17,8 @@ class Base extends Collection
     /**
      * Dynamically build params.
      *
-     * @param string $method
-     * @param array  $args
-     *
+     * @param  string  $method
+     * @param  array  $args
      * @return $this
      */
     public function __call($method, $args)

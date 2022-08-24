@@ -9,16 +9,20 @@ use Telegram\Bot\FileUpload\InputFile;
 class InputFileTest extends TestCase
 {
     protected $tempPath;
+
     protected $tempFileResource;
+
     protected $tempStream;
+
     protected $tempFileName;
+
     protected $url;
 
     protected function setUp(): void
     {
         parent::setUp();
         $this->tempPath = sys_get_temp_dir();
-        $this->tempFileName = $this->tempPath . '/TestFile.tmp';
+        $this->tempFileName = $this->tempPath.'/TestFile.tmp';
         $this->tempFileResource = fopen($this->tempFileName, 'w+');
         $this->tempStream = new LazyOpenStream($this->tempFileName, 'r');
     }

@@ -55,7 +55,6 @@ abstract class Command implements CommandInterface
      * Set Command Name.
      *
      * @param $name
-     *
      * @return Command
      */
     public function setName(string $name): self
@@ -80,8 +79,7 @@ abstract class Command implements CommandInterface
     /**
      * Set Command Aliases.
      *
-     * @param string|array $aliases
-     *
+     * @param  string|array  $aliases
      * @return Command
      */
     public function setAliases($aliases): self
@@ -106,8 +104,7 @@ abstract class Command implements CommandInterface
     /**
      * Set Command Description.
      *
-     * @param string $description
-     *
+     * @param  string  $description
      * @return Command
      */
     public function setDescription(string $description): self
@@ -132,8 +129,7 @@ abstract class Command implements CommandInterface
     /**
      * Set Command Arguments.
      *
-     * @param array $arguments
-     *
+     * @param  array  $arguments
      * @return Command
      */
     public function setArguments(array $arguments): self
@@ -156,8 +152,7 @@ abstract class Command implements CommandInterface
     /**
      * Get Command Arguments Pattern.
      *
-     * @param string $pattern
-     *
+     * @param  string  $pattern
      * @return Command
      */
     public function setPattern(string $pattern): self
@@ -170,10 +165,9 @@ abstract class Command implements CommandInterface
     /**
      * Process Inbound Command.
      *
-     * @param Api $telegram
-     * @param Update $update
-     * @param array $entity
-     *
+     * @param  Api  $telegram
+     * @param  Update  $update
+     * @param  array  $entity
      * @return mixed
      */
     public function make(Api $telegram, Update $update, array $entity)
@@ -194,8 +188,7 @@ abstract class Command implements CommandInterface
     /**
      * Helper to Trigger other Commands.
      *
-     * @param string $command
-     *
+     * @param  string  $command
      * @return mixed
      */
     protected function triggerCommand(string $command)
@@ -234,7 +227,6 @@ abstract class Command implements CommandInterface
 
     /**
      * @param $regex
-     *
      * @return Collection
      */
     private function extractVariableNames($regex)
@@ -245,11 +237,9 @@ abstract class Command implements CommandInterface
     }
 
     /**
-     * @param Collection $required
-     * @param Collection $optional
-     *
-     * @param string $customRegex
-     *
+     * @param  Collection  $required
+     * @param  Collection  $optional
+     * @param  string  $customRegex
      * @return string
      */
     private function prepareRegex(Collection $required, Collection $optional, $customRegex)
@@ -276,7 +266,7 @@ abstract class Command implements CommandInterface
             $commandName = $this->getName();
         } else {
             $names = array_merge([$this->getName()], $this->getAliases());
-            $commandName = '(?:' . implode('|', $names) . ')';
+            $commandName = '(?:'.implode('|', $names).')';
         }
 
         return "%/{$commandName}{$optionalBotName}{$required}{$optional}{$customRegex}%si";

@@ -17,13 +17,9 @@ class Api
     use Macroable {
         __call as macroCall;
     }
-
     use Events\EmitsEvents;
-
     use Traits\Http;
-
     use Traits\CommandsHandler;
-
     use Traits\HasContainer;
     use Methods\Chat;
     use Methods\Commands;
@@ -48,9 +44,9 @@ class Api
      * Instantiates a new Telegram super-class object.
      *
      *
-     * @param string                   $token             The Telegram Bot API Access Token.
-     * @param bool                     $async             (Optional) Indicates if the request to Telegram will be asynchronous (non-blocking).
-     * @param HttpClientInterface|null $httpClientHandler (Optional) Custom HTTP Client Handler.
+     * @param  string  $token             The Telegram Bot API Access Token.
+     * @param  bool  $async             (Optional) Indicates if the request to Telegram will be asynchronous (non-blocking).
+     * @param  HttpClientInterface|null  $httpClientHandler (Optional) Custom HTTP Client Handler.
      *
      * @throws TelegramSDKException
      */
@@ -70,8 +66,7 @@ class Api
      * @deprecated This method will be removed in SDK v4.
      * Invoke Bots Manager.
      *
-     * @param array $config
-     *
+     * @param  array  $config
      * @return BotsManager
      */
     public static function manager($config): BotsManager
@@ -84,7 +79,6 @@ class Api
      *
      * @param $method
      * @param $arguments
-     *
      * @return mixed
      */
     public function __call($method, $arguments)

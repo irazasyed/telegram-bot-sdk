@@ -18,26 +18,26 @@ class BotsManagerTest extends TestCase
         parent::setUp();
         $this->manager = new BotsManager(
             [
-                'default'                      => 'bot1',
-                'bots'                         => [
+                'default' => 'bot1',
+                'bots' => [
                     'bot1' => [
                         'username' => 'BotOne_Bot',
-                        'token'    => 'TOKEN1',
+                        'token' => 'TOKEN1',
                         'commands' => [],
                     ],
                     'bot2' => [
                         'username' => 'BotTwo_Bot',
-                        'token'    => 'TOKEN2',
+                        'token' => 'TOKEN2',
                         'commands' => [],
                     ],
                     'bot3' => [
                         'username' => 'BotThree_Bot',
-                        'token'    => 'TOKEN3',
+                        'token' => 'TOKEN3',
                         'commands' => [],
                     ],
                 ],
                 'resolve_command_dependencies' => true,
-                'commands'                     => [
+                'commands' => [
                     //      Telegram\Bot\Commands\HelpCommand::class,
                 ],
             ]
@@ -107,16 +107,16 @@ class BotsManagerTest extends TestCase
     {
         $manager = new BotsManager(
             [
-                'commands'        => [
+                'commands' => [
                     'Acme\Project\Commands\Command1',
                 ],
                 'shared_commands' => [
-                    'start'  => 'Acme\Project\Commands\StartCommand',
-                    'stop'   => 'Acme\Project\Commands\StopCommand',
+                    'start' => 'Acme\Project\Commands\StartCommand',
+                    'stop' => 'Acme\Project\Commands\StopCommand',
                     'status' => 'Acme\Project\Commands\StatusCommand',
                 ],
-                'command_groups'  => [
-                    'common'       => [
+                'command_groups' => [
+                    'common' => [
                         'Acme\Project\Commands\TodoCommand',
                         'Acme\Project\Commands\TaskCommand',
                         'Acme\Project\Commands\Command2',
@@ -125,11 +125,11 @@ class BotsManagerTest extends TestCase
                         'start',
                         'stop',
                     ],
-                    'parentgroup'  => [
+                    'parentgroup' => [
                         'common',
                         'subscription',
                     ],
-                    'myBot'        => [
+                    'myBot' => [
                         'admin', // Command Group Name.
                         'subscription', // Command Group Name.
                         'status', // Shared Command Name.

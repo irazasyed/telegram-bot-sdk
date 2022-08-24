@@ -15,6 +15,7 @@ use Telegram\Bot\Traits\Http;
 
 /**
  * Class Update.
+ *
  * @mixin Http
  */
 trait Update
@@ -33,19 +34,19 @@ trait Update
      *
      * @link https://core.telegram.org/bots/api#getupdates
      *
-     * @param bool  $shouldEmitEvents
-     * @param array $params           [
+     * @param  bool  $shouldEmitEvents
+     * @param  array  $params           [
      *
-     * @var int   $offset          Optional. Identifier of the first update to be returned. Must be greater by one than the highest among the identifiers of previously received updates. By default, updates starting with the earliest unconfirmed update are returned. An update is considered confirmed as soon as getUpdates is called with an offset higher than its update_id. The negative offset can be specified to retrieve updates starting from -offset update from the end of the updates queue. All previous updates will forgotten.
-     * @var int   $limit           Optional. Limits the number of updates to be retrieved. Values between 1—100 are accepted. Defaults to 100.
-     * @var int   $timeout         Optional. Timeout in seconds for long polling. Defaults to 0, i.e. usual short polling. Should be positive, short polling should be used for testing purposes only.
-     * @var array $allowed_updates Optional. List the types of updates you want your bot to receive. For example, specify [“message”, “edited_channel_post”, “callback_query”] to only receive updates of these types. See Update for a complete list of available update types. Specify an empty list to receive all updates regardless of type (default). If not specified, the previous setting will be used.
+     * @var int            Optional. Identifier of the first update to be returned. Must be greater by one than the highest among the identifiers of previously received updates. By default, updates starting with the earliest unconfirmed update are returned. An update is considered confirmed as soon as getUpdates is called with an offset higher than its update_id. The negative offset can be specified to retrieve updates starting from -offset update from the end of the updates queue. All previous updates will forgotten.
+     * @var int             Optional. Limits the number of updates to be retrieved. Values between 1—100 are accepted. Defaults to 100.
+     * @var int           Optional. Timeout in seconds for long polling. Defaults to 0, i.e. usual short polling. Should be positive, short polling should be used for testing purposes only.
+     * @var array Optional. List the types of updates you want your bot to receive. For example, specify [“message”, “edited_channel_post”, “callback_query”] to only receive updates of these types. See Update for a complete list of available update types. Specify an empty list to receive all updates regardless of type (default). If not specified, the previous setting will be used.
      *
      * ]
      *
-     * @throws TelegramSDKException
-     *
      * @return UpdateObject[]
+     *
+     * @throws TelegramSDKException
      */
     public function getUpdates(array $params = [], $shouldEmitEvents = true): array
     {
@@ -79,18 +80,18 @@ trait Update
      *
      * @link https://core.telegram.org/bots/api#setwebhook
      *
-     * @param array $params [
+     * @param  array  $params [
      *
-     * @var string    $url             Required. HTTPS url to send updates to. Use an empty string to remove webhook integration
-     * @var InputFile $certificate     Optional. Upload your public key certificate so that the root certificate in use can be checked. See our self-signed guide for details.
-     * @var int       $max_connections Optional. Maximum allowed number of simultaneous HTTPS connections to the webhook for update delivery, 1-100. Defaults to 40. Use lower values to limit the load on your bot‘s server, and higher values to increase your bot’s throughput.
-     * @var array     $allowed_updates Optional. List the types of updates you want your bot to receive. For example, specify [“message”, “edited_channel_post”, “callback_query”] to only receive updates of these types. See Update for a complete list of available update types. Specify an empty list to receive all updates regardless of type (default). If not specified, the previous setting will be used.
+     * @var string                Required. HTTPS url to send updates to. Use an empty string to remove webhook integration
+     * @var InputFile     Optional. Upload your public key certificate so that the root certificate in use can be checked. See our self-signed guide for details.
+     * @var int       Optional. Maximum allowed number of simultaneous HTTPS connections to the webhook for update delivery, 1-100. Defaults to 40. Use lower values to limit the load on your bot‘s server, and higher values to increase your bot’s throughput.
+     * @var array     Optional. List the types of updates you want your bot to receive. For example, specify [“message”, “edited_channel_post”, “callback_query”] to only receive updates of these types. See Update for a complete list of available update types. Specify an empty list to receive all updates regardless of type (default). If not specified, the previous setting will be used.
      *
      * ]
      *
-     * @throws TelegramSDKException
-     *
      * @return bool
+     *
+     * @throws TelegramSDKException
      */
     public function setWebhook(array $params): bool
     {
@@ -110,8 +111,9 @@ trait Update
      *
      * @link https://core.telegram.org/bots/api#deletewebhook
      *
-     * @throws TelegramSDKException
      * @return bool
+     *
+     * @throws TelegramSDKException
      */
     public function deleteWebhook(): bool
     {
@@ -123,8 +125,9 @@ trait Update
      *
      * @link https://core.telegram.org/bots/api#getwebhookinfo
      *
-     * @throws TelegramSDKException
      * @return WebhookInfo
+     *
+     * @throws TelegramSDKException
      */
     public function getWebhookInfo(): WebhookInfo
     {
@@ -140,8 +143,7 @@ trait Update
      * @deprecated Call method getWebhookUpdate (note lack of letter s at end)
      *             To be removed in next major version.
      *
-     * @param bool $shouldEmitEvent
-     *
+     * @param  bool  $shouldEmitEvent
      * @return UpdateObject
      */
     public function getWebhookUpdates($shouldEmitEvent = true): UpdateObject
@@ -153,11 +155,11 @@ trait Update
      * Returns a webhook update sent by Telegram.
      * Works only if you set a webhook.
      *
-     * @param bool $shouldEmitEvent
-     * @param RequestInterface|null $request
+     * @param  bool  $shouldEmitEvent
+     * @param  RequestInterface|null  $request
      * @return UpdateObject
-     * @see setWebhook
      *
+     * @see setWebhook
      */
     public function getWebhookUpdate($shouldEmitEvent = true, ?RequestInterface $request = null): UpdateObject
     {
@@ -176,9 +178,9 @@ trait Update
     /**
      * Alias for deleteWebhook.
      *
-     * @throws TelegramSDKException
-     *
      * @return bool
+     *
+     * @throws TelegramSDKException
      */
     public function removeWebhook(): bool
     {
@@ -186,7 +188,7 @@ trait Update
     }
 
     /**
-     * @param string $url
+     * @param  string  $url
      *
      * @throws TelegramSDKException
      */
@@ -211,7 +213,7 @@ trait Update
     }
 
     /**
-     * @param RequestInterface|null $request
+     * @param  RequestInterface|null  $request
      * @return mixed
      */
     private function getRequestBody(?RequestInterface $request)

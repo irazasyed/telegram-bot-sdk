@@ -14,12 +14,11 @@ abstract class AnswerBus
     /**
      * Handle calls to missing methods.
      *
-     * @param string $method
-     * @param array  $parameters
+     * @param  string  $method
+     * @param  array  $parameters
+     * @return mixed
      *
      * @throws \BadMethodCallException
-     *
-     * @return mixed
      */
     public function __call($method, $parameters)
     {
@@ -34,7 +33,6 @@ abstract class AnswerBus
      * Use PHP Reflection and Laravel Container to instantiate the answer with type hinted dependencies.
      *
      * @param $answerClass
-     *
      * @return object
      */
     protected function buildDependencyInjectedAnswer($answerClass)

@@ -26,7 +26,7 @@ class PreCheckoutQuery extends BaseObject
     public function relations()
     {
         return [
-            'from'       => User::class,
+            'from' => User::class,
             'order_info' => OrderInfo::class,
         ];
     }

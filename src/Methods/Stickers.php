@@ -10,6 +10,7 @@ use Telegram\Bot\Traits\Http;
 
 /**
  * Class Message.
+ *
  * @mixin Http
  */
 trait Stickers
@@ -31,11 +32,10 @@ trait Stickers
      *
      * @link https://core.telegram.org/bots/api#sendsticker
      *
-     * @param array $params
+     * @param  array  $params
+     * @return MessageObject
      *
      * @throws TelegramSDKException
-     *
-     * @return MessageObject
      */
     public function sendSticker(array $params): MessageObject
     {
@@ -55,11 +55,10 @@ trait Stickers
      *
      * @link https://core.telegram.org/bots/api#getstickerset
      *
-     * @param array $params
+     * @param  array  $params
+     * @return StickerSet
      *
      * @throws TelegramSDKException
-     *
-     * @return StickerSet
      */
     public function getStickerSet(array $params): StickerSet
     {
@@ -81,11 +80,10 @@ trait Stickers
      *
      * @link https://core.telegram.org/bots/api#uploadstickerfile
      *
-     * @param array $params
+     * @param  array  $params
+     * @return File
      *
      * @throws TelegramSDKException
-     *
-     * @return File
      */
     public function uploadStickerFile(array $params): File
     {
@@ -112,11 +110,10 @@ trait Stickers
      *
      * @link https://core.telegram.org/bots/api#createnewstickerset
      *
-     * @param array $params
+     * @param  array  $params
+     * @return bool
      *
      * @throws TelegramSDKException
-     *
-     * @return bool
      */
     public function createNewStickerSet(array $params): bool
     {
@@ -139,11 +136,10 @@ trait Stickers
      *
      * @link https://core.telegram.org/bots/api#addstickertoset
      *
-     * @param array $params
+     * @param  array  $params
+     * @return bool
      *
      * @throws TelegramSDKException
-     *
-     * @return bool
      */
     public function addStickerToSet(array $params): bool
     {
@@ -162,11 +158,10 @@ trait Stickers
      *
      * @link https://core.telegram.org/bots/api#setstickerpositioninset
      *
-     * @param array $params
+     * @param  array  $params
+     * @return bool
      *
      * @throws TelegramSDKException
-     *
-     * @return bool
      */
     public function setStickerPositionInSet(array $params): bool
     {
@@ -184,11 +179,10 @@ trait Stickers
      *
      * @link https://core.telegram.org/bots/api#deletestickerfromset
      *
-     * @param array $params
+     * @param  array  $params
+     * @return bool
      *
      * @throws TelegramSDKException
-     *
-     * @return bool
      */
     public function deleteStickerFromSet(array $params): bool
     {
@@ -208,11 +202,10 @@ trait Stickers
      * @link https://core.telegram.org/bots/api#setstickersetthumb
      * </code>
      *
-     * @param array $params
+     * @param  array  $params
+     * @return bool
      *
      * @throws TelegramSDKException
-     *
-     * @return bool
      */
     public function setStickerSetThumb(array $params): bool
     {

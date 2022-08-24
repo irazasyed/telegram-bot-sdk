@@ -66,40 +66,40 @@ class Message extends BaseObject
     public function relations()
     {
         return [
-            'from'               => User::class,
-            'chat'               => Chat::class,
-            'forward_from'       => User::class,
-            'forward_from_chat'  => Chat::class,
-            'reply_to_message'   => self::class,
-            'entities'           => [MessageEntity::class],
-            'caption_entities'   => [MessageEntity::class],
-            'audio'              => Audio::class,
-            'dice'               => Dice::class,
-            'animation'          => Animation::class,
-            'document'           => Document::class,
-            'game'               => Game::class,
-            'photo'              => [PhotoSize::class],
-            'sticker'            => Sticker::class,
-            'video'              => Video::class,
-            'voice'              => Voice::class,
-            'video_note'         => VideoNote::class,
-            'contact'            => Contact::class,
-            'location'           => Location::class,
-            'venue'              => Venue::class,
-            'poll'               => Poll::class,
-            'new_chat_member'    => ChatMember::class,
-            'new_chat_members'   => [User::class],
-            'left_chat_member'   => User::class,
-            'new_chat_photo'     => [PhotoSize::class],
-            'delete_chat_photo'  => ChatPhoto::class,
-            'pinned_message'     => self::class,
-            'invoice'            => Invoice::class,
+            'from' => User::class,
+            'chat' => Chat::class,
+            'forward_from' => User::class,
+            'forward_from_chat' => Chat::class,
+            'reply_to_message' => self::class,
+            'entities' => [MessageEntity::class],
+            'caption_entities' => [MessageEntity::class],
+            'audio' => Audio::class,
+            'dice' => Dice::class,
+            'animation' => Animation::class,
+            'document' => Document::class,
+            'game' => Game::class,
+            'photo' => [PhotoSize::class],
+            'sticker' => Sticker::class,
+            'video' => Video::class,
+            'voice' => Voice::class,
+            'video_note' => VideoNote::class,
+            'contact' => Contact::class,
+            'location' => Location::class,
+            'venue' => Venue::class,
+            'poll' => Poll::class,
+            'new_chat_member' => ChatMember::class,
+            'new_chat_members' => [User::class],
+            'left_chat_member' => User::class,
+            'new_chat_photo' => [PhotoSize::class],
+            'delete_chat_photo' => ChatPhoto::class,
+            'pinned_message' => self::class,
+            'invoice' => Invoice::class,
             'successful_payment' => SuccessfulPayment::class,
-            'passport_data'      => PassportData::class,
-            'sender_chat'        => Chat::class,
-            'proximity_alert_triggered'       => ProximityAlertTriggered::class,
-            'voice_chat_started'              => VoiceChatStarted::class,
-            'voice_chat_ended'                => VoiceChatEnded::class,
+            'passport_data' => PassportData::class,
+            'sender_chat' => Chat::class,
+            'proximity_alert_triggered' => ProximityAlertTriggered::class,
+            'voice_chat_started' => VoiceChatStarted::class,
+            'voice_chat_ended' => VoiceChatEnded::class,
             'voice_chat_participants_invited' => VoiceChatParticipantsInvited::class,
         ];
     }
@@ -108,7 +108,6 @@ class Message extends BaseObject
      * Determine if the message is of given type.
      *
      * @param  string  $type
-     *
      * @return bool
      */
     public function isType($type)
@@ -132,6 +131,7 @@ class Message extends BaseObject
 
     /**
      * Detect type based on properties.
+     *
      * @deprecated Will be removed in v4.0, please use {@see \Telegram\Bot\Objects\Message::objectType} instead.
      *
      * @return string|null

@@ -25,8 +25,7 @@ trait Telegram
     /**
      * Set Telegram Api Instance.
      *
-     * @param Api $telegram
-     *
+     * @param  Api  $telegram
      * @return $this
      */
     public function setTelegram(Api $telegram)

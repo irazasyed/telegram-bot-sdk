@@ -16,11 +16,10 @@ trait EmitsEvents
     /**
      * Emit an event.
      *
-     * @param EventInterface|string $event
+     * @param  EventInterface|string  $event
+     * @return bool true if emitted, false otherwise.
      *
      * @throws \InvalidArgumentException
-     *
-     * @return bool true if emitted, false otherwise.
      */
     protected function emitEvent($event): bool
     {
@@ -38,11 +37,10 @@ trait EmitsEvents
     /**
      * Emit events in batch.
      *
-     * @param EventInterface[]|string[] $events
+     * @param  EventInterface[]|string[]  $events
+     * @return bool true if all emitted, false otherwise
      *
      * @throws \InvalidArgumentException
-     *
-     * @return bool true if all emitted, false otherwise
      */
     private function emitBatchOfEvents(array $events): bool
     {
@@ -72,8 +70,7 @@ trait EmitsEvents
     /**
      * Set an event emitter.
      *
-     * @param EmitterInterface $eventEmitter
-     *
+     * @param  EmitterInterface  $eventEmitter
      * @return $this
      */
     public function setEventEmitter($eventEmitter)
@@ -85,7 +82,6 @@ trait EmitsEvents
 
     /**
      * @param $event
-     *
      * @return void
      */
     private function validateEvent($event)

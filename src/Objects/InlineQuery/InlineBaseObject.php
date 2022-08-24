@@ -16,7 +16,7 @@ abstract class InlineBaseObject extends Collection
     /**
      * InlineBaseObject constructor.
      *
-     * @param array $params
+     * @param  array  $params
      */
     public function __construct($params = [])
     {
@@ -29,7 +29,6 @@ abstract class InlineBaseObject extends Collection
      *
      * @param $name
      * @param $arguments
-     *
      * @return $this|mixed
      */
     public function __call($name, $arguments)

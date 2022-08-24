@@ -22,11 +22,11 @@ class ChatMemberUpdated extends BaseObject
     public function relations()
     {
         return [
-            'chat'            => Chat::class,
-            'from'            => User::class,
+            'chat' => Chat::class,
+            'from' => User::class,
             'old_chat_member' => ChatMember::class,
             'new_chat_member' => ChatMember::class,
-            'invite_link'     => ChatInviteLink::class,
+            'invite_link' => ChatInviteLink::class,
         ];
     }
 }

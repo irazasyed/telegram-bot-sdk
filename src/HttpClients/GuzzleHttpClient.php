@@ -34,7 +34,7 @@ class GuzzleHttpClient implements HttpClientInterface
     /**
      * GuzzleHttpClient constructor.
      *
-     * @param ClientInterface|null $client
+     * @param  ClientInterface|null  $client
      */
     public function __construct(ClientInterface $client = null)
     {
@@ -43,6 +43,7 @@ class GuzzleHttpClient implements HttpClientInterface
 
     /**
      * Unwrap Promises.
+     *
      * @throws Throwable
      */
     public function __destruct()
@@ -53,8 +54,7 @@ class GuzzleHttpClient implements HttpClientInterface
     /**
      * Sets HTTP client.
      *
-     * @param ClientInterface $client
-     *
+     * @param  ClientInterface  $client
      * @return GuzzleHttpClient
      */
     public function setClient(ClientInterface $client): self
@@ -66,6 +66,7 @@ class GuzzleHttpClient implements HttpClientInterface
 
     /**
      * {@inheritdoc}
+     *
      * @throws TelegramSDKException
      */
     public function send(
@@ -103,11 +104,10 @@ class GuzzleHttpClient implements HttpClientInterface
     /**
      * Prepares and returns request options.
      *
-     * @param array $headers
-     * @param       $body
-     * @param array $options
-     * @param bool  $isAsyncRequest
-     *
+     * @param  array  $headers
+     * @param    $body
+     * @param  array  $options
+     * @param  bool  $isAsyncRequest
      * @return array
      */
     private function getOptions(
@@ -118,11 +118,11 @@ class GuzzleHttpClient implements HttpClientInterface
         $proxy = null
     ): array {
         $default_options = [
-            RequestOptions::HEADERS         => $headers,
-            RequestOptions::BODY            => $body,
-            RequestOptions::TIMEOUT         => $this->getTimeOut(),
+            RequestOptions::HEADERS => $headers,
+            RequestOptions::BODY => $body,
+            RequestOptions::TIMEOUT => $this->getTimeOut(),
             RequestOptions::CONNECT_TIMEOUT => $this->getConnectTimeOut(),
-            RequestOptions::SYNCHRONOUS     => ! $isAsyncRequest,
+            RequestOptions::SYNCHRONOUS => ! $isAsyncRequest,
         ];
 
         if ($proxy !== null) {

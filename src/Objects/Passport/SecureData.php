@@ -27,16 +27,16 @@ class SecureData extends BaseObject
     public function relations()
     {
         return [
-            'personal_details'       => SecureValue::class,
-            'passport'               => SecureValue::class,
-            'internal_passport'      => SecureValue::class,
-            'driver_license'         => SecureValue::class,
-            'identity_card'          => SecureValue::class,
-            'address'                => SecureValue::class,
-            'utility_bill'           => SecureValue::class,
-            'bank_statement'         => SecureValue::class,
-            'rental_agreement'       => SecureValue::class,
-            'passport_registration'  => SecureValue::class,
+            'personal_details' => SecureValue::class,
+            'passport' => SecureValue::class,
+            'internal_passport' => SecureValue::class,
+            'driver_license' => SecureValue::class,
+            'identity_card' => SecureValue::class,
+            'address' => SecureValue::class,
+            'utility_bill' => SecureValue::class,
+            'bank_statement' => SecureValue::class,
+            'rental_agreement' => SecureValue::class,
+            'passport_registration' => SecureValue::class,
             'temporary_registration' => SecureValue::class,
         ];
     }

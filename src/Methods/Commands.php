@@ -26,10 +26,10 @@ trait Commands
      *
      * @link https://core.telegram.org/bots/api#setmycommands
      *
-     * @param array $params Where "commands" key is required, where value is a serialized array of commands.
+     * @param  array  $params Where "commands" key is required, where value is a serialized array of commands.
+     * @return bool
      *
      * @throws TelegramSDKException
-     * @return bool
      */
     public function setMyCommands(array $params): bool
     {
@@ -52,8 +52,7 @@ trait Commands
      *
      * @link https://core.telegram.org/bots/api#deletemycommands
      *
-     * @param array|null $params
-     *
+     * @param  array|null  $params
      * @return bool
      */
     public function deleteMyCommands(array $params = []): bool
@@ -73,8 +72,9 @@ trait Commands
      *
      * @link https://core.telegram.org/bots/api#getmycommands
      *
-     * @throws TelegramSDKException
      * @return BotCommand[]
+     *
+     * @throws TelegramSDKException
      */
     public function getMyCommands(array $params = []): array
     {

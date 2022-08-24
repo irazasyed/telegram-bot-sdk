@@ -10,6 +10,7 @@ use Telegram\Bot\Objects\Update;
 class CommandTest extends TestCase
 {
     protected $api;
+
     /**
      * @var Command
      */
@@ -29,10 +30,10 @@ class CommandTest extends TestCase
         //Condensed update data
         $update = new Update([
             'message' => [
-                'text'     => 'This /demo',
+                'text' => 'This /demo',
                 'entities' => [
                     [
-                        'type'   => 'bot_command',
+                        'type' => 'bot_command',
                         'offset' => 5,
                         'length' => 5,
                     ],
@@ -54,10 +55,10 @@ class CommandTest extends TestCase
         //Condensed update data
         $update = new Update([
             'message' => [
-                'text'     => '/demo@testing_Bot John Doe',
+                'text' => '/demo@testing_Bot John Doe',
                 'entities' => [
                     [
-                        'type'   => 'bot_command',
+                        'type' => 'bot_command',
                         'offset' => 0,
                         'length' => 17,
                     ],
@@ -79,10 +80,10 @@ class CommandTest extends TestCase
         //Condensed update data
         $update = new Update([
             'message' => [
-                'text'     => '/demo@testing_Bot John Doe 77 200',
+                'text' => '/demo@testing_Bot John Doe 77 200',
                 'entities' => [
                     [
-                        'type'   => 'bot_command',
+                        'type' => 'bot_command',
                         'offset' => 0,
                         'length' => 17,
                     ],
@@ -106,10 +107,10 @@ class CommandTest extends TestCase
         //Condensed update data
         $update = new Update([
             'message' => [
-                'text'     => '/demo@testing_Bot John Doe 77 200',
+                'text' => '/demo@testing_Bot John Doe 77 200',
                 'entities' => [
                     [
-                        'type'   => 'bot_command',
+                        'type' => 'bot_command',
                         'offset' => 0,
                         'length' => 17,
                     ],
@@ -133,10 +134,10 @@ class CommandTest extends TestCase
         //Condensed update data
         $update = new Update([
             'message' => [
-                'text'     => '/demo@testing_Bot John Doe 77',
+                'text' => '/demo@testing_Bot John Doe 77',
                 'entities' => [
                     [
-                        'type'   => 'bot_command',
+                        'type' => 'bot_command',
                         'offset' => 0,
                         'length' => 17,
                     ],
@@ -157,10 +158,10 @@ class CommandTest extends TestCase
         //Condensed update data
         $update = new Update([
             'message' => [
-                'text'     => '/demo@testing_Bot eidw einn egaa egcc',
+                'text' => '/demo@testing_Bot eidw einn egaa egcc',
                 'entities' => [
                     [
-                        'type'   => 'bot_command',
+                        'type' => 'bot_command',
                         'offset' => 0,
                         'length' => 17,
                     ],
@@ -181,10 +182,10 @@ class CommandTest extends TestCase
         //Condensed update data
         $update = new Update([
             'message' => [
-                'text'     => '/demo@testing_Bot ei105 22/03/2017',
+                'text' => '/demo@testing_Bot ei105 22/03/2017',
                 'entities' => [
                     [
-                        'type'   => 'bot_command',
+                        'type' => 'bot_command',
                         'offset' => 0,
                         'length' => 17,
                     ],
@@ -205,20 +206,20 @@ class CommandTest extends TestCase
         //Condensed update data
         $update = new Update([
             'message' => [
-                'text'     => 'This /demo john doe command with /demo jane doe and a unrelated /test command',
+                'text' => 'This /demo john doe command with /demo jane doe and a unrelated /test command',
                 'entities' => [
                     [
-                        'type'   => 'bot_command',
+                        'type' => 'bot_command',
                         'offset' => 5,
                         'length' => 5,
                     ],
                     [
-                        'type'   => 'bot_command',
+                        'type' => 'bot_command',
                         'offset' => 33,
                         'length' => 5,
                     ],
                     [
-                        'type'   => 'bot_command',
+                        'type' => 'bot_command',
                         'offset' => 64,
                         'length' => 5,
                     ],

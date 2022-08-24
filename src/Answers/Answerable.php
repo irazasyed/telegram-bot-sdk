@@ -33,7 +33,6 @@ trait Answerable
      *
      * @param $method
      * @param $arguments
-     *
      * @return mixed|string
      */
     public function __call($method, $arguments)
@@ -42,7 +41,7 @@ trait Answerable
             throw new \BadMethodCallException("Method [$method] does not exist.");
         }
         $reply_name = Str::studly(substr($method, 9));
-        $methodName = 'send' . $reply_name;
+        $methodName = 'send'.$reply_name;
 
         if (! method_exists($this->telegram, $methodName)) {
             throw new \BadMethodCallException("Method [$method] does not exist.");

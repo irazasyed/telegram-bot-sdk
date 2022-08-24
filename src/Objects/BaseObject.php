@@ -15,7 +15,7 @@ abstract class BaseObject extends Collection
     /**
      * Builds collection entity.
      *
-     * @param array|mixed $data
+     * @param  array|mixed  $data
      */
     public function __construct($data)
     {
@@ -33,7 +33,6 @@ abstract class BaseObject extends Collection
      * Magically access collection data.
      *
      * @param $property
-     *
      * @return mixed
      */
     public function __get($property)
@@ -44,9 +43,8 @@ abstract class BaseObject extends Collection
     /**
      * Magically map to an object class (if exists) and return data.
      *
-     * @param string $property Name of the property or relation.
-     * @param mixed $default Default value or \Closure that returns default value.
-     *
+     * @param  string  $property Name of the property or relation.
+     * @param  mixed  $default Default value or \Closure that returns default value.
      * @return mixed
      */
     protected function getPropertyValue($property, $default = null)
@@ -64,7 +62,7 @@ abstract class BaseObject extends Collection
         }
 
         /** @var BaseObject $class */
-        $class = 'Telegram\Bot\Objects\\' . Str::studly($property);
+        $class = 'Telegram\Bot\Objects\\'.Str::studly($property);
 
         if (class_exists($class)) {
             return $class::make($value);
@@ -78,8 +76,8 @@ abstract class BaseObject extends Collection
     }
 
     /**
-     * @param string $relationName
-     * @param array  $relationRawData
+     * @param  string  $relationName
+     * @param  array  $relationRawData
      * @return array|\Illuminate\Support\Enumerable|\Illuminate\Support\Traits\EnumeratesValues|\Telegram\Bot\Objects\BaseObject
      */
     protected function getRelationValue(string $relationName, iterable $relationRawData)
@@ -91,6 +89,7 @@ abstract class BaseObject extends Collection
             if (! class_exists($relation)) {
                 throw new \InvalidArgumentException("Could not load “{$relationName}” relation: class “{$relation}” not found.");
             }
+
             return $relation::make($relationRawData);
         }
 
@@ -102,6 +101,7 @@ abstract class BaseObject extends Collection
             foreach ($relationRawData as $singleObjectRawData) {
                 $relatedObjects[] = $clasString::make($singleObjectRawData);
             }
+
             return $relatedObjects;
         }
 
@@ -111,9 +111,8 @@ abstract class BaseObject extends Collection
     /**
      * Get an item from the collection by key.
      *
-     * @param mixed $key
-     * @param mixed $default
-     *
+     * @param  mixed  $key
+     * @param  mixed  $default
      * @return mixed|static
      */
     public function get($key, $default = null)
@@ -141,7 +140,6 @@ abstract class BaseObject extends Collection
      * Returns raw result.
      *
      * @param $data
-     *
      * @return mixed
      */
     public function getRawResult($data)
@@ -172,8 +170,7 @@ abstract class BaseObject extends Collection
     /**
      * Determine if the object is of given type.
      *
-     * @param string $type
-     *
+     * @param  string  $type
      * @return bool
      */
     public function isType($type)
@@ -188,8 +185,7 @@ abstract class BaseObject extends Collection
     /**
      * Determine the type by given types.
      *
-     * @param array $types
-     *
+     * @param  array  $types
      * @return string|null
      */
     protected function findType(array $types): ?string
@@ -204,7 +200,6 @@ abstract class BaseObject extends Collection
      *
      * @param $name
      * @param $arguments
-     *
      * @return mixed
      */
     public function __call($name, $arguments)

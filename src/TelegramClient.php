@@ -22,7 +22,7 @@ class TelegramClient
     /**
      * Instantiates a new TelegramClient object.
      *
-     * @param HttpClientInterface|null $httpClientHandler
+     * @param  HttpClientInterface|null  $httpClientHandler
      */
     public function __construct(HttpClientInterface $httpClientHandler = null)
     {
@@ -42,8 +42,7 @@ class TelegramClient
     /**
      * Sets the HTTP client handler.
      *
-     * @param HttpClientInterface $httpClientHandler
-     *
+     * @param  HttpClientInterface  $httpClientHandler
      * @return TelegramClient
      */
     public function setHttpClientHandler(HttpClientInterface $httpClientHandler): self
@@ -56,11 +55,10 @@ class TelegramClient
     /**
      * Send an API request and process the result.
      *
-     * @param TelegramRequest $request
+     * @param  TelegramRequest  $request
+     * @return TelegramResponse
      *
      * @throws TelegramSDKException
-     *
-     * @return TelegramResponse
      */
     public function sendRequest(TelegramRequest $request): TelegramResponse
     {
@@ -91,13 +89,12 @@ class TelegramClient
     /**
      * Prepares the API request for sending to the client handler.
      *
-     * @param TelegramRequest $request
-     *
+     * @param  TelegramRequest  $request
      * @return array
      */
     public function prepareRequest(TelegramRequest $request): array
     {
-        $url = $this->getBaseBotUrl() . $request->getAccessToken() . '/' . $request->getEndpoint();
+        $url = $this->getBaseBotUrl().$request->getAccessToken().'/'.$request->getEndpoint();
 
         return [
             $url,
@@ -120,9 +117,8 @@ class TelegramClient
     /**
      * Creates response object.
      *
-     * @param TelegramRequest                    $request
-     * @param ResponseInterface|PromiseInterface $response
-     *
+     * @param  TelegramRequest  $request
+     * @param  ResponseInterface|PromiseInterface  $response
      * @return TelegramResponse
      */
     protected function getResponse(TelegramRequest $request, $response): TelegramResponse
@@ -131,9 +127,8 @@ class TelegramClient
     }
 
     /**
-     * @param TelegramRequest $request
-     * @param string $method
-     *
+     * @param  TelegramRequest  $request
+     * @param  string  $method
      * @return array
      */
     private function getOption(TelegramRequest $request, $method)

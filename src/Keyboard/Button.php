@@ -22,8 +22,7 @@ class Button extends Base
     /**
      * Button Label Text.
      *
-     * @param string $text
-     *
+     * @param  string  $text
      * @return Button
      */
     public function setText($text): self

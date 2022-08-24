@@ -33,11 +33,10 @@ trait Message
      *
      * @link https://core.telegram.org/bots/api#sendmessage
      *
-     * @param array $params
+     * @param  array  $params
+     * @return MessageObject
      *
      * @throws TelegramSDKException
-     *
-     * @return MessageObject
      */
     public function sendMessage(array $params): MessageObject
     {
@@ -61,11 +60,10 @@ trait Message
      *
      * @link https://core.telegram.org/bots/api#forwardmessage
      *
-     * @param array $params
+     * @param  array  $params
+     * @return MessageObject
      *
      * @throws TelegramSDKException
-     *
-     * @return MessageObject
      */
     public function forwardMessage(array $params): MessageObject
     {
@@ -97,11 +95,10 @@ trait Message
      *
      * @link https://core.telegram.org/bots/api#copymessage
      *
-     * @param array $params
+     * @param  array  $params
+     * @return MessageObject
      *
      * @throws TelegramSDKException
-     *
-     * @return MessageObject
      */
     public function copyMessage(array $params): MessageObject
     {
@@ -130,11 +127,10 @@ trait Message
      *
      * @link https://core.telegram.org/bots/api#sendphoto
      *
-     * @param array $params
+     * @param  array  $params
+     * @return MessageObject
      *
      * @throws TelegramSDKException
-     *
-     * @return MessageObject
      */
     public function sendPhoto(array $params): MessageObject
     {
@@ -167,11 +163,10 @@ trait Message
      * @link https://core.telegram.org/bots/api#sendaudio
      * </code>
      *
-     * @param array $params
+     * @param  array  $params
+     * @return MessageObject
      *
      * @throws TelegramSDKException
-     *
-     * @return MessageObject
      */
     public function sendAudio(array $params): MessageObject
     {
@@ -202,11 +197,10 @@ trait Message
      *
      * @link https://core.telegram.org/bots/api#senddocument
      *
-     * @param array $params
+     * @param  array  $params
+     * @return MessageObject
      *
      * @throws TelegramSDKException
-     *
-     * @return MessageObject
      */
     public function sendDocument(array $params): MessageObject
     {
@@ -241,11 +235,10 @@ trait Message
      * @link https://core.telegram.org/bots/api#sendvideo
      * @see  sendDocument
      *
-     * @param array $params
+     * @param  array  $params
+     * @return MessageObject
      *
      * @throws TelegramSDKException
-     *
-     * @return MessageObject
      */
     public function sendVideo(array $params): MessageObject
     {
@@ -278,11 +271,10 @@ trait Message
      *
      * @link https://core.telegram.org/bots/api#sendanimation
      *
-     * @param array $params
+     * @param  array  $params
+     * @return MessageObject
      *
      * @throws TelegramSDKException
-     *
-     * @return MessageObject
      */
     public function sendAnimation(array $params): MessageObject
     {
@@ -312,11 +304,10 @@ trait Message
      *
      * @link https://core.telegram.org/bots/api#sendvoice
      *
-     * @param array $params
+     * @param  array  $params
+     * @return MessageObject
      *
      * @throws TelegramSDKException
-     *
-     * @return MessageObject
      */
     public function sendVoice(array $params): MessageObject
     {
@@ -345,11 +336,10 @@ trait Message
      *
      * @link https://core.telegram.org/bots/api#sendvideonote
      *
-     * @param array $params
+     * @param  array  $params
+     * @return MessageObject
      *
      * @throws TelegramSDKException
-     *
-     * @return MessageObject
      */
     public function sendVideoNote(array $params): MessageObject
     {
@@ -374,12 +364,12 @@ trait Message
      *
      * @link https://core.telegram.org/bots/api#sendmediagroup
      *
-     * @param array $params
+     * @param  array  $params
+     * @return MessageObject
      *
      * @throws TelegramSDKException
      *
      * //TODO Check this return type.
-     * @return MessageObject
      */
     public function sendMediaGroup(array $params)
     {
@@ -412,11 +402,10 @@ trait Message
      *
      * @link https://core.telegram.org/bots/api#sendvenue
      *
-     * @param array $params
+     * @param  array  $params
+     * @return MessageObject
      *
      * @throws TelegramSDKException
-     *
-     * @return MessageObject
      */
     public function sendVenue(array $params): MessageObject
     {
@@ -445,11 +434,10 @@ trait Message
      *
      * @link https://core.telegram.org/bots/api#sendcontact
      *
-     * @param array $params
+     * @param  array  $params
+     * @return MessageObject
      *
      * @throws TelegramSDKException
-     *
-     * @return MessageObject
      */
     public function sendContact(array $params): MessageObject
     {
@@ -488,11 +476,10 @@ trait Message
      *
      * @link https://core.telegram.org/bots/api#sendpoll
      *
-     * @param array $params
+     * @param  array  $params
+     * @return MessageObject
      *
      * @throws TelegramSDKException
-     *
-     * @return MessageObject
      */
     public function sendPoll(array $params): MessageObject
     {
@@ -523,11 +510,10 @@ trait Message
      *
      * @link https://core.telegram.org/bots/api#senddice
      *
-     * @param array $params
+     * @param  array  $params
+     * @return MessageObject
      *
      * @throws TelegramSDKException
-     *
-     * @return MessageObject
      */
     public function sendDice(array $params): MessageObject
     {
@@ -548,11 +534,10 @@ trait Message
      *
      * @link https://core.telegram.org/bots/api#sendchataction
      *
-     * @param array $params
+     * @param  array  $params
+     * @return bool
      *
      * @throws TelegramSDKException
-     *
-     * @return bool
      */
     public function sendChatAction(array $params): bool
     {
@@ -575,6 +560,6 @@ trait Message
             return true;
         }
 
-        throw new TelegramSDKException('Invalid Action! Accepted value: ' . implode(', ', $validActions));
+        throw new TelegramSDKException('Invalid Action! Accepted value: '.implode(', ', $validActions));
     }
 }

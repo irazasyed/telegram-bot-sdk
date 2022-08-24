@@ -38,11 +38,11 @@ class TelegramApiTest extends TestCase
 
     /**
      * @param  GuzzleHttpClient|null  $client
-     * @param  string                 $token
-     * @param  bool                   $async
+     * @param  string  $token
+     * @param  bool  $async
+     * @return Api
      *
      * @throws TelegramSDKException
-     * @return Api
      */
     protected function getApi($client = null, $token = 'TELEGRAM_TOKEN', $async = false)
     {
@@ -147,11 +147,11 @@ class TelegramApiTest extends TestCase
         $data = [];
         $fakeResponse = $this->makeFakeServerResponse($data);
         $params = [
-            'chat_id'                  => 12345678,
-            'text'                     => 'lorem ipsum',
+            'chat_id' => 12345678,
+            'text' => 'lorem ipsum',
             'disable_web_page_preview' => true,
-            'disable_notification'     => false,
-            'reply_to_message_id'      => 99999999,
+            'disable_notification' => false,
+            'reply_to_message_id' => 99999999,
         ];
 
         $api = $this->getApi($this->getGuzzleHttpClient([$fakeResponse]), 'Special_Bot_Token');
@@ -174,88 +174,88 @@ class TelegramApiTest extends TestCase
         $data1 = [
             [
                 'update_id' => 377695760,
-                'message'   => [
+                'message' => [
                     'message_id' => 749,
-                    'from'       => [
-                        'id'         => 123456789,
+                    'from' => [
+                        'id' => 123456789,
                         'first_name' => 'John',
-                        'last_name'  => 'Doe',
-                        'username'   => 'jdoe',
+                        'last_name' => 'Doe',
+                        'username' => 'jdoe',
                     ],
-                    'chat'       => [
-                        'id'         => 123456789,
+                    'chat' => [
+                        'id' => 123456789,
                         'first_name' => 'John',
-                        'last_name'  => 'Doe',
-                        'username'   => 'jdoe',
-                        'type'       => 'private',
+                        'last_name' => 'Doe',
+                        'username' => 'jdoe',
+                        'type' => 'private',
                     ],
-                    'date'       => 1494623093,
-                    'text'       => 'Test1',
+                    'date' => 1494623093,
+                    'text' => 'Test1',
                 ],
             ],
             [
                 'update_id' => 377695761,
-                'message'   => [
+                'message' => [
                     'message_id' => 750,
-                    'from'       => [
-                        'id'         => 123456789,
+                    'from' => [
+                        'id' => 123456789,
                         'first_name' => 'John',
-                        'last_name'  => 'Doe',
-                        'username'   => 'jdoe',
+                        'last_name' => 'Doe',
+                        'username' => 'jdoe',
                     ],
-                    'chat'       => [
-                        'id'         => 123456789,
+                    'chat' => [
+                        'id' => 123456789,
                         'first_name' => 'John',
-                        'last_name'  => 'Doe',
-                        'username'   => 'jdoe',
-                        'type'       => 'private',
+                        'last_name' => 'Doe',
+                        'username' => 'jdoe',
+                        'type' => 'private',
                     ],
-                    'date'       => 1494623095,
-                    'text'       => 'Test2',
+                    'date' => 1494623095,
+                    'text' => 'Test2',
                 ],
             ],
         ];
         $data2 = [
             [
                 'update_id' => 377695762,
-                'message'   => [
+                'message' => [
                     'message_id' => 751,
-                    'from'       => [
-                        'id'         => 123456789,
+                    'from' => [
+                        'id' => 123456789,
                         'first_name' => 'John',
-                        'last_name'  => 'Doe',
-                        'username'   => 'jdoe',
+                        'last_name' => 'Doe',
+                        'username' => 'jdoe',
                     ],
-                    'chat'       => [
-                        'id'         => 123456789,
+                    'chat' => [
+                        'id' => 123456789,
                         'first_name' => 'John',
-                        'last_name'  => 'Doe',
-                        'username'   => 'jdoe',
-                        'type'       => 'private',
+                        'last_name' => 'Doe',
+                        'username' => 'jdoe',
+                        'type' => 'private',
                     ],
-                    'date'       => 1494623093,
-                    'text'       => 'Test3',
+                    'date' => 1494623093,
+                    'text' => 'Test3',
                 ],
             ],
             [
                 'update_id' => 377695763,
-                'message'   => [
+                'message' => [
                     'message_id' => 752,
-                    'from'       => [
-                        'id'         => 123456789,
+                    'from' => [
+                        'id' => 123456789,
                         'first_name' => 'John',
-                        'last_name'  => 'Doe',
-                        'username'   => 'jdoe',
+                        'last_name' => 'Doe',
+                        'username' => 'jdoe',
                     ],
-                    'chat'       => [
-                        'id'         => 123456789,
+                    'chat' => [
+                        'id' => 123456789,
                         'first_name' => 'John',
-                        'last_name'  => 'Doe',
-                        'username'   => 'jdoe',
-                        'type'       => 'private',
+                        'last_name' => 'Doe',
+                        'username' => 'jdoe',
+                        'type' => 'private',
                     ],
-                    'date'       => 1494623095,
-                    'text'       => 'Test4',
+                    'date' => 1494623095,
+                    'text' => 'Test4',
                 ],
             ],
         ];
@@ -378,7 +378,7 @@ class TelegramApiTest extends TestCase
         $api = $this->getApi($this->getGuzzleHttpClient([$this->makeFakeInboundUpdate($data)]));
 
         $result = $api->sendDocument([
-            'chat_id'  => 123456789,
+            'chat_id' => 123456789,
             'document' => 'AwADBAADYwADO1wlBuF1ogMa7HnMAg',
         ]);
 
@@ -395,6 +395,7 @@ class TelegramApiTest extends TestCase
      * @param $type
      *
      * @dataProvider fileTypes
+     *
      * @throws TelegramSDKException
      */
     public function it_requires_all_file_uploads_except_file_id_to_be_created_with_fileInput_object($type)
@@ -404,7 +405,7 @@ class TelegramApiTest extends TestCase
         $api = $this->getApi();
 
         $api->sendDocument([
-            'chat_id'  => 123456789,
+            'chat_id' => 123456789,
             'document' => $type,
         ]);
     }
@@ -420,7 +421,7 @@ class TelegramApiTest extends TestCase
         //We want to send a document but the params have a voice key instead.
         $api->sendDocument([
             'chat_id' => 123456789,
-            'voice'   => InputFile::create(fopen('php://input', 'r'), 'Myvoice.ogg'),
+            'voice' => InputFile::create(fopen('php://input', 'r'), 'Myvoice.ogg'),
         ]);
     }
 
@@ -432,7 +433,7 @@ class TelegramApiTest extends TestCase
         $api = $this->getApi($this->getGuzzleHttpClient([$this->makeFakeInboundUpdate($data)]));
 
         $result = $api->sendDocument([
-            'chat_id'  => '123456789',
+            'chat_id' => '123456789',
             'document' => InputFile::create($stream, 'myFile.txt'),
         ]);
 
@@ -454,7 +455,7 @@ class TelegramApiTest extends TestCase
         $api = $this->getApi();
 
         $api->sendDocument([
-            'chat_id'  => '123456789',
+            'chat_id' => '123456789',
             'document' => InputFile::create('/path/to/nonexisting/file/test.pdf'),
         ]);
     }
@@ -467,7 +468,7 @@ class TelegramApiTest extends TestCase
 
         //We can use any file input here, for testing a stream is quick and easy.
         $api->sendDocument([
-            'chat_id'  => 123456789,
+            'chat_id' => 123456789,
             'document' => InputFile::create($this->streamFor('Some text'), 'testing.txt'),
         ]);
 
@@ -519,13 +520,13 @@ class TelegramApiTest extends TestCase
         // If the user uses the INPUTFILE class to send the webhook cert, the filename will override our default
         // setting of certificate.pem
         $api->setWebhook([
-            'url'         => 'https://example.com',
+            'url' => 'https://example.com',
             'certificate' => InputFile::create($this->streamFor($pubKey), 'public.key'),
         ]);
 
         //If the user uses just a string to the path/filename of the webhook cert.
         $api->setWebhook([
-            'url'         => 'https://example.com',
+            'url' => 'https://example.com',
             'certificate' => $fakeFile,
         ]);
 
@@ -599,23 +600,23 @@ class TelegramApiTest extends TestCase
         $updateData = $this->makeFakeServerResponse([
             [
                 'update_id' => 377695760,
-                'message'   => [
+                'message' => [
                     'message_id' => 749,
-                    'from'       => [
-                        'id'         => 123456789,
+                    'from' => [
+                        'id' => 123456789,
                         'first_name' => 'John',
-                        'last_name'  => 'Doe',
-                        'username'   => 'jdoe',
+                        'last_name' => 'Doe',
+                        'username' => 'jdoe',
                     ],
-                    'chat'       => [
-                        'id'         => 123456789,
+                    'chat' => [
+                        'id' => 123456789,
                         'first_name' => 'John',
-                        'last_name'  => 'Doe',
-                        'username'   => 'jdoe',
-                        'type'       => 'private',
+                        'last_name' => 'Doe',
+                        'username' => 'jdoe',
+                        'type' => 'private',
                     ],
-                    'date'       => 1494623093,
-                    'text'       => 'Just some text',
+                    'date' => 1494623093,
+                    'text' => 'Just some text',
                 ],
             ],
         ]);
@@ -660,7 +661,8 @@ class TelegramApiTest extends TestCase
 
     private function createSpyListener(): \League\Event\ListenerInterface
     {
-        return new class() extends AbstractListener {
+        return new class() extends AbstractListener
+        {
             /** @var array<string, list<\League\Event\EventInterface>> */
             public $events = [];
 

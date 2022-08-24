@@ -23,8 +23,7 @@ trait GuzzleMock
     protected $history = [];
 
     /**
-     * @param array $responsesToQueue
-     *
+     * @param  array  $responsesToQueue
      * @return GuzzleHttpClient
      */
     public function getGuzzleHttpClient(array $responsesToQueue = [])
@@ -35,8 +34,7 @@ trait GuzzleMock
     }
 
     /**
-     * @param array $responsesToQueue
-     *
+     * @param  array  $responsesToQueue
      * @return Client
      */
     protected function createClientWithQueuedResponse(array $responsesToQueue)
@@ -49,10 +47,9 @@ trait GuzzleMock
     }
 
     /**
-     * @param array|bool $data
-     * @param int        $status_code
-     * @param array      $headers
-     *
+     * @param  array|bool  $data
+     * @param  int  $status_code
+     * @param  array  $headers
      * @return Response
      */
     public function makeFakeServerResponse($data, $status_code = 200, $headers = [])
@@ -61,7 +58,7 @@ trait GuzzleMock
             $status_code,
             $headers,
             json_encode([
-                'ok'     => true,
+                'ok' => true,
                 'result' => $data,
             ])
         );
@@ -90,8 +87,8 @@ trait GuzzleMock
             $status_code,
             $headers,
             json_encode([
-                'ok'          => false,
-                'error_code'  => $error_code,
+                'ok' => false,
+                'error_code' => $error_code,
                 'description' => "$description",
             ])
         );

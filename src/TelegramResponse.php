@@ -39,8 +39,8 @@ class TelegramResponse
     /**
      * Gets the relevant data from the Http client.
      *
-     * @param TelegramRequest                    $request
-     * @param ResponseInterface|PromiseInterface $response
+     * @param  TelegramRequest  $request
+     * @param  ResponseInterface|PromiseInterface  $response
      */
     public function __construct(TelegramRequest $request, $response)
     {

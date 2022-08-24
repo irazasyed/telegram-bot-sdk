@@ -24,9 +24,8 @@ class InputFile
     /**
      * Create a new InputFile entity.
      *
-     * @param string|resource|StreamInterface|null $file
-     * @param string|null                          $filename
-     *
+     * @param  string|resource|StreamInterface|null  $file
+     * @param  string|null  $filename
      * @return InputFile
      */
     public static function create($file = null, $filename = null): self
@@ -37,9 +36,8 @@ class InputFile
     /**
      * Create a file on-fly using the provided contents and filename.
      *
-     * @param string $contents
-     * @param string $filename
-     *
+     * @param  string  $contents
+     * @param  string  $filename
      * @return mixed
      */
     public static function createFromContents($contents, $filename)
@@ -50,8 +48,8 @@ class InputFile
     /**
      * Creates a new InputFile entity.
      *
-     * @param string|resource|StreamInterface|null $file
-     * @param string|null                          $filename
+     * @param  string|resource|StreamInterface|null  $file
+     * @param  string|null  $filename
      */
     public function __construct($file = null, $filename = null)
     {
@@ -72,8 +70,7 @@ class InputFile
     /**
      * Set File.
      *
-     * @param string|resource|StreamInterface|null $file
-     *
+     * @param  string|resource|StreamInterface|null  $file
      * @return InputFile
      */
     public function setFile($file): self
@@ -86,9 +83,9 @@ class InputFile
     /**
      * Return the name of the file.
      *
-     * @throws CouldNotUploadInputFile
-     *
      * @return string
+     *
+     * @throws CouldNotUploadInputFile
      */
     public function getFilename(): string
     {
@@ -103,9 +100,9 @@ class InputFile
      * Attempts to access the meta data in the stream or resource to determine what
      * the filename should be if the user did not supply one.
      *
-     * @throws CouldNotUploadInputFile
-     *
      * @return string
+     *
+     * @throws CouldNotUploadInputFile
      */
     protected function attemptFileNameDetection()
     {
@@ -135,10 +132,9 @@ class InputFile
      * Set a filename.
      *
      * @param $filename
+     * @return InputFile
      *
      * @throws InvalidArgumentException
-     *
-     * @return InputFile
      */
     public function setFilename($filename): self
     {
@@ -157,6 +153,7 @@ class InputFile
      * Get contents.
      *
      * @return StreamInterface|resource|string
+     *
      * @throws CouldNotUploadInputFile
      */
     public function getContents()
@@ -167,8 +164,7 @@ class InputFile
     /**
      * Set contents of the file.
      *
-     * @param string $contents
-     *
+     * @param  string  $contents
      * @return InputFile
      */
     public function setContents($contents): self
@@ -181,9 +177,9 @@ class InputFile
     /**
      * Opens remote & local file.
      *
-     * @throws CouldNotUploadInputFile
-     *
      * @return StreamInterface|resource|string
+     *
+     * @throws CouldNotUploadInputFile
      */
     protected function open()
     {
@@ -197,8 +193,7 @@ class InputFile
     /**
      * Determine if given param is a string or null.
      *
-     * @param mixed $param
-     *
+     * @param  mixed  $param
      * @return bool true if it's a string or null, false otherwise.
      */
     protected function isStringOrNull($param): bool
@@ -230,11 +225,11 @@ class InputFile
     /**
      * Determine if it's a local file and exists.
      *
-     * @throws CouldNotUploadInputFile
-     *
      * @return bool true if the file exists and readable, false if it's not a
      *              local file. Throws exception if the file doesn't exist or
      *              is not readable otherwise.
+     *
+     * @throws CouldNotUploadInputFile
      */
     protected function isFileLocalAndExists(): bool
     {

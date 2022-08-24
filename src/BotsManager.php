@@ -26,7 +26,7 @@ class BotsManager
     /**
      * TelegramManager constructor.
      *
-     * @param array $config
+     * @param  array  $config
      */
     public function __construct(array $config)
     {
@@ -36,8 +36,7 @@ class BotsManager
     /**
      * Set the IoC Container.
      *
-     * @param Container $container Container instance
-     *
+     * @param  Container  $container Container instance
      * @return BotsManager
      */
     public function setContainer(Container $container): self
@@ -50,11 +49,10 @@ class BotsManager
     /**
      * Get the configuration for a bot.
      *
-     * @param string|null $name
+     * @param  string|null  $name
+     * @return array
      *
      * @throws InvalidArgumentException
-     *
-     * @return array
      */
     public function getBotConfig($name = null): array
     {
@@ -74,10 +72,10 @@ class BotsManager
     /**
      * Get a bot instance.
      *
-     * @param string|null $name
+     * @param  string|null  $name
+     * @return Api
      *
      * @throws TelegramSDKException
-     * @return Api
      */
     public function bot($name = null): Api
     {
@@ -93,10 +91,10 @@ class BotsManager
     /**
      * Reconnect to the given bot.
      *
-     * @param string|null $name
+     * @param  string|null  $name
+     * @return Api
      *
      * @throws TelegramSDKException
-     * @return Api
      */
     public function reconnect($name = null): Api
     {
@@ -109,8 +107,7 @@ class BotsManager
     /**
      * Disconnect from the given bot.
      *
-     * @param string|null $name
-     *
+     * @param  string|null  $name
      * @return BotsManager
      */
     public function disconnect($name = null): self
@@ -124,9 +121,8 @@ class BotsManager
     /**
      * Get the specified configuration value for Telegram.
      *
-     * @param string $key
-     * @param mixed  $default
-     *
+     * @param  string  $key
+     * @param  mixed  $default
      * @return mixed
      */
     public function getConfig($key, $default = null)
@@ -147,8 +143,7 @@ class BotsManager
     /**
      * Set the default bot name.
      *
-     * @param string $name
-     *
+     * @param  string  $name
      * @return BotsManager
      */
     public function setDefaultBot($name): self
@@ -171,8 +166,7 @@ class BotsManager
     /**
      * De-duplicate an array.
      *
-     * @param array $array
-     *
+     * @param  array  $array
      * @return array
      */
     protected function deduplicateArray(array $array): array
@@ -183,10 +177,10 @@ class BotsManager
     /**
      * Make the bot instance.
      *
-     * @param string $name
+     * @param  string  $name
+     * @return Api
      *
      * @throws TelegramSDKException
-     * @return Api
      */
     protected function makeBot($name): Api
     {
@@ -216,11 +210,11 @@ class BotsManager
 
     /**
      * @deprecated Will be removed in SDK v4
+     *
      * @internal
      * Builds the list of commands for the given commands array.
      *
-     * @param list<string|class-string<\Telegram\Bot\Commands\CommandInterface>> $commands A list of command names or FQCNs of CommandInterface instances.
-     *
+     * @param  list<string|class-string<\Telegram\Bot\Commands\CommandInterface>>  $commands A list of command names or FQCNs of CommandInterface instances.
      * @return array An array of commands which includes global and bot specific commands.
      */
     public function parseBotCommands(array $commands): array
@@ -234,8 +228,7 @@ class BotsManager
     /**
      * Parse an array of commands and build a list.
      *
-     * @param list<string|class-string<\Telegram\Bot\Commands\CommandInterface>> $commands
-     *
+     * @param  list<string|class-string<\Telegram\Bot\Commands\CommandInterface>>  $commands
      * @return array
      */
     protected function parseCommands(array $commands): array
@@ -274,11 +267,11 @@ class BotsManager
     /**
      * Magically pass methods to the default bot.
      *
-     * @param string $method
-     * @param array  $parameters
+     * @param  string  $method
+     * @param  array  $parameters
+     * @return mixed
      *
      * @throws TelegramSDKException
-     * @return mixed
      */
     public function __call($method, $parameters)
     {

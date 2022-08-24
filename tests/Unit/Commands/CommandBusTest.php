@@ -69,7 +69,8 @@ class CommandBusTest extends TestCase
     {
         $this->expectException(TelegramSDKException::class);
         $this->bus->addCommand(
-            new class() {
+            new class()
+            {
             }
         );
     }
@@ -194,7 +195,6 @@ class CommandBusTest extends TestCase
 
     /**
      * @param $result
-     *
      * @return Collection
      */
     private function getAllCommandNames($result): Collection

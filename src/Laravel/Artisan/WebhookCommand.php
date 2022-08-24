@@ -22,6 +22,7 @@ class WebhookCommand extends Command
                 {--setup : To declare your webhook on Telegram servers. So they can call you.}
                 {--remove : To remove your already declared webhook on Telegram servers.}
                 {--info : To get the information about your current webhook on Telegram servers.}';
+
     /**
      * The console command description.
      *
@@ -41,7 +42,7 @@ class WebhookCommand extends Command
     /**
      * WebhookCommand constructor.
      *
-     * @param BotsManager $botsManager
+     * @param  BotsManager  $botsManager
      */
     public function __construct(BotsManager $botsManager)
     {
@@ -76,6 +77,7 @@ class WebhookCommand extends Command
 
     /**
      * Setup Webhook.
+     *
      * @throws TelegramSDKException
      */
     protected function setupWebhook()
@@ -99,6 +101,7 @@ class WebhookCommand extends Command
 
     /**
      * Remove Webhook.
+     *
      * @throws TelegramSDKException
      */
     protected function removeWebHook()
@@ -118,6 +121,7 @@ class WebhookCommand extends Command
 
     /**
      * Get Webhook Info.
+     *
      * @throws TelegramSDKException
      */
     protected function getInfo()
@@ -143,8 +147,8 @@ class WebhookCommand extends Command
     /**
      * Make WebhookInfo Response for console.
      *
-     * @param WebhookInfo $response
-     * @param string      $bot
+     * @param  WebhookInfo  $response
+     * @param  string  $bot
      */
     protected function makeWebhookInfoResponse(WebhookInfo $response, string $bot)
     {
@@ -156,7 +160,7 @@ class WebhookCommand extends Command
         })->toArray();
 
         $this->table([
-            [new TableCell('Bot: ' . $bot, ['colspan' => 2])],
+            [new TableCell('Bot: '.$bot, ['colspan' => 2])],
             ['Key', 'Info'],
         ], $rows);
     }
@@ -165,7 +169,6 @@ class WebhookCommand extends Command
      * Map Boolean Value to Yes/No.
      *
      * @param $value
-     *
      * @return string
      */
     protected function mapBool($value)

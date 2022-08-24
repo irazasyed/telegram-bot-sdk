@@ -33,7 +33,7 @@ class TelegramServiceProvider extends ServiceProvider implements DeferrableProvi
      */
     protected function configure()
     {
-        $this->mergeConfigFrom(__DIR__ . '/config/telegram.php', 'telegram');
+        $this->mergeConfigFrom(__DIR__.'/config/telegram.php', 'telegram');
     }
 
     /**
@@ -43,7 +43,7 @@ class TelegramServiceProvider extends ServiceProvider implements DeferrableProvi
     {
         if ($this->app instanceof LaravelApplication && $this->app->runningInConsole()) {
             $this->publishes([
-                __DIR__ . '/config/telegram.php' => config_path('telegram.php'),
+                __DIR__.'/config/telegram.php' => config_path('telegram.php'),
             ], 'telegram-config');
         } elseif ($this->app instanceof LumenApplication) {
             $this->app->configure('telegram');
