@@ -3,23 +3,21 @@ name: Code Style
 on: [push]
 
 jobs:
-  php-cs-fixer:
+  phplint:
+    name: "Laravel Pint (Style)"
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
+      
+      - name: "Laravel Pint"
+        uses: aglipanci/laravel-pint-action@0.1.0
         with:
-          ref: ${{ github.head_ref }}
-
-      - name: Run PHP CS Fixer
-        uses: docker://oskarstark/php-cs-fixer-ga
-        with:
-          args: --config=.php-cs-fixer.dist.php --allow-risky=yes
-
-      - name: Commit changes
+          preset: laravel
+          
+      - name: Commit changes to GitHub
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          commit_message: Apply PHP CS Fixer changes
+          commit_message: "PHP Style Change (Laravel Pint in CI)"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
