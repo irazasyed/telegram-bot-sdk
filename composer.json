@@ -22,6 +22,7 @@
   },
   "require-dev": {
     "php-parallel-lint/php-parallel-lint": "^1.3",
+    "phpspec/prophecy": "^1.15",
     "phpunit/phpunit": "^9.5"
   },
   "autoload": {
