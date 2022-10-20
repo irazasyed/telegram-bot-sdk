@@ -424,23 +424,6 @@ trait Http
     }
 
     /**
-     * @throws CouldNotUploadInputFile
-     */
-    protected function validateMediaField(array $params) {
-        $media = $params[$this->mediaKey()];
-        Arr::isList($media) || $media = [$media];
-
-        collect($media)->each(function (array $mediaItem, $key) {
-            // All file-paths, urls, or file resources should be provided by using the InputFile object
-            if (! $mediaItem[$this->mediaKey()] instanceof InputFile) {
-                throw CouldNotUploadInputFile::inputFileParameterShouldBeInputFileEntity(
-                    sprintf("%s #%s", $this->mediaKey(), $key)
-                );
-            }
-        });
-    }
-
-    /**
      * @param  array  $params
      * @param $fileUpload
      * @return array
