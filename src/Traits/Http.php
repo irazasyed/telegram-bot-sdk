@@ -2,6 +2,7 @@
 
 namespace Telegram\Bot\Traits;
 
+use Illuminate\Support\Arr;
 use InvalidArgumentException;
 use Telegram\Bot\Exceptions\CouldNotUploadInputFile;
 use Telegram\Bot\Exceptions\TelegramSDKException;
@@ -257,9 +258,9 @@ trait Http
      * @param  string  $inputFileField
      * @return TelegramResponse
      *
-     * @throws CouldNotUploadInputFile
+     * @throws CouldNotUploadInputFile|TelegramSDKException
      */
-    protected function uploadFile(string $endpoint, array $params, $inputFileField): TelegramResponse
+    protected function uploadFile(string $endpoint, array $params, string $inputFileField): TelegramResponse
     {
         //Check if the field in the $params array (that is being used to send the relative file), is a file id.
         if (! isset($params[$inputFileField])) {
@@ -283,9 +284,26 @@ trait Http
      *
      * @throws CouldNotUploadInputFile
      */
-    protected function prepareMultipartParams(array $params, $inputFileField): array
+    protected function prepareMultipartParams(array $params, string $inputFileField): array
     {
         $this->validateInputFileField($params, $inputFileField);
+
+        $inputFiles = Arr::wrap($params[$inputFileField]);
+        Arr::isList($inputFiles) || $inputFiles = [$inputFiles];
+        $multipart = collect($inputFiles)
+            ->map(function ($inputFile) use ($inputFileField): ?array {
+                // get input file if key media
+                if (is_array($inputFile) && $inputFileField === $this->mediaKey()) {
+                    $inputFile = $inputFile[$inputFileField];
+                }
+
+                if (!$inputFile instanceof InputFile) {
+                    return null;
+                }
+
+                return $inputFile->toMultipart();
+            })
+            ->filter();
 
         //Iterate through all param options and convert to multipart/form-data.
         return collect($params)
@@ -295,6 +313,7 @@ trait Http
             ->map(function ($contents, $name) {
                 return $this->generateMultipartData($contents, $name);
             })
+            ->concat($multipart)
             ->values()
             ->all();
     }
@@ -303,19 +322,39 @@ trait Http
      * Generates the multipart data required when sending files to telegram.
      *
      * @param  mixed  $contents
-     * @param  string  $name
+     * @param  string $name
      * @return array
      */
-    protected function generateMultipartData($contents, $name): array
+    protected function generateMultipartData($contents, string $name): array
     {
-        if (! $this->isInputFile($contents)) {
+        if ($name === $this->mediaKey()) {
+            $media = Arr::wrap($contents);
+            $wasList = Arr::isList($media);
+            $wasList || $media = [$media];
+            $media = collect($media)->map(function (array $mediaItem): array {
+                $inputFile = $mediaItem[$this->mediaKey()];
+                if ($inputFile instanceof InputFile) {
+                    return array_merge($mediaItem, [
+                        'media' => $inputFile->getAttachString()
+                    ]);
+                }
+
+                return $mediaItem;
+            })
+                ->all();
+
+            // if media was single media, unwrap that
+            $wasList || $media = reset($media);
+
+            $contents = json_encode($media);
             return compact('name', 'contents');
         }
 
-        $filename = $contents->getFilename();
-        $contents = $contents->getContents();
+        if ($contents instanceof InputFile) {
+            $contents = $contents->getAttachString();
+        }
 
-        return compact('name', 'contents', 'filename');
+        return compact('name', 'contents');
     }
 
     /**
@@ -358,20 +397,47 @@ trait Http
 
     /**
      * @param  array  $params
-     * @param $inputFileField
+     * @param  string $inputFileField
      *
      * @throws CouldNotUploadInputFile
      */
-    protected function validateInputFileField(array $params, $inputFileField): void
+    protected function validateInputFileField(array $params, string $inputFileField): void
     {
         if (! isset($params[$inputFileField])) {
             throw CouldNotUploadInputFile::missingParam($inputFileField);
         }
 
-        // All file-paths, urls, or file resources should be provided by using the InputFile object
-        if ((! $params[$inputFileField] instanceof InputFile) && (is_string($params[$inputFileField]) && ! $this->is_json($params[$inputFileField]))) {
-            throw CouldNotUploadInputFile::inputFileParameterShouldBeInputFileEntity($inputFileField);
-        }
+        $inputFiles = Arr::wrap($params[$inputFileField]);
+        Arr::isList($inputFiles) || $inputFiles = [$inputFiles];
+
+        collect($inputFiles)->each(function ($inputFile, $key) use ($inputFileField) {
+            $failParameter = $inputFileField;
+            if (is_array($inputFile) && $inputFileField === $this->mediaKey()) {
+                $inputFile = $inputFile[$inputFileField];
+                $failParameter = sprintf("%s #%s", $inputFileField, $key);
+            }
+            // All file-paths, urls, or file resources should be provided by using the InputFile object
+            if (! $inputFile instanceof InputFile) {
+                throw CouldNotUploadInputFile::inputFileParameterShouldBeInputFileEntity($failParameter);
+            }
+        });
+    }
+
+    /**
+     * @throws CouldNotUploadInputFile
+     */
+    protected function validateMediaField(array $params) {
+        $media = $params[$this->mediaKey()];
+        Arr::isList($media) || $media = [$media];
+
+        collect($media)->each(function (array $mediaItem, $key) {
+            // All file-paths, urls, or file resources should be provided by using the InputFile object
+            if (! $mediaItem[$this->mediaKey()] instanceof InputFile) {
+                throw CouldNotUploadInputFile::inputFileParameterShouldBeInputFileEntity(
+                    sprintf("%s #%s", $this->mediaKey(), $key)
+                );
+            }
+        });
     }
 
     /**
@@ -386,5 +452,10 @@ trait Http
         }
 
         return ['form_params' => $this->replyMarkupToString($params)];
+    }
+
+    private function mediaKey(): string
+    {
+        return 'media';
     }
 }

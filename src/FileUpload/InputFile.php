@@ -4,13 +4,14 @@ namespace Telegram\Bot\FileUpload;
 
 use GuzzleHttp\Psr7\LazyOpenStream;
 use InvalidArgumentException;
+use JsonSerializable;
 use Psr\Http\Message\StreamInterface;
 use Telegram\Bot\Exceptions\CouldNotUploadInputFile;
 
 /**
  * Class InputFile.
  */
-class InputFile
+class InputFile implements JsonSerializable
 {
     /** @var string|resource|StreamInterface The path to the file on the system or remote / resource. */
     protected $file;
@@ -20,6 +21,9 @@ class InputFile
 
     /** @var string|resource|StreamInterface The contents of the file. */
     protected $contents;
+
+    /** @var string */
+    protected $multipartName;
 
     /**
      * Create a new InputFile entity.
@@ -55,6 +59,15 @@ class InputFile
     {
         $this->file = $file;
         $this->filename = $filename;
+        $this->multipartName = $this->generateRandomName();
+    }
+
+    /**
+     * @return string
+     */
+    public function getMultipartName(): string
+    {
+        return $this->multipartName;
     }
 
     /**
@@ -174,6 +187,28 @@ class InputFile
         return $this;
     }
 
+    public function getAttachString(): string
+    {
+        return 'attach://' . $this->getMultipartName();
+    }
+
+    public function jsonSerialize(): string
+    {
+        return $this->getAttachString();
+    }
+
+    /**
+     * @throws CouldNotUploadInputFile
+     */
+    public function toMultipart(): array
+    {
+        return [
+            'name' => $this->getMultipartName(),
+            'filename' => $this->getFilename(),
+            'contents' => $this->getContents(),
+        ];
+    }
+
     /**
      * Opens remote & local file.
      *
@@ -242,5 +277,10 @@ class InputFile
         }
 
         throw CouldNotUploadInputFile::fileDoesNotExistOrNotReadable($this->file);
+    }
+
+    protected function generateRandomName(): string
+    {
+        return substr(md5(uniqid((string)$this->filename, true)), 0, 10);
     }
 }
