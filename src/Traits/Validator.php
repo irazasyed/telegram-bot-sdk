@@ -70,4 +70,11 @@ trait Validator
 
         return json_last_error() == JSON_ERROR_NONE;
     }
+
+    protected function is_list(array $array): bool
+    {
+        $keys = array_keys($array);
+
+        return array_keys($keys) === $keys;
+    }
 }

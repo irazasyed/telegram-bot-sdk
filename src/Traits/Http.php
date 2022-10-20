@@ -289,7 +289,7 @@ trait Http
         $this->validateInputFileField($params, $inputFileField);
 
         $inputFiles = Arr::wrap($params[$inputFileField]);
-        Arr::isList($inputFiles) || $inputFiles = [$inputFiles];
+        $this->is_list($inputFiles) || $inputFiles = [$inputFiles];
         $multipart = collect($inputFiles)
             ->map(function ($inputFile) use ($inputFileField): ?array {
                 // get input file if key media
@@ -329,7 +329,7 @@ trait Http
     {
         if ($name === $this->mediaKey()) {
             $media = Arr::wrap($contents);
-            $wasList = Arr::isList($media);
+            $wasList = $this->is_list($media);
             $wasList || $media = [$media];
             $media = collect($media)->map(function (array $mediaItem): array {
                 $inputFile = $mediaItem[$this->mediaKey()];
@@ -408,7 +408,7 @@ trait Http
         }
 
         $inputFiles = Arr::wrap($params[$inputFileField]);
-        Arr::isList($inputFiles) || $inputFiles = [$inputFiles];
+        $this->is_list($inputFiles) || $inputFiles = [$inputFiles];
 
         collect($inputFiles)->each(function ($inputFile, $key) use ($inputFileField) {
             $failParameter = $inputFileField;
