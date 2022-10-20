@@ -445,7 +445,6 @@ class TelegramApiTest extends TestCase
 
         $this->assertInstanceOf(Message::class, $result);
         $this->assertStringContainsString('This is some text', $body);
-//        $this->assertStringContainsString('Content-Disposition: form-data; name="document"; filename="myFile.txt"', $body);
         $this->assertStringContainsString(
             sprintf(
                 'Content-Disposition: form-data; name="%s"; filename="%s"',
