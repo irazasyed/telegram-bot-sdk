@@ -10,8 +10,6 @@ use Telegram\Bot\Objects\Update;
 
 class CommandTest extends TestCase
 {
-    use ProphecyTrait;
-
     protected $api;
 
     /**

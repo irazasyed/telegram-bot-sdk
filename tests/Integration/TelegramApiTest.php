@@ -29,7 +29,6 @@ class TelegramApiTest extends TestCase
 {
     use GuzzleMock;
     use CommandGenerator;
-    use ProphecyTrait;
 
     protected function tearDown(): void
     {

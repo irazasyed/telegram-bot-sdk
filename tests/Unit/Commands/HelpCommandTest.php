@@ -12,8 +12,6 @@ use Telegram\Bot\Objects\Update;
 
 class HelpCommandTest extends TestCase
 {
-    use ProphecyTrait;
-
     /** @test it makes the make method work */
     public function it_ensures_a_command_make_method_works()
     {

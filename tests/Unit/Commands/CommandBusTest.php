@@ -13,7 +13,6 @@ use Telegram\Bot\Tests\Traits\CommandGenerator;
 class CommandBusTest extends TestCase
 {
     use CommandGenerator;
-    use ProphecyTrait;
 
     /**
      * @var CommandBus
