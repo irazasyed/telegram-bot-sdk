@@ -9,6 +9,7 @@ use League\Event\Emitter;
 use League\Event\EventInterface;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Telegram\Bot\Api;
 use Telegram\Bot\Commands\CommandBus;
 use Telegram\Bot\Events\UpdateEvent;
@@ -28,6 +29,7 @@ class TelegramApiTest extends TestCase
 {
     use GuzzleMock;
     use CommandGenerator;
+    use ProphecyTrait;
 
     protected function tearDown(): void
     {
@@ -37,9 +39,9 @@ class TelegramApiTest extends TestCase
     }
 
     /**
-     * @param  GuzzleHttpClient|null  $client
-     * @param  string  $token
-     * @param  bool  $async
+     * @param GuzzleHttpClient|null $client
+     * @param string $token
+     * @param bool $async
      * @return Api
      *
      * @throws TelegramSDKException
@@ -161,7 +163,7 @@ class TelegramApiTest extends TestCase
         $request = $this->getHistory()->pluck('request')->first();
 
         $this->assertInstanceOf(Stream::class, $request->getBody());
-        $this->assertEquals(http_build_query($params), (string) $request->getBody());
+        $this->assertEquals(http_build_query($params), (string)$request->getBody());
         $this->assertEquals('https', $request->getUri()->getScheme());
         $this->assertEquals('api.telegram.org', $request->getUri()->getHost());
         $this->assertEquals('/botSpecial_Bot_Token/sendMessage', $request->getUri()->getPath());
@@ -386,7 +388,7 @@ class TelegramApiTest extends TestCase
         $request = $this->getHistory()->pluck('request')->first();
 
         $this->assertInstanceOf(Message::class, $result);
-        $this->assertStringContainsString('document=AwADBAADYwADO1wlBuF1ogMa7HnMAg', (string) $request->getBody());
+        $this->assertStringContainsString('document=AwADBAADYwADO1wlBuF1ogMa7HnMAg', (string)$request->getBody());
     }
 
     /**
@@ -434,16 +436,24 @@ class TelegramApiTest extends TestCase
 
         $result = $api->sendDocument([
             'chat_id' => '123456789',
-            'document' => InputFile::create($stream, 'myFile.txt'),
+            'document' => $if = InputFile::create($stream, 'myFile.txt'),
         ]);
 
         /** @var Request $request */
         $request = $this->getHistory()->pluck('request')->first();
-        $body = (string) $request->getBody();
+        $body = (string)$request->getBody();
 
         $this->assertInstanceOf(Message::class, $result);
         $this->assertStringContainsString('This is some text', $body);
-        $this->assertStringContainsString('Content-Disposition: form-data; name="document"; filename="myFile.txt"', $body);
+//        $this->assertStringContainsString('Content-Disposition: form-data; name="document"; filename="myFile.txt"', $body);
+        $this->assertStringContainsString(
+            sprintf(
+                'Content-Disposition: form-data; name="%s"; filename="%s"',
+                $if->getMultipartName(),
+                $if->getFilename()
+            ),
+            $body
+        );
     }
 
     /**
@@ -469,15 +479,22 @@ class TelegramApiTest extends TestCase
         //We can use any file input here, for testing a stream is quick and easy.
         $api->sendDocument([
             'chat_id' => 123456789,
-            'document' => InputFile::create($this->streamFor('Some text'), 'testing.txt'),
+            'document' => $if = InputFile::create($this->streamFor('Some text'), 'testing.txt'),
         ]);
 
         /** @var Request $request */
         $request = $this->getHistory()->pluck('request')->first();
-        $body = (string) $request->getBody();
+        $body = (string)$request->getBody();
 
         $this->assertStringContainsString('Content-Disposition: form-data; name="chat_id"', $body);
-        $this->assertStringContainsString('Content-Disposition: form-data; name="document"; filename="testing.txt"', $body);
+        $this->assertStringContainsString(
+            sprintf(
+                'Content-Disposition: form-data; name="%s"; filename="%s"',
+                $if->getMultipartName(),
+                $if->getFilename()
+            ),
+            $body
+        );
         $this->assertEquals('POST', $request->getMethod());
         $this->assertStringContainsString('multipart/form-data;', $request->getHeaderLine('Content-Type'));
     }
@@ -512,16 +529,18 @@ class TelegramApiTest extends TestCase
         fseek($fakeFile, 0);
 
         //Setup the responses the fake telegram server should reply with.
-        $api = $this->getApi($this->getGuzzleHttpClient([
-            $this->makeFakeServerResponse(true),
-            $this->makeFakeServerResponse(true),
-        ]));
+        $api = $this->getApi(
+            $this->getGuzzleHttpClient([
+                $this->makeFakeServerResponse(true),
+                $this->makeFakeServerResponse(true),
+            ])
+        );
 
         // If the user uses the INPUTFILE class to send the webhook cert, the filename will override our default
         // setting of certificate.pem
         $api->setWebhook([
             'url' => 'https://example.com',
-            'certificate' => InputFile::create($this->streamFor($pubKey), 'public.key'),
+            'certificate' => $if = InputFile::create($this->streamFor($pubKey), 'public.key'),
         ]);
 
         //If the user uses just a string to the path/filename of the webhook cert.
@@ -531,12 +550,19 @@ class TelegramApiTest extends TestCase
         ]);
 
         /** @var Request $request */
-        $response1 = (string) $this->getHistory()->pluck('request')->get(0)->getBody();
-        $response2 = (string) $this->getHistory()->pluck('request')->get(1)->getBody();
-
-        $this->assertStringContainsString('Content-Disposition: form-data; name="certificate"; filename="public.key"', $response1);
+        $response1 = (string)$this->getHistory()->pluck('request')->get(0)->getBody();
+        $response2 = (string)$this->getHistory()->pluck('request')->get(1)->getBody();
+        $this->assertStringContainsString(
+            sprintf(
+                'Content-Disposition: form-data; name="%s"; filename="%s"',
+                $if->getMultipartName(),
+                $if->getFilename()
+            ),
+            $response1
+        );
         $this->assertStringContainsString('THISISSOMERANDOMKEYDATA', $response1);
-        $this->assertStringContainsString('Content-Disposition: form-data; name="certificate"; filename="certificate.pem"', $response2);
+        $this->assertStringContainsString('Content-Disposition: form-data; name="certificate"', $response2);
+        $this->assertStringContainsString('filename="certificate.pem"', $response2);
         $this->assertStringContainsString('THISISSOMERANDOMKEYDATA', $response1);
     }
 
@@ -661,8 +687,7 @@ class TelegramApiTest extends TestCase
 
     private function createSpyListener(): \League\Event\ListenerInterface
     {
-        return new class() extends AbstractListener
-        {
+        return new class() extends AbstractListener {
             /** @var array<string, list<\League\Event\EventInterface>> */
             public $events = [];
 
