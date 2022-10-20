@@ -335,7 +335,7 @@ trait Http
                 $inputFile = $mediaItem[$this->mediaKey()];
                 if ($inputFile instanceof InputFile) {
                     return array_merge($mediaItem, [
-                        'media' => $inputFile->getAttachString()
+                        'media' => $inputFile->getAttachString(),
                     ]);
                 }
 
@@ -416,10 +416,15 @@ trait Http
                 $inputFile = $inputFile[$inputFileField];
                 $failParameter = sprintf("%s #%s", $inputFileField, $key);
             }
+
+            if (is_string($inputFile) && $this->isFileId($inputFile)) {
+                return true;
+            }
             // All file-paths, urls, or file resources should be provided by using the InputFile object
             if (! $inputFile instanceof InputFile) {
                 throw CouldNotUploadInputFile::inputFileParameterShouldBeInputFileEntity($failParameter);
             }
+            return true;
         });
     }
 
