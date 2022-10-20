@@ -39,9 +39,9 @@ class TelegramApiTest extends TestCase
     }
 
     /**
-     * @param GuzzleHttpClient|null $client
-     * @param string $token
-     * @param bool $async
+     * @param  GuzzleHttpClient|null  $client
+     * @param  string  $token
+     * @param  bool  $async
      * @return Api
      *
      * @throws TelegramSDKException
@@ -163,7 +163,7 @@ class TelegramApiTest extends TestCase
         $request = $this->getHistory()->pluck('request')->first();
 
         $this->assertInstanceOf(Stream::class, $request->getBody());
-        $this->assertEquals(http_build_query($params), (string)$request->getBody());
+        $this->assertEquals(http_build_query($params), (string) $request->getBody());
         $this->assertEquals('https', $request->getUri()->getScheme());
         $this->assertEquals('api.telegram.org', $request->getUri()->getHost());
         $this->assertEquals('/botSpecial_Bot_Token/sendMessage', $request->getUri()->getPath());
@@ -388,7 +388,7 @@ class TelegramApiTest extends TestCase
         $request = $this->getHistory()->pluck('request')->first();
 
         $this->assertInstanceOf(Message::class, $result);
-        $this->assertStringContainsString('document=AwADBAADYwADO1wlBuF1ogMa7HnMAg', (string)$request->getBody());
+        $this->assertStringContainsString('document=AwADBAADYwADO1wlBuF1ogMa7HnMAg', (string) $request->getBody());
     }
 
     /**
@@ -441,7 +441,7 @@ class TelegramApiTest extends TestCase
 
         /** @var Request $request */
         $request = $this->getHistory()->pluck('request')->first();
-        $body = (string)$request->getBody();
+        $body = (string) $request->getBody();
 
         $this->assertInstanceOf(Message::class, $result);
         $this->assertStringContainsString('This is some text', $body);
@@ -484,7 +484,7 @@ class TelegramApiTest extends TestCase
 
         /** @var Request $request */
         $request = $this->getHistory()->pluck('request')->first();
-        $body = (string)$request->getBody();
+        $body = (string) $request->getBody();
 
         $this->assertStringContainsString('Content-Disposition: form-data; name="chat_id"', $body);
         $this->assertStringContainsString(
@@ -550,8 +550,8 @@ class TelegramApiTest extends TestCase
         ]);
 
         /** @var Request $request */
-        $response1 = (string)$this->getHistory()->pluck('request')->get(0)->getBody();
-        $response2 = (string)$this->getHistory()->pluck('request')->get(1)->getBody();
+        $response1 = (string) $this->getHistory()->pluck('request')->get(0)->getBody();
+        $response2 = (string) $this->getHistory()->pluck('request')->get(1)->getBody();
         $this->assertStringContainsString(
             sprintf(
                 'Content-Disposition: form-data; name="%s"; filename="%s"',
@@ -687,7 +687,8 @@ class TelegramApiTest extends TestCase
 
     private function createSpyListener(): \League\Event\ListenerInterface
     {
-        return new class() extends AbstractListener {
+        return new class() extends AbstractListener
+        {
             /** @var array<string, list<\League\Event\EventInterface>> */
             public $events = [];
 

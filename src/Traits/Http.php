@@ -297,7 +297,7 @@ trait Http
                     $inputFile = $inputFile[$inputFileField];
                 }
 
-                if (!$inputFile instanceof InputFile) {
+                if (! $inputFile instanceof InputFile) {
                     return null;
                 }
 
@@ -322,7 +322,7 @@ trait Http
      * Generates the multipart data required when sending files to telegram.
      *
      * @param  mixed  $contents
-     * @param  string $name
+     * @param  string  $name
      * @return array
      */
     protected function generateMultipartData($contents, string $name): array
@@ -347,6 +347,7 @@ trait Http
             $wasList || $media = reset($media);
 
             $contents = json_encode($media);
+
             return compact('name', 'contents');
         }
 
@@ -397,7 +398,7 @@ trait Http
 
     /**
      * @param  array  $params
-     * @param  string $inputFileField
+     * @param  string  $inputFileField
      *
      * @throws CouldNotUploadInputFile
      */
@@ -414,7 +415,7 @@ trait Http
             $failParameter = $inputFileField;
             if (is_array($inputFile) && $inputFileField === $this->mediaKey()) {
                 $inputFile = $inputFile[$inputFileField];
-                $failParameter = sprintf("%s #%s", $inputFileField, $key);
+                $failParameter = sprintf('%s #%s', $inputFileField, $key);
             }
 
             if (is_string($inputFile) && $this->isFileId($inputFile)) {
@@ -424,6 +425,7 @@ trait Http
             if (! $inputFile instanceof InputFile) {
                 throw CouldNotUploadInputFile::inputFileParameterShouldBeInputFileEntity($failParameter);
             }
+
             return true;
         });
     }

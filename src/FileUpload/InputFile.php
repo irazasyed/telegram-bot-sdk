@@ -189,7 +189,7 @@ class InputFile implements JsonSerializable
 
     public function getAttachString(): string
     {
-        return 'attach://' . $this->getMultipartName();
+        return 'attach://'.$this->getMultipartName();
     }
 
     public function jsonSerialize(): string
@@ -281,6 +281,6 @@ class InputFile implements JsonSerializable
 
     protected function generateRandomName(): string
     {
-        return substr(md5(uniqid((string)$this->filename, true)), 0, 10);
+        return substr(md5(uniqid((string) $this->filename, true)), 0, 10);
     }
 }
