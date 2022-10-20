@@ -4,7 +4,6 @@ namespace Telegram\Bot\Tests\Unit\Commands;
 
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
-use Prophecy\PhpUnit\ProphecyTrait;
 use Telegram\Bot\Api;
 use Telegram\Bot\Commands\HelpCommand;
 use Telegram\Bot\Objects\Message;

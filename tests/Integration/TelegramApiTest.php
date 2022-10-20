@@ -9,7 +9,6 @@ use League\Event\Emitter;
 use League\Event\EventInterface;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
-use Prophecy\PhpUnit\ProphecyTrait;
 use Telegram\Bot\Api;
 use Telegram\Bot\Commands\CommandBus;
 use Telegram\Bot\Events\UpdateEvent;
