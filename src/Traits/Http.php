@@ -58,6 +58,19 @@ trait Http
     }
 
     /**
+     * Set Http Client Handler.
+     *
+     * @param  string  $baseBotUrl
+     * @return $this
+     */
+    public function setBaseBotUrl(string $baseBotUrl)
+    {
+        $this->baseBotUrl = $baseBotUrl;
+
+        return $this;
+    }
+
+    /**
      * Returns the TelegramClient service.
      *
      * @return TelegramClient
