@@ -191,7 +191,8 @@ class BotsManager
         $telegram = new Api(
             $token,
             $this->getConfig('async_requests', false),
-            $this->getConfig('http_client_handler', null)
+            $this->getConfig('http_client_handler', null),
+            $this->getConfig('base_bot_url',null)
         );
 
         // Check if DI needs to be enabled for Commands
