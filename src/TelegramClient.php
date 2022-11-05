@@ -19,14 +19,20 @@ class TelegramClient
     /** @var HttpClientInterface|null HTTP Client. */
     protected $httpClientHandler;
 
+    /** @var string|null base bot url. */
+    protected $baseBotUrl;
+
     /**
      * Instantiates a new TelegramClient object.
      *
      * @param  HttpClientInterface|null  $httpClientHandler
+     * @param  string|null  $baseBotUrl
      */
-    public function __construct(HttpClientInterface $httpClientHandler = null)
+    public function __construct(HttpClientInterface $httpClientHandler = null, $baseBotUrl = null)
     {
         $this->httpClientHandler = $httpClientHandler ?? new GuzzleHttpClient();
+
+        $this->baseBotUrl = $baseBotUrl;
     }
 
     /**
@@ -111,7 +117,7 @@ class TelegramClient
      */
     public function getBaseBotUrl(): string
     {
-        return static::BASE_BOT_URL;
+        return $this->baseBotUrl ?? static::BASE_BOT_URL;
     }
 
     /**
