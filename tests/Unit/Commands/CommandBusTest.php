@@ -4,6 +4,7 @@ namespace Telegram\Bot\Tests\Unit\Commands;
 
 use Illuminate\Support\Collection;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Telegram\Bot\Commands\Command;
 use Telegram\Bot\Commands\CommandBus;
 use Telegram\Bot\Exceptions\TelegramSDKException;
@@ -12,6 +13,7 @@ use Telegram\Bot\Tests\Traits\CommandGenerator;
 class CommandBusTest extends TestCase
 {
     use CommandGenerator;
+    use ProphecyTrait;
 
     /**
      * @var CommandBus

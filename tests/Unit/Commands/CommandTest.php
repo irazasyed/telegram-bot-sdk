@@ -3,6 +3,7 @@
 namespace Telegram\Bot\Tests\Unit\Commands;
 
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Telegram\Bot\Api;
 use Telegram\Bot\Commands\Command;
 use Telegram\Bot\Objects\Update;
@@ -10,6 +11,7 @@ use Telegram\Bot\Objects\Update;
 class CommandTest extends TestCase
 {
     protected $api;
+    use ProphecyTrait;
 
     /**
      * @var Command
