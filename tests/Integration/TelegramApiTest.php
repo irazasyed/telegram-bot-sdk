@@ -9,6 +9,7 @@ use League\Event\Emitter;
 use League\Event\EventInterface;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Telegram\Bot\Api;
 use Telegram\Bot\Commands\CommandBus;
 use Telegram\Bot\Events\UpdateEvent;
@@ -28,6 +29,7 @@ class TelegramApiTest extends TestCase
 {
     use GuzzleMock;
     use CommandGenerator;
+    use ProphecyTrait;
 
     protected function tearDown(): void
     {
