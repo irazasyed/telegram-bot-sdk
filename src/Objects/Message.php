@@ -5,6 +5,7 @@ namespace Telegram\Bot\Objects;
 use Telegram\Bot\Objects\Passport\PassportData;
 use Telegram\Bot\Objects\Payments\Invoice;
 use Telegram\Bot\Objects\Payments\SuccessfulPayment;
+use Telegram\Bot\Objects\WebApp\WebAppData;
 
 /**
  * Class Message.
@@ -56,6 +57,7 @@ use Telegram\Bot\Objects\Payments\SuccessfulPayment;
  * @property string|null            $connectedWebsite       (Optional). The domain name of the website on which the user has logged in.
  * @property PassportData|null      $passportData           (Optional). Telegram Passport data
  * @property string|null            $replyMarkup            (Optional). Inline keyboard attached to the message. login_url buttons are represented as ordinary url buttons.
+ * @property WebAppData|null        $webAppData             (Optional). Service message: data sent by a Web App.
  * @property Chat|null              $senderChat             (Optional). Sender of a message which is a chat (group or channel).
  */
 class Message extends BaseObject
@@ -101,6 +103,7 @@ class Message extends BaseObject
             'voice_chat_started' => VoiceChatStarted::class,
             'voice_chat_ended' => VoiceChatEnded::class,
             'voice_chat_participants_invited' => VoiceChatParticipantsInvited::class,
+            'web_app_data' => WebAppData::class,
         ];
     }
 
@@ -173,6 +176,7 @@ class Message extends BaseObject
             'voice_chat_started',
             'voice_chat_ended',
             'voice_chat_participants_invited',
+            'web_app_data',
         ];
 
         return $this->findType($types);
