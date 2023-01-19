@@ -130,7 +130,8 @@ class WebhookCommand extends Command
 
         if ($this->hasArgument('bot') && ! $this->option('all')) {
             $response = $this->telegram->getWebhookInfo();
-            $this->makeWebhookInfoResponse($response, $this->argument('bot'));
+            $bot = $this->botsManager->getBotConfig($this->argument('bot'))['bot'];
+            $this->makeWebhookInfoResponse($response, $bot);
 
             return;
         }
