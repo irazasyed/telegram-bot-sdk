@@ -32,6 +32,7 @@ use Telegram\Bot\Objects\LoginUrl;
  *
  * @template TKey of array-key
  * @template TValue
+ *
  * @extends Base<TKey, TValue>
  */
 class Keyboard extends Base

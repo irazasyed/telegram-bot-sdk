@@ -10,6 +10,7 @@ use Illuminate\Support\Str;
  *
  * @template TKey of array-key
  * @template TValue
+ *
  * @extends Collection<TKey, TValue>
  */
 class Base extends Collection

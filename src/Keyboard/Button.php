@@ -15,6 +15,7 @@ namespace Telegram\Bot\Keyboard;
  *
  * @template TKey of array-key
  * @template TValue
+ *
  * @extends Base<TKey, TValue>
  */
 class Button extends Base
