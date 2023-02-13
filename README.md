@@ -57,7 +57,6 @@ Thank you for considering contributing to the project. Please review the [CONTRI
 
 Thanks to these companies for providing access to their products that have been very useful in developing this SDK. Please go check them out!
 
-<a href="https://www.jetbrains.com/?from=telegram-bot-sdk"><img src="https://user-images.githubusercontent.com/1915268/74379552-06464a80-4e0e-11ea-9dfa-2b4f17d6f184.png" alt="JetBrains" width="100"/></a>
 <a href="https://1password.com/?utm_source=telegram-bot-sdk"><img src="https://user-images.githubusercontent.com/1915268/80118353-e79ac780-85a5-11ea-9447-6be9090ca8de.png" alt="1Password" width="100"></a>
 
 ## Disclaimer
