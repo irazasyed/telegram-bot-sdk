@@ -31,8 +31,6 @@ trait Answerable
     /**
      * Magic Method to handle all ReplyWith Methods.
      *
-     * @param $method
-     * @param $arguments
      * @return mixed|string
      */
     public function __call($method, $arguments)
@@ -58,8 +56,6 @@ trait Answerable
 
     /**
      * Returns Update object.
-     *
-     * @return Update
      */
     public function getUpdate(): Update
     {

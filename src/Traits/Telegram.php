@@ -14,8 +14,6 @@ trait Telegram
 
     /**
      * Returns Super Class Instance.
-     *
-     * @return Api
      */
     public function getTelegram(): Api
     {
@@ -25,7 +23,6 @@ trait Telegram
     /**
      * Set Telegram Api Instance.
      *
-     * @param  Api  $telegram
      * @return $this
      */
     public function setTelegram(Api $telegram)

@@ -43,8 +43,6 @@ abstract class Command implements CommandInterface
      *
      * The name of the Telegram command.
      * Ex: help - Whenever the user sends /help, this would be resolved.
-     *
-     * @return string
      */
     public function getName(): string
     {
@@ -53,9 +51,6 @@ abstract class Command implements CommandInterface
 
     /**
      * Set Command Name.
-     *
-     * @param $name
-     * @return Command
      */
     public function setName(string $name): self
     {
@@ -68,8 +63,6 @@ abstract class Command implements CommandInterface
      * Get Command Aliases.
      *
      * Helpful when you want to trigger command with more than one name.
-     *
-     * @return array
      */
     public function getAliases(): array
     {
@@ -80,7 +73,6 @@ abstract class Command implements CommandInterface
      * Set Command Aliases.
      *
      * @param  string|array  $aliases
-     * @return Command
      */
     public function setAliases($aliases): self
     {
@@ -93,8 +85,6 @@ abstract class Command implements CommandInterface
      * Get Command Description.
      *
      * The Telegram command description.
-     *
-     * @return string
      */
     public function getDescription(): string
     {
@@ -103,9 +93,6 @@ abstract class Command implements CommandInterface
 
     /**
      * Set Command Description.
-     *
-     * @param  string  $description
-     * @return Command
      */
     public function setDescription(string $description): self
     {
@@ -118,8 +105,6 @@ abstract class Command implements CommandInterface
      * Get Arguments Description.
      *
      * Get Command Arguments.
-     *
-     * @return array
      */
     public function getArguments(): array
     {
@@ -128,9 +113,6 @@ abstract class Command implements CommandInterface
 
     /**
      * Set Command Arguments.
-     *
-     * @param  array  $arguments
-     * @return Command
      */
     public function setArguments(array $arguments): self
     {
@@ -141,8 +123,6 @@ abstract class Command implements CommandInterface
 
     /**
      * Get Command Arguments Pattern.
-     *
-     * @return string
      */
     public function getPattern(): string
     {
@@ -151,9 +131,6 @@ abstract class Command implements CommandInterface
 
     /**
      * Get Command Arguments Pattern.
-     *
-     * @param  string  $pattern
-     * @return Command
      */
     public function setPattern(string $pattern): self
     {
@@ -165,9 +142,6 @@ abstract class Command implements CommandInterface
     /**
      * Process Inbound Command.
      *
-     * @param  Api  $telegram
-     * @param  Update  $update
-     * @param  array  $entity
      * @return mixed
      */
     public function make(Api $telegram, Update $update, array $entity)
@@ -188,7 +162,6 @@ abstract class Command implements CommandInterface
     /**
      * Helper to Trigger other Commands.
      *
-     * @param  string  $command
      * @return mixed
      */
     protected function triggerCommand(string $command)
@@ -198,8 +171,6 @@ abstract class Command implements CommandInterface
 
     /**
      * Returns an instance of Command Bus.
-     *
-     * @return CommandBus
      */
     public function getCommandBus(): CommandBus
     {
@@ -208,8 +179,6 @@ abstract class Command implements CommandInterface
 
     /**
      * Parse Command Arguments.
-     *
-     * @return array
      */
     protected function parseCommandArguments(): array
     {
@@ -226,7 +195,6 @@ abstract class Command implements CommandInterface
     }
 
     /**
-     * @param $regex
      * @return Collection
      */
     private function extractVariableNames($regex)
@@ -237,8 +205,6 @@ abstract class Command implements CommandInterface
     }
 
     /**
-     * @param  Collection  $required
-     * @param  Collection  $optional
      * @param  string  $customRegex
      * @return string
      */

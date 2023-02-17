@@ -26,7 +26,6 @@ class InputFile
      *
      * @param  string|resource|StreamInterface|null  $file
      * @param  string|null  $filename
-     * @return InputFile
      */
     public static function create($file = null, $filename = null): self
     {
@@ -71,7 +70,6 @@ class InputFile
      * Set File.
      *
      * @param  string|resource|StreamInterface|null  $file
-     * @return InputFile
      */
     public function setFile($file): self
     {
@@ -83,7 +81,6 @@ class InputFile
     /**
      * Return the name of the file.
      *
-     * @return string
      *
      * @throws CouldNotUploadInputFile
      */
@@ -131,8 +128,6 @@ class InputFile
     /**
      * Set a filename.
      *
-     * @param $filename
-     * @return InputFile
      *
      * @throws InvalidArgumentException
      */
@@ -165,7 +160,6 @@ class InputFile
      * Set contents of the file.
      *
      * @param  string  $contents
-     * @return InputFile
      */
     public function setContents($contents): self
     {

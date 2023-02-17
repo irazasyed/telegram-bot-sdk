@@ -25,8 +25,6 @@ class BotsManager
 
     /**
      * TelegramManager constructor.
-     *
-     * @param  array  $config
      */
     public function __construct(array $config)
     {
@@ -37,7 +35,6 @@ class BotsManager
      * Set the IoC Container.
      *
      * @param  Container  $container Container instance
-     * @return BotsManager
      */
     public function setContainer(Container $container): self
     {
@@ -50,7 +47,6 @@ class BotsManager
      * Get the configuration for a bot.
      *
      * @param  string|null  $name
-     * @return array
      *
      * @throws InvalidArgumentException
      */
@@ -73,7 +69,6 @@ class BotsManager
      * Get a bot instance.
      *
      * @param  string|null  $name
-     * @return Api
      *
      * @throws TelegramSDKException
      */
@@ -92,7 +87,6 @@ class BotsManager
      * Reconnect to the given bot.
      *
      * @param  string|null  $name
-     * @return Api
      *
      * @throws TelegramSDKException
      */
@@ -108,7 +102,6 @@ class BotsManager
      * Disconnect from the given bot.
      *
      * @param  string|null  $name
-     * @return BotsManager
      */
     public function disconnect($name = null): self
     {
@@ -144,7 +137,6 @@ class BotsManager
      * Set the default bot name.
      *
      * @param  string  $name
-     * @return BotsManager
      */
     public function setDefaultBot($name): self
     {
@@ -165,9 +157,6 @@ class BotsManager
 
     /**
      * De-duplicate an array.
-     *
-     * @param  array  $array
-     * @return array
      */
     protected function deduplicateArray(array $array): array
     {
@@ -178,7 +167,6 @@ class BotsManager
      * Make the bot instance.
      *
      * @param  string  $name
-     * @return Api
      *
      * @throws TelegramSDKException
      */
@@ -230,7 +218,6 @@ class BotsManager
      * Parse an array of commands and build a list.
      *
      * @param  list<string|class-string<\Telegram\Bot\Commands\CommandInterface>>  $commands
-     * @return array
      */
     protected function parseCommands(array $commands): array
     {

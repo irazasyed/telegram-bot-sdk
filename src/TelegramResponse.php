@@ -39,7 +39,6 @@ class TelegramResponse
     /**
      * Gets the relevant data from the Http client.
      *
-     * @param  TelegramRequest  $request
      * @param  ResponseInterface|PromiseInterface  $response
      */
     public function __construct(TelegramRequest $request, $response)
@@ -85,8 +84,6 @@ class TelegramResponse
 
     /**
      * Checks if response is an error.
-     *
-     * @return bool
      */
     public function isError(): bool
     {
@@ -103,8 +100,6 @@ class TelegramResponse
 
     /**
      * Return the original request that returned this response.
-     *
-     * @return TelegramRequest
      */
     public function getRequest(): TelegramRequest
     {
@@ -124,8 +119,6 @@ class TelegramResponse
 
     /**
      * Gets the Request Endpoint used to get the response.
-     *
-     * @return string
      */
     public function getEndpoint(): string
     {
@@ -144,8 +137,6 @@ class TelegramResponse
 
     /**
      * Return the HTTP headers for this response.
-     *
-     * @return array
      */
     public function getHeaders(): array
     {
@@ -154,8 +145,6 @@ class TelegramResponse
 
     /**
      * Return the raw body response.
-     *
-     * @return string
      */
     public function getBody(): string
     {
@@ -164,8 +153,6 @@ class TelegramResponse
 
     /**
      * Return the decoded body response.
-     *
-     * @return array
      */
     public function getDecodedBody(): array
     {
@@ -194,8 +181,6 @@ class TelegramResponse
 
     /**
      * Returns the exception that was thrown for this request.
-     *
-     * @return TelegramSDKException
      */
     public function getThrownException(): TelegramSDKException
     {

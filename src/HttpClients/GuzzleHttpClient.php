@@ -33,8 +33,6 @@ class GuzzleHttpClient implements HttpClientInterface
 
     /**
      * GuzzleHttpClient constructor.
-     *
-     * @param  ClientInterface|null  $client
      */
     public function __construct(ClientInterface $client = null)
     {
@@ -53,9 +51,6 @@ class GuzzleHttpClient implements HttpClientInterface
 
     /**
      * Sets HTTP client.
-     *
-     * @param  ClientInterface  $client
-     * @return GuzzleHttpClient
      */
     public function setClient(ClientInterface $client): self
     {
@@ -104,11 +99,8 @@ class GuzzleHttpClient implements HttpClientInterface
     /**
      * Prepares and returns request options.
      *
-     * @param  array  $headers
-     * @param    $body
      * @param  array  $options
      * @param  bool  $isAsyncRequest
-     * @return array
      */
     private function getOptions(
         array $headers,
@@ -170,8 +162,6 @@ class GuzzleHttpClient implements HttpClientInterface
 
     /**
      * Gets HTTP client for internal class use.
-     *
-     * @return Client
      */
     private function getClient(): Client
     {

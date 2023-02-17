@@ -13,8 +13,6 @@ trait CommandsHandler
 {
     /**
      * Return Command Bus.
-     *
-     * @return CommandBus
      */
     protected function getCommandBus(): CommandBus
     {
@@ -23,8 +21,6 @@ trait CommandsHandler
 
     /**
      * Get all registered commands.
-     *
-     * @return array
      */
     public function getCommands(): array
     {
@@ -34,8 +30,6 @@ trait CommandsHandler
     /**
      * Processes Inbound Commands.
      *
-     * @param  bool  $webhook
-     * @param  RequestInterface|null  $request
      * @return Update|Update[]
      */
     public function commandsHandler(bool $webhook = false, ?RequestInterface $request = null)
@@ -45,9 +39,6 @@ trait CommandsHandler
 
     /**
      * Process the update object for a command from your webhook.
-     *
-     * @param  RequestInterface|null  $request
-     * @return Update
      */
     protected function useWebHook(?RequestInterface $request = null): Update
     {
@@ -83,7 +74,6 @@ trait CommandsHandler
     /**
      * Mark updates as read.
      *
-     * @param $highestId
      * @return Update[]
      */
     protected function markUpdateAsRead($highestId): array
@@ -97,8 +87,6 @@ trait CommandsHandler
 
     /**
      * Check update object for a command and process.
-     *
-     * @param  Update  $update
      */
     public function processCommand(Update $update)
     {

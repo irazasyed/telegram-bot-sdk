@@ -121,8 +121,6 @@ class Message extends BaseObject
 
     /**
      * Detect type based on properties.
-     *
-     * @return string|null
      */
     public function objectType(): ?string
     {

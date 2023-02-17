@@ -83,8 +83,6 @@ class Update extends BaseObject
 
     /**
      * Update type.
-     *
-     * @return string|null
      */
     public function objectType(): ?string
     {

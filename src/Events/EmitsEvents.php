@@ -59,8 +59,6 @@ trait EmitsEvents
 
     /**
      * Returns an event emitter.
-     *
-     * @return EmitterInterface
      */
     public function getEventEmitter(): EmitterInterface
     {
@@ -81,7 +79,6 @@ trait EmitsEvents
     }
 
     /**
-     * @param $event
      * @return void
      */
     private function validateEvent($event)

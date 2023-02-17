@@ -25,7 +25,6 @@ class TelegramClient
     /**
      * Instantiates a new TelegramClient object.
      *
-     * @param  HttpClientInterface|null  $httpClientHandler
      * @param  string|null  $baseBotUrl
      */
     public function __construct(HttpClientInterface $httpClientHandler = null, $baseBotUrl = null)
@@ -47,9 +46,6 @@ class TelegramClient
 
     /**
      * Sets the HTTP client handler.
-     *
-     * @param  HttpClientInterface  $httpClientHandler
-     * @return TelegramClient
      */
     public function setHttpClientHandler(HttpClientInterface $httpClientHandler): self
     {
@@ -61,8 +57,6 @@ class TelegramClient
     /**
      * Send an API request and process the result.
      *
-     * @param  TelegramRequest  $request
-     * @return TelegramResponse
      *
      * @throws TelegramSDKException
      */
@@ -94,9 +88,6 @@ class TelegramClient
 
     /**
      * Prepares the API request for sending to the client handler.
-     *
-     * @param  TelegramRequest  $request
-     * @return array
      */
     public function prepareRequest(TelegramRequest $request): array
     {
@@ -112,8 +103,6 @@ class TelegramClient
 
     /**
      * Returns the base Bot URL.
-     *
-     * @return string
      */
     public function getBaseBotUrl(): string
     {
@@ -123,9 +112,7 @@ class TelegramClient
     /**
      * Creates response object.
      *
-     * @param  TelegramRequest  $request
      * @param  ResponseInterface|PromiseInterface  $response
-     * @return TelegramResponse
      */
     protected function getResponse(TelegramRequest $request, $response): TelegramResponse
     {
@@ -133,7 +120,6 @@ class TelegramClient
     }
 
     /**
-     * @param  TelegramRequest  $request
      * @param  string  $method
      * @return array
      */

@@ -48,7 +48,6 @@ class TelegramResponseException extends TelegramSDKException
      * A factory for creating the appropriate exception based on the response from Telegram.
      *
      * @param  TelegramResponse  $response The response that threw the exception.
-     * @return TelegramResponseException
      */
     public static function create(TelegramResponse $response): self
     {
@@ -77,8 +76,6 @@ class TelegramResponseException extends TelegramSDKException
 
     /**
      * Returns the error type.
-     *
-     * @return string
      */
     public function getErrorType(): string
     {
@@ -87,8 +84,6 @@ class TelegramResponseException extends TelegramSDKException
 
     /**
      * Returns the raw response used to create the exception.
-     *
-     * @return string
      */
     public function getRawResponse(): string
     {
@@ -97,8 +92,6 @@ class TelegramResponseException extends TelegramSDKException
 
     /**
      * Returns the decoded response used to create the exception.
-     *
-     * @return array
      */
     public function getResponseData(): array
     {
@@ -107,8 +100,6 @@ class TelegramResponseException extends TelegramSDKException
 
     /**
      * Returns the response entity used to create the exception.
-     *
-     * @return TelegramResponse
      */
     public function getResponse(): TelegramResponse
     {
