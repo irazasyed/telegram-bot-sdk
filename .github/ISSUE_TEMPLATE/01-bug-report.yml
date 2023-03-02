@@ -21,7 +21,7 @@ body:
   - type: input
     id: package-version
     attributes:
-      label: `irazasyed/telegram-bot-sdk` version
+      label: irazasyed/telegram-bot-sdk version
       placeholder: #.#.#
       description: Output from `composer show irazasyed/telegram-bot-sdk | grep versions`
     validations:
