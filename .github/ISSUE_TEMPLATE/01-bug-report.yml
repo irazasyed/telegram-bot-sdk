@@ -23,6 +23,7 @@ body:
     attributes:
       label: `irazasyed/telegram-bot-sdk` version
       placeholder: #.#.#
+      description: Output from `composer show irazasyed/telegram-bot-sdk | grep versions`
     validations:
       required: true
 
@@ -31,6 +32,7 @@ body:
     attributes:
       label: Laravel version (if any)
       placeholder: #.#.#
+      description: Output from `composer show laravel/framework | grep versions`
     validations:
       required: false
 
