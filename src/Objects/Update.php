@@ -87,9 +87,10 @@ class Update extends BaseObject
     public function objectType(): ?string
     {
         if ($this->updateType === null) {
-            $this->updateType = $this->except('update_id')
-                ->keys()
-                ->first();
+            $isWebAppData = (bool)$this->getMessage()->get('web_app_data');
+            $updateType   = $this->except('update_id')->keys()->first();
+
+            $this->updateType = $isWebAppData ? 'web_app_data' : $updateType;
         }
 
         return $this->updateType;
