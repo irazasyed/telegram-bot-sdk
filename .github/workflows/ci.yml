@@ -49,7 +49,7 @@ jobs:
           key: ${{ env.EXT_CACHE_KEY }}
 
       - name: Cache extensions
-        uses: actions/cache@v1
+        uses: actions/cache@v3
         with:
           path: ${{ steps.cache-env.outputs.dir }}
           key: ${{ steps.cache-env.outputs.key }}
@@ -68,7 +68,7 @@ jobs:
         run: echo "::set-output name=dir::$(composer config cache-files-dir)"
 
       - name: Cache composer dependencies
-        uses: actions/cache@v1
+        uses: actions/cache@v3
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-laravel-${{ matrix.laravel }}-php-${{ matrix.php }}-composer-${{ hashFiles('**/composer.json') }}
