@@ -31,8 +31,6 @@ class CommandBus extends AnswerBus
 
     /**
      * Instantiate Command Bus.
-     *
-     * @param  Api|null  $telegram
      */
     public function __construct(Api $telegram = null)
     {
@@ -53,7 +51,6 @@ class CommandBus extends AnswerBus
      * Add a list of commands.
      *
      * @param  list<CommandInterface|class-string<CommandInterface>>  $commands
-     * @return CommandBus
      *
      * @throws TelegramSDKException
      */
@@ -70,7 +67,6 @@ class CommandBus extends AnswerBus
      * Add a command to the commands list.
      *
      * @param  CommandInterface|class-string<CommandInterface>  $command Either an object or fully qualified class name (FQCN) of the command class.
-     * @return CommandBus
      *
      * @throws TelegramSDKException
      */
@@ -104,7 +100,6 @@ class CommandBus extends AnswerBus
      * Remove a command from the list.
      *
      * @param  string  $name Command's name without leading slash
-     * @return CommandBus
      */
     public function removeCommand($name): self
     {
@@ -117,7 +112,6 @@ class CommandBus extends AnswerBus
      * Removes a list of commands.
      *
      * @param  list<string>  $names Command names
-     * @return CommandBus
      */
     public function removeCommands(array $names): self
     {
@@ -160,9 +154,6 @@ class CommandBus extends AnswerBus
 
     /**
      * Handles Inbound Messages and Executes Appropriate Command.
-     *
-     * @param  Update  $update
-     * @return Update
      */
     protected function handler(Update $update): Update
     {
@@ -199,7 +190,6 @@ class CommandBus extends AnswerBus
      * Execute a bot command from the update text.
      *
      * @param  array<string, mixed>  $entity {@see \Telegram\Bot\Objects\MessageEntity} object attributes.
-     * @param  Update  $update
      */
     protected function process($entity, Update $update)
     {
@@ -216,7 +206,6 @@ class CommandBus extends AnswerBus
      * Execute the command.
      *
      * @param  string  $name Telegram command name without leading slash
-     * @param  Update  $update
      * @param  array<string, mixed>  $entity
      * @return mixed
      */
@@ -234,7 +223,6 @@ class CommandBus extends AnswerBus
 
     /**
      * @param  CommandInterface|class-string<CommandInterface>  $command
-     * @return CommandInterface
      *
      * @throws TelegramSDKException
      */

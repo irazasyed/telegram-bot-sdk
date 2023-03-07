@@ -12,8 +12,6 @@ interface HttpClientInterface
      *
      * @param  string  $url
      * @param  string  $method
-     * @param  array  $headers
-     * @param  array  $options
      * @param  bool|false  $isAsyncRequest
      * @return mixed
      */
@@ -27,8 +25,6 @@ interface HttpClientInterface
 
     /**
      * Get Timeout.
-     *
-     * @return int
      */
     public function getTimeOut(): int;
 
@@ -42,8 +38,6 @@ interface HttpClientInterface
 
     /**
      * Get Connection Timeout.
-     *
-     * @return int
      */
     public function getConnectTimeOut(): int;
 

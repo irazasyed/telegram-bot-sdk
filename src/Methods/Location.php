@@ -35,9 +35,6 @@ trait Location
      *
      * @link https://core.telegram.org/bots/api#sendlocation
      *
-     * @param  array  $params
-     * @return MessageObject
-     *
      * @throws TelegramSDKException
      */
     public function sendLocation(array $params): MessageObject
@@ -66,7 +63,6 @@ trait Location
      *
      * @link https://core.telegram.org/bots/api#editmessagelivelocation
      *
-     * @param  array  $params
      * @return MessageObject|bool
      *
      * @throws TelegramSDKException
@@ -92,7 +88,6 @@ trait Location
      *
      * @link https://core.telegram.org/bots/api#stopmessagelivelocation
      *
-     * @param  array  $params
      * @return MessageObject|bool
      *
      * @throws TelegramSDKException

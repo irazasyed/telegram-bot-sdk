@@ -32,7 +32,6 @@ abstract class BaseObject extends Collection
     /**
      * Magically access collection data.
      *
-     * @param $property
      * @return mixed
      */
     public function __get($property)
@@ -76,7 +75,6 @@ abstract class BaseObject extends Collection
     }
 
     /**
-     * @param  string  $relationName
      * @param  array  $relationRawData
      * @return array|\Illuminate\Support\Enumerable|\Illuminate\Support\Traits\EnumeratesValues|\Telegram\Bot\Objects\BaseObject
      */
@@ -139,7 +137,6 @@ abstract class BaseObject extends Collection
     /**
      * Returns raw result.
      *
-     * @param $data
      * @return mixed
      */
     public function getRawResult($data)
@@ -159,8 +156,6 @@ abstract class BaseObject extends Collection
 
     /**
      * Detect type based on fields.
-     *
-     * @return string|null
      */
     public function objectType(): ?string
     {
@@ -184,9 +179,6 @@ abstract class BaseObject extends Collection
 
     /**
      * Determine the type by given types.
-     *
-     * @param  array  $types
-     * @return string|null
      */
     protected function findType(array $types): ?string
     {
@@ -198,8 +190,6 @@ abstract class BaseObject extends Collection
     /**
      * Magic method to get properties dynamically.
      *
-     * @param $name
-     * @param $arguments
      * @return mixed
      */
     public function __call($name, $arguments)

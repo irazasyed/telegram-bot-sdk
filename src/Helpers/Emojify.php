@@ -84,7 +84,6 @@ class Emojify
     /**
      * Translate Word to Emoji.
      *
-     * @param $text
      * @return mixed
      */
     public function toEmoji($text)
@@ -95,7 +94,6 @@ class Emojify
     /**
      * Alias of toEmoji().
      *
-     * @param $text
      * @return mixed
      */
     public static function text($text)
@@ -106,7 +104,6 @@ class Emojify
     /**
      * Translate Emoji to Word.
      *
-     * @param $text
      * @return mixed
      */
     public function toWord($text)
@@ -117,7 +114,6 @@ class Emojify
     /**
      * Alias of toWord().
      *
-     * @param $text
      * @return mixed
      */
     public static function translate($text)
@@ -128,8 +124,6 @@ class Emojify
     /**
      * Replace.
      *
-     * @param    $line
-     * @param    $replace
      * @param  bool  $toWord
      * @param  string  $delimiter
      * @return mixed
@@ -147,9 +141,6 @@ class Emojify
      * Finds words enclosed by the delimiter and converts them to the
      * appropriate emoji character.
      *
-     * @param $line
-     * @param $replace
-     * @param $delimiter
      * @return mixed
      */
     protected function wordToEmojiReplace($line, $replace, $delimiter)
@@ -164,9 +155,6 @@ class Emojify
     /**
      * Finds emojis and replaces them with text enclosed by the delimiter.
      *
-     * @param $line
-     * @param $replace
-     * @param $delimiter
      * @return mixed
      */
     protected function emojiToWordReplace($line, $replace, $delimiter)

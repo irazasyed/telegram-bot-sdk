@@ -89,8 +89,6 @@ trait Update
      *
      * ]
      *
-     * @return bool
-     *
      * @throws TelegramSDKException
      */
     public function setWebhook(array $params): bool
@@ -111,8 +109,6 @@ trait Update
      *
      * @link https://core.telegram.org/bots/api#deletewebhook
      *
-     * @return bool
-     *
      * @throws TelegramSDKException
      */
     public function deleteWebhook(): bool
@@ -124,8 +120,6 @@ trait Update
      * Get current webhook status.
      *
      * @link https://core.telegram.org/bots/api#getwebhookinfo
-     *
-     * @return WebhookInfo
      *
      * @throws TelegramSDKException
      */
@@ -144,7 +138,6 @@ trait Update
      *             To be removed in next major version.
      *
      * @param  bool  $shouldEmitEvent
-     * @return UpdateObject
      */
     public function getWebhookUpdates($shouldEmitEvent = true): UpdateObject
     {
@@ -156,8 +149,6 @@ trait Update
      * Works only if you set a webhook.
      *
      * @param  bool  $shouldEmitEvent
-     * @param  RequestInterface|null  $request
-     * @return UpdateObject
      *
      * @see setWebhook
      */
@@ -178,7 +169,6 @@ trait Update
     /**
      * Alias for deleteWebhook.
      *
-     * @return bool
      *
      * @throws TelegramSDKException
      */
@@ -188,8 +178,6 @@ trait Update
     }
 
     /**
-     * @param  string  $url
-     *
      * @throws TelegramSDKException
      */
     private function validateHookUrl(string $url)
@@ -213,7 +201,6 @@ trait Update
     }
 
     /**
-     * @param  RequestInterface|null  $request
      * @return mixed
      */
     private function getRequestBody(?RequestInterface $request)

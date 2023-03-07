@@ -193,10 +193,6 @@ class CommandBusTest extends TestCase
         $this->bus->parseCommand($message, 5, 5);
     }
 
-    /**
-     * @param $result
-     * @return Collection
-     */
     private function getAllCommandNames($result): Collection
     {
         return collect($result)

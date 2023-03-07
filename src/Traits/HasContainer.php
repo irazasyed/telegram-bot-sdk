@@ -26,8 +26,6 @@ trait HasContainer
 
     /**
      * Get the IoC Container.
-     *
-     * @return Container
      */
     public function getContainer(): Container
     {
@@ -36,8 +34,6 @@ trait HasContainer
 
     /**
      * Check if IoC Container has been set.
-     *
-     * @return bool
      */
     public function hasContainer(): bool
     {

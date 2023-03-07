@@ -18,8 +18,6 @@ class Entities
 
     /**
      * Entities constructor.
-     *
-     * @param  string  $text
      */
     public function __construct(string $text)
     {
@@ -27,7 +25,6 @@ class Entities
     }
 
     /**
-     * @param  string  $text
      * @return static
      */
     public static function format(string $text): self
@@ -36,7 +33,6 @@ class Entities
     }
 
     /**
-     * @param  array  $entities
      * @return $this
      */
     public function withEntities(array $entities): self
@@ -48,8 +44,6 @@ class Entities
 
     /**
      * Format it to markdown style.
-     *
-     * @return string
      */
     public function toMarkdown(): string
     {
@@ -60,8 +54,6 @@ class Entities
 
     /**
      * Format it to HTML syntax.
-     *
-     * @return string
      */
     public function toHTML(): string
     {
@@ -101,8 +93,6 @@ class Entities
 
     /**
      * Formatting Syntax.
-     *
-     * @return array
      */
     protected function syntax(): array
     {

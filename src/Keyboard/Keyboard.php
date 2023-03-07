@@ -32,6 +32,7 @@ use Telegram\Bot\Objects\LoginUrl;
  *
  * @template TKey of array-key
  * @template TValue
+ *
  * @extends Base<TKey, TValue>
  */
 class Keyboard extends Base
@@ -43,8 +44,6 @@ class Keyboard extends Base
      * Make this keyboard inline, So it appears right next to the message it belongs to.
      *
      * @link https://core.telegram.org/bots/api#inlinekeyboardmarkup
-     *
-     * @return Keyboard
      */
     public function inline(): self
     {
@@ -55,8 +54,6 @@ class Keyboard extends Base
 
     /**
      * Determine if it's an inline keyboard.
-     *
-     * @return bool
      */
     public function isInlineKeyboard(): bool
     {
@@ -67,7 +64,6 @@ class Keyboard extends Base
      * Create a new row in keyboard to add buttons.
      *
      * @param  array  $buttons
-     * @return Keyboard
      */
     public function row(...$buttons): self
     {
@@ -176,8 +172,6 @@ class Keyboard extends Base
      * @var bool          Optional. Use this parameter if you want to remove the keyboard for specific users only. Targets: 1) users that are @mentioned in the text of the Message object; 2) if the bot's message is a reply (has reply_to_message_id), sender of the original message.
      *
      * ]
-     *
-     * @return Keyboard
      */
     public static function remove(array $params = []): self
     {
@@ -202,8 +196,6 @@ class Keyboard extends Base
      * @var bool      Optional. Use this parameter if you want to force reply from specific users only. Targets: 1) users that are @mentioned in the text of the Message object; 2) if the bot's message is a reply (has reply_to_message_id), sender of the original message.
      *
      * ]
-     *
-     * @return Keyboard
      */
     public static function forceReply(array $params = []): self
     {

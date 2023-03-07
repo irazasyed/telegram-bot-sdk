@@ -19,9 +19,6 @@ class UpdateWasReceived extends AbstractEvent
 
     /**
      * UpdateWasReceived constructor.
-     *
-     * @param  Update  $update
-     * @param  Api  $telegram
      */
     public function __construct(Update $update, Api $telegram)
     {
@@ -29,17 +26,11 @@ class UpdateWasReceived extends AbstractEvent
         $this->telegram = $telegram;
     }
 
-    /**
-     * @return Update
-     */
     public function getUpdate(): Update
     {
         return $this->update;
     }
 
-    /**
-     * @return Api
-     */
     public function getTelegram(): Api
     {
         return $this->telegram;

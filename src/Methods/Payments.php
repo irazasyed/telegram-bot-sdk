@@ -51,9 +51,6 @@ trait Payments
      *
      * @link https://core.telegram.org/bots/api#sendinvoice
      *
-     * @param  array  $params
-     * @return Message
-     *
      * @throws TelegramSDKException
      */
     public function sendInvoice(array $params): Message
@@ -78,9 +75,6 @@ trait Payments
      *
      * @link https://core.telegram.org/bots/api#answershippingquery
      *
-     * @param  array  $params
-     * @return bool
-     *
      * @throws TelegramSDKException
      */
     public function answerShippingQuery(array $params): bool
@@ -100,9 +94,6 @@ trait Payments
      * </code>
      *
      * @link https://core.telegram.org/bots/api#answerprecheckoutquery
-     *
-     * @param  array  $params
-     * @return bool
      *
      * @throws TelegramSDKException
      */

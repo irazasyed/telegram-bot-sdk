@@ -41,8 +41,6 @@ class WebhookCommand extends Command
 
     /**
      * WebhookCommand constructor.
-     *
-     * @param  BotsManager  $botsManager
      */
     public function __construct(BotsManager $botsManager)
     {
@@ -146,9 +144,6 @@ class WebhookCommand extends Command
 
     /**
      * Make WebhookInfo Response for console.
-     *
-     * @param  WebhookInfo  $response
-     * @param  string  $bot
      */
     protected function makeWebhookInfoResponse(WebhookInfo $response, string $bot)
     {
@@ -168,7 +163,6 @@ class WebhookCommand extends Command
     /**
      * Map Boolean Value to Yes/No.
      *
-     * @param $value
      * @return string
      */
     protected function mapBool($value)

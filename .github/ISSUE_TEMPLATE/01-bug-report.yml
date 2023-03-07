@@ -1,0 +1,53 @@
+name: Bug report
+description: Something not working as expected? 🐞
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Ensure that the bug is not not fixed in recent releases. 
+        Ensure that you will not create a duplicate: Use the GitHub issue search.
+        For community help, please use discussions.
+
+  - type: input
+    id: php-version
+    attributes:
+      label: PHP version
+      description: Your PHP version
+      placeholder: #.#.#
+    validations:
+      required: true
+
+  - type: input
+    id: package-version
+    attributes:
+      label: irazasyed/telegram-bot-sdk version
+      placeholder: #.#.#
+      description: Output from `composer show irazasyed/telegram-bot-sdk | grep versions`
+    validations:
+      required: true
+
+  - type: input
+    id: laravel-version
+    attributes:
+      label: Laravel version (if any)
+      placeholder: #.#.#
+      description: Output from `composer show laravel/framework | grep versions`
+    validations:
+      required: false
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Code To Reproduce the bug
+      description: Valid PHP code to reproduce the bug
+    validations:
+      required: true
+
+  - type: textarea
+    id: stacktrace
+    attributes:
+      label: Error stacktrace (if any)
+      description: Error stacktrace
+    validations:
+      required: false

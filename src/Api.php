@@ -70,7 +70,6 @@ class Api
      * Invoke Bots Manager.
      *
      * @param  array  $config
-     * @return BotsManager
      */
     public static function manager($config): BotsManager
     {
@@ -80,8 +79,6 @@ class Api
     /**
      * Magic method to process any dynamic method calls.
      *
-     * @param $method
-     * @param $arguments
      * @return mixed
      */
     public function __call($method, $arguments)

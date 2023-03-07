@@ -32,7 +32,6 @@ abstract class AnswerBus
     /**
      * Use PHP Reflection and Laravel Container to instantiate the answer with type hinted dependencies.
      *
-     * @param $answerClass
      * @return object
      */
     protected function buildDependencyInjectedAnswer($answerClass)

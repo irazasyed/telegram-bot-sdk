@@ -15,6 +15,7 @@ namespace Telegram\Bot\Keyboard;
  *
  * @template TKey of array-key
  * @template TValue
+ *
  * @extends Base<TKey, TValue>
  */
 class Button extends Base
@@ -23,7 +24,6 @@ class Button extends Base
      * Button Label Text.
      *
      * @param  string  $text
-     * @return Button
      */
     public function setText($text): self
     {

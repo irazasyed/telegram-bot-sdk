@@ -23,7 +23,6 @@ trait GuzzleMock
     protected $history = [];
 
     /**
-     * @param  array  $responsesToQueue
      * @return GuzzleHttpClient
      */
     public function getGuzzleHttpClient(array $responsesToQueue = [])
@@ -34,7 +33,6 @@ trait GuzzleMock
     }
 
     /**
-     * @param  array  $responsesToQueue
      * @return Client
      */
     protected function createClientWithQueuedResponse(array $responsesToQueue)
@@ -73,9 +71,6 @@ trait GuzzleMock
         );
     }
 
-    /**
-     * @return Collection
-     */
     public function getHistory(): Collection
     {
         return collect($this->history);

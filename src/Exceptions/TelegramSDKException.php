@@ -11,9 +11,6 @@ class TelegramSDKException extends Exception
 {
     /**
      * Thrown when token is not provided.
-     *
-     * @param $tokenEnvName
-     * @return TelegramSDKException
      */
     public static function tokenNotProvided($tokenEnvName): self
     {

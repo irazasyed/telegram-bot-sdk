@@ -392,8 +392,6 @@ class TelegramApiTest extends TestCase
     /**
      * @test
      *
-     * @param $type
-     *
      * @dataProvider fileTypes
      *
      * @throws TelegramSDKException
