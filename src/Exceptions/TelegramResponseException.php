@@ -39,7 +39,7 @@ class TelegramResponseException extends TelegramSDKException
      * @param  mixed  $default
      * @return mixed
      */
-    protected function get($key, $default = null)
+    public function get($key, $default = null)
     {
         return $this->responseData[$key] ?? $default;
     }
