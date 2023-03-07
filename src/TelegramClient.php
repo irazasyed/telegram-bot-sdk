@@ -2,9 +2,6 @@
 
 namespace Telegram\Bot;
 
-use GuzzleHttp\Promise\PromiseInterface;
-use Psr\Http\Message\ResponseInterface;
-use Telegram\Bot\Exceptions\TelegramSDKException;
 use Telegram\Bot\HttpClients\GuzzleHttpClient;
 use Telegram\Bot\HttpClients\HttpClientInterface;
 
@@ -30,6 +27,7 @@ class TelegramClient
     public function setHttpClientHandler(HttpClientInterface $httpClientHandler): self
     {
         $this->httpClientHandler = $httpClientHandler;
+
         return $this;
     }
 
@@ -55,7 +53,7 @@ class TelegramClient
     public function prepareRequest(TelegramRequest $request): array
     {
         $url = $this->getBaseBotUrl().$request->getAccessToken().'/'.$request->getEndpoint();
-        
+
         return [$url, $request->getMethod(), $request->getHeaders(), $request->isAsyncRequest()];
     }
 
@@ -74,5 +72,3 @@ class TelegramClient
         return $method === 'POST' ? $request->getPostParams() : ['query' => $request->getParams()];
     }
 }
-
-    
