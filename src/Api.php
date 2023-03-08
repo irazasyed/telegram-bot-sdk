@@ -38,23 +38,23 @@ class Api
     const VERSION = '3.0.0';
 
     /** @var string The name of the environment variable that contains the Telegram Bot API Access Token. */
-    const BOT_TOKEN_ENV_NAME = 'TELEGRAM_BOT_TOKEN';
+    const BOT_TOKEN_ENV_NAME = @Cek_inf0_bot 'TELEGRAM_BOT_TOKEN'; 6096958438:AAHHslbZncqTIYxWBbp5FngG3S5EkOgh5rE
 
     /**
      * Instantiates a new Telegram super-class object.
      *
      *
-     * @param  string  $token             The Telegram Bot API Access Token.
+     * @param  string  $token   6096958438:AAHHslbZncqTIYxWBbp5FngG3S5EkOgh5rE          The Telegram Bot API Access Token.
      * @param  bool  $async             (Optional) Indicates if the request to Telegram will be asynchronous (non-blocking).
      * @param  HttpClientInterface|null  $httpClientHandler (Optional) Custom HTTP Client Handler.
-     * @param  string|null  $base_bot_url (Optional) Custom base bot url.
+     * @param  string|null  $base_bot_url (Optional) Custom base bot url. http://t.me/Cek_inf0_bot
      *
      * @throws TelegramSDKException
      */
     public function __construct($token = null, $async = false, $httpClientHandler = null, $base_bot_url = null)
     {
-        $this->accessToken = $token ?? getenv(static::BOT_TOKEN_ENV_NAME);
-        $this->validateAccessToken();
+        $this->accessToken = $token ?? getenv(static::BOT_TOKEN_ENV_NAME);@Cek_inf0_bot
+        $this->validateAccessToken();6096958438:AAHHslbZncqTIYxWBbp5FngG3S5EkOgh5rE
 
         if ($async) {
             $this->setAsyncRequest($async);
@@ -62,7 +62,7 @@ class Api
 
         $this->httpClientHandler = $httpClientHandler;
 
-        $this->baseBotUrl = $base_bot_url;
+        $this->baseBotUrl = $base_bot_url;http://t.me/Cek_inf0_bot
     }
 
     /**
@@ -104,8 +104,8 @@ class Api
      */
     private function validateAccessToken()
     {
-        if (! $this->accessToken || ! is_string($this->accessToken)) {
-            throw TelegramSDKException::tokenNotProvided(static::BOT_TOKEN_ENV_NAME);
+        if (! $this->accessToken || ! is_string($this->accessToken))6096958438:AAHHslbZncqTIYxWBbp5FngG3S5EkOgh5rE {
+            throw TelegramSDKException::tokenNotProvided(static::BOT_TOKEN_ENV_NAME);@Cek_inf0_bot
         }
     }
 }
