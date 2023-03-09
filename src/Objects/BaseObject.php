@@ -2,11 +2,11 @@
 
 namespace Telegram\Bot\Objects;
 
+use Illuminate\Support\Collection;
 use Illuminate\Support\Enumerable;
+use Illuminate\Support\Str;
 use Illuminate\Support\Traits\EnumeratesValues;
 use InvalidArgumentException;
-use Illuminate\Support\Collection;
-use Illuminate\Support\Str;
 
 /**
  * Class BaseObject.
@@ -18,7 +18,7 @@ abstract class BaseObject extends Collection
     /**
      * Builds collection entity.
      *
-     * @param array|mixed $data
+     * @param  array|mixed  $data
      */
     public function __construct($data)
     {
@@ -27,8 +27,6 @@ abstract class BaseObject extends Collection
 
     /**
      * Property relations.
-     *
-     * @return array
      */
     abstract public function relations(): array;
 
@@ -45,14 +43,14 @@ abstract class BaseObject extends Collection
     /**
      * Magically map to an object class (if exists) and return data.
      *
-     * @param string $property Name of the property or relation.
-     * @param mixed $default Default value or \Closure that returns default value.
+     * @param  string  $property Name of the property or relation.
+     * @param  mixed  $default Default value or \Closure that returns default value.
      * @return mixed
      */
     protected function getPropertyValue(string $property, $default = null)
     {
         $property = Str::snake($property);
-        if (!$this->offsetExists($property)) {
+        if (! $this->offsetExists($property)) {
             return value($default);
         }
 
@@ -64,7 +62,7 @@ abstract class BaseObject extends Collection
         }
 
         /** @var BaseObject $class */
-        $class = 'Telegram\Bot\Objects\\' . Str::studly($property);
+        $class = 'Telegram\Bot\Objects\\'.Str::studly($property);
 
         if (class_exists($class)) {
             return $class::make($value);
@@ -78,7 +76,7 @@ abstract class BaseObject extends Collection
     }
 
     /**
-     * @param array $relationRawData
+     * @param  array  $relationRawData
      * @return array|Enumerable|EnumeratesValues|BaseObject
      */
     protected function getRelationValue(string $relationName, iterable $relationRawData)
@@ -87,7 +85,7 @@ abstract class BaseObject extends Collection
         $relation = $this->relations()[$relationName];
 
         if (is_string($relation)) {
-            if (!class_exists($relation)) {
+            if (! class_exists($relation)) {
                 throw new InvalidArgumentException(sprintf('Could not load “%s” relation: class “%s” not found.', $relationName, $relation));
             }
 
@@ -100,14 +98,15 @@ abstract class BaseObject extends Collection
         foreach ($relationRawData as $singleObjectRawData) {
             $relatedObjects[] = $clasString::make($singleObjectRawData);
         }
+
         return $relatedObjects;
     }
 
     /**
      * Get an item from the collection by key.
      *
-     * @param mixed $key
-     * @param mixed $default
+     * @param  mixed  $key
+     * @param  mixed  $default
      * @return mixed|static
      */
     public function get($key, $default = null)
@@ -116,7 +115,7 @@ abstract class BaseObject extends Collection
         if (null === $value) {
             return null;
         }
-        if (!is_array($value)) {
+        if (! is_array($value)) {
             return $value;
         }
 
@@ -163,9 +162,6 @@ abstract class BaseObject extends Collection
 
     /**
      * Determine if the object is of given type.
-     *
-     * @param string $type
-     * @return bool
      */
     public function isType(string $type): bool
     {
@@ -193,7 +189,7 @@ abstract class BaseObject extends Collection
      */
     public function __call($method, $parameters)
     {
-        if (!Str::startsWith($method, 'get')) {
+        if (! Str::startsWith($method, 'get')) {
             return false;
         }
 

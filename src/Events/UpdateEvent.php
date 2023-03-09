@@ -18,10 +18,8 @@ final class UpdateEvent implements HasEventName
      */
     private string $name;
 
-    /** @var Api */
     public Api $telegram;
 
-    /** @var Update */
     public Update $update;
 
     public function __construct(Api $telegram, Update $update, string $name = self::NAME)

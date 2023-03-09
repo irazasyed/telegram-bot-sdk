@@ -39,7 +39,7 @@ final class InputFile
      * @param  string  $filename
      * @return mixed
      */
-    public static function createFromContents($contents, $filename): \Telegram\Bot\FileUpload\InputFile
+    public static function createFromContents($contents, $filename): InputFile
     {
         return (new self(null, $filename))->setContents($contents);
     }
@@ -132,7 +132,7 @@ final class InputFile
      */
     public function setFilename($filename): self
     {
-        if (!$this->isStringOrNull($filename)) {
+        if (! $this->isStringOrNull($filename)) {
             throw new InvalidArgumentException(
                 'Filename must be a string or null'
             );
@@ -182,6 +182,7 @@ final class InputFile
         if ($this->isFileLocalAndExists()) {
             return $this->contents = new LazyOpenStream($this->file, 'r');
         }
+
         return $this->contents = $this->file;
     }
 

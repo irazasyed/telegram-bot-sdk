@@ -91,6 +91,7 @@ final class Entities
 
     /**
      * Formatting Syntax.
+     *
      * @return array{bold: string[], italic: string[], code: string[], pre: string[], text_mention: string[], text_link: string[]}
      */
     private function syntax(): array

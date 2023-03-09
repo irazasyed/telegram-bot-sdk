@@ -3,6 +3,7 @@
 namespace Telegram\Bot\Traits;
 
 use LogicException;
+
 /**
  * Singleton.
  */

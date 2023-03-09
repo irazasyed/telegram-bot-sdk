@@ -35,6 +35,7 @@ abstract class Command implements CommandInterface
 
     /** @var array|null Details of the current entity this command is responding to - offset, length, type etc */
     protected ?array $entity;
+
     /**
      * @var string
      */
@@ -74,7 +75,7 @@ abstract class Command implements CommandInterface
     /**
      * Set Command Aliases.
      *
-     * @param string|array $aliases
+     * @param  string|array  $aliases
      */
     public function setAliases($aliases): self
     {
@@ -196,10 +197,6 @@ abstract class Command implements CommandInterface
         return $this->formatMatches($matches, $required, $optional);
     }
 
-    /**
-     * @param string $regex
-     * @return Collection
-     */
     private function extractVariableNames(string $regex): Collection
     {
         preg_match_all($regex, $this->pattern, $matches);
@@ -207,10 +204,6 @@ abstract class Command implements CommandInterface
         return collect($matches[1]);
     }
 
-    /**
-     * @param string $customRegex
-     * @return string
-     */
     private function prepareRegex(Collection $required, Collection $optional, string $customRegex): string
     {
         if ($customRegex !== '' && $customRegex !== '0') {
@@ -218,18 +211,18 @@ abstract class Command implements CommandInterface
         }
 
         $requiredPattern = $required
-            ->map(static fn($varName): string => sprintf('(?P<%s>[^ ]++)', $varName))
+            ->map(static fn ($varName): string => sprintf('(?P<%s>[^ ]++)', $varName))
             ->implode('\s+?');
 
         $optionalPattern = $optional
-            ->map(static fn($varName): string => sprintf('(?:\s+?(?P<%s>[^ ]++))?', $varName))
+            ->map(static fn ($varName): string => sprintf('(?:\s+?(?P<%s>[^ ]++))?', $varName))
             ->implode('');
 
         if (empty($this->aliases)) {
             $commandName = $this->name;
         } else {
             $names = array_merge([$this->name], $this->aliases);
-            $commandName = '(?:' . implode('|', $names) . ')';
+            $commandName = '(?:'.implode('|', $names).')';
         }
 
         return sprintf('%%/%s%s%s%s%s%%si', $commandName, self::OPTIONAL_BOT_NAME, $requiredPattern, $optionalPattern, $customRegex);
@@ -255,10 +248,10 @@ abstract class Command implements CommandInterface
         if ($this->pattern === '0') {
             return '';
         }
-        if (!$required->isEmpty()) {
+        if (! $required->isEmpty()) {
             return '';
         }
-        if (!$optional->isEmpty()) {
+        if (! $optional->isEmpty()) {
             return '';
         }
 
@@ -303,9 +296,6 @@ abstract class Command implements CommandInterface
         );
     }
 
-    /**
-     * @return Collection
-     */
     private function allCommandOffsets(): Collection
     {
         $message = $this->getUpdate()
@@ -314,7 +304,7 @@ abstract class Command implements CommandInterface
         return $message->hasCommand() ?
             $message
                 ->get('entities', collect())
-                ->filter(static fn(MessageEntity $entity): bool => $entity->type === 'bot_command')
+                ->filter(static fn (MessageEntity $entity): bool => $entity->type === 'bot_command')
                 ->pluck('offset') :
             collect();
     }

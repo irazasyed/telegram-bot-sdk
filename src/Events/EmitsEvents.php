@@ -15,7 +15,7 @@ trait EmitsEvents
     /**
      * Emit an event.
      *
-     * @param object|string $event
+     * @param  object|string  $event
      * @return bool true if emitted, false otherwise.
      *
      * @throws InvalidArgumentException
@@ -29,10 +29,6 @@ trait EmitsEvents
         return true;
     }
 
-    /**
-     * @param $event
-     * @return void
-     */
     private function validateEvent($event): void
     {
         if (is_string($event) || is_object($event)) {

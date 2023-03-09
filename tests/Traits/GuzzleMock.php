@@ -17,8 +17,6 @@ trait GuzzleMock
     /**
      * This collection contains a history of all requests and responses
      * sent using the client.
-     *
-     * @var array
      */
     protected array $history = [];
 
@@ -40,8 +38,6 @@ trait GuzzleMock
 
     /**
      * @param  array|bool  $data
-     * @param int $status_code
-     * @param array $headers
      */
     public function makeFakeServerResponse($data, int $status_code = 200, array $headers = []): Response
     {

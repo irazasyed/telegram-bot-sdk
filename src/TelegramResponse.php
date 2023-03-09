@@ -39,7 +39,7 @@ final class TelegramResponse
     /**
      * Gets the relevant data from the Http client.
      *
-     * @param ResponseInterface|PromiseInterface $response
+     * @param  ResponseInterface|PromiseInterface  $response
      */
     public function __construct(TelegramRequest $request, $response)
     {
@@ -66,7 +66,7 @@ final class TelegramResponse
      */
     public function decodeBody(): void
     {
-        $this->body = (string)$this->body;
+        $this->body = (string) $this->body;
         $this->decodedBody = json_decode($this->body, true);
 
         if ($this->decodedBody === null) {
@@ -74,7 +74,7 @@ final class TelegramResponse
             parse_str($this->body, $this->decodedBody);
         }
 
-        if (!is_array($this->decodedBody)) {
+        if (! is_array($this->decodedBody)) {
             $this->decodedBody = [];
         }
 
@@ -110,8 +110,6 @@ final class TelegramResponse
     /**
      * Gets the HTTP status code.
      * Returns NULL if the request was asynchronous since we are not waiting for the response.
-     *
-     * @return null|int
      */
     public function getHttpStatusCode(): ?int
     {
@@ -172,6 +170,7 @@ final class TelegramResponse
      * Throws the exception.
      *
      * @return never
+     *
      * @throws TelegramSDKException
      */
     public function throwException(): TelegramSDKException

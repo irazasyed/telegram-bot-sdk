@@ -102,8 +102,10 @@ class Message extends BaseObject
         'voice_chat_participants_invited',
         'web_app_data',
     ];
+
     /**
      * {@inheritdoc}
+     *
      * @return array{from: string, chat: string, forward_from: string, forward_from_chat: string, reply_to_message: class-string<\Telegram\Bot\Objects\Message>, entities: string[], caption_entities: string[], audio: string, dice: string, animation: string, document: string, game: string, photo: string[], sticker: string, video: string, voice: string, video_note: string, contact: string, location: string, venue: string, poll: string, new_chat_member: string, new_chat_members: string[], left_chat_member: string, new_chat_photo: string[], delete_chat_photo: string, pinned_message: class-string<\Telegram\Bot\Objects\Message>, invoice: string, successful_payment: string, passport_data: string, sender_chat: string, proximity_alert_triggered: string, voice_chat_started: string, voice_chat_ended: string, voice_chat_participants_invited: string, web_app_data: string}
      */
     public function relations(): array
@@ -150,8 +152,6 @@ class Message extends BaseObject
 
     /**
      * Determine if the message is of given type.
-     *
-     * @param string $type
      */
     public function isType(string $type): bool
     {
@@ -182,8 +182,6 @@ class Message extends BaseObject
 
     /**
      * Does this message contain a command entity.
-     *
-     * @return bool
      */
     public function hasCommand(): bool
     {

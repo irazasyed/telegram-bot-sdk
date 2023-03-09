@@ -2,13 +2,12 @@
 
 namespace Telegram\Bot\HttpClients;
 
-use function GuzzleHttp\Promise\unwrap;
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Exception\RequestException;
-use GuzzleHttp\Promise;
 use GuzzleHttp\Promise\PromiseInterface;
+use function GuzzleHttp\Promise\unwrap;
 use GuzzleHttp\RequestOptions;
 use Psr\Http\Client\RequestExceptionInterface;
 use Psr\Http\Message\ResponseInterface;

@@ -25,6 +25,7 @@ class Poll extends BaseObject
 {
     /**
      * {@inheritdoc}
+     *
      * @return array{options: string[]}
      */
     public function relations(): array

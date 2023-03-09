@@ -3,8 +3,8 @@
 namespace Telegram\Bot\Answers;
 
 use BadMethodCallException;
-use ReflectionMethod;
 use ReflectionClass;
+use ReflectionMethod;
 use Telegram\Bot\Traits\Telegram;
 
 /**
@@ -17,8 +17,6 @@ abstract class AnswerBus
     /**
      * Handle calls to missing methods.
      *
-     * @param string $method
-     * @param array $parameters
      * @return mixed
      *
      * @throws BadMethodCallException
@@ -34,8 +32,6 @@ abstract class AnswerBus
 
     /**
      * Use PHP Reflection and Laravel Container to instantiate the answer with type hinted dependencies.
-     *
-     * @return object
      */
     protected function buildDependencyInjectedAnswer($answerClass): object
     {

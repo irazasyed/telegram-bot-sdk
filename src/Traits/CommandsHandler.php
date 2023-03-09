@@ -94,13 +94,12 @@ trait CommandsHandler
     }
 
     /**
-     * @param string $name Command Name
-     * @param Update $update Update Object
-     * @param array|null $entity
+     * @param  string  $name Command Name
+     * @param  Update  $update Update Object
      * @return mixed
+     *
      * @deprecated This method will be protected and signature will be changed in SDK v4.
      * Helper to Trigger Commands.
-     *
      */
     public function triggerCommand(string $name, Update $update, array $entity = null)
     {

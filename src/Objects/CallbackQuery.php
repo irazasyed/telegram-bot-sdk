@@ -19,6 +19,7 @@ class CallbackQuery extends BaseObject
 {
     /**
      * {@inheritdoc}
+     *
      * @return array{from: string, message: string}
      */
     public function relations(): array
