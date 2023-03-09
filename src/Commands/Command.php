@@ -244,7 +244,7 @@ abstract class Command implements CommandInterface
             ->intersectByKeys(
                 $required
                     ->merge($optional)
-                    //incase this was a custom regex search we need to add a custom key
+                    //in case this was a custom regex search we need to add a custom key
                     ->push('custom')
                     ->flip()
             )->all();

@@ -94,7 +94,7 @@ class InputFile
     }
 
     /**
-     * Attempts to access the meta data in the stream or resource to determine what
+     * Attempts to access the metadata in the stream or resource to determine what
      * the filename should be if the user did not supply one.
      *
      * @return string

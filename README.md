@@ -61,7 +61,7 @@ Thanks to these companies for providing access to their products that have been 
 
 ## Disclaimer
 
-This project and its author is neither associated, nor affiliated with [Telegram](https://telegram.org/) in anyway.
+This project and its author are neither associated, nor affiliated with [Telegram](https://telegram.org/) in any way.
 See License section for more details.
 
 ## License

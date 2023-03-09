@@ -26,7 +26,7 @@ trait Chat
      * The bot must be an administrator in the group for this to work.
      *
      * Note: This will method only work if the ‘All Members Are Admins’ setting is off in the target group.
-     * Otherwise members may only be removed by the group's creator or by the member that added them.
+     * Otherwise, members may only be removed by the group's creator or by the member that added them.
      *
      * <code>
      * $params = [
@@ -61,7 +61,7 @@ trait Chat
      * The bot must be an administrator in the group for this to work.
      *
      * Note: This will method only work if the ‘All Members Are Admins’ setting is off in the target group.
-     * Otherwise members may only be removed by the group's creator or by the member that added them.
+     * Otherwise, members may only be removed by the group's creator or by the member that added them.
      *
      * <code>
      * $params = [
@@ -82,7 +82,7 @@ trait Chat
     }
 
     /**
-     * Export an invite link to a supergroup or a channel.
+     * Export an invitation link to a supergroup or a channel.
      *
      * The bot must be an administrator in the group for this to work.
      *
