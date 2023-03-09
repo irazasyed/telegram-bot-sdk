@@ -13,20 +13,15 @@ final class UpdateEvent implements HasEventName
      */
     public const NAME = 'update';
 
-    /**
-     * @deprecated Will be removed in SDK v4
-     */
-    private string $name;
-
-    public Api $telegram;
-
-    public Update $update;
-
-    public function __construct(Api $telegram, Update $update, string $name = self::NAME)
+    public function __construct(
+        public Api $telegram,
+        public Update $update,
+        /**
+         * @deprecated Will be removed in SDK v4
+         */
+        private string $name = self::NAME
+    )
     {
-        $this->telegram = $telegram;
-        $this->update = $update;
-        $this->name = $name;
     }
 
     public function eventName(): string

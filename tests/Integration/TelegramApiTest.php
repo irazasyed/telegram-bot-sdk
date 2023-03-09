@@ -231,7 +231,7 @@ test('the correct request body data is created when a post method has parameters
     $request = $this->getHistory()->pluck('request')->first();
 
     expect($request->getBody())->toBeInstanceOf(Stream::class)
-        ->and((string) $request->getBody())->toEqual(http_build_query(PARAMS))
+        ->and((string)$request->getBody())->toEqual(http_build_query(PARAMS))
         ->and($request->getUri()->getScheme())->toEqual('https')
         ->and($request->getUri()->getHost())->toEqual('api.telegram.org')
         ->and($request->getUri()->getPath())->toEqual('/botSpecial_Bot_Token/sendMessage')
@@ -256,10 +256,11 @@ it('returns decoded update objects when updates are available', function () {
         ->and($secondUpdates[0]->message->text)->toEqual('Test3')
         ->and($secondUpdates[1]->updateId)->toEqual('377695763')
         ->and($secondUpdates[1]->message->text)->toEqual('Test4');
+
 });
 
 it('throws an exception if a method called does not exist')
-    ->tap(fn () => api()->badMethod())
+    ->tap(fn() => api()->badMethod())
     ->throws(BadMethodCallException::class);
 
 it('checks the last response property gets populated after a request', function () {
@@ -292,7 +293,7 @@ it('throws an exception if the api response is not ok', function () {
 })->throws(TelegramResponseException::class, 'BadResponse Test');
 
 it('throws exception if invalid chat action is sent')
-    ->tap(fn () => api()->sendChatAction(['action' => 'zzz']))
+    ->tap(fn() => api()->sendChatAction(['action' => 'zzz']))
     ->throws(TelegramSDKException::class);
 
 it('can use async promises to send requests', function () {
@@ -322,11 +323,11 @@ it('allows a file id to be used when using a method that involves a file upload'
     $request = $this->getHistory()->pluck('request')->first();
 
     expect($result)->toBeInstanceOf(Message::class);
-    $this->assertStringContainsString('document=AwADBAADYwADO1wlBuF1ogMa7HnMAg', (string) $request->getBody());
+    $this->assertStringContainsString('document=AwADBAADYwADO1wlBuF1ogMa7HnMAg', (string)$request->getBody());
 });
 
 it('requires all file uploads except file id to be created with file input object')
-    ->tap(fn ($type) => api()->sendDocument(['chat_id' => 123456789, 'document' => $type]))
+    ->tap(fn($type) => api()->sendDocument(['chat_id' => 123456789, 'document' => $type]))
     ->with([
         ['/local/path/to/file.pdf'],
         ['https://example.com/file.pdf'],
@@ -355,7 +356,7 @@ test('a stream not created from an actual file can be used as a file upload', fu
 
     /** @var Request $request */
     $request = $this->getHistory()->pluck('request')->first();
-    $body = (string) $request->getBody();
+    $body = (string)$request->getBody();
 
     expect($result)->toBeInstanceOf(Message::class);
     $this->assertStringContainsString('This is some text', $body);
@@ -381,7 +382,7 @@ it('can upload a file properly using the correct multipart data', function () {
 
     /** @var Request $request */
     $request = $this->getHistory()->pluck('request')->first();
-    $body = (string) $request->getBody();
+    $body = (string)$request->getBody();
 
     $this->assertStringContainsString('Content-Disposition: form-data; name="chat_id"', $body);
     $this->assertStringContainsString('Content-Disposition: form-data; name="document"; filename="testing.txt"', $body);
@@ -415,8 +416,8 @@ it('can set a webhook with its own certificate successfully', function () {
         'certificate' => $fakeFile,
     ]);
 
-    $response1 = (string) $this->getHistory()->pluck('request')->get(0)->getBody();
-    $response2 = (string) $this->getHistory()->pluck('request')->get(1)->getBody();
+    $response1 = (string)$this->getHistory()->pluck('request')->get(0)->getBody();
+    $response2 = (string)$this->getHistory()->pluck('request')->get(1)->getBody();
 
     $this->assertStringContainsString('Content-Disposition: form-data; name="certificate"; filename="public.key"', $response1);
     $this->assertStringContainsString('THISISSOMERANDOMKEYDATA', $response1);
@@ -462,6 +463,7 @@ it('dispatches 3 events of update event type', function () {
         ->and($allEvents['message'])->toHaveCount(1)
         ->and($allEvents['message.text'])->toHaveCount(1);
 });
+
 
 it('can get the webhook info', function () {
     $api = api($this->getGuzzleHttpClient([
@@ -558,17 +560,22 @@ function streamFor($resource): StreamInterface
 
 function createSpyListener()
 {
-    return new class implements \League\Event\Listener
-    {
+    return new class implements \League\Event\Listener {
         public array $events = [];
 
+        /**
+         * @var object|null
+         */
         private ?object $calledWith = null;
 
+        /**
+         * @var int
+         */
         private int $timesCalled = 0;
 
         public function __invoke(object $event): void
         {
-            $this->timesCalled++;
+            ++$this->timesCalled;
             $this->calledWith = $event;
             $this->events[$event->eventName()][] = $event;
         }

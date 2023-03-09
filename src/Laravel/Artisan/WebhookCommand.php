@@ -33,17 +33,14 @@ final class WebhookCommand extends Command
     /** @var Api */
     protected $telegram;
 
-    protected BotsManager $botsManager;
-
     /** @var array Bot Config */
     protected $config = [];
 
     /**
      * WebhookCommand constructor.
      */
-    public function __construct(BotsManager $botsManager)
+    public function __construct(protected BotsManager $botsManager)
     {
-        $this->botsManager = $botsManager;
     }
 
     /**

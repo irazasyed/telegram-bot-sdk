@@ -101,7 +101,7 @@ final class Keyboard extends Base
      *
      * @return mixed
      */
-    public static function button($params = [])
+    public static function button(string|array $params = [])
     {
         if (is_string($params)) {
             return $params;

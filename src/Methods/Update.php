@@ -2,6 +2,7 @@
 
 namespace Telegram\Bot\Methods;
 
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Http\Message\RequestInterface;
 use Telegram\Bot\Events\UpdateEvent;
 use Telegram\Bot\Events\UpdateWasReceived;
@@ -9,6 +10,7 @@ use Telegram\Bot\Exceptions\TelegramSDKException;
 use Telegram\Bot\FileUpload\InputFile;
 use Telegram\Bot\Objects\Update as UpdateObject;
 use Telegram\Bot\Objects\WebhookInfo;
+use Telegram\Bot\TelegramResponse;
 use Telegram\Bot\Traits\Http;
 
 /**
@@ -32,7 +34,8 @@ trait Update
      *
      * @link https://core.telegram.org/bots/api#getupdates
      *
-     * @param  array  $params [
+     * @param bool $shouldEmitEvents
+     * @param array $params [
      *
      * @var int            Optional. Identifier of the first update to be returned. Must be greater by one than the highest among the identifiers of previously received updates. By default, updates starting with the earliest unconfirmed update are returned. An update is considered confirmed as soon as getUpdates is called with an offset higher than its update_id. The negative offset can be specified to retrieve updates starting from -offset update from the end of the updates queue. All previous updates will forgotten.
      * @var int             Optional. Limits the number of updates to be retrieved. Values between 1—100 are accepted. Defaults to 100.
@@ -78,7 +81,7 @@ trait Update
      *
      * @link https://core.telegram.org/bots/api#setwebhook
      *
-     * @param  array  $params [
+     * @param array $params [
      *
      * @var string                Required. HTTPS url to send updates to. Use an empty string to remove webhook integration
      * @var InputFile     Optional. Upload your public key certificate so that the root certificate in use can be checked. See our self-signed guide for details.
@@ -199,7 +202,7 @@ trait Update
      */
     private function getRequestBody(?RequestInterface $request)
     {
-        $rawBody = $request instanceof RequestInterface ? (string) $request->getBody() : file_get_contents('php://input');
+        $rawBody = $request instanceof RequestInterface ? (string)$request->getBody() : file_get_contents('php://input');
 
         return json_decode($rawBody, true);
     }

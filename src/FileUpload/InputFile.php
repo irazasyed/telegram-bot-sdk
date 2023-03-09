@@ -12,12 +12,6 @@ use Telegram\Bot\Exceptions\CouldNotUploadInputFile;
  */
 final class InputFile
 {
-    /** @var string|resource|StreamInterface The path to the file on the system or remote / resource. */
-    private $file;
-
-    /** @var string|null The filename. */
-    private $filename;
-
     /** @var string|resource|StreamInterface The contents of the file. */
     private $contents;
 
@@ -39,7 +33,7 @@ final class InputFile
      * @param  string  $filename
      * @return mixed
      */
-    public static function createFromContents($contents, $filename): InputFile
+    public static function createFromContents($contents, $filename): \Telegram\Bot\FileUpload\InputFile
     {
         return (new self(null, $filename))->setContents($contents);
     }
@@ -48,12 +42,9 @@ final class InputFile
      * Creates a new InputFile entity.
      *
      * @param  string|resource|StreamInterface|null  $file
-     * @param  string|null  $filename
      */
-    public function __construct($file = null, $filename = null)
+    public function __construct(private $file = null, private ?string $filename = null)
     {
-        $this->file = $file;
-        $this->filename = $filename;
     }
 
     /**
@@ -132,7 +123,7 @@ final class InputFile
      */
     public function setFilename($filename): self
     {
-        if (! $this->isStringOrNull($filename)) {
+        if (!$this->isStringOrNull($filename)) {
             throw new InvalidArgumentException(
                 'Filename must be a string or null'
             );
@@ -179,6 +170,7 @@ final class InputFile
         if ($this->isFileRemote()) {
             return $this->contents = new LazyOpenStream($this->file, 'r');
         }
+
         if ($this->isFileLocalAndExists()) {
             return $this->contents = new LazyOpenStream($this->file, 'r');
         }
@@ -189,10 +181,9 @@ final class InputFile
     /**
      * Determine if given param is a string or null.
      *
-     * @param  mixed  $param
      * @return bool true if it's a string or null, false otherwise.
      */
-    private function isStringOrNull($param): bool
+    private function isStringOrNull(mixed $param): bool
     {
         return in_array(gettype($param), ['string', 'NULL']);
     }

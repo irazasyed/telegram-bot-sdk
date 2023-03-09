@@ -23,7 +23,6 @@ class InputMediaAnimation extends InputMedia
 {
     /**
      * {@inheritdoc}
-     *
      * @return array{thumb: string}
      */
     public function relations(): array

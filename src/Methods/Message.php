@@ -334,6 +334,7 @@ trait Message
      *
      * @link https://core.telegram.org/bots/api#sendmediagroup
      *
+     *
      * @throws TelegramSDKException
      * //TODO Check this return type.
      */

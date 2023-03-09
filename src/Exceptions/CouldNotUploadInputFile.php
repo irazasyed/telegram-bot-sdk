@@ -3,7 +3,6 @@
 namespace Telegram\Bot\Exceptions;
 
 use Telegram\Bot\FileUpload\InputFile;
-
 /**
  * Class CouldNotUploadInputFile.
  */
@@ -31,7 +30,7 @@ final class CouldNotUploadInputFile extends TelegramSDKException
 
     public static function inputFileParameterShouldBeInputFileEntity($property): self
     {
-        return new self(sprintf('A path to local file, a URL, or a file resource should be uploaded using `'.InputFile::class.'::create($pathOrUrlOrResource, $filename)` for `%s` property. Please view docs for example.', $property));
+        return new self(sprintf('A path to local file, a URL, or a file resource should be uploaded using `' . InputFile::class . '::create($pathOrUrlOrResource, $filename)` for `%s` property. Please view docs for example.', $property));
     }
 
     public static function missingParam($inputFileField): self

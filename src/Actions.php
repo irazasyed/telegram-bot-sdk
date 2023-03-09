@@ -30,7 +30,6 @@ final class Actions
     /**
      * @deprecated Please use RECORD_VOICE (the correct one)
      * Sets chat status as Recording Audio.
-     *
      * @var string
      */
     public const RECORD_AUDIO = 'record_voice';
@@ -42,7 +41,6 @@ final class Actions
     /**
      * @deprecated Please use UPLOAD_VOICE (the correct one)
      * Sets chat status as Sending Audio.
-     *
      * @var string
      */
     public const UPLOAD_AUDIO = 'upload_voice';

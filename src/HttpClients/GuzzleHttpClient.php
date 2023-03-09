@@ -6,8 +6,8 @@ use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Promise\Utils;
 use GuzzleHttp\Promise\PromiseInterface;
-use function GuzzleHttp\Promise\unwrap;
 use GuzzleHttp\RequestOptions;
 use Psr\Http\Client\RequestExceptionInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -17,19 +17,19 @@ use Throwable;
 /**
  * Class GuzzleHttpClient.
  */
-final class GuzzleHttpClient implements HttpClientInterface
+class GuzzleHttpClient implements HttpClientInterface
 {
     /** @var PromiseInterface[] Holds promises. */
-    private static array $promises = [];
+    protected static array $promises = [];
 
     /** @var Client|ClientInterface HTTP client. */
-    private ClientInterface $client;
+    protected ClientInterface|Client $client;
 
     /** @var int Timeout of the request in seconds. */
-    private int $timeOut = 30;
+    protected int $timeOut = 30;
 
     /** @var int Connection timeout of the request in seconds. */
-    private int $connectTimeOut = 10;
+    protected int $connectTimeOut = 10;
 
     /**
      * GuzzleHttpClient constructor.
@@ -46,7 +46,7 @@ final class GuzzleHttpClient implements HttpClientInterface
      */
     public function __destruct()
     {
-        unwrap(self::$promises);
+        Utils::unwrap(self::$promises);
     }
 
     /**
@@ -65,12 +65,13 @@ final class GuzzleHttpClient implements HttpClientInterface
      * @throws TelegramSDKException
      */
     public function send(
-        $url,
-        $method,
-        array $headers = [],
-        array $options = [],
-        $isAsyncRequest = false
-    ) {
+        string $url,
+        string $method,
+        array  $headers = [],
+        array  $options = [],
+        bool   $isAsyncRequest = false
+    ): ResponseInterface|PromiseInterface|null
+    {
         $body = $options['body'] ?? null;
         $options = $this->getOptions($headers, $body, $options, $isAsyncRequest);
 
@@ -88,7 +89,7 @@ final class GuzzleHttpClient implements HttpClientInterface
                 $response = $guzzleException->getResponse();
             }
 
-            if (! $response instanceof ResponseInterface) {
+            if (!$response instanceof ResponseInterface) {
                 throw new TelegramSDKException($guzzleException->getMessage(), $guzzleException->getCode(), $guzzleException);
             }
         }
@@ -99,21 +100,27 @@ final class GuzzleHttpClient implements HttpClientInterface
     /**
      * Prepares and returns request options.
      *
-     * @param  bool  $isAsyncRequest
+     * @param array $headers
+     * @param mixed $body
+     * @param array $options
+     * @param bool $isAsyncRequest
+     * @param string|array|null $proxy
+     * @return array
      */
     private function getOptions(
-        array $headers,
-        $body,
-        array $options,
-        $isAsyncRequest = false,
-        $proxy = null
-    ): array {
+        array        $headers,
+        mixed        $body,
+        array        $options,
+        bool         $isAsyncRequest = false,
+        string|array $proxy = null
+    ): array
+    {
         $default_options = [
             RequestOptions::HEADERS => $headers,
             RequestOptions::BODY => $body,
             RequestOptions::TIMEOUT => $this->timeOut,
             RequestOptions::CONNECT_TIMEOUT => $this->connectTimeOut,
-            RequestOptions::SYNCHRONOUS => ! $isAsyncRequest,
+            RequestOptions::SYNCHRONOUS => !$isAsyncRequest,
         ];
 
         if ($proxy !== null) {
@@ -134,7 +141,7 @@ final class GuzzleHttpClient implements HttpClientInterface
     /**
      * {@inheritdoc}
      */
-    public function setTimeOut($timeOut): self
+    public function setTimeOut(int $timeOut): static
     {
         $this->timeOut = $timeOut;
 
@@ -152,7 +159,7 @@ final class GuzzleHttpClient implements HttpClientInterface
     /**
      * {@inheritdoc}
      */
-    public function setConnectTimeOut($connectTimeOut): self
+    public function setConnectTimeOut(int $connectTimeOut): static
     {
         $this->connectTimeOut = $connectTimeOut;
 

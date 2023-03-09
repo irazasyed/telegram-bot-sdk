@@ -2,6 +2,7 @@
 
 namespace Telegram\Bot\Commands;
 
+use Telegram\Bot\Objects\Message;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use InvalidArgumentException;
@@ -70,7 +71,7 @@ final class CommandBus extends AnswerBus
      *
      * @throws TelegramSDKException
      */
-    public function addCommand($command): self
+    public function addCommand(CommandInterface|string $command): self
     {
         $command = $this->resolveCommand($command);
 
@@ -178,7 +179,7 @@ final class CommandBus extends AnswerBus
     private function parseCommandsIn(Collection $message): Collection
     {
         return Collection::wrap($message->get('entities'))
-            ->filter(static fn (MessageEntity $entity): bool => $entity->type === 'bot_command');
+            ->filter(static fn(MessageEntity $entity): bool => $entity->type === 'bot_command');
     }
 
     /**
@@ -209,7 +210,7 @@ final class CommandBus extends AnswerBus
         $command = $this->commands[$name] ??
             $this->commandAliases[$name] ??
             $this->commands['help'] ??
-            collect($this->commands)->filter(static fn ($command): bool => $command instanceof $name)->first() ?? null;
+            collect($this->commands)->filter(static fn($command): bool => $command instanceof $name)->first() ?? null;
 
         return $command !== null ? $command->make($this->telegram, $update, $entity) : false;
     }
@@ -219,13 +220,13 @@ final class CommandBus extends AnswerBus
      *
      * @throws TelegramSDKException
      */
-    private function resolveCommand($command): CommandInterface
+    private function resolveCommand(CommandInterface|string $command): CommandInterface
     {
         if (! is_a($command, CommandInterface::class, true)) {
             throw new TelegramSDKException(
                 sprintf(
                     'Command class "%s" should be an instance of "%s"',
-                    is_object($command) ? get_class($command) : $command,
+                    is_object($command) ? $command::class : $command,
                     CommandInterface::class
                 )
             );
@@ -249,7 +250,6 @@ final class CommandBus extends AnswerBus
     /**
      * @param  string  $alias
      * @return void
-     *
      * @throws TelegramSDKException
      */
     private function checkForConflicts(CommandInterface $command, $alias)
@@ -259,7 +259,7 @@ final class CommandBus extends AnswerBus
                 sprintf(
                     '[Error] Alias [%s] conflicts with command name of "%s" try with another name or remove this alias from the list.',
                     $alias,
-                    get_class($command)
+                    $command::class
                 )
             );
         }
@@ -269,7 +269,7 @@ final class CommandBus extends AnswerBus
                 sprintf(
                     '[Error] Alias [%s] conflicts with another command\'s alias list: "%s", try with another name or remove this alias from the list.',
                     $alias,
-                    get_class($command)
+                    $command::class
                 )
             );
         }

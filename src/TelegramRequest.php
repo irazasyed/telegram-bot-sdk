@@ -38,15 +38,19 @@ final class TelegramRequest
     /**
      * Creates a new Request entity.
      *
-     * @param  mixed[]  $params
+     * @param string|null $accessToken
+     * @param string|null $method
+     * @param string|null $endpoint
+     * @param mixed[] $params
      */
     public function __construct(
         string $accessToken = null,
         string $method = null,
         string $endpoint = null,
-        array $params = [],
-        bool $isAsyncRequest = false
-    ) {
+        array  $params = [],
+        bool   $isAsyncRequest = false
+    )
+    {
         $this->setAccessToken($accessToken);
         $this->setMethod($method);
         $this->setEndpoint($endpoint);
@@ -56,6 +60,8 @@ final class TelegramRequest
 
     /**
      * Make this request asynchronous (non-blocking).
+     *
+     *
      */
     public function setAsyncRequest(bool $isAsyncRequest): self
     {
@@ -105,7 +111,7 @@ final class TelegramRequest
             throw new TelegramSDKException('HTTP method not specified.');
         }
 
-        if (! in_array($this->method, ['GET', 'POST'])) {
+        if (!in_array($this->method, ['GET', 'POST'])) {
             throw new TelegramSDKException('Invalid HTTP method specified. Must be GET or POST');
         }
     }
@@ -154,7 +160,7 @@ final class TelegramRequest
     public function getDefaultHeaders(): array
     {
         return [
-            'User-Agent' => 'Telegram Bot PHP SDK v'.Api::VERSION.' (https://github.com/irazasyed/telegram-bot-sdk)',
+            'User-Agent' => 'Telegram Bot PHP SDK v' . Api::VERSION . ' (https://github.com/irazasyed/telegram-bot-sdk)',
         ];
     }
 
@@ -188,6 +194,8 @@ final class TelegramRequest
 
     /**
      * Set the HTTP method for this request.
+     *
+     *
      */
     public function setMethod(string $method): self
     {

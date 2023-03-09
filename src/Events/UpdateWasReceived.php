@@ -11,19 +11,16 @@ use Telegram\Bot\Objects\Update;
  */
 final class UpdateWasReceived implements HasEventName
 {
+    /**
+     * @var string
+     */
     private const NAME = 'update.received';
-
-    private Update $update;
-
-    private Api $telegram;
 
     /**
      * UpdateWasReceived constructor.
      */
-    public function __construct(Update $update, Api $telegram)
+    public function __construct(private Update $update, private Api $telegram)
     {
-        $this->update = $update;
-        $this->telegram = $telegram;
     }
 
     public function update(): Update

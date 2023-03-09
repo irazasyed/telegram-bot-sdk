@@ -7,9 +7,6 @@ namespace Telegram\Bot\Helpers;
  */
 final class Entities
 {
-    /** @var string Message or Caption */
-    private string $text;
-
     /** @var array Entities from Telegram */
     private array $entities = [];
 
@@ -19,9 +16,11 @@ final class Entities
     /**
      * Entities constructor.
      */
-    public function __construct(string $text)
+    public function __construct(
+        /** @var string Message or Caption */
+        private string $text
+    )
     {
-        $this->text = $text;
     }
 
     public static function format(string $text): self
@@ -64,7 +63,7 @@ final class Entities
      *
      * @return mixed|string
      */
-    private function apply()
+    private function apply(): string
     {
         $syntax = $this->syntax();
 
@@ -91,7 +90,6 @@ final class Entities
 
     /**
      * Formatting Syntax.
-     *
      * @return array{bold: string[], italic: string[], code: string[], pre: string[], text_mention: string[], text_link: string[]}
      */
     private function syntax(): array

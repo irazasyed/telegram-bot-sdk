@@ -33,7 +33,6 @@ class Chat extends BaseObject
 {
     /**
      * {@inheritdoc}
-     *
      * @return array{photo: string, pinned_message: string, permissions: string, location: string}
      */
     public function relations(): array

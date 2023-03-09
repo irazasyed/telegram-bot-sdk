@@ -32,7 +32,7 @@ trait CommandsHandler
      *
      * @return Update|Update[]
      */
-    public function commandsHandler(bool $webhook = false, ?RequestInterface $request = null)
+    public function commandsHandler(bool $webhook = false, ?RequestInterface $request = null): Update|array
     {
         return $webhook ? $this->useWebHook($request) : $this->useGetUpdates();
     }
@@ -94,12 +94,13 @@ trait CommandsHandler
     }
 
     /**
-     * @param  string  $name Command Name
-     * @param  Update  $update Update Object
+     * @param string $name Command Name
+     * @param Update $update Update Object
+     * @param array|null $entity
      * @return mixed
-     *
      * @deprecated This method will be protected and signature will be changed in SDK v4.
      * Helper to Trigger Commands.
+     *
      */
     public function triggerCommand(string $name, Update $update, array $entity = null)
     {

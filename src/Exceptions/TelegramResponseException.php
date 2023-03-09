@@ -9,21 +9,17 @@ use Telegram\Bot\TelegramResponse;
  */
 final class TelegramResponseException extends TelegramSDKException
 {
-    /** @var TelegramResponse The response that threw the exception. */
-    private TelegramResponse $response;
-
     /** @var array Decoded response. */
-    private array $responseData;
+    private array $responseData = [];
 
     /**
      * Creates a TelegramResponseException.
      *
      * @param  TelegramResponse  $response          The response that threw the exception.
-     * @param  TelegramSDKException|null  $previousException The more detailed exception.
+     * @param TelegramSDKException|null $previousException The more detailed exception.
      */
-    public function __construct(TelegramResponse $response, TelegramSDKException $previousException = null)
+    public function __construct(private TelegramResponse $response, TelegramSDKException $previousException = null)
     {
-        $this->response = $response;
         $this->responseData = $response->getDecodedBody();
 
         $errorMessage = $this->get('description', 'Unknown error from API Response.');
@@ -36,10 +32,9 @@ final class TelegramResponseException extends TelegramSDKException
      * Checks isset and returns that or a default value.
      *
      * @param  string  $key
-     * @param  mixed  $default
      * @return mixed
      */
-    public function get($key, $default = null)
+    public function get($key, mixed $default = null)
     {
         return $this->responseData[$key] ?? $default;
     }
@@ -66,10 +61,8 @@ final class TelegramResponseException extends TelegramSDKException
 
     /**
      * Returns the HTTP status code.
-     *
-     * @return int
      */
-    public function getHttpStatusCode()
+    public function getHttpStatusCode(): ?int
     {
         return $this->response->getHttpStatusCode();
     }

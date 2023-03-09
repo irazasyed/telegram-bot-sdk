@@ -121,7 +121,7 @@ final class Emojify
      * @param  string  $delimiter
      * @return mixed
      */
-    private function replace($line, $replace, bool $toWord = false, $delimiter = ':')
+    private function replace($line, array $replace, bool $toWord = false, $delimiter = ':')
     {
         if ($toWord) {
             return $this->emojiToWordReplace($line, $replace, $delimiter);
@@ -136,7 +136,7 @@ final class Emojify
      *
      * @return mixed
      */
-    private function wordToEmojiReplace($line, $replace, $delimiter)
+    private function wordToEmojiReplace($line, array $replace, $delimiter)
     {
         foreach ($replace as $key => $value) {
             $line = str_replace($delimiter.$key.$delimiter, $value, $line);
@@ -150,7 +150,7 @@ final class Emojify
      *
      * @return mixed
      */
-    private function emojiToWordReplace($line, $replace, $delimiter)
+    private function emojiToWordReplace($line, array $replace, $delimiter)
     {
         foreach ($replace as $key => $value) {
             $line = str_replace($key, $delimiter.$value.$delimiter, $line);

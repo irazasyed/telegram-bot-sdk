@@ -30,18 +30,16 @@ final class TelegramResponse
     /** @var string API Endpoint used to make the request. */
     private string $endPoint;
 
-    /** @var TelegramRequest The original request that returned this response. */
-    private TelegramRequest $request;
-
     /** @var TelegramSDKException The exception thrown by this request. */
     private TelegramSDKException $thrownException;
 
     /**
      * Gets the relevant data from the Http client.
      *
-     * @param  ResponseInterface|PromiseInterface  $response
+     * @param ResponseInterface|PromiseInterface $response
      */
-    public function __construct(TelegramRequest $request, $response)
+    public function __construct(/** @var TelegramRequest The original request that returned this response. */
+    private TelegramRequest $request, $response)
     {
         if ($response instanceof ResponseInterface) {
             $this->httpStatusCode = $response->getStatusCode();
@@ -56,8 +54,6 @@ final class TelegramResponse
                 'Second constructor argument "response" must be instance of ResponseInterface or PromiseInterface'
             );
         }
-
-        $this->request = $request;
         $this->endPoint = $request->getEndpoint();
     }
 
@@ -66,7 +62,6 @@ final class TelegramResponse
      */
     public function decodeBody(): void
     {
-        $this->body = (string) $this->body;
         $this->decodedBody = json_decode($this->body, true);
 
         if ($this->decodedBody === null) {
@@ -74,7 +69,7 @@ final class TelegramResponse
             parse_str($this->body, $this->decodedBody);
         }
 
-        if (! is_array($this->decodedBody)) {
+        if (!is_array($this->decodedBody)) {
             $this->decodedBody = [];
         }
 
@@ -170,7 +165,6 @@ final class TelegramResponse
      * Throws the exception.
      *
      * @return never
-     *
      * @throws TelegramSDKException
      */
     public function throwException(): TelegramSDKException

@@ -35,7 +35,7 @@ it('can add multiple commands to the bus', function () {
 });
 
 it('throws an exception if a no class exists for the name supplied as a command')
-    ->tap(fn () => $this->bus->addCommand('badcommand'))
+    ->tap(fn() => $this->bus->addCommand('badcommand'))
     ->throws(TelegramSDKException::class);
 
 it('throws an exception if a commands alias matches a previously added command alias', function () {
@@ -125,17 +125,19 @@ it('can parse a command from a group of bots', function () {
 });
 
 it('throws an exception if parsing for a command in a message with no text')
-    ->tap(fn () => $this->bus->parseCommand('', 5, 5))
+    ->tap(fn() => $this->bus->parseCommand('', 5, 5))
     ->throws(InvalidArgumentException::class);
 
-it('throws an exception if command is not an instance of command interface')
-    ->tap(fn () => $this->bus->addCommand(new class()
-    {
-    }))
+it('throws an exception if command is not an instance of command interface', function () {
+    $class = new class() {
+    };
+
+    $this->bus->addCommand($class::class);
+})
     ->throws(TelegramSDKException::class);
 
 function getAllCommandNames($result): Collection
 {
     return collect($result)
-        ->map(static fn (Command $command): string => $command->getName());
+        ->map(static fn(Command $command): string => $command->getName());
 }

@@ -19,10 +19,9 @@ class Base extends Collection
      * Dynamically build params.
      *
      * @param  string  $method
-     * @param  array  $args
      * @return $this
      */
-    public function __call($method, $args)
+    public function __call($method, array $args)
     {
         if (! Str::startsWith($method, 'set')) {
             return parent::__call($method, $args);
