@@ -2,8 +2,8 @@
 
 namespace Telegram\Bot;
 
-use Psr\Http\Message\ResponseInterface;
 use GuzzleHttp\Promise\PromiseInterface;
+use Psr\Http\Message\ResponseInterface;
 use Telegram\Bot\HttpClients\GuzzleHttpClient;
 use Telegram\Bot\HttpClients\HttpClientInterface;
 
