@@ -2,6 +2,8 @@
 
 namespace Telegram\Bot;
 
+use Psr\Http\Message\ResponseInterface;
+use GuzzleHttp\Promise\PromiseInterface;
 use Telegram\Bot\HttpClients\GuzzleHttpClient;
 use Telegram\Bot\HttpClients\HttpClientInterface;
 
@@ -65,7 +67,7 @@ final class TelegramClient
         return $this->baseBotUrl;
     }
 
-    private function getResponse(TelegramRequest $request, $response): TelegramResponse
+    private function getResponse(TelegramRequest $request, ResponseInterface|PromiseInterface|null $response): TelegramResponse
     {
         return new TelegramResponse($request, $response);
     }

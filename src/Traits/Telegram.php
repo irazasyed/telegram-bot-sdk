@@ -10,7 +10,7 @@ use Telegram\Bot\Api;
 trait Telegram
 {
     /** @var Api|null Holds the Super Class Instance. */
-    protected ?Api $telegram;
+    protected ?Api $telegram = null;
 
     /**
      * Returns Super Class Instance.

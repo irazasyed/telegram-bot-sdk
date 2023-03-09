@@ -75,9 +75,15 @@
     }
   },
   "scripts": {
-    "php:syntax": "parallel-lint . --blame --colors --exclude vendor",
-    "rector": "vendor/bin/rector",
-    "test": "vendor/bin/pest",
-    "test-coverage": "vendor/bin/pest --coverage"
+    "refactor": "rector --debug",
+    "test:lint": "parallel-lint . --blame --colors --exclude vendor",
+    "test:refactor": "rector --dry-run",
+    "test:unit": "pest --colors=always",
+    "test:coverage": "pest --coverage --colors=always",
+    "test": [
+      "@test:lint",
+      "@test:refactor",
+      "@test:unit"
+    ]
   }
 }

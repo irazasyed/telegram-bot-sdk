@@ -55,7 +55,7 @@ trait Payments
      */
     public function sendInvoice(array $params): Message
     {
-        $params['prices'] = json_encode(Arr::wrap($params['prices']));
+        $params['prices'] = json_encode(Arr::wrap($params['prices']), JSON_THROW_ON_ERROR);
         $response = $this->post('sendInvoice', $params);
 
         return new Message($response->getDecodedBody());
