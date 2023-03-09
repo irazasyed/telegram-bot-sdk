@@ -16,6 +16,7 @@ use Telegram\Bot\Objects\Message;
 use Telegram\Bot\Objects\Update;
 use Telegram\Bot\Objects\WebhookInfo;
 use Telegram\Bot\TelegramResponse;
+use Telegram\Bot\Tests\Fixtures\Events\ListenerSpy;
 use Telegram\Bot\Tests\Traits\CommandGenerator;
 use Telegram\Bot\Tests\Traits\GuzzleMock;
 
@@ -138,7 +139,7 @@ it('returns decoded update objects when updates are available', function () {
 });
 
 it('throws an exception if a method called does not exist')
-    ->tap(fn () => api()->badMethod())
+    ->tap(fn () => $this->api->badMethod())
     ->throws(BadMethodCallException::class);
 
 it('checks the last response property gets populated after a request', function () {
@@ -216,7 +217,7 @@ it('requires all file uploads except file id to be created with file input objec
 
 it('throws an exception if the param key used to upload file does not match the method being used', function () {
     //We want to send a document but the params have a voice key instead.
-    api()->sendDocument([
+    $this->api->sendDocument([
         'chat_id' => 123456789,
         'voice' => InputFile::create(fopen('php://input', 'rb'), 'Myvoice.ogg'),
     ]);
@@ -254,7 +255,7 @@ it('can upload a file properly using the correct multipart data', function () {
 
     //We can use any file input here, for testing a stream is quick and easy.
     $api->sendDocument([
-        'chat_id' => 123_456_789,
+        'chat_id' => 123456789,
         'document' => InputFile::create(streamFor('Some text'), 'testing.txt'),
     ]);
 
@@ -304,24 +305,22 @@ it('can set a webhook with its own certificate successfully', function () {
 });
 
 test('check the webhook works and can emmit an event', function () {
-    $api = api();
-    $listener = createSpyListener();
+    $listener = new ListenerSpy();
 
-    $api->eventDispatcher()->subscribeTo(UpdateWasReceived::class, $listener);
+    $this->api->eventDispatcher()->subscribeTo(UpdateWasReceived::class, $listener);
 
     $incomeWebhookRequest = createIncomeWebhookRequestInstance([]);
 
-    $update = $api->getWebhookUpdate(true, $incomeWebhookRequest);
+    $update = $this->api->getWebhookUpdate(true, $incomeWebhookRequest);
 
     expect($update)->toBeEmpty()
         ->and($listener->numberOfTimeCalled())->toBeOne();
 });
 
 it('dispatches 3 events of update event type', function () {
-    $api = api();
-    $listener = createSpyListener();
+    $listener = new ListenerSpy();
 
-    $api->eventDispatcher()->subscribeTo(UpdateEvent::class, $listener);
+    $this->api->eventDispatcher()->subscribeTo(UpdateEvent::class, $listener);
 
     $incomeWebhookRequest = createIncomeWebhookRequestInstance([
         'message' => [ // to help SDK to detect Update of "message" type and send 2nd event (with name "message")
@@ -329,7 +328,7 @@ it('dispatches 3 events of update event type', function () {
         ],
     ]);
 
-    $api->getWebhookUpdate(true, $incomeWebhookRequest);
+    $this->api->getWebhookUpdate(true, $incomeWebhookRequest);
 
     $allEvents = $listener->events;
 
@@ -366,39 +365,15 @@ it('can get the webhook info', function () {
 });
 
 test('the commands handler can get all commands', function () {
-    $api = api();
+    $this->api->addCommands($this->commandGenerator(4)->all());
 
-    $api->addCommands($this->commandGenerator(4)->all());
-
-    $commands = $api->getCommands();
+    $commands = $this->api->getCommands();
 
     expect($commands)->toHaveCount(4);
 });
 
 test('the command handler can use get updates to process updates and mark updates read', function () {
-    $updateData = $this->makeFakeServerResponse([
-        [
-            'update_id' => 377695760,
-            'message' => [
-                'message_id' => 749,
-                'from' => [
-                    'id' => 123456789,
-                    'first_name' => 'John',
-                    'last_name' => 'Doe',
-                    'username' => 'jdoe',
-                ],
-                'chat' => [
-                    'id' => 123456789,
-                    'first_name' => 'John',
-                    'last_name' => 'Doe',
-                    'username' => 'jdoe',
-                    'type' => 'private',
-                ],
-                'date' => 1494623093,
-                'text' => 'Just some text',
-            ],
-        ],
-    ]);
+    $updateData = $this->makeFakeServerResponse(updatesPayload());
     $markAsReadData = $this->makeFakeServerResponse([]);
     $api = api($this->getGuzzleHttpClient([$updateData, $markAsReadData]));
 
@@ -409,10 +384,10 @@ test('the command handler can use get updates to process updates and mark update
         expect($update)->toBeInstanceOf(Update::class);
     });
 
-    expect($updates->first()->getMessage()->text)->toEqual('Just some text')
+    expect($updates->first()->getMessage()->text)->toEqual('Test1')
         ->and($updates->first()->updateId)->toEqual('377695760');
 
-    $this->assertStringContainsString('offset=377695761&limit=1', $markAsReadRequest->getUri()->getQuery());
+    $this->assertStringContainsString('offset=377695762&limit=1', $markAsReadRequest->getUri()->getQuery());
 });
 
 test('the command handler when using webhook to process updates for commands will return the update', function () {
@@ -425,32 +400,3 @@ test('the command handler when using webhook to process updates for commands wil
 
     expect($update)->toBeInstanceOf(Update::class);
 });
-
-function createSpyListener(): callable|League\Event\Listener
-{
-    return new class implements \League\Event\Listener
-    {
-        public array $events = [];
-
-        private ?object $calledWith = null;
-
-        private int $timesCalled = 0;
-
-        public function __invoke(object $event): void
-        {
-            $this->timesCalled++;
-            $this->calledWith = $event;
-            $this->events[$event->eventName()][] = $event;
-        }
-
-        public function numberOfTimeCalled(): int
-        {
-            return $this->timesCalled;
-        }
-
-        public function wasCalledWith(object $event): bool
-        {
-            return $event === $this->calledWith;
-        }
-    };
-}
