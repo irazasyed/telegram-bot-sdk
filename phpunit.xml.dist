@@ -22,20 +22,12 @@
          verbose="true">
 <testsuites>
     <testsuite name="Telegram Bot SDK Test Suite">
-        <directory suffix="Test.php">tests</directory>
+        <directory suffix=".php">tests</directory>
     </testsuite>
 </testsuites>
-<coverage processUncoveredFiles="true">
+<coverage>
     <include>
         <directory suffix=".php">src</directory>
     </include>
-    <report>
-        <html outputDirectory="build/coverage"/>
-        <text outputFile="build/coverage.txt"/>
-        <clover outputFile="build/logs/clover.xml"/>
-    </report>
 </coverage>
-<logging>
-    <junit outputFile="build/report.junit.xml"/>
-</logging>
 </phpunit>
