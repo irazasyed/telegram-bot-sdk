@@ -2,9 +2,7 @@
 
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Stream;
-use GuzzleHttp\Psr7\Utils;
 use Prophecy\PhpUnit\ProphecyTrait;
-use Psr\Http\Message\StreamInterface;
 use Telegram\Bot\Api;
 use Telegram\Bot\Commands\CommandBus;
 use Telegram\Bot\Events\UpdateEvent;
@@ -23,124 +21,12 @@ use Telegram\Bot\Tests\Traits\GuzzleMock;
 
 uses(ProphecyTrait::class, GuzzleMock::class, CommandGenerator::class);
 
-/**
- * @var array<string, bool|int|string>
- */
-const PARAMS = [
-    'chat_id' => 12_345_678,
-    'text' => 'lorem ipsum',
-    'disable_web_page_preview' => true,
-    'disable_notification' => false,
-    'reply_to_message_id' => 99_999_999,
-];
-
-/**
- * @var array<string, array<string, array<string, int|string>|int|string>|int>[]
- */
-const DATA1 = [
-    [
-        'update_id' => 377695760,
-        'message' => [
-            'message_id' => 749,
-            'from' => [
-                'id' => 123_456_789,
-                'first_name' => 'John',
-                'last_name' => 'Doe',
-                'username' => 'jdoe',
-            ],
-            'chat' => [
-                'id' => 123_456_789,
-                'first_name' => 'John',
-                'last_name' => 'Doe',
-                'username' => 'jdoe',
-                'type' => 'private',
-            ],
-            'date' => 1494623093,
-            'text' => 'Test1',
-        ],
-    ],
-    [
-        'update_id' => 377695761,
-        'message' => [
-            'message_id' => 750,
-            'from' => [
-                'id' => 123456789,
-                'first_name' => 'John',
-                'last_name' => 'Doe',
-                'username' => 'jdoe',
-            ],
-            'chat' => [
-                'id' => 123456789,
-                'first_name' => 'John',
-                'last_name' => 'Doe',
-                'username' => 'jdoe',
-                'type' => 'private',
-            ],
-            'date' => 149462395,
-            'text' => 'Test2',
-        ],
-    ],
-];
-
-/**
- * @var array<string, array<string, array<string, int|string>|int|string>|int>[]
- */
-const DATA2 = [
-    [
-        'update_id' => 377695762,
-        'message' => [
-            'message_id' => 751,
-            'from' => [
-                'id' => 123456789,
-                'first_name' => 'John',
-                'last_name' => 'Doe',
-                'username' => 'jdoe',
-            ],
-            'chat' => [
-                'id' => 123456789,
-                'first_name' => 'John',
-                'last_name' => 'Doe',
-                'username' => 'jdoe',
-                'type' => 'private',
-            ],
-            'date' => 1494623093,
-            'text' => 'Test3',
-        ],
-    ],
-    [
-        'update_id' => 377695763,
-        'message' => [
-            'message_id' => 752,
-            'from' => [
-                'id' => 123456789,
-                'first_name' => 'John',
-                'last_name' => 'Doe',
-                'username' => 'jdoe',
-            ],
-            'chat' => [
-                'id' => 123456789,
-                'first_name' => 'John',
-                'last_name' => 'Doe',
-                'username' => 'jdoe',
-                'type' => 'private',
-            ],
-            'date' => 1494623095,
-            'text' => 'Test4',
-        ],
-    ],
-];
-
-/**
- * @var string
- */
-const PUB_KEY = '
-        -----BEGIN PUBLIC KEY-----
-        THISISSOMERANDOMKEYDATA
-        -----END PUBLIC KEY-----';
+beforeEach(function () {
+    $this->httpClient = $this->getGuzzleHttpClient();
+    $this->api = api($this->httpClient);
+});
 
 afterEach(function () {
-    // Prevent previous commands added to the bus lingering between
-    // tests.
     CommandBus::destroy();
 });
 
@@ -155,28 +41,22 @@ function createIncomeWebhookRequestInstance(array $updateData): Request
     return new Request('POST', 'any', [], json_encode($updateData, JSON_THROW_ON_ERROR));
 }
 
-it('checks the default http client is guzzle if not specified', function () {
-    $api = api();
-    $client = $api->getClient()->getHttpClientHandler();
+it('uses the default Guzzle http client if none is specified', function () {
+    $httpClientHandler = $this->api->getClient()->getHttpClientHandler();
 
-    expect($client)->toBeInstanceOf(GuzzleHttpClient::class);
+    expect($httpClientHandler)->toBeInstanceOf(GuzzleHttpClient::class);
 });
 
-test('a guzzle client with a mock queue can be used without error', function () {
-    $api = api($this->getGuzzleHttpClient());
-
-    expect($api)->toBeInstanceOf(Api::class);
+it('uses a Guzzle client with a mock queue without error', function () {
+    expect($this->api)->toBeInstanceOf(Api::class);
 });
 
-test('a normal guzzle client with no mock queue can be used without error', function () {
-    $api = api();
-
-    expect($api)->toBeInstanceOf(Api::class);
-});
+it('uses a normal Guzzle client with no mock queue without error')
+    ->expect(api())
+    ->toBeInstanceOf(Api::class);
 
 it('returns an empty array if there are no updates', function () {
-    $data = [];
-    $fakeResponse = $this->makeFakeServerResponse($data);
+    $fakeResponse = $this->makeFakeServerResponse([]);
 
     $api = api($this->getGuzzleHttpClient([$fakeResponse]));
     $result = $api->getUpdates();
@@ -185,9 +65,8 @@ it('returns an empty array if there are no updates', function () {
         ->and($result)->toBeEmpty();
 });
 
-test('the correct bot url is used when a request is made', function () {
-    $data = [];
-    $fakeResponse = $this->makeFakeServerResponse($data);
+it('uses the correct bot url when a request is made', function () {
+    $fakeResponse = $this->makeFakeServerResponse([]);
 
     $api = api($this->getGuzzleHttpClient([$fakeResponse]), 'Special_Bot_Token');
     $api->getMe();
@@ -206,8 +85,8 @@ test('the correct request query string is created when a get method has paramete
 
     $api = api($this->getGuzzleHttpClient([$fakeResponse]), 'Special_Bot_Token');
     $api->getChatMember([
-        'chat_id' => 123_456_789,
-        'user_id' => 888_888_888,
+        'chat_id' => 123456789,
+        'user_id' => 888888888,
     ]);
 
     /** @var Request $request */
@@ -225,13 +104,13 @@ test('the correct request body data is created when a post method has parameters
     $fakeResponse = $this->makeFakeServerResponse($data);
 
     $api = api($this->getGuzzleHttpClient([$fakeResponse]), 'Special_Bot_Token');
-    $api->sendMessage(PARAMS);
+    $api->sendMessage(sendMessage());
 
     /** @var Request $request */
     $request = $this->getHistory()->pluck('request')->first();
 
     expect($request->getBody())->toBeInstanceOf(Stream::class)
-        ->and((string) $request->getBody())->toEqual(http_build_query(PARAMS))
+        ->and((string) $request->getBody())->toEqual(http_build_query(sendMessage()))
         ->and($request->getUri()->getScheme())->toEqual('https')
         ->and($request->getUri()->getHost())->toEqual('api.telegram.org')
         ->and($request->getUri()->getPath())->toEqual('/botSpecial_Bot_Token/sendMessage')
@@ -239,8 +118,8 @@ test('the correct request body data is created when a post method has parameters
 });
 
 it('returns decoded update objects when updates are available', function () {
-    $replyFromTelegram1 = $this->makeFakeServerResponse(DATA1);
-    $replyFromTelegram2 = $this->makeFakeServerResponse(DATA2);
+    $replyFromTelegram1 = $this->makeFakeServerResponse(updatesPayload());
+    $replyFromTelegram2 = $this->makeFakeServerResponse(updatesPayload2());
 
     $api = api($this->getGuzzleHttpClient([$replyFromTelegram1, $replyFromTelegram2]));
     $firstUpdates = $api->getUpdates();
@@ -393,7 +272,7 @@ it('can set a webhook with its own certificate successfully', function () {
     //Probably not the best way to attempt to create a file on a server.
     //Help appreciated.
     $fakeFile = fopen('php://temp', 'wb+');
-    fwrite($fakeFile, PUB_KEY);
+    fwrite($fakeFile, pubKey());
     fseek($fakeFile, 0);
 
     // Set up the responses the fake telegram server should reply with.
@@ -406,7 +285,7 @@ it('can set a webhook with its own certificate successfully', function () {
     // setting of certificate.pem
     $api->setWebhook([
         'url' => 'https://example.com',
-        'certificate' => InputFile::create(streamFor(PUB_KEY), 'public.key'),
+        'certificate' => InputFile::create(streamFor(pubKey()), 'public.key'),
     ]);
 
     //If the user uses just a string to the path/filename of the webhook cert.
@@ -547,17 +426,7 @@ test('the command handler when using webhook to process updates for commands wil
     expect($update)->toBeInstanceOf(Update::class);
 });
 
-function streamFor($resource): StreamInterface
-{
-    if (class_exists(Utils::class)) {
-        return Utils::streamFor($resource);
-    }
-
-    throw new RuntimeException('Not found "streamFor" implementation');
-}
-
-function createSpyListener()
-{
+function createSpyListener(): callable|\League\Event\Listener {
     return new class implements \League\Event\Listener
     {
         public array $events = [];

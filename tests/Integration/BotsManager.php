@@ -4,54 +4,24 @@ use Telegram\Bot\BotsManager;
 use Telegram\Bot\Exceptions\TelegramBotNotFoundException;
 
 beforeEach(function () {
-    $this->manager = new BotsManager(
-        [
-            'default' => 'bot1',
-            'bots' => [
-                'bot1' => [
-                    'username' => 'BotOne_Bot',
-                    'token' => 'TOKEN1',
-                    'commands' => [],
-                ],
-                'bot2' => [
-                    'username' => 'BotTwo_Bot',
-                    'token' => 'TOKEN2',
-                    'commands' => [],
-                ],
-                'bot3' => [
-                    'username' => 'BotThree_Bot',
-                    'token' => 'TOKEN3',
-                    'commands' => [],
-                ],
-            ],
-            'resolve_command_dependencies' => true,
-            'commands' => [
-                //      Telegram\Bot\Commands\HelpCommand::class,
-            ],
-        ]
-    );
+    $this->manager = new BotsManager(botsManager());
 });
 
-test('a bots manager can be created with no config', function () {
-    $manager = new BotsManager([]);
+test('a bots manager can be created with no config')
+    ->expect(new BotsManager([]))
+    ->toBeInstanceOf(BotsManager::class);
 
-    expect($manager)->toBeInstanceOf(BotsManager::class);
-});
+test('a bot must be configured before it can be used')
+    ->expect(new BotsManager([]))
+    ->toBeInstanceOf(BotsManager::class)
+    ->bot('demo')
+    ->throws(TelegramBotNotFoundException::class, 'Bot [demo] is not configured.');
 
-test('a bot must be configured before it can be used', function () {
-    $this->expectException(TelegramBotNotFoundException::class);
-
-    $manager = new BotsManager([]);
-    $manager->bot('demo');
-});
-
-test('an invalid or missing config parameter returns null', function () {
-    $manager = new BotsManager([]);
-
-    $name = $manager->getDefaultBotName();
-
-    expect($name)->toBeNull();
-});
+test('an invalid or missing config parameter returns null')
+    ->expect(new BotsManager([]))
+    ->toBeInstanceOf(BotsManager::class)
+    ->getDefaultBotName()
+    ->toBeNull();
 
 it('is possible to remove a bot from the manager but leave the others', function () {
     $this->manager->bot('bot1');
@@ -63,10 +33,10 @@ it('is possible to remove a bot from the manager but leave the others', function
     $this->manager->disconnect('bot2');
     $remainingBots = $this->manager->getBots();
 
-    expect($remainingBots)->toHaveCount(2);
-    $this->assertArrayNotHasKey('bot2', $remainingBots);
-    expect($remainingBots)->toHaveKey('bot1')
-        ->and($remainingBots)->toHaveKey('bot3');
+    expect($remainingBots)->toHaveCount(2)
+        ->and($remainingBots)->toHaveKey('bot1')
+        ->and($remainingBots)->toHaveKey('bot3')
+        ->and($remainingBots)->not->toHaveKey('bot2');
 });
 
 it('is possible to reconnect a bot that was disconnected or not used yet', function () {

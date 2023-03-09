@@ -2,12 +2,10 @@
 
 namespace Telegram\Bot\Tests\Traits;
 
-use Guzzle\Http\Exception\RequestException;
 use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Middleware;
-use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use Illuminate\Support\Collection;
 use Telegram\Bot\HttpClients\GuzzleHttpClient;
@@ -37,9 +35,9 @@ trait GuzzleMock
     }
 
     /**
-     * @param  array|bool  $data
+     * @param bool|array $data
      */
-    public function makeFakeServerResponse($data, int $status_code = 200, array $headers = []): Response
+    public function makeFakeServerResponse(bool|array $data, int $status_code = 200, array $headers = []): Response
     {
         return new Response(
             $status_code,
