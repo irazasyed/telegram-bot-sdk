@@ -13,7 +13,7 @@ use Illuminate\Support\Str;
  *
  * @extends Collection<TKey, TValue>
  */
-final class Base extends Collection
+class Base extends Collection
 {
     /**
      * Dynamically build params.
