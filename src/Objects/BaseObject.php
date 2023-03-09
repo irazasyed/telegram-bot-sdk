@@ -40,21 +40,24 @@ abstract class BaseObject extends Collection
         return $this->getPropertyValue($key);
     }
 
-    public function __set(string $name, mixed $value): void {
+    public function __set(string $name, mixed $value): void
+    {
         throw new InvalidArgumentException(sprintf('Cannot set property “%s” on “%s” immutable object.', $name, static::class));
     }
 
-    public function __isset(string $name): bool {
+    public function __isset(string $name): bool
+    {
         return $this->getPropertyValue($name) !== null;
     }
 
     /**
      * Magically map to an object class (if exists) and return data.
      *
-     * @param string $property Name of the property or relation.
-     * @param mixed $default Default value or \Closure that returns default value.
+     * @param  string  $property Name of the property or relation.
+     * @param  mixed  $default Default value or \Closure that returns default value.
      */
-    protected function getPropertyValue(string $property, mixed $default = null): mixed {
+    protected function getPropertyValue(string $property, mixed $default = null): mixed
+    {
         $property = Str::snake($property);
         if (! $this->offsetExists($property)) {
             return value($default);
@@ -82,10 +85,11 @@ abstract class BaseObject extends Collection
     }
 
     /**
-     * @param array  $relationRawData
+     * @param  array  $relationRawData
      * @return array|Enumerable|EnumeratesValues|BaseObject
      */
-    protected function getRelationValue(string $relationName, iterable $relationRawData): mixed {
+    protected function getRelationValue(string $relationName, iterable $relationRawData): mixed
+    {
         /** @var class-string<BaseObject>|list<class-string<BaseObject>> $relation */
         $relation = $this->relations()[$relationName];
 
@@ -114,7 +118,8 @@ abstract class BaseObject extends Collection
      * @param  mixed  $key
      * @param  mixed  $default
      */
-    public function get($key, $default = null): mixed {
+    public function get($key, $default = null): mixed
+    {
         $value = parent::get($key, $default);
         if (null === $value) {
             return null;
@@ -132,23 +137,24 @@ abstract class BaseObject extends Collection
      *
      * @return array|mixed
      */
-    public function getRawResponse(): mixed {
+    public function getRawResponse(): mixed
+    {
         return $this->items;
     }
 
     /**
      * Returns raw result.
-     *
-     * @param $data
      */
-    public function getRawResult($data): mixed {
+    public function getRawResult($data): mixed
+    {
         return data_get($data, 'result', $data);
     }
 
     /**
      * Get Status of request.
      */
-    public function getStatus(): mixed {
+    public function getStatus(): mixed
+    {
         return data_get($this->items, 'ok', false);
     }
 
