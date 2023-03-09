@@ -20,7 +20,8 @@ final class UpdateEvent implements HasEventName
          * @deprecated Will be removed in SDK v4
          */
         private string $name = self::NAME
-    ) {
+    )
+    {
     }
 
     public function eventName(): string

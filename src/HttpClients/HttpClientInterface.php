@@ -16,8 +16,8 @@ interface HttpClientInterface
     public function send(
         string $url,
         string $method,
-        array $headers = [],
-        array $options = [],
+        array  $headers = [],
+        array  $options = [],
         bool $isAsyncRequest = false
     ): ResponseInterface|PromiseInterface|null;
 

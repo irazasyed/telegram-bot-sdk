@@ -17,7 +17,7 @@ final class Emojify
      *
      * @var string
      */
-    const DEFAULT_EMOJI_MAP_FILE = '/../Storage/emoji.json';
+    public const DEFAULT_EMOJI_MAP_FILE = '/../Storage/emoji.json';
 
     /**
      * The path to the file containing the emoji map.
@@ -176,7 +176,7 @@ final class Emojify
             throw new TelegramEmojiMapFileNotFoundException();
         }
 
-        return json_decode(file_get_contents($this->emojiMapFile), true);
+        return json_decode(file_get_contents($this->emojiMapFile), true, 512, JSON_THROW_ON_ERROR);
     }
 
     /**

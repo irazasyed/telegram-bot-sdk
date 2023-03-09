@@ -334,6 +334,7 @@ trait Message
      *
      * @link https://core.telegram.org/bots/api#sendmediagroup
      *
+     *
      * @throws TelegramSDKException
      * //TODO Check this return type.
      */
@@ -442,7 +443,7 @@ trait Message
     {
         $params['options'] = is_string($params['options'])
             ? $params['options']
-            : json_encode($params['options']);
+            : json_encode($params['options'], JSON_THROW_ON_ERROR);
         $response = $this->post('sendPoll', $params);
 
         return new MessageObject($response->getDecodedBody());

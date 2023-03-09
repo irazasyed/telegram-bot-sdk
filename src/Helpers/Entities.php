@@ -19,7 +19,8 @@ final class Entities
     public function __construct(
         /** @var string Message or Caption */
         private string $text
-    ) {
+    )
+    {
     }
 
     public static function format(string $text): self
@@ -89,7 +90,6 @@ final class Entities
 
     /**
      * Formatting Syntax.
-     *
      * @return array{bold: string[], italic: string[], code: string[], pre: string[], text_mention: string[], text_link: string[]}
      */
     private function syntax(): array

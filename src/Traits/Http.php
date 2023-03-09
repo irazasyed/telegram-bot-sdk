@@ -27,10 +27,10 @@ trait Http
     protected ?TelegramClient $client = null;
 
     /** @var HttpClientInterface|null Http Client Handler */
-    protected ?HttpClientInterface $httpClientHandler;
+    protected ?HttpClientInterface $httpClientHandler = null;
 
     /** @var string|null Base Bot Url */
-    protected ?string $baseBotUrl;
+    protected ?string $baseBotUrl = null;
 
     /** @var bool Indicates if the request to Telegram will be asynchronous (non-blocking). */
     protected bool $isAsyncRequest = false;
@@ -91,15 +91,15 @@ trait Http
     /**
      * Download a file from Telegram server by file ID.
      *
-     * @param  File|BaseObject|string  $file Telegram File Instance / File Response Object or File ID.
-     * @param  string  $filename Absolute path to dir or filename to save as.
+     * @param File|BaseObject|string $file Telegram File Instance / File Response Object or File ID.
+     * @param string $filename Absolute path to dir or filename to save as.
      *
      * @throws TelegramSDKException
      */
     public function downloadFile(File|BaseObject|string $file, string $filename): string
     {
         $originalFilename = null;
-        if (! $file instanceof File) {
+        if (!$file instanceof File) {
             if ($file instanceof BaseObject) {
                 $originalFilename = $file->get('file_name');
 
@@ -107,7 +107,7 @@ trait Http
                 $file = $file->get('file_id', $file);
             }
 
-            if (! is_string($file)) {
+            if (!is_string($file)) {
                 throw new InvalidArgumentException(
                     'Invalid $file param provided. Please provide one of file_id, File or Response object containing file_id'
                 );
@@ -119,7 +119,7 @@ trait Http
         // No filename provided.
         if (pathinfo($filename, PATHINFO_EXTENSION) === '') {
             // Attempt to use the original file name if there is one or fallback to the file_path filename.
-            $filename .= DIRECTORY_SEPARATOR.($originalFilename ?: basename($file->file_path));
+            $filename .= DIRECTORY_SEPARATOR . ($originalFilename ?: basename($file->file_path));
         }
 
         return $this->getClient()->download($file->file_path, $filename);
@@ -136,7 +136,7 @@ trait Http
     /**
      * Sets the bot access token to use with API requests.
      *
-     * @param  string  $accessToken The bot access token to save.
+     * @param string $accessToken The bot access token to save.
      * @return $this
      */
     public function setAccessToken(string $accessToken): self
@@ -212,7 +212,7 @@ trait Http
     /**
      * Sends a POST request to Telegram Bot API and returns the result.
      *
-     * @param  bool  $fileUpload Set true if a file is being uploaded.
+     * @param bool $fileUpload Set true if a file is being uploaded.
      *
      * @throws TelegramSDKException
      */
@@ -229,7 +229,7 @@ trait Http
     protected function replyMarkupToString(array $params): array
     {
         if (isset($params['reply_markup'])) {
-            $params['reply_markup'] = (string) $params['reply_markup'];
+            $params['reply_markup'] = (string)$params['reply_markup'];
         }
 
         return $params;
@@ -246,7 +246,7 @@ trait Http
     protected function uploadFile(string $endpoint, array $params, string $inputFileField): TelegramResponse
     {
         //Check if the field in the $params array (that is being used to send the relative file), is a file id.
-        if (! isset($params[$inputFileField])) {
+        if (!isset($params[$inputFileField])) {
             throw CouldNotUploadInputFile::missingParam($inputFileField);
         }
 
@@ -270,8 +270,8 @@ trait Http
 
         //Iterate through all param options and convert to multipart/form-data.
         return collect($params)
-            ->reject(static fn ($value): bool => null === $value)
-            ->map(fn ($contents, $name) => $this->generateMultipartData($contents, $name))
+            ->reject(static fn($value): bool => null === $value)
+            ->map(fn($contents, $name) => $this->generateMultipartData($contents, $name))
             ->values()
             ->all();
     }
@@ -281,7 +281,7 @@ trait Http
      */
     protected function generateMultipartData(mixed $contents, string $name): array
     {
-        if (! $this->isInputFile($contents)) {
+        if (!$this->isInputFile($contents)) {
             return ['name' => $name, 'contents' => $contents];
         }
 
@@ -324,7 +324,7 @@ trait Http
      */
     protected function validateInputFileField(array $params, $inputFileField): void
     {
-        if (! isset($params[$inputFileField])) {
+        if (!isset($params[$inputFileField])) {
             throw CouldNotUploadInputFile::missingParam($inputFileField);
         }
 
@@ -333,7 +333,7 @@ trait Http
             return;
         }
 
-        if (! (is_string($params[$inputFileField]) && ! $this->is_json($params[$inputFileField]))) {
+        if (!(is_string($params[$inputFileField]) && !$this->is_json($params[$inputFileField]))) {
             return;
         }
 

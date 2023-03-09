@@ -2,9 +2,9 @@
 
 namespace Telegram\Bot;
 
+use Telegram\Bot\Commands\CommandInterface;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Support\Arr;
-use Telegram\Bot\Commands\CommandInterface;
 use Telegram\Bot\Exceptions\TelegramBotNotFoundException;
 use Telegram\Bot\Exceptions\TelegramSDKException;
 
@@ -26,13 +26,14 @@ final class BotsManager
     public function __construct(
         /** @var array The config instance. */
         private array $config
-    ) {
+    )
+    {
     }
 
     /**
      * Set the IoC Container.
      *
-     * @param  Container  $container Container instance
+     * @param Container $container Container instance
      */
     public function setContainer(Container $container): self
     {
@@ -44,6 +45,7 @@ final class BotsManager
     /**
      * Get the configuration for a bot.
      *
+     * @param string|null $name
      *
      * @throws TelegramBotNotFoundException
      */
@@ -55,7 +57,7 @@ final class BotsManager
 
         $config = $bots->get($name);
 
-        if (! $config) {
+        if (!$config) {
             throw TelegramBotNotFoundException::create($name);
         }
 
@@ -65,6 +67,7 @@ final class BotsManager
     /**
      * Get a bot instance.
      *
+     * @param string|null $name
      *
      * @throws TelegramSDKException
      */
@@ -72,7 +75,7 @@ final class BotsManager
     {
         $name ??= $this->getDefaultBotName();
 
-        if (! isset($this->bots[$name])) {
+        if (!isset($this->bots[$name])) {
             $this->bots[$name] = $this->makeBot($name);
         }
 
@@ -82,6 +85,7 @@ final class BotsManager
     /**
      * Reconnect to the given bot.
      *
+     * @param string|null $name
      *
      * @throws TelegramSDKException
      */
@@ -95,6 +99,8 @@ final class BotsManager
 
     /**
      * Disconnect from the given bot.
+     *
+     * @param string|null $name
      */
     public function disconnect(string $name = null): self
     {
@@ -186,11 +192,11 @@ final class BotsManager
     /**
      * @param list<(string | class-string<CommandInterface>)> $commands A list of command names or FQCNs of CommandInterface instances.
      * @return array An array of commands which includes global and bot specific commands.
-     *
      * @deprecated Will be removed in SDK v4
      *
      * @internal
      * Builds the list of commands for the given commands array.
+     *
      */
     public function parseBotCommands(array $commands): array
     {

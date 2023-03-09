@@ -147,7 +147,7 @@ final class Keyboard extends Base
      *
      * @return mixed
      */
-    public static function inlineButton($params = [])
+    public static function inlineButton(string|array $params = [])
     {
         return self::button($params);
     }

@@ -54,7 +54,6 @@ class Update extends BaseObject
 
     /**
      * {@inheritdoc}
-     *
      * @return array{message: string, edited_message: string, channel_post: string, edited_channel_post: string, inline_query: string, chosen_inline_result: string, callback_query: string, shipping_query: string, pre_checkout_query: string, poll: string, poll_answer: string, my_chat_member: string, chat_member: string, chat_join_request: string}
      */
     public function relations(): array
@@ -104,7 +103,7 @@ class Update extends BaseObject
     public function objectType(): ?string
     {
         if ($this->updateType === null) {
-            $isWebAppData = (bool) $this->getMessage()->get('web_app_data');
+            $isWebAppData = (bool)$this->getMessage()->get('web_app_data');
             $updateType = $this->except('update_id')->keys()->first();
 
             $this->updateType = $isWebAppData ? 'web_app_data' : $updateType;
@@ -117,6 +116,7 @@ class Update extends BaseObject
      * Detect type based on properties.
      *
      * @deprecated Will be removed in v4.0, please use {@see \Telegram\Bot\Objects\Update::objectType} instead.
+     *
      */
     public function detectType(): ?string
     {
@@ -187,9 +187,10 @@ class Update extends BaseObject
     /**
      * @deprecated This method will be removed in SDK v4
      * Is there a command entity in this update object.
+     *
      */
     public function hasCommand(): bool
     {
-        return (bool) $this->getMessage()->get('entities', collect())->contains('type', 'bot_command');
+        return (bool)$this->getMessage()->get('entities', collect())->contains('type', 'bot_command');
     }
 }

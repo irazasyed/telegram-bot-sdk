@@ -22,7 +22,6 @@ class Sticker extends BaseObject
 {
     /**
      * {@inheritdoc}
-     *
      * @return array{thumb: string, mask_position: string}
      */
     public function relations(): array

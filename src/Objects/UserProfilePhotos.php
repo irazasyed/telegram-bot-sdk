@@ -14,7 +14,6 @@ class UserProfilePhotos extends BaseObject
 {
     /**
      * {@inheritdoc}
-     *
      * @return array{photos: string[]}
      */
     public function relations(): array

@@ -2,6 +2,7 @@
 
 namespace Telegram\Bot\Commands;
 
+use Telegram\Bot\Objects\Message;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use InvalidArgumentException;
@@ -178,7 +179,7 @@ final class CommandBus extends AnswerBus
     private function parseCommandsIn(Collection $message): Collection
     {
         return Collection::wrap($message->get('entities'))
-            ->filter(static fn (MessageEntity $entity): bool => $entity->type === 'bot_command');
+            ->filter(static fn(MessageEntity $entity): bool => $entity->type === 'bot_command');
     }
 
     /**
@@ -209,7 +210,7 @@ final class CommandBus extends AnswerBus
         $command = $this->commands[$name] ??
             $this->commandAliases[$name] ??
             $this->commands['help'] ??
-            collect($this->commands)->filter(static fn ($command): bool => $command instanceof $name)->first() ?? null;
+            collect($this->commands)->filter(static fn($command): bool => $command instanceof $name)->first() ?? null;
 
         return $command !== null ? $command->make($this->telegram, $update, $entity) : false;
     }
@@ -249,7 +250,6 @@ final class CommandBus extends AnswerBus
     /**
      * @param  string  $alias
      * @return void
-     *
      * @throws TelegramSDKException
      */
     private function checkForConflicts(CommandInterface $command, $alias)

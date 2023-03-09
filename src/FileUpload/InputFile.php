@@ -33,7 +33,7 @@ final class InputFile
      * @param  string  $filename
      * @return mixed
      */
-    public static function createFromContents($contents, $filename): InputFile
+    public static function createFromContents($contents, $filename): \Telegram\Bot\FileUpload\InputFile
     {
         return (new self(null, $filename))->setContents($contents);
     }
@@ -121,9 +121,9 @@ final class InputFile
      *
      * @throws InvalidArgumentException
      */
-    public function setFilename($filename): self
+    public function setFilename(?string $filename): self
     {
-        if (! $this->isStringOrNull($filename)) {
+        if (!$this->isStringOrNull($filename)) {
             throw new InvalidArgumentException(
                 'Filename must be a string or null'
             );

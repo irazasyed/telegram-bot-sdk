@@ -16,7 +16,7 @@ final class TelegramResponseException extends TelegramSDKException
      * Creates a TelegramResponseException.
      *
      * @param  TelegramResponse  $response          The response that threw the exception.
-     * @param  TelegramSDKException|null  $previousException The more detailed exception.
+     * @param TelegramSDKException|null $previousException The more detailed exception.
      */
     public function __construct(private TelegramResponse $response, TelegramSDKException $previousException = null)
     {
