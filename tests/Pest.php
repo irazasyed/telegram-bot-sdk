@@ -15,7 +15,7 @@ expect()->extend('toBeOne', function () {
     return $this->toBe(1);
 });
 
-function streamFor($resource): \Psr\Http\Message\StreamInterface
+function streamFor($resource): Psr\Http\Message\StreamInterface
 {
     if (class_exists(\GuzzleHttp\Psr7\Utils::class)) {
         return \GuzzleHttp\Psr7\Utils::streamFor($resource);

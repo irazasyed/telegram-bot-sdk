@@ -1,6 +1,7 @@
 <?php
 
-function botsManager(): array {
+function botsManager(): array
+{
     return [
         'default' => 'bot1',
         'bots' => [

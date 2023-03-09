@@ -426,7 +426,8 @@ test('the command handler when using webhook to process updates for commands wil
     expect($update)->toBeInstanceOf(Update::class);
 });
 
-function createSpyListener(): callable|\League\Event\Listener {
+function createSpyListener(): callable|League\Event\Listener
+{
     return new class implements \League\Event\Listener
     {
         public array $events = [];

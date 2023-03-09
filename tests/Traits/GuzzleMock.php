@@ -34,9 +34,6 @@ trait GuzzleMock
         return new Client(['handler' => $handler]);
     }
 
-    /**
-     * @param bool|array $data
-     */
     public function makeFakeServerResponse(bool|array $data, int $status_code = 200, array $headers = []): Response
     {
         return new Response(
