@@ -2,11 +2,12 @@
 
 namespace Telegram\Bot;
 
-use League\Event\EventDispatcher;
+use BadMethodCallException;
+use Illuminate\Support\Traits\Macroable;
+use Telegram\Bot\Commands\CommandBus;
 use Telegram\Bot\Events\EmitsEvents;
-use Telegram\Bot\Traits\Http;
-use Telegram\Bot\Traits\CommandsHandler;
-use Telegram\Bot\Traits\HasContainer;
+use Telegram\Bot\Exceptions\TelegramSDKException;
+use Telegram\Bot\HttpClients\HttpClientInterface;
 use Telegram\Bot\Methods\Chat;
 use Telegram\Bot\Methods\Commands;
 use Telegram\Bot\Methods\EditMessage;
@@ -19,11 +20,9 @@ use Telegram\Bot\Methods\Payments;
 use Telegram\Bot\Methods\Query;
 use Telegram\Bot\Methods\Stickers;
 use Telegram\Bot\Methods\Update;
-use BadMethodCallException;
-use Illuminate\Support\Traits\Macroable;
-use Telegram\Bot\Exceptions\TelegramSDKException;
-use Telegram\Bot\HttpClients\HttpClientInterface;
-use Telegram\Bot\Commands\CommandBus;
+use Telegram\Bot\Traits\CommandsHandler;
+use Telegram\Bot\Traits\HasContainer;
+use Telegram\Bot\Traits\Http;
 
 /**
  * Class Api.
@@ -62,10 +61,10 @@ class Api
      * Instantiates a new Telegram super-class object.
      *
      *
-     * @param string|null $token The Telegram Bot API Access Token.
-     * @param bool $async (Optional) Indicates if the request to Telegram will be asynchronous (non-blocking).
-     * @param HttpClientInterface|null $httpClientHandler (Optional) Custom HTTP Client Handler.
-     * @param string|null $baseBotUrl (Optional) Custom base bot url.
+     * @param  string|null  $token The Telegram Bot API Access Token.
+     * @param  bool  $async (Optional) Indicates if the request to Telegram will be asynchronous (non-blocking).
+     * @param  HttpClientInterface|null  $httpClientHandler (Optional) Custom HTTP Client Handler.
+     * @param  string|null  $baseBotUrl (Optional) Custom base bot url.
      *
      * @throws TelegramSDKException
      */
@@ -120,7 +119,7 @@ class Api
      */
     private function validateAccessToken(): void
     {
-        if (!$this->accessToken) {
+        if (! $this->accessToken) {
             throw TelegramSDKException::tokenNotProvided(self::BOT_TOKEN_ENV_NAME);
         }
     }

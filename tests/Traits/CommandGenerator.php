@@ -9,14 +9,13 @@ trait CommandGenerator
 {
     /**
      * @param  int  $numberRequired
-     * @return Collection
      */
     private function commandGenerator($numberRequired): Collection
     {
         $range = range(1, $numberRequired, 1);
 
         return collect($range)
-            ->map(fn(int $instanceNumber): Command => new class($instanceNumber) extends Command
+            ->map(fn (int $instanceNumber): Command => new class($instanceNumber) extends Command
             {
                 private int $instanceNumber;
 

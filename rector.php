@@ -15,7 +15,7 @@ return static function (RectorConfig $rectorConfig): void {
 
     $rectorConfig->skip([
         JsonThrowOnErrorRector::class => [
-            __DIR__ . '/src/Methods/Update.php',
+            __DIR__.'/src/Methods/Update.php',
         ],
     ]);
 
@@ -31,6 +31,6 @@ return static function (RectorConfig $rectorConfig): void {
         SetList::DEAD_CODE,
         SetList::EARLY_RETURN,
         SetList::TYPE_DECLARATION,
-//        SetList::PRIVATIZATION,
+        //        SetList::PRIVATIZATION,
     ]);
 };

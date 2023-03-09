@@ -16,6 +16,7 @@ class VideoNote extends BaseObject
 {
     /**
      * {@inheritdoc}
+     *
      * @return array{thumb: string}
      */
     public function relations(): array
