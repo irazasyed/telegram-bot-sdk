@@ -33,6 +33,7 @@ class ChatMember extends BaseObject
 {
     /**
      * {@inheritdoc}
+     *
      * @return array{user: string}
      */
     public function relations(): array

@@ -75,7 +75,7 @@ abstract class Command implements CommandInterface
     /**
      * Set Command Aliases.
      *
-     * @param string|array $aliases
+     * @param  string|array  $aliases
      */
     public function setAliases($aliases): self
     {
@@ -211,18 +211,18 @@ abstract class Command implements CommandInterface
         }
 
         $requiredPattern = $required
-            ->map(static fn($varName): string => sprintf('(?P<%s>[^ ]++)', $varName))
+            ->map(static fn ($varName): string => sprintf('(?P<%s>[^ ]++)', $varName))
             ->implode('\s+?');
 
         $optionalPattern = $optional
-            ->map(static fn($varName): string => sprintf('(?:\s+?(?P<%s>[^ ]++))?', $varName))
+            ->map(static fn ($varName): string => sprintf('(?:\s+?(?P<%s>[^ ]++))?', $varName))
             ->implode('');
 
         if ($this->aliases === []) {
             $commandName = $this->name;
         } else {
             $names = array_merge([$this->name], $this->aliases);
-            $commandName = '(?:' . implode('|', $names) . ')';
+            $commandName = '(?:'.implode('|', $names).')';
         }
 
         return sprintf('%%/%s%s%s%s%s%%si', $commandName, self::OPTIONAL_BOT_NAME, $requiredPattern, $optionalPattern, $customRegex);
@@ -250,11 +250,11 @@ abstract class Command implements CommandInterface
             return '';
         }
 
-        if (!$required->isEmpty()) {
+        if (! $required->isEmpty()) {
             return '';
         }
 
-        if (!$optional->isEmpty()) {
+        if (! $optional->isEmpty()) {
             return '';
         }
 
@@ -307,7 +307,7 @@ abstract class Command implements CommandInterface
         return $message->hasCommand() ?
             $message
                 ->get('entities', collect())
-                ->filter(static fn(MessageEntity $entity): bool => $entity->type === 'bot_command')
+                ->filter(static fn (MessageEntity $entity): bool => $entity->type === 'bot_command')
                 ->pluck('offset') :
             collect();
     }

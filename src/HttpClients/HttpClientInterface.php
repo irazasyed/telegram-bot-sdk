@@ -12,19 +12,12 @@ interface HttpClientInterface
 {
     /**
      * Send HTTP request.
-     *
-     * @param string $url
-     * @param string $method
-     * @param array $headers
-     * @param array $options
-     * @param bool $isAsyncRequest
-     * @return ResponseInterface|PromiseInterface|null
      */
     public function send(
         string $url,
         string $method,
-        array  $headers = [],
-        array  $options = [],
+        array $headers = [],
+        array $options = [],
         bool $isAsyncRequest = false
     ): ResponseInterface|PromiseInterface|null;
 
@@ -36,7 +29,6 @@ interface HttpClientInterface
     /**
      * Set Timeout.
      *
-     * @param int $timeOut
      * @return $this
      */
     public function setTimeOut(int $timeOut): static;
@@ -49,7 +41,6 @@ interface HttpClientInterface
     /**
      * Set Connection Timeout.
      *
-     * @param int $connectTimeOut
      * @return $this
      */
     public function setConnectTimeOut(int $connectTimeOut): static;

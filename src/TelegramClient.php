@@ -55,7 +55,7 @@ final class TelegramClient
 
     public function prepareRequest(TelegramRequest $request): array
     {
-        $url = $this->baseBotUrl . $request->getAccessToken() . '/' . $request->getEndpoint();
+        $url = $this->baseBotUrl.$request->getAccessToken().'/'.$request->getEndpoint();
 
         return [$url, $request->getMethod(), $request->getHeaders(), $request->isAsyncRequest()];
     }

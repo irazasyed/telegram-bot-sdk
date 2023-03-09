@@ -136,7 +136,6 @@ trait EditMessage
      *
      * @link https://core.telegram.org/bots/api#stoppoll
      *
-     *
      * @throws TelegramSDKException
      */
     public function stopPoll(array $params): Poll

@@ -53,10 +53,10 @@ final class TelegramServiceProvider extends ServiceProvider implements Deferrabl
      */
     private function registerBindings(): void
     {
-        $this->app->singleton(BotsManager::class, static fn($app): BotsManager => (new BotsManager(config('telegram')))->setContainer($app));
+        $this->app->singleton(BotsManager::class, static fn ($app): BotsManager => (new BotsManager(config('telegram')))->setContainer($app));
         $this->app->alias(BotsManager::class, 'telegram');
 
-        $this->app->bind(Api::class, static fn($app) => $app[BotsManager::class]->bot());
+        $this->app->bind(Api::class, static fn ($app) => $app[BotsManager::class]->bot());
         $this->app->alias(Api::class, 'telegram.bot');
     }
 

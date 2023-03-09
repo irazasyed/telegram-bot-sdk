@@ -3,9 +3,6 @@
 use Telegram\Bot\Objects\Message;
 use Telegram\Bot\Objects\PhotoSize;
 
-
-
-
 it('inits one to many relation', function () {
     $message = Message::make([
         'photo' => [
@@ -15,9 +12,6 @@ it('inits one to many relation', function () {
             ['file_id' => ''],
         ],
     ]);
-
-
-
 
     expect($message->photo)->toBeIterable();
     expect($message->photo)->toHaveCount(4);

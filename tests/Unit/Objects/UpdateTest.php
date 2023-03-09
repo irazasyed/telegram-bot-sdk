@@ -2,14 +2,8 @@
 
 declare(strict_types=1);
 
-
-
-
 use Telegram\Bot\Objects\Chat;
 use Telegram\Bot\Objects\Update;
-
-
-
 
 it('parses chat relation for bot kicked event', function () {
     $update = new Update([
@@ -33,9 +27,5 @@ it('parses chat relation for bot kicked event', function () {
         ],
     ]);
 
-
-
-
     expect($update->getChat())->toBeInstanceOf(Chat::class);
 });
-

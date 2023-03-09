@@ -22,6 +22,7 @@ class EncryptedPassportElement extends BaseObject
 {
     /**
      * {@inheritdoc}
+     *
      * @return array{files: string[], front_side: string, reverse_side: string, selfie: string, translation: string[]}
      */
     public function relations(): array

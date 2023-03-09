@@ -36,7 +36,7 @@ final class TelegramResponse
     /**
      * Gets the relevant data from the Http client.
      *
-     * @param ResponseInterface|PromiseInterface $response
+     * @param  ResponseInterface|PromiseInterface  $response
      */
     public function __construct(/** @var TelegramRequest The original request that returned this response. */
     private TelegramRequest $request, $response)
@@ -69,7 +69,7 @@ final class TelegramResponse
             parse_str($this->body, $this->decodedBody);
         }
 
-        if (!is_array($this->decodedBody)) {
+        if (! is_array($this->decodedBody)) {
             $this->decodedBody = [];
         }
 
@@ -165,6 +165,7 @@ final class TelegramResponse
      * Throws the exception.
      *
      * @return never
+     *
      * @throws TelegramSDKException
      */
     public function throwException(): TelegramSDKException

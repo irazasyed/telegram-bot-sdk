@@ -6,8 +6,8 @@ use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Exception\RequestException;
-use GuzzleHttp\Promise\Utils;
 use GuzzleHttp\Promise\PromiseInterface;
+use GuzzleHttp\Promise\Utils;
 use GuzzleHttp\RequestOptions;
 use Psr\Http\Client\RequestExceptionInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -67,11 +67,10 @@ class GuzzleHttpClient implements HttpClientInterface
     public function send(
         string $url,
         string $method,
-        array  $headers = [],
-        array  $options = [],
-        bool   $isAsyncRequest = false
-    ): ResponseInterface|PromiseInterface|null
-    {
+        array $headers = [],
+        array $options = [],
+        bool $isAsyncRequest = false
+    ): ResponseInterface|PromiseInterface|null {
         $body = $options['body'] ?? null;
         $options = $this->getOptions($headers, $body, $options, $isAsyncRequest);
 
@@ -89,7 +88,7 @@ class GuzzleHttpClient implements HttpClientInterface
                 $response = $guzzleException->getResponse();
             }
 
-            if (!$response instanceof ResponseInterface) {
+            if (! $response instanceof ResponseInterface) {
                 throw new TelegramSDKException($guzzleException->getMessage(), $guzzleException->getCode(), $guzzleException);
             }
         }
@@ -99,28 +98,20 @@ class GuzzleHttpClient implements HttpClientInterface
 
     /**
      * Prepares and returns request options.
-     *
-     * @param array $headers
-     * @param mixed $body
-     * @param array $options
-     * @param bool $isAsyncRequest
-     * @param string|array|null $proxy
-     * @return array
      */
     private function getOptions(
-        array        $headers,
-        mixed        $body,
-        array        $options,
-        bool         $isAsyncRequest = false,
+        array $headers,
+        mixed $body,
+        array $options,
+        bool $isAsyncRequest = false,
         string|array $proxy = null
-    ): array
-    {
+    ): array {
         $default_options = [
             RequestOptions::HEADERS => $headers,
             RequestOptions::BODY => $body,
             RequestOptions::TIMEOUT => $this->timeOut,
             RequestOptions::CONNECT_TIMEOUT => $this->connectTimeOut,
-            RequestOptions::SYNCHRONOUS => !$isAsyncRequest,
+            RequestOptions::SYNCHRONOUS => ! $isAsyncRequest,
         ];
 
         if ($proxy !== null) {
