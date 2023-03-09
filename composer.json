@@ -25,6 +25,7 @@
     "ext-json": "*",
     "guzzlehttp/guzzle": "^7.4.5",
     "guzzlehttp/psr7": "^2.4",
+    "illuminate/console": "9 - 10",
     "illuminate/support": "9 - 10",
     "league/event": "^3.0"
   },
