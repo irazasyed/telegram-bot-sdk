@@ -23,8 +23,9 @@ class SecureData extends BaseObject
 {
     /**
      * {@inheritdoc}
+     * @return array{personal_details: string, passport: string, internal_passport: string, driver_license: string, identity_card: string, address: string, utility_bill: string, bank_statement: string, rental_agreement: string, passport_registration: string, temporary_registration: string}
      */
-    public function relations()
+    public function relations(): array
     {
         return [
             'personal_details' => SecureValue::class,

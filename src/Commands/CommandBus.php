@@ -2,6 +2,7 @@
 
 namespace Telegram\Bot\Commands;
 
+use Telegram\Bot\Objects\Message;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use InvalidArgumentException;
@@ -15,19 +16,19 @@ use Telegram\Bot\Traits\Singleton;
 /**
  * Class CommandBus.
  */
-class CommandBus extends AnswerBus
+final class CommandBus extends AnswerBus
 {
     use Singleton;
 
     /**
      * @var array<string, Command> Holds all commands. Keys are command names (without leading slashes).
      */
-    protected $commands = [];
+    private array $commands = [];
 
     /**
      * @var array<string, Command> Holds all commands' aliases. Keys are command names (without leading slashes).
      */
-    protected $commandAliases = [];
+    private array $commandAliases = [];
 
     /**
      * Instantiate Command Bus.
@@ -83,7 +84,7 @@ class CommandBus extends AnswerBus
 
         $aliases = $command->getAliases();
 
-        if (empty($aliases)) {
+        if ($aliases === []) {
             return $this;
         }
 
@@ -161,7 +162,7 @@ class CommandBus extends AnswerBus
 
         if ($message->has('entities')) {
             $this->parseCommandsIn($message)
-                ->each(function ($botCommandEntity) use ($update) {
+                ->each(function ($botCommandEntity) use ($update): void {
                     $botCommandAsArray = $botCommandEntity instanceof MessageEntity
                         ? $botCommandEntity->all()
                         : $botCommandEntity;
@@ -175,15 +176,13 @@ class CommandBus extends AnswerBus
     /**
      * Returns all bot_commands detected in the update.
      *
-     * @param  \Telegram\Bot\Objects\Message|Collection  $message
-     * @return Collection<int, MessageEntity>
+     * @param Collection $message
+     * @return Collection
      */
-    protected function parseCommandsIn(Collection $message): Collection
+    private function parseCommandsIn(Collection $message): Collection
     {
         return Collection::wrap($message->get('entities'))
-            ->filter(function (MessageEntity $entity) {
-                return $entity->type === 'bot_command';
-            });
+            ->filter(static fn(MessageEntity $entity): bool => $entity->type === 'bot_command');
     }
 
     /**
@@ -191,7 +190,7 @@ class CommandBus extends AnswerBus
      *
      * @param  array<string, mixed>  $entity {@see \Telegram\Bot\Objects\MessageEntity} object attributes.
      */
-    protected function process($entity, Update $update)
+    private function process(array $entity, Update $update): void
     {
         $command = $this->parseCommand(
             $update->getMessage()->text,
@@ -209,16 +208,14 @@ class CommandBus extends AnswerBus
      * @param  array<string, mixed>  $entity
      * @return mixed
      */
-    protected function execute(string $name, Update $update, array $entity)
+    private function execute(string $name, Update $update, array $entity)
     {
         $command = $this->commands[$name] ??
             $this->commandAliases[$name] ??
             $this->commands['help'] ??
-            collect($this->commands)->filter(function ($command) use ($name) {
-                return $command instanceof $name;
-            })->first() ?? null;
+            collect($this->commands)->filter(static fn($command): bool => $command instanceof $name)->first() ?? null;
 
-        return $command ? $command->make($this->telegram, $update, $entity) : false;
+        return $command !== null ? $command->make($this->telegram, $update, $entity) : false;
     }
 
     /**
@@ -254,13 +251,11 @@ class CommandBus extends AnswerBus
     }
 
     /**
-     * @param  CommandInterface  $command
      * @param  string  $alias
      * @return void
-     *
      * @throws TelegramSDKException
      */
-    private function checkForConflicts($command, $alias)
+    private function checkForConflicts(CommandInterface $command, $alias)
     {
         if (isset($this->commands[$alias])) {
             throw new TelegramSDKException(

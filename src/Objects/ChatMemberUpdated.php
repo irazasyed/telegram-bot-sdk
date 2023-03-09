@@ -18,8 +18,9 @@ class ChatMemberUpdated extends BaseObject
 {
     /**
      * {@inheritdoc}
+     * @return array{chat: string, from: string, old_chat_member: string, new_chat_member: string, invite_link: string}
      */
-    public function relations()
+    public function relations(): array
     {
         return [
             'chat' => Chat::class,

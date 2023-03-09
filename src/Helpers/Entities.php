@@ -5,16 +5,16 @@ namespace Telegram\Bot\Helpers;
 /**
  * Class Entities.
  */
-class Entities
+final class Entities
 {
     /** @var string Message or Caption */
-    protected $text;
+    private string $text;
 
     /** @var array Entities from Telegram */
-    protected $entities;
+    private array $entities = [];
 
     /** @var int Formatting Mode: 0:Markdown | 1:HTML */
-    protected $mode = 0;
+    private int $mode = 0;
 
     /**
      * Entities constructor.
@@ -24,12 +24,9 @@ class Entities
         $this->text = $text;
     }
 
-    /**
-     * @return static
-     */
     public static function format(string $text): self
     {
-        return new static($text);
+        return new self($text);
     }
 
     /**
@@ -67,7 +64,7 @@ class Entities
      *
      * @return mixed|string
      */
-    protected function apply()
+    private function apply()
     {
         $syntax = $this->syntax();
 
@@ -84,6 +81,7 @@ class Entities
                         ($type === 'text_mention') ? $entity['user']['username'] : $value
                     );
                 }
+
                 $this->text = substr_replace($this->text, $replacement, $entity['offset'], $entity['length']);
             }
         }
@@ -93,8 +91,9 @@ class Entities
 
     /**
      * Formatting Syntax.
+     * @return array{bold: string[], italic: string[], code: string[], pre: string[], text_mention: string[], text_link: string[]}
      */
-    protected function syntax(): array
+    private function syntax(): array
     {
         // No need of any special formatting for these entity types.
         // 'url', 'bot_command', 'hashtag', 'cashtag', 'email', 'phone_number', 'mention'

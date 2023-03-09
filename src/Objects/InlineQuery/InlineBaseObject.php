@@ -2,6 +2,7 @@
 
 namespace Telegram\Bot\Objects\InlineQuery;
 
+use BadMethodCallException;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
@@ -32,8 +33,9 @@ abstract class InlineBaseObject extends Collection
     public function __call($name, $arguments)
     {
         if (! Str::startsWith($name, 'set')) {
-            throw new \BadMethodCallException("Method {$name} does not exist.");
+            throw new BadMethodCallException(sprintf('Method %s does not exist.', $name));
         }
+
         $property = Str::snake(substr($name, 3));
         $this->put($property, $arguments[0]);
 

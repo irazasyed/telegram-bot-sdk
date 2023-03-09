@@ -4,80 +4,56 @@ on:
   workflow_dispatch:
   push:
     paths:
-      - 'src/**'
-      - 'test/**'
+      - '**.php'
+      - 'ci.yml'
       - 'composer.json'
       - 'phpunit.xml.dist'
   pull_request:
     paths:
-      - 'src/**'
-      - 'test/**'
+      - '**.php'
+      - 'ci.yml'
       - 'composer.json'
       - 'phpunit.xml.dist'
 
 jobs:
   tests:
-    runs-on: ubuntu-latest
+    if: "!contains(github.event.head_commit.message, 'skip ci')"
 
+    runs-on: ubuntu-latest
+    continue-on-error: ${{ matrix.experimental }}
     strategy:
       fail-fast: true
       matrix:
-        php: ['7.3', '7.4', '8.0', '8.1', '8.2']
-        laravel: [5.5.*, 6.*, 7.*, '^8.0', '^9.0']
-        dependency-version: [prefer-lowest, prefer-stable]
-        exclude:
-          - laravel: '^9.0'
-            php: '7.3'
-          - laravel: '^9.0'
-            php: '7.4'
+        php: [8.0, 8.1, 8.2]
+        dependencies: [lowest, highest]
+        experimental: [false]
 
-    name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.dependency-version }}
-    env:
-      EXTENSIONS: dom, curl, bcmath, libxml, mbstring, fileinfo
-      EXT_CACHE_KEY: ext-cache-v1
+    name: PHP ${{ matrix.php }} (${{ matrix.dependencies }})
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Setup extensions cache environment
-        id: cache-env
-        uses: shivammathur/cache-extensions@v1
-        with:
-          php-version: ${{ matrix.php }}
-          extensions: ${{ env.EXTENSIONS }}
-          key: ${{ env.EXT_CACHE_KEY }}
-
-      - name: Cache extensions
-        uses: actions/cache@v3
-        with:
-          path: ${{ steps.cache-env.outputs.dir }}
-          key: ${{ steps.cache-env.outputs.key }}
-          restore-keys: ${{ steps.cache-env.outputs.key }}
-
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
-          extensions: ${{ env.EXTENSIONS }}
-          coverage: none #pcov
           tools: cs2pr
+          coverage: none
 
-      - name: Get composer cache directory
-        id: composer-cache
-        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
-
-      - name: Cache composer dependencies
-        uses: actions/cache@v3
-        with:
-          path: ${{ steps.composer-cache.outputs.dir }}
-          key: ${{ runner.os }}-laravel-${{ matrix.laravel }}-php-${{ matrix.php }}-composer-${{ hashFiles('**/composer.json') }}
-          restore-keys: ${{ runner.os }}-laravel-${{ matrix.laravel }}-php-${{ matrix.php }}-composer-
+      - name: Setup problem matchers
+        run: |
+          echo "::add-matcher::${{ runner.tool_cache }}/php.json"
+          echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
 
       - name: Install dependencies
-        run: |
-          composer require "illuminate/support:${{ matrix.laravel }}" --no-interaction --no-update --no-progress --no-suggest --ignore-platform-req=php
-          composer update --${{ matrix.dependency-version }} --prefer-dist --no-interaction --no-suggest --ignore-platform-req=php
+        uses: ramsey/composer-install@v2
+        with:
+          dependency-versions: ${{ matrix.dependencies }}
+          composer-options: "--prefer-dist ${{ matrix.composer-options }}"
+
+      - name: List Installed Dependencies
+        run: composer show -D
 
       - name: Execute tests
         run: composer test
@@ -85,7 +61,7 @@ jobs:
       - name: Check .php files for syntax errors
         run: composer php:syntax -- --checkstyle | cs2pr
 
-      - uses: actions/cache@v3
+      - uses: actions/cache@v2
         id: cache-db
         with:
           path: ~/.symfony/cache

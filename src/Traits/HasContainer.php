@@ -12,14 +12,14 @@ trait HasContainer
     /**
      * @var Container IoC Container
      */
-    protected static $container = null;
+    protected static Container $container;
 
     /**
      * Set the IoC Container.
      *
      * @param $container Container instance
      */
-    public static function setContainer(Container $container)
+    public static function setContainer(Container $container): void
     {
         self::$container = $container;
     }

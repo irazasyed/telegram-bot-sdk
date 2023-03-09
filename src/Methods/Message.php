@@ -334,13 +334,11 @@ trait Message
      *
      * @link https://core.telegram.org/bots/api#sendmediagroup
      *
-     * @return MessageObject
      *
      * @throws TelegramSDKException
-     *
      * //TODO Check this return type.
      */
-    public function sendMediaGroup(array $params)
+    public function sendMediaGroup(array $params): \Telegram\Bot\Objects\Message
     {
         $response = $this->uploadFile('sendMediaGroup', $params, 'media');
 

@@ -20,22 +20,16 @@ trait GuzzleMock
      *
      * @var array
      */
-    protected $history = [];
+    protected array $history = [];
 
-    /**
-     * @return GuzzleHttpClient
-     */
-    public function getGuzzleHttpClient(array $responsesToQueue = [])
+    public function getGuzzleHttpClient(array $responsesToQueue = []): GuzzleHttpClient
     {
         $client = $this->createClientWithQueuedResponse($responsesToQueue);
 
         return new GuzzleHttpClient($client);
     }
 
-    /**
-     * @return Client
-     */
-    protected function createClientWithQueuedResponse(array $responsesToQueue)
+    protected function createClientWithQueuedResponse(array $responsesToQueue): Client
     {
         $this->history = [];
         $handler = HandlerStack::create(new MockHandler($responsesToQueue));
@@ -46,11 +40,10 @@ trait GuzzleMock
 
     /**
      * @param  array|bool  $data
-     * @param  int  $status_code
-     * @param  array  $headers
-     * @return Response
+     * @param int $status_code
+     * @param array $headers
      */
-    public function makeFakeServerResponse($data, $status_code = 200, $headers = [])
+    public function makeFakeServerResponse($data, int $status_code = 200, array $headers = []): Response
     {
         return new Response(
             $status_code,
@@ -62,7 +55,7 @@ trait GuzzleMock
         );
     }
 
-    public function makeFakeInboundUpdate(array $data, $status_code = 200, $headers = [])
+    public function makeFakeInboundUpdate(array $data, $status_code = 200, $headers = []): Response
     {
         return new Response(
             $status_code,
@@ -76,7 +69,7 @@ trait GuzzleMock
         return collect($this->history);
     }
 
-    protected function makeFakeServerErrorResponse($error_code, $description, $status_code = 200, $headers = [])
+    protected function makeFakeServerErrorResponse($error_code, $description, $status_code = 200, $headers = []): Response
     {
         return new Response(
             $status_code,
@@ -84,7 +77,7 @@ trait GuzzleMock
             json_encode([
                 'ok' => false,
                 'error_code' => $error_code,
-                'description' => "$description",
+                'description' => sprintf('%s', $description),
             ])
         );
     }

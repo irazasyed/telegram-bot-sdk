@@ -10,16 +10,16 @@ use Telegram\Bot\Exceptions\CouldNotUploadInputFile;
 /**
  * Class InputFile.
  */
-class InputFile
+final class InputFile
 {
     /** @var string|resource|StreamInterface The path to the file on the system or remote / resource. */
-    protected $file;
+    private $file;
 
     /** @var string|null The filename. */
-    protected $filename;
+    private $filename;
 
     /** @var string|resource|StreamInterface The contents of the file. */
-    protected $contents;
+    private $contents;
 
     /**
      * Create a new InputFile entity.
@@ -29,7 +29,7 @@ class InputFile
      */
     public static function create($file = null, $filename = null): self
     {
-        return new static($file, $filename);
+        return new self($file, $filename);
     }
 
     /**
@@ -39,9 +39,9 @@ class InputFile
      * @param  string  $filename
      * @return mixed
      */
-    public static function createFromContents($contents, $filename)
+    public static function createFromContents($contents, $filename): \Telegram\Bot\FileUpload\InputFile
     {
-        return (new static(null, $filename))->setContents($contents);
+        return (new self(null, $filename))->setContents($contents);
     }
 
     /**
@@ -86,7 +86,7 @@ class InputFile
      */
     public function getFilename(): string
     {
-        if ($this->isFileResourceOrStream() && ! isset($this->filename)) {
+        if ($this->isFileResourceOrStream() && $this->filename === null) {
             return $this->filename = $this->attemptFileNameDetection();
         }
 
@@ -97,11 +97,10 @@ class InputFile
      * Attempts to access the meta data in the stream or resource to determine what
      * the filename should be if the user did not supply one.
      *
-     * @return string
      *
      * @throws CouldNotUploadInputFile
      */
-    protected function attemptFileNameDetection()
+    private function attemptFileNameDetection(): string
     {
         if ($uri = $this->getUriMetaDataFromStream()) {
             return basename($uri);
@@ -118,7 +117,7 @@ class InputFile
      *
      * @return string|null
      */
-    protected function getUriMetaDataFromStream()
+    private function getUriMetaDataFromStream()
     {
         $meta = is_resource($this->file) ? stream_get_meta_data($this->file) : $this->file->getMetadata();
 
@@ -133,7 +132,7 @@ class InputFile
      */
     public function setFilename($filename): self
     {
-        if (false === $this->isStringOrNull($filename)) {
+        if (!$this->isStringOrNull($filename)) {
             throw new InvalidArgumentException(
                 'Filename must be a string or null'
             );
@@ -175,12 +174,14 @@ class InputFile
      *
      * @throws CouldNotUploadInputFile
      */
-    protected function open()
+    private function open()
     {
-        if ($this->isFileRemote() || $this->isFileLocalAndExists()) {
+        if ($this->isFileRemote()) {
             return $this->contents = new LazyOpenStream($this->file, 'r');
         }
-
+        if ($this->isFileLocalAndExists()) {
+            return $this->contents = new LazyOpenStream($this->file, 'r');
+        }
         return $this->contents = $this->file;
     }
 
@@ -190,7 +191,7 @@ class InputFile
      * @param  mixed  $param
      * @return bool true if it's a string or null, false otherwise.
      */
-    protected function isStringOrNull($param): bool
+    private function isStringOrNull($param): bool
     {
         return in_array(gettype($param), ['string', 'NULL']);
     }
@@ -202,7 +203,7 @@ class InputFile
      */
     public function isFileRemote(): bool
     {
-        return is_string($this->file) && preg_match('/^(https?|ftp):\/\/.*/', $this->file) === 1;
+        return is_string($this->file) && preg_match('#^(https?|ftp):\/\/.*#', $this->file) === 1;
     }
 
     /**
@@ -211,7 +212,7 @@ class InputFile
      * @return bool true if it's a resource file or an instance of
      *              \Psr\Http\Message\StreamInterface, false otherwise.
      */
-    protected function isFileResourceOrStream(): bool
+    private function isFileResourceOrStream(): bool
     {
         return is_resource($this->file) || $this->file instanceof StreamInterface;
     }
@@ -225,7 +226,7 @@ class InputFile
      *
      * @throws CouldNotUploadInputFile
      */
-    protected function isFileLocalAndExists(): bool
+    private function isFileLocalAndExists(): bool
     {
         if (! is_string($this->file)) {
             return false;

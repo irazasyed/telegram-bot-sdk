@@ -9,10 +9,8 @@ class TelegramObject extends BaseObject
 {
     /**
      * Property relations.
-     *
-     * @return array
      */
-    public function relations()
+    public function relations(): array
     {
         return [];
     }

@@ -2,6 +2,7 @@
 
 namespace Telegram\Bot\HttpClients;
 
+use function GuzzleHttp\Promise\unwrap;
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\GuzzleException;
@@ -17,19 +18,19 @@ use Throwable;
 /**
  * Class GuzzleHttpClient.
  */
-class GuzzleHttpClient implements HttpClientInterface
+final class GuzzleHttpClient implements HttpClientInterface
 {
     /** @var PromiseInterface[] Holds promises. */
-    private static $promises = [];
+    private static array $promises = [];
 
     /** @var Client|ClientInterface HTTP client. */
-    protected $client;
+    private ClientInterface $client;
 
     /** @var int Timeout of the request in seconds. */
-    protected $timeOut = 30;
+    private int $timeOut = 30;
 
     /** @var int Connection timeout of the request in seconds. */
-    protected $connectTimeOut = 10;
+    private int $connectTimeOut = 10;
 
     /**
      * GuzzleHttpClient constructor.
@@ -46,7 +47,7 @@ class GuzzleHttpClient implements HttpClientInterface
      */
     public function __destruct()
     {
-        Promise\unwrap(self::$promises);
+        unwrap(self::$promises);
     }
 
     /**
@@ -75,21 +76,21 @@ class GuzzleHttpClient implements HttpClientInterface
         $options = $this->getOptions($headers, $body, $options, $isAsyncRequest);
 
         try {
-            $response = $this->getClient()->requestAsync($method, $url, $options);
+            $response = $this->client->requestAsync($method, $url, $options);
 
             if ($isAsyncRequest) {
                 self::$promises[] = $response;
             } else {
                 $response = $response->wait();
             }
-        } catch (GuzzleException $e) {
+        } catch (GuzzleException $guzzleException) {
             $response = null;
-            if ($e instanceof RequestExceptionInterface || $e instanceof RequestException) {
-                $response = $e->getResponse();
+            if ($guzzleException instanceof RequestExceptionInterface || $guzzleException instanceof RequestException) {
+                $response = $guzzleException->getResponse();
             }
 
             if (! $response instanceof ResponseInterface) {
-                throw new TelegramSDKException($e->getMessage(), $e->getCode(), $e);
+                throw new TelegramSDKException($guzzleException->getMessage(), $guzzleException->getCode(), $guzzleException);
             }
         }
 
@@ -99,21 +100,20 @@ class GuzzleHttpClient implements HttpClientInterface
     /**
      * Prepares and returns request options.
      *
-     * @param  array  $options
      * @param  bool  $isAsyncRequest
      */
     private function getOptions(
         array $headers,
         $body,
-        $options,
+        array $options,
         $isAsyncRequest = false,
         $proxy = null
     ): array {
         $default_options = [
             RequestOptions::HEADERS => $headers,
             RequestOptions::BODY => $body,
-            RequestOptions::TIMEOUT => $this->getTimeOut(),
-            RequestOptions::CONNECT_TIMEOUT => $this->getConnectTimeOut(),
+            RequestOptions::TIMEOUT => $this->timeOut,
+            RequestOptions::CONNECT_TIMEOUT => $this->connectTimeOut,
             RequestOptions::SYNCHRONOUS => ! $isAsyncRequest,
         ];
 
@@ -158,13 +158,5 @@ class GuzzleHttpClient implements HttpClientInterface
         $this->connectTimeOut = $connectTimeOut;
 
         return $this;
-    }
-
-    /**
-     * Gets HTTP client for internal class use.
-     */
-    private function getClient(): Client
-    {
-        return $this->client;
     }
 }

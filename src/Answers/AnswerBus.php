@@ -2,6 +2,9 @@
 
 namespace Telegram\Bot\Answers;
 
+use BadMethodCallException;
+use ReflectionMethod;
+use ReflectionClass;
 use Telegram\Bot\Traits\Telegram;
 
 /**
@@ -14,19 +17,19 @@ abstract class AnswerBus
     /**
      * Handle calls to missing methods.
      *
-     * @param  string  $method
-     * @param  array  $parameters
+     * @param string $method
+     * @param array $parameters
      * @return mixed
      *
-     * @throws \BadMethodCallException
+     * @throws BadMethodCallException
      */
-    public function __call($method, $parameters)
+    public function __call(string $method, array $parameters)
     {
         if (method_exists($this, $method)) {
             return call_user_func_array([$this, $method], $parameters);
         }
 
-        throw new \BadMethodCallException("Method [$method] does not exist.");
+        throw new BadMethodCallException(sprintf('Method [%s] does not exist.', $method));
     }
 
     /**
@@ -34,7 +37,7 @@ abstract class AnswerBus
      *
      * @return object
      */
-    protected function buildDependencyInjectedAnswer($answerClass)
+    protected function buildDependencyInjectedAnswer($answerClass): object
     {
         // check if the command has a constructor
         if (! method_exists($answerClass, '__construct')) {
@@ -42,11 +45,11 @@ abstract class AnswerBus
         }
 
         // get constructor params
-        $constructorReflector = new \ReflectionMethod($answerClass, '__construct');
+        $constructorReflector = new ReflectionMethod($answerClass, '__construct');
         $params = $constructorReflector->getParameters();
 
         // if no params are needed proceed with normal instantiation
-        if (empty($params)) {
+        if ($params === []) {
             return new $answerClass();
         }
 
@@ -62,8 +65,6 @@ abstract class AnswerBus
         }
 
         // and instantiate the object with dependencies through ReflectionClass
-        $classReflector = new \ReflectionClass($answerClass);
-
-        return $classReflector->newInstanceArgs($dependencies);
+        return (new ReflectionClass($answerClass))->newInstanceArgs($dependencies);
     }
 }

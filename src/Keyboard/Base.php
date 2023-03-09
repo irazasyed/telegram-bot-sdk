@@ -13,7 +13,7 @@ use Illuminate\Support\Str;
  *
  * @extends Collection<TKey, TValue>
  */
-class Base extends Collection
+final class Base extends Collection
 {
     /**
      * Dynamically build params.
@@ -27,6 +27,7 @@ class Base extends Collection
         if (! Str::startsWith($method, 'set')) {
             return parent::__call($method, $args);
         }
+
         $property = Str::snake(substr($method, 3));
         $this->items[$property] = $args[0];
 

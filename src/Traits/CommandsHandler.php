@@ -64,7 +64,7 @@ trait CommandsHandler
         }
 
         //An update is considered confirmed as soon as getUpdates is called with an offset higher than it's update_id.
-        if ($highestId != -1) {
+        if ($highestId !== -1) {
             $this->markUpdateAsRead($highestId);
         }
 
@@ -88,23 +88,23 @@ trait CommandsHandler
     /**
      * Check update object for a command and process.
      */
-    public function processCommand(Update $update)
+    public function processCommand(Update $update): void
     {
         $this->getCommandBus()->handler($update);
     }
 
     /**
+     * @param string $name Command Name
+     * @param Update $update Update Object
+     * @param array|null $entity
+     * @return mixed
      * @deprecated This method will be protected and signature will be changed in SDK v4.
      * Helper to Trigger Commands.
      *
-     * @param  string  $name   Command Name
-     * @param  Update  $update Update Object
-     * @param  array|null  $entity
-     * @return mixed
      */
-    public function triggerCommand(string $name, Update $update, $entity = null)
+    public function triggerCommand(string $name, Update $update, array $entity = null)
     {
-        $entity = $entity ?? ['offset' => 0, 'length' => strlen($name) + 1, 'type' => 'bot_command'];
+        $entity ??= ['offset' => 0, 'length' => strlen($name) + 1, 'type' => 'bot_command'];
 
         return $this->getCommandBus()->execute(
             $name,

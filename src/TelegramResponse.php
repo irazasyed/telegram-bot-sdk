@@ -13,33 +13,33 @@ use Telegram\Bot\Exceptions\TelegramSDKException;
  *
  * Handles the response from Telegram API.
  */
-class TelegramResponse
+final class TelegramResponse
 {
     /** @var null|int The HTTP status code response from API. */
-    protected $httpStatusCode;
+    private ?int $httpStatusCode = null;
 
     /** @var array The headers returned from API request. */
-    protected $headers;
+    private array $headers = [];
 
     /** @var string The raw body of the response from API request. */
-    protected $body;
+    private string $body;
 
-    /** @var array The decoded body of the API response. */
-    protected $decodedBody = [];
+    /** @var array|null The decoded body of the API response. */
+    private ?array $decodedBody = null;
 
     /** @var string API Endpoint used to make the request. */
-    protected $endPoint;
+    private string $endPoint;
 
     /** @var TelegramRequest The original request that returned this response. */
-    protected $request;
+    private TelegramRequest $request;
 
     /** @var TelegramSDKException The exception thrown by this request. */
-    protected $thrownException;
+    private TelegramSDKException $thrownException;
 
     /**
      * Gets the relevant data from the Http client.
      *
-     * @param  ResponseInterface|PromiseInterface  $response
+     * @param ResponseInterface|PromiseInterface $response
      */
     public function __construct(TelegramRequest $request, $response)
     {
@@ -58,14 +58,15 @@ class TelegramResponse
         }
 
         $this->request = $request;
-        $this->endPoint = (string) $request->getEndpoint();
+        $this->endPoint = $request->getEndpoint();
     }
 
     /**
      * Converts raw API response to proper decoded response.
      */
-    public function decodeBody()
+    public function decodeBody(): void
     {
+        $this->body = (string)$this->body;
         $this->decodedBody = json_decode($this->body, true);
 
         if ($this->decodedBody === null) {
@@ -73,7 +74,7 @@ class TelegramResponse
             parse_str($this->body, $this->decodedBody);
         }
 
-        if (! is_array($this->decodedBody)) {
+        if (!is_array($this->decodedBody)) {
             $this->decodedBody = [];
         }
 
@@ -93,7 +94,7 @@ class TelegramResponse
     /**
      * Instantiates an exception to be thrown later.
      */
-    public function makeException()
+    public function makeException(): void
     {
         $this->thrownException = TelegramResponseException::create($this);
     }
@@ -112,7 +113,7 @@ class TelegramResponse
      *
      * @return null|int
      */
-    public function getHttpStatusCode()
+    public function getHttpStatusCode(): ?int
     {
         return $this->httpStatusCode;
     }
@@ -127,10 +128,8 @@ class TelegramResponse
 
     /**
      * Return the bot access token that was used for this request.
-     *
-     * @return string|null
      */
-    public function getAccessToken()
+    public function getAccessToken(): ?string
     {
         return $this->request->getAccessToken();
     }
@@ -154,7 +153,7 @@ class TelegramResponse
     /**
      * Return the decoded body response.
      */
-    public function getDecodedBody(): array
+    public function getDecodedBody(): ?array
     {
         return $this->decodedBody;
     }
@@ -172,6 +171,7 @@ class TelegramResponse
     /**
      * Throws the exception.
      *
+     * @return never
      * @throws TelegramSDKException
      */
     public function throwException(): TelegramSDKException

@@ -1,23 +1,29 @@
 name: Code Style
 
-on: [push]
+on:
+  push:
+    paths:
+      - '**.php'
+      - 'code-style.yml'
 
 jobs:
-  phplint:
+  code-style:
+    if: "!contains(github.event.head_commit.message, 'skip ci')"
+
     name: "Laravel Pint (Style)"
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-      
+
       - name: "Laravel Pint"
         uses: aglipanci/laravel-pint-action@2.1.0
         with:
           preset: laravel
-          
+
       - name: Commit changes to GitHub
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          commit_message: "PHP Style Change (Laravel Pint in CI)"
+          commit_message: Fix styling
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

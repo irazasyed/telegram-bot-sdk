@@ -3,7 +3,7 @@
 <p align="center">
 <a href="https://phpchat.co"><img src="https://img.shields.io/badge/Slack-PHP%20Chat-5c6aaa.svg?logo=slack&labelColor=4A154B&style=for-the-badge" alt="Join PHP Chat"/></a>
 <a href="https://t.me/PHPChatCo"><img src="https://img.shields.io/badge/Chat-on%20Telegram-2CA5E0.svg?logo=telegram&style=for-the-badge" alt="Chat on Telegram"/></a>
-<a href="https://github.com/irazasyed/telegram-bot-sdk/actions"><img src="https://img.shields.io/github/workflow/status/irazasyed/telegram-bot-sdk/CI.svg?style=for-the-badge" alt="Build Status"/></a>
+<a href="https://github.com/irazasyed/telegram-bot-sdk/actions"><img src="https://img.shields.io/github/actions/workflow/status/irazasyed/telegram-bot-sdk/ci.yml?style=for-the-badge" alt="Build Status"/></a>
 <a href="https://github.com/irazasyed/telegram-bot-sdk/releases"><img src="https://img.shields.io/github/release/irazasyed/telegram-bot-sdk.svg?style=for-the-badge" alt="Latest Version"/></a>
 <a href="https://packagist.org/packages/irazasyed/telegram-bot-sdk"><img src="https://img.shields.io/packagist/dt/irazasyed/telegram-bot-sdk.svg?style=for-the-badge" alt="Total Downloads"/></a>
 </p>
@@ -50,7 +50,7 @@ Thank you for considering contributing to the project. Please review the [CONTRI
 
 ## Credits
 
-- [Syed Irfaq R.][link-author]
+- [Irfaq Syed][link-author]
 - [All Contributors][link-contributors]
 
 ## Thanks
@@ -61,7 +61,7 @@ Thanks to these companies for providing access to their products that have been 
 
 ## Disclaimer
 
-This project and its author is neither associated, nor affiliated with [Telegram](https://telegram.org/) in anyway.
+This project and its author are neither associated, nor affiliated with [Telegram](https://telegram.org/) in any way.
 See License section for more details.
 
 ## License

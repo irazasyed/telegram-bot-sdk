@@ -2,7 +2,7 @@
 
 namespace Telegram\Bot\Methods;
 
-use League\Event\EmitterInterface;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Http\Message\RequestInterface;
 use Telegram\Bot\Events\UpdateEvent;
 use Telegram\Bot\Events\UpdateWasReceived;
@@ -34,8 +34,8 @@ trait Update
      *
      * @link https://core.telegram.org/bots/api#getupdates
      *
-     * @param  bool  $shouldEmitEvents
-     * @param  array  $params           [
+     * @param bool $shouldEmitEvents
+     * @param array $params [
      *
      * @var int            Optional. Identifier of the first update to be returned. Must be greater by one than the highest among the identifiers of previously received updates. By default, updates starting with the earliest unconfirmed update are returned. An update is considered confirmed as soon as getUpdates is called with an offset higher than its update_id. The negative offset can be specified to retrieve updates starting from -offset update from the end of the updates queue. All previous updates will forgotten.
      * @var int             Optional. Limits the number of updates to be retrieved. Values between 1—100 are accepted. Defaults to 100.
@@ -48,17 +48,18 @@ trait Update
      *
      * @throws TelegramSDKException
      */
-    public function getUpdates(array $params = [], $shouldEmitEvents = true): array
+    public function getUpdates(array $params = [], bool $shouldEmitEvents = true): array
     {
         $response = $this->get('getUpdates', $params);
 
         return collect($response->getResult())
-            ->map(function ($data) use ($shouldEmitEvents) {
+            ->map(function ($data) use ($shouldEmitEvents): UpdateObject {
                 $update = new UpdateObject($data);
 
                 if ($shouldEmitEvents) {
                     $this->emitEvent(new UpdateWasReceived($update, $this));
                 }
+
                 $this->dispatchUpdateEvent($update);
 
                 return $update;
@@ -80,7 +81,7 @@ trait Update
      *
      * @link https://core.telegram.org/bots/api#setwebhook
      *
-     * @param  array  $params [
+     * @param array $params [
      *
      * @var string                Required. HTTPS url to send updates to. Use an empty string to remove webhook integration
      * @var InputFile     Optional. Upload your public key certificate so that the root certificate in use can be checked. See our self-signed guide for details.
@@ -125,7 +126,6 @@ trait Update
      */
     public function getWebhookInfo(): WebhookInfo
     {
-        /** @var TelegramResponse $response */
         $response = $this->get('getWebhookInfo');
 
         return new WebhookInfo($response->getDecodedBody());
@@ -134,12 +134,12 @@ trait Update
     /**
      * Alias for getWebhookUpdate.
      *
+     * @param bool $shouldEmitEvent
+     * @return UpdateObject
      * @deprecated Call method getWebhookUpdate (note lack of letter s at end)
      *             To be removed in next major version.
-     *
-     * @param  bool  $shouldEmitEvent
      */
-    public function getWebhookUpdates($shouldEmitEvent = true): UpdateObject
+    public function getWebhookUpdates(bool $shouldEmitEvent = true): UpdateObject
     {
         return $this->getWebhookUpdate($shouldEmitEvent);
     }
@@ -148,11 +148,12 @@ trait Update
      * Returns a webhook update sent by Telegram.
      * Works only if you set a webhook.
      *
-     * @param  bool  $shouldEmitEvent
-     *
+     * @param bool $shouldEmitEvent
+     * @param RequestInterface|null $request
+     * @return UpdateObject
      * @see setWebhook
      */
-    public function getWebhookUpdate($shouldEmitEvent = true, ?RequestInterface $request = null): UpdateObject
+    public function getWebhookUpdate(bool $shouldEmitEvent = true, ?RequestInterface $request = null): UpdateObject
     {
         $body = $this->getRequestBody($request);
 
@@ -161,6 +162,7 @@ trait Update
         if ($shouldEmitEvent) {
             $this->emitEvent(new UpdateWasReceived($update, $this));
         }
+
         $this->dispatchUpdateEvent($update);
 
         return $update;
@@ -180,7 +182,7 @@ trait Update
     /**
      * @throws TelegramSDKException
      */
-    private function validateHookUrl(string $url)
+    private function validateHookUrl(string $url): void
     {
         if (filter_var($url, FILTER_VALIDATE_URL) === false) {
             throw new TelegramSDKException('Invalid URL Provided');
@@ -191,7 +193,7 @@ trait Update
         }
     }
 
-    private function formatCertificate($certificate)
+    private function formatCertificate($certificate): InputFile
     {
         if ($certificate instanceof InputFile) {
             return $certificate;
@@ -205,32 +207,28 @@ trait Update
      */
     private function getRequestBody(?RequestInterface $request)
     {
-        if ($request instanceof RequestInterface) {
-            $rawBody = (string) $request->getBody();
-        } else {
-            $rawBody = file_get_contents('php://input');
-        }
+        $rawBody = $request instanceof RequestInterface ? (string)$request->getBody() : file_get_contents('php://input');
 
         return json_decode($rawBody, true);
     }
 
     /** Dispatch Update Event. */
-    private function dispatchUpdateEvent(UpdateObject $update): void
+    protected function dispatchUpdateEvent(UpdateObject $update): void
     {
-        if (! property_exists($this, 'eventEmitter') || ! $this->eventEmitter instanceof EmitterInterface) {
-            return;
-        }
+        $eventDispatcher = $this->eventDispatcher();
 
-        $eventEmitter = $this->eventEmitter;
+        $eventDispatcher->dispatch(new UpdateEvent($this, $update));
 
-        $eventEmitter->emit(new UpdateEvent($this, $update));
         $updateType = $update->objectType();
         if (is_string($updateType)) {
-            $eventEmitter->emit(new UpdateEvent($this, $update, $updateType));
+            $eventDispatcher->dispatch(new UpdateEvent($this, $update, $updateType));
 
-            $messageType = $update->getMessage()->objectType();
-            if (null !== $messageType) {
-                $eventEmitter->emit(new UpdateEvent($this, $update, "$updateType.$messageType"));
+            if (method_exists($update->getMessage(), 'objectType')) {
+                $messageType = $update->getMessage()->objectType();
+
+                if (null !== $messageType) {
+                    $eventDispatcher->dispatch(new UpdateEvent($this, $update, sprintf('%s.%s', $updateType, $messageType)));
+                }
             }
         }
     }

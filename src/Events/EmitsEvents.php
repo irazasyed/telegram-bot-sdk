@@ -2,89 +2,43 @@
 
 namespace Telegram\Bot\Events;
 
-use League\Event\EmitterInterface;
-use League\Event\EventInterface;
+use InvalidArgumentException;
+use League\Event\EventDispatcherAwareBehavior;
 
 /**
  * EmitsEvents.
  */
 trait EmitsEvents
 {
-    /** @var EmitterInterface */
-    protected $eventEmitter;
+    use EventDispatcherAwareBehavior;
 
     /**
      * Emit an event.
      *
-     * @param  EventInterface|string  $event
+     * @param object|string $event
      * @return bool true if emitted, false otherwise.
      *
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     protected function emitEvent($event): bool
     {
-        if (is_null($this->eventEmitter)) {
-            return false;
-        }
-
         $this->validateEvent($event);
 
-        $this->eventEmitter->emit($event);
+        $this->eventDispatcher()->dispatch($event);
 
         return true;
     }
 
     /**
-     * Emit events in batch.
-     *
-     * @param  EventInterface[]|string[]  $events
-     * @return bool true if all emitted, false otherwise
-     *
-     * @throws \InvalidArgumentException
-     */
-    private function emitBatchOfEvents(array $events): bool
-    {
-        if (is_null($this->eventEmitter)) {
-            return false;
-        }
-
-        foreach ($events as $e) {
-            $this->validateEvent($e);
-        }
-
-        $this->emitBatchOfEvents($events);
-
-        return true;
-    }
-
-    /**
-     * Returns an event emitter.
-     */
-    public function getEventEmitter(): EmitterInterface
-    {
-        return $this->eventEmitter;
-    }
-
-    /**
-     * Set an event emitter.
-     *
-     * @param  EmitterInterface  $eventEmitter
-     * @return $this
-     */
-    public function setEventEmitter($eventEmitter)
-    {
-        $this->eventEmitter = $eventEmitter;
-
-        return $this;
-    }
-
-    /**
+     * @param $event
      * @return void
      */
-    private function validateEvent($event)
+    private function validateEvent($event): void
     {
-        if (! is_string($event) && ! $event instanceof EventInterface) {
-            throw new \InvalidArgumentException('Event must be either be of type "string" or instance of League\Event\EventInterface');
+        if (is_string($event) || is_object($event)) {
+            return;
         }
+
+        throw new InvalidArgumentException('Event must be either be of type "string" or instance of object');
     }
 }

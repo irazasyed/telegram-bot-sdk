@@ -19,8 +19,9 @@ class SuccessfulPayment extends BaseObject
 {
     /**
      * {@inheritdoc}
+     * @return array{order_info: string}
      */
-    public function relations()
+    public function relations(): array
     {
         return [
             'order_info' => OrderInfo::class,

@@ -35,10 +35,10 @@ use Telegram\Bot\Objects\LoginUrl;
  *
  * @extends Base<TKey, TValue>
  */
-class Keyboard extends Base
+final class Keyboard extends Base
 {
     /** @var bool Make an Inline Keyboard */
-    protected $inline = false;
+    private bool $inline = false;
 
     /**
      * Make this keyboard inline, So it appears right next to the message it belongs to.
@@ -62,12 +62,10 @@ class Keyboard extends Base
 
     /**
      * Create a new row in keyboard to add buttons.
-     *
-     * @param  array  $buttons
      */
-    public function row(...$buttons): self
+    public function row(array $buttons = []): self
     {
-        $property = $this->isInlineKeyboard() ? 'inline_keyboard' : 'keyboard';
+        $property = $this->inline ? 'inline_keyboard' : 'keyboard';
         $this->items[$property][] = $buttons;
 
         return $this;
@@ -175,7 +173,7 @@ class Keyboard extends Base
      */
     public static function remove(array $params = []): self
     {
-        return new static(array_merge(['remove_keyboard' => true, 'selective' => false], $params));
+        return new self(array_merge(['remove_keyboard' => true, 'selective' => false], $params));
     }
 
     /**
@@ -199,6 +197,6 @@ class Keyboard extends Base
      */
     public static function forceReply(array $params = []): self
     {
-        return new static(array_merge(['force_reply' => true, 'selective' => false], $params));
+        return new self(array_merge(['force_reply' => true, 'selective' => false], $params));
     }
 }

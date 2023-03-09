@@ -10,7 +10,7 @@ use Telegram\Bot\BotsManager;
 use Telegram\Bot\Exceptions\TelegramSDKException;
 use Telegram\Bot\Objects\WebhookInfo;
 
-class WebhookCommand extends Command
+final class WebhookCommand extends Command
 {
     /**
      * The name and signature of the console command.
@@ -33,8 +33,7 @@ class WebhookCommand extends Command
     /** @var Api */
     protected $telegram;
 
-    /** @var BotsManager */
-    protected $botsManager;
+    protected BotsManager $botsManager;
 
     /** @var array Bot Config */
     protected $config = [];
@@ -44,8 +43,6 @@ class WebhookCommand extends Command
      */
     public function __construct(BotsManager $botsManager)
     {
-        parent::__construct();
-
         $this->botsManager = $botsManager;
     }
 
@@ -54,7 +51,7 @@ class WebhookCommand extends Command
      *
      * @throws TelegramSDKException
      */
-    public function handle()
+    public function handle(): void
     {
         $bot = $this->hasArgument('bot') ? $this->argument('bot') : null;
         $this->telegram = $this->botsManager->bot($bot);
@@ -78,7 +75,7 @@ class WebhookCommand extends Command
      *
      * @throws TelegramSDKException
      */
-    protected function setupWebhook()
+    private function setupWebhook(): void
     {
         $params = ['url' => data_get($this->config, 'webhook_url')];
         $certificatePath = data_get($this->config, 'certificate_path', false);
@@ -102,9 +99,9 @@ class WebhookCommand extends Command
      *
      * @throws TelegramSDKException
      */
-    protected function removeWebHook()
+    private function removeWebHook(): void
     {
-        if ($this->confirm("Are you sure you want to remove the webhook for {$this->config['bot']}?")) {
+        if ($this->confirm(sprintf('Are you sure you want to remove the webhook for %s?', $this->config['bot']))) {
             $this->info('Removing webhook...');
 
             if ($this->telegram->removeWebhook()) {
@@ -122,7 +119,7 @@ class WebhookCommand extends Command
      *
      * @throws TelegramSDKException
      */
-    protected function getInfo()
+    private function getInfo(): void
     {
         $this->alert('Webhook Info');
 
@@ -135,7 +132,7 @@ class WebhookCommand extends Command
 
         if ($this->option('all')) {
             $bots = $this->botsManager->getConfig('bots');
-            collect($bots)->each(function ($bot, $key) {
+            collect($bots)->each(function ($bot, $key): void {
                 $response = $this->botsManager->bot($key)->getWebhookInfo();
                 $this->makeWebhookInfoResponse($response, $key);
             });
@@ -145,13 +142,13 @@ class WebhookCommand extends Command
     /**
      * Make WebhookInfo Response for console.
      */
-    protected function makeWebhookInfoResponse(WebhookInfo $response, string $bot)
+    private function makeWebhookInfoResponse(WebhookInfo $response, string $bot): void
     {
-        $rows = $response->map(function ($value, $key) {
+        $rows = $response->map(function ($value, $key): array {
             $key = Str::title(str_replace('_', ' ', $key));
             $value = is_bool($value) ? $this->mapBool($value) : $value;
 
-            return compact('key', 'value');
+            return ['key' => $key, 'value' => $value];
         })->toArray();
 
         $this->table([
@@ -162,10 +159,8 @@ class WebhookCommand extends Command
 
     /**
      * Map Boolean Value to Yes/No.
-     *
-     * @return string
      */
-    protected function mapBool($value)
+    private function mapBool(bool $value): string
     {
         return $value ? 'Yes' : 'No';
     }

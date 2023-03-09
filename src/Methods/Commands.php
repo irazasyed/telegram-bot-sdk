@@ -51,7 +51,7 @@ trait Commands
      *
      * @link https://core.telegram.org/bots/api#deletemycommands
      *
-     * @param  array|null  $params
+     * @param mixed[] $params
      */
     public function deleteMyCommands(array $params = []): bool
     {

@@ -18,7 +18,7 @@ namespace Telegram\Bot\Keyboard;
  *
  * @extends Base<TKey, TValue>
  */
-class Button extends Base
+final class Button extends Base
 {
     /**
      * Button Label Text.
