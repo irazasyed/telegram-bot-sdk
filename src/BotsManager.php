@@ -105,6 +105,18 @@ final class BotsManager
     }
 
     /**
+     * Determine if given bot name exists.
+     *
+     * @param string $name
+     *
+     * @return bool
+     */
+    public function hasBot(string $name): bool
+    {
+        return isset($this->bots[$name]);
+    }
+
+    /**
      * Get the specified configuration value for Telegram.
      *
      * @return mixed

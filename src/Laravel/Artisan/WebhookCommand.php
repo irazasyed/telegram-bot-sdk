@@ -10,7 +10,7 @@ use Telegram\Bot\BotsManager;
 use Telegram\Bot\Exceptions\TelegramSDKException;
 use Telegram\Bot\Objects\WebhookInfo;
 
-final class WebhookCommand extends Command
+class WebhookCommand extends Command
 {
     /**
      * The name and signature of the console command.
@@ -37,20 +37,25 @@ final class WebhookCommand extends Command
     protected $config = [];
 
     /**
-     * WebhookCommand constructor.
-     */
-    public function __construct(protected BotsManager $botsManager)
-    {
-    }
-
-    /**
      * Execute the console command.
      *
      * @throws TelegramSDKException
      */
-    public function handle(): void
+    public function handle(BotsManager $botsManager): void
     {
-        $bot = $this->hasArgument('bot') ? $this->argument('bot') : null;
+        $this->botsManager = $botsManager;
+        $bot = $this->argument('bot');
+
+        if($bot !== null && $this->botsManager->hasBot($bot) === false) {
+            $this->warn("Bot [$bot] is not configured.");
+            $this->warn('You must specify a proper bot name or use the --all option.');
+            $this->line('');
+
+            $this->info('💡Omitting the bot name will fallback to the default bot.');
+
+            return;
+        }
+
         $this->telegram = $this->botsManager->bot($bot);
         $this->config = $this->botsManager->getBotConfig($bot);
 
@@ -59,7 +64,7 @@ final class WebhookCommand extends Command
         }
 
         if ($this->option('remove')) {
-            $this->removeWebHook();
+            $this->removeWebhook();
         }
 
         if ($this->option('info')) {
@@ -96,7 +101,7 @@ final class WebhookCommand extends Command
      *
      * @throws TelegramSDKException
      */
-    private function removeWebHook(): void
+    private function removeWebhook(): void
     {
         if ($this->confirm(sprintf('Are you sure you want to remove the webhook for %s?', $this->config['bot']))) {
             $this->info('Removing webhook...');
@@ -120,20 +125,19 @@ final class WebhookCommand extends Command
     {
         $this->alert('Webhook Info');
 
-        if ($this->hasArgument('bot') && ! $this->option('all')) {
-            $response = $this->telegram->getWebhookInfo();
-            $this->makeWebhookInfoResponse($response, $this->argument('bot'));
-
-            return;
-        }
-
         if ($this->option('all')) {
             $bots = $this->botsManager->getConfig('bots');
             collect($bots)->each(function ($bot, $key): void {
                 $response = $this->botsManager->bot($key)->getWebhookInfo();
                 $this->makeWebhookInfoResponse($response, $key);
             });
+
+            return;
         }
+
+        $response = $this->telegram->getWebhookInfo();
+        $bot = $this->config['bot'];
+        $this->makeWebhookInfoResponse($response, $bot);
     }
 
     /**
