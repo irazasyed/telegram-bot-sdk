@@ -86,7 +86,7 @@ class WebhookCommand extends Command
 
         $webhookUrl = data_get($this->config, 'webhook_url');
 
-        if(!Str::startsWith($webhookUrl, 'https://')) {
+        if (! Str::startsWith($webhookUrl, 'https://')) {
             $this->error('Your webhook url must start with https://');
 
             return;
