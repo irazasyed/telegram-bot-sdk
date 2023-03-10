@@ -211,20 +211,20 @@ final class BotsManager
         $sharedCommands = collect($this->getConfig('shared_commands'));
 
         return collect($commands)->map(function ($command) use ($commandGroups, $sharedCommands) {
-                // If the command is a group, we'll parse through the group of commands
-                // and resolve the full class name.
-                if ($commandGroups->has($command)) {
-                    return $this->parseCommands($commandGroups->get($command));
-                }
+            // If the command is a group, we'll parse through the group of commands
+            // and resolve the full class name.
+            if ($commandGroups->has($command)) {
+                return $this->parseCommands($commandGroups->get($command));
+            }
 
-                // If this command is actually a shared command, we'll extract the full
-                // class name out of the command list now.
-                if ($sharedCommands->has($command)) {
-                    return $sharedCommands->get($command);
-                }
+            // If this command is actually a shared command, we'll extract the full
+            // class name out of the command list now.
+            if ($sharedCommands->has($command)) {
+                return $sharedCommands->get($command);
+            }
 
-                return $command;
-            })
+            return $command;
+        })
             ->flatten()
             ->unique()
             ->values()

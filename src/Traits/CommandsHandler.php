@@ -96,12 +96,12 @@ trait CommandsHandler
     /**
      * @param  string  $name Command Name
      * @param  Update  $update Update Object
-     * @return mixed
      *
      * @deprecated This method will be protected and signature will be changed in SDK v4.
      * Helper to Trigger Commands.
      */
-    public function triggerCommand(string $name, Update $update, array $entity = null): mixed {
+    public function triggerCommand(string $name, Update $update, array $entity = null): mixed
+    {
         $entity ??= ['offset' => 0, 'length' => strlen($name) + 1, 'type' => 'bot_command'];
 
         return $this->commandBus->execute(

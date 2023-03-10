@@ -96,7 +96,7 @@ final class CommandBus extends AnswerBus
     /**
      * Remove a command from the list.
      *
-     * @param string $name Command's name without leading slash
+     * @param  string  $name Command's name without leading slash
      */
     public function removeCommand(string $name): self
     {
@@ -122,10 +122,7 @@ final class CommandBus extends AnswerBus
     /**
      * Parse a Command for a Match.
      *
-     * @param string $text Command name with a leading slash
-     * @param int    $offset
-     * @param int    $length
-     *
+     * @param  string  $text Command name with a leading slash
      * @return string Telegram command name (without leading slash)
      */
     public function parseCommand(string $text, int $offset, int $length): string
@@ -198,11 +195,8 @@ final class CommandBus extends AnswerBus
     /**
      * Execute the command.
      *
-     * @param string               $name Telegram command name without leading slash
-     * @param Update               $update
-     * @param array<string, mixed> $entity
-     *
-     * @return mixed
+     * @param  string  $name Telegram command name without leading slash
+     * @param  array<string, mixed>  $entity
      */
     private function execute(string $name, Update $update, array $entity): mixed
     {
@@ -247,11 +241,6 @@ final class CommandBus extends AnswerBus
     }
 
     /**
-     * @param CommandInterface $command
-     * @param string           $alias
-     *
-     * @return void
-     *
      * @throws TelegramSDKException
      */
     private function checkForConflicts(CommandInterface $command, string $alias): void

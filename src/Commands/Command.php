@@ -255,9 +255,6 @@ abstract class Command implements CommandInterface
         return $this->pattern;
     }
 
-    /**
-     * @return bool|string
-     */
     private function relevantMessageSubString(): bool|string
     {
         //Get all the bot_command offsets in the Update object
