@@ -4,7 +4,6 @@ use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Stream;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Telegram\Bot\Api;
-use Telegram\Bot\Commands\CommandBus;
 use Telegram\Bot\Events\UpdateEvent;
 use Telegram\Bot\Events\UpdateWasReceived;
 use Telegram\Bot\Exceptions\CouldNotUploadInputFile;
