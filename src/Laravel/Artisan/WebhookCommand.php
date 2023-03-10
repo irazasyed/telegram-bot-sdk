@@ -81,7 +81,18 @@ class WebhookCommand extends Command
      */
     private function setupWebhook(): void
     {
-        $params = ['url' => data_get($this->config, 'webhook_url')];
+        $this->info('Setting up webhook...');
+        $this->line('');
+
+        $webhookUrl = data_get($this->config, 'webhook_url');
+
+        if(!Str::startsWith($webhookUrl, 'https://')) {
+            $this->error('Your webhook url must start with https://');
+
+            return;
+        }
+
+        $params = ['url' => $webhookUrl];
         $certificatePath = data_get($this->config, 'certificate_path', false);
 
         if ($certificatePath && 'YOUR-CERTIFICATE-PATH' !== $certificatePath) {
