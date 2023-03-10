@@ -31,10 +31,8 @@ class WebhookCommand extends Command
      */
     protected $description = 'Ease the Process of setting up and removing webhooks.';
 
-    /** @var Api */
     protected Api $telegram;
 
-    /** @var BotsManager */
     protected BotsManager $botsManager;
 
     /** @var array Bot Config */
