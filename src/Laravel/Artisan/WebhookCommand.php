@@ -32,10 +32,13 @@ class WebhookCommand extends Command
     protected $description = 'Ease the Process of setting up and removing webhooks.';
 
     /** @var Api */
-    protected $telegram;
+    protected Api $telegram;
+
+    /** @var BotsManager */
+    protected BotsManager $botsManager;
 
     /** @var array Bot Config */
-    protected $config = [];
+    protected array $config = [];
 
     /**
      * Execute the console command.
@@ -51,7 +54,7 @@ class WebhookCommand extends Command
             $this->telegram = $this->botsManager->bot($bot);
         } catch (TelegramBotNotFoundException $e) {
             $this->warn($e->getMessage());
-            $this->warn('You must specify a proper bot name or use the --all option.');
+            $this->warn('You must specify a proper bot name or configure one.');
             $this->line('');
             $this->info('💡Omitting the bot name will fallback to the default bot.');
 
@@ -83,7 +86,7 @@ class WebhookCommand extends Command
         $params = ['url' => data_get($this->config, 'webhook_url')];
         $certificatePath = data_get($this->config, 'certificate_path', false);
 
-        if ($certificatePath) {
+        if ($certificatePath && 'YOUR-CERTIFICATE-PATH' !== $certificatePath) {
             $params['certificate'] = $certificatePath;
         }
 
