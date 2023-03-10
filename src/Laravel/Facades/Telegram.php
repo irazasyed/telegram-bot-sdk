@@ -10,9 +10,9 @@ use Telegram\Bot\BotsManager;
  * Class Telegram.
  *
  * @method static list<Api> getBots(string $name)
- * @method static Api bot((string | null) $name = null)
- * @method static Api reconnect((string | null) $name = null)
- * @method static BotsManager disconnect((string | null) $name = null)
+ * @method static Api bot(?string $name = null)
+ * @method static Api reconnect(?string $name = null)
+ * @method static BotsManager disconnect(?string $name = null)
  *
  * @mixin BotsManager
  */

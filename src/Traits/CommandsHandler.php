@@ -16,7 +16,7 @@ trait CommandsHandler
      */
     protected function getCommandBus(): CommandBus
     {
-        return CommandBus::Instance()->setTelegram($this);
+        return $this->commandBus;
     }
 
     /**
@@ -24,7 +24,7 @@ trait CommandsHandler
      */
     public function getCommands(): array
     {
-        return $this->getCommandBus()->getCommands();
+        return $this->commandBus->getCommands();
     }
 
     /**
@@ -90,7 +90,7 @@ trait CommandsHandler
      */
     public function processCommand(Update $update): void
     {
-        $this->getCommandBus()->handler($update);
+        $this->commandBus->handler($update);
     }
 
     /**
@@ -101,11 +101,10 @@ trait CommandsHandler
      * @deprecated This method will be protected and signature will be changed in SDK v4.
      * Helper to Trigger Commands.
      */
-    public function triggerCommand(string $name, Update $update, array $entity = null)
-    {
+    public function triggerCommand(string $name, Update $update, array $entity = null): mixed {
         $entity ??= ['offset' => 0, 'length' => strlen($name) + 1, 'type' => 'bot_command'];
 
-        return $this->getCommandBus()->execute(
+        return $this->commandBus->execute(
             $name,
             $update,
             $entity

@@ -10,15 +10,12 @@ use Telegram\Bot\Api;
 use Telegram\Bot\Exceptions\TelegramSDKException;
 use Telegram\Bot\Objects\MessageEntity;
 use Telegram\Bot\Objects\Update;
-use Telegram\Bot\Traits\Singleton;
 
 /**
  * Class CommandBus.
  */
 final class CommandBus extends AnswerBus
 {
-    use Singleton;
-
     /**
      * @var array<string, Command> Holds all commands. Keys are command names (without leading slashes).
      */
@@ -99,9 +96,9 @@ final class CommandBus extends AnswerBus
     /**
      * Remove a command from the list.
      *
-     * @param  string  $name Command's name without leading slash
+     * @param string $name Command's name without leading slash
      */
-    public function removeCommand($name): self
+    public function removeCommand(string $name): self
     {
         unset($this->commands[$name]);
 
@@ -125,12 +122,13 @@ final class CommandBus extends AnswerBus
     /**
      * Parse a Command for a Match.
      *
-     * @param  string  $text Command name with a leading slash
-     * @param  int  $offset
-     * @param  int  $length
+     * @param string $text Command name with a leading slash
+     * @param int    $offset
+     * @param int    $length
+     *
      * @return string Telegram command name (without leading slash)
      */
-    public function parseCommand($text, $offset, $length): string
+    public function parseCommand(string $text, int $offset, int $length): string
     {
         if (trim($text) === '') {
             throw new InvalidArgumentException('Message is empty, Cannot parse for command');
@@ -200,11 +198,13 @@ final class CommandBus extends AnswerBus
     /**
      * Execute the command.
      *
-     * @param  string  $name Telegram command name without leading slash
-     * @param  array<string, mixed>  $entity
+     * @param string               $name Telegram command name without leading slash
+     * @param Update               $update
+     * @param array<string, mixed> $entity
+     *
      * @return mixed
      */
-    private function execute(string $name, Update $update, array $entity)
+    private function execute(string $name, Update $update, array $entity): mixed
     {
         $command = $this->commands[$name] ??
             $this->commandAliases[$name] ??
@@ -247,12 +247,14 @@ final class CommandBus extends AnswerBus
     }
 
     /**
-     * @param  string  $alias
+     * @param CommandInterface $command
+     * @param string           $alias
+     *
      * @return void
      *
      * @throws TelegramSDKException
      */
-    private function checkForConflicts(CommandInterface $command, $alias)
+    private function checkForConflicts(CommandInterface $command, string $alias): void
     {
         if (isset($this->commands[$alias])) {
             throw new TelegramSDKException(

@@ -74,10 +74,8 @@ abstract class Command implements CommandInterface
 
     /**
      * Set Command Aliases.
-     *
-     * @param  string|array  $aliases
      */
-    public function setAliases($aliases): self
+    public function setAliases(array|string $aliases): self
     {
         $this->aliases = is_array($aliases) ? $aliases : [$aliases];
 
@@ -144,10 +142,8 @@ abstract class Command implements CommandInterface
 
     /**
      * Process Inbound Command.
-     *
-     * @return mixed
      */
-    public function make(Api $telegram, Update $update, array $entity)
+    public function make(Api $telegram, Update $update, array $entity): mixed
     {
         $this->telegram = $telegram;
         $this->update = $update;
@@ -164,10 +160,8 @@ abstract class Command implements CommandInterface
 
     /**
      * Helper to Trigger other Commands.
-     *
-     * @return mixed
      */
-    protected function triggerCommand(string $command)
+    protected function triggerCommand(string $command): mixed
     {
         return $this->getCommandBus()->execute($command, $this->update, $this->entity);
     }
@@ -264,7 +258,7 @@ abstract class Command implements CommandInterface
     /**
      * @return bool|string
      */
-    private function relevantMessageSubString()
+    private function relevantMessageSubString(): bool|string
     {
         //Get all the bot_command offsets in the Update object
         $commandOffsets = $this->allCommandOffsets();
@@ -282,7 +276,7 @@ abstract class Command implements CommandInterface
         return $splice->count() === 2 ? $this->cutTextBetween($splice) : $this->cutTextFrom($splice);
     }
 
-    private function cutTextBetween(Collection $splice)
+    private function cutTextBetween(Collection $splice): string
     {
         return substr(
             $this->getUpdate()->getMessage()->text,
@@ -291,7 +285,7 @@ abstract class Command implements CommandInterface
         );
     }
 
-    private function cutTextFrom(Collection $splice)
+    private function cutTextFrom(Collection $splice): string
     {
         return substr(
             $this->getUpdate()->getMessage()->text,

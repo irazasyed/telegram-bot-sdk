@@ -23,10 +23,8 @@ final class BotsManager
     /**
      * TelegramManager constructor.
      */
-    public function __construct(
-        /** @var array The config instance. */
-        private array $config
-    ) {
+    public function __construct(private array $config)
+    {
     }
 
     /**
@@ -149,20 +147,12 @@ final class BotsManager
     }
 
     /**
-     * De-duplicate an array.
-     */
-    private function deduplicateArray(array $array): array
-    {
-        return array_values(array_unique($array));
-    }
-
-    /**
      * Make the bot instance.
      *
      *
      * @throws TelegramSDKException
      */
-    private function makeBot(string $name): Api
+    protected function makeBot(string $name): Api
     {
         $config = $this->getBotConfig($name);
 
@@ -203,7 +193,11 @@ final class BotsManager
         $globalCommands = $this->getConfig('commands', []);
         $parsedCommands = $this->parseCommands($commands);
 
-        return $this->deduplicateArray(array_merge($globalCommands, $parsedCommands));
+        return collect($globalCommands)
+            ->merge($parsedCommands)
+            ->unique()
+            ->values()
+            ->all();
     }
 
     /**
@@ -213,16 +207,28 @@ final class BotsManager
      */
     private function parseCommands(array $commands): array
     {
-        $commandGroups = $this->getConfig('command_groups');
-        $sharedCommands = $this->getConfig('shared_commands');
+        $commandGroups = collect($this->getConfig('command_groups'));
+        $sharedCommands = collect($this->getConfig('shared_commands'));
 
-        return collect($commands)->flatMap(function ($command) use ($commandGroups, $sharedCommands) {
-            if (isset($commandGroups[$command])) {
-                return $this->parseCommands($commandGroups[$command]);
-            }
+        return collect($commands)->map(function ($command) use ($commandGroups, $sharedCommands) {
+                // If the command is a group, we'll parse through the group of commands
+                // and resolve the full class name.
+                if ($commandGroups->has($command)) {
+                    return $this->parseCommands($commandGroups->get($command));
+                }
 
-            return $sharedCommands[$command] ?? $command;
-        })->unique()->all();
+                // If this command is actually a shared command, we'll extract the full
+                // class name out of the command list now.
+                if ($sharedCommands->has($command)) {
+                    return $sharedCommands->get($command);
+                }
+
+                return $command;
+            })
+            ->flatten()
+            ->unique()
+            ->values()
+            ->all();
     }
 
     /**

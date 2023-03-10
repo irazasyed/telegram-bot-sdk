@@ -32,7 +32,7 @@ use Telegram\Bot\Traits\Http;
 class Api
 {
     use Macroable {
-        __call as macroCall;
+        Macroable::__call as macroCall;
     }
     use EmitsEvents;
     use Http;
@@ -57,6 +57,8 @@ class Api
     /** @var string The name of the environment variable that contains the Telegram Bot API Access Token. */
     public const BOT_TOKEN_ENV_NAME = 'TELEGRAM_BOT_TOKEN';
 
+    private CommandBus $commandBus;
+
     /**
      * Instantiates a new Telegram super-class object.
      *
@@ -80,6 +82,7 @@ class Api
         $this->httpClientHandler = $httpClientHandler;
 
         $this->baseBotUrl = $baseBotUrl;
+        $this->commandBus = new CommandBus($this);
     }
 
     /**
