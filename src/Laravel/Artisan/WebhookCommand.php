@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 use Symfony\Component\Console\Helper\TableCell;
 use Telegram\Bot\Api;
 use Telegram\Bot\BotsManager;
+use Telegram\Bot\Exceptions\TelegramBotNotFoundException;
 use Telegram\Bot\Exceptions\TelegramSDKException;
 use Telegram\Bot\Objects\WebhookInfo;
 
@@ -46,17 +47,17 @@ class WebhookCommand extends Command
         $this->botsManager = $botsManager;
         $bot = $this->argument('bot');
 
-        if ($bot !== null && $this->botsManager->hasBot($bot) === false) {
-            $this->warn("Bot [$bot] is not configured.");
+        try {
+            $this->telegram = $this->botsManager->bot($bot);
+        } catch (TelegramBotNotFoundException $e) {
+            $this->warn($e->getMessage());
             $this->warn('You must specify a proper bot name or use the --all option.');
             $this->line('');
-
             $this->info('💡Omitting the bot name will fallback to the default bot.');
 
             return;
         }
 
-        $this->telegram = $this->botsManager->bot($bot);
         $this->config = $this->botsManager->getBotConfig($bot);
 
         if ($this->option('setup')) {
