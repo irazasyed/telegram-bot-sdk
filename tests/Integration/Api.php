@@ -27,10 +27,6 @@ beforeEach(function () {
     $this->api = api($this->httpClient);
 });
 
-afterEach(function () {
-    CommandBus::destroy();
-});
-
 function api($client = null, $token = 'TELEGRAM_TOKEN', bool $async = false): Api
 {
     return new Api($token, $async, $client);
