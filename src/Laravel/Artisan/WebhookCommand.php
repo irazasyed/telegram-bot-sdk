@@ -131,7 +131,7 @@ class WebhookCommand extends Command
 
         $bots = collect($this->botsManager->getConfig('bots'));
 
-        if(!$this->option('all')) {
+        if (! $this->option('all')) {
             $bots = $bots->only($this->config['bot']);
         }
 
