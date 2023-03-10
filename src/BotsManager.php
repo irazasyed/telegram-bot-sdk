@@ -114,10 +114,8 @@ final class BotsManager
 
     /**
      * Get the specified configuration value for Telegram.
-     *
-     * @return mixed
      */
-    public function getConfig(string $key, mixed $default = null)
+    public function getConfig(string $key, mixed $default = null): mixed
     {
         return data_get($this->config, $key, $default);
     }

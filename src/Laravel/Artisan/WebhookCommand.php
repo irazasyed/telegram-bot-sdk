@@ -48,16 +48,7 @@ class WebhookCommand extends Command
         $this->botsManager = $botsManager;
         $bot = $this->argument('bot');
 
-        try {
-            $this->telegram = $this->botsManager->bot($bot);
-        } catch (TelegramBotNotFoundException $e) {
-            $this->warn($e->getMessage());
-            $this->warn('You must specify a proper bot name or configure one.');
-            $this->line('');
-            $this->info('💡Omitting the bot name will fallback to the default bot.');
-
-            return;
-        }
+        $this->resolveTelegramBot($bot);
 
         $this->config = $this->botsManager->getBotConfig($bot);
 
@@ -82,7 +73,7 @@ class WebhookCommand extends Command
     private function setupWebhook(): void
     {
         $this->info('Setting up webhook...');
-        $this->line('');
+        $this->newLine();
 
         $webhookUrl = data_get($this->config, 'webhook_url');
 
@@ -138,19 +129,17 @@ class WebhookCommand extends Command
     {
         $this->alert('Webhook Info');
 
-        if ($this->option('all')) {
-            $bots = $this->botsManager->getConfig('bots');
-            collect($bots)->each(function ($bot, $key): void {
-                $response = $this->botsManager->bot($key)->getWebhookInfo();
-                $this->makeWebhookInfoResponse($response, $key);
-            });
+        $bots = collect($this->botsManager->getConfig('bots'));
 
-            return;
+        if(!$this->option('all')) {
+            $bots = $bots->only($this->config['bot']);
         }
 
-        $response = $this->telegram->getWebhookInfo();
-        $bot = $this->config['bot'];
-        $this->makeWebhookInfoResponse($response, $bot);
+        $bots->each(function ($bot, $botName): void {
+            $response = $this->botsManager->bot($botName)->getWebhookInfo();
+
+            $this->makeWebhookInfoResponse($response, $botName);
+        });
     }
 
     /**
@@ -177,5 +166,19 @@ class WebhookCommand extends Command
     private function mapBool(bool $value): string
     {
         return $value ? 'Yes' : 'No';
+    }
+
+    private function resolveTelegramBot(string|null $bot): void
+    {
+        try {
+            $this->telegram = $this->botsManager->bot($bot);
+        } catch (TelegramBotNotFoundException $e) {
+            $this->warn($e->getMessage());
+            $this->warn('You must specify a proper bot name or configure one.');
+            $this->newLine();
+            $this->info('💡Omitting the bot name will fallback to the default bot.');
+
+            exit(1);
+        }
     }
 }
