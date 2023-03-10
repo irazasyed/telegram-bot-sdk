@@ -46,7 +46,7 @@ class WebhookCommand extends Command
         $this->botsManager = $botsManager;
         $bot = $this->argument('bot');
 
-        if($bot !== null && $this->botsManager->hasBot($bot) === false) {
+        if ($bot !== null && $this->botsManager->hasBot($bot) === false) {
             $this->warn("Bot [$bot] is not configured.");
             $this->warn('You must specify a proper bot name or use the --all option.');
             $this->line('');
