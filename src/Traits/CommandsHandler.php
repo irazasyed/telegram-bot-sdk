@@ -53,6 +53,7 @@ trait CommandsHandler
      * Process the update object for a command using the getUpdates method.
      *
      * @return Update[]
+     *
      * @throws TelegramSDKException
      */
     protected function useGetUpdates(): array
