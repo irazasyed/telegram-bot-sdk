@@ -24,11 +24,11 @@ Telegram Bot API - PHP SDK
 Only the latest released version of SDK is supported.
 To facilitate upgrades we almost never make backwards-incompatible changes.
 
-| Version | Supported                           | Documentation         |
-|---------|-------------------------------------|-----------------------|
-| 2.x     | ❌ (security fixes only)             | ✅ [docs][link-docs]   |
-| 3.x     | ✅ (current)                         | ❌                     |
-| 4.x     | ✅ ([in development][link-new-repo]) | ❌                     |
+| Version | Supported                            | Documentation         |
+|---------|--------------------------------------|-----------------------|
+| 2.x     | ❌                                    | ✅ [docs][link-docs]   |
+| 3.x     | ✅ (current)                          | ❌                     |
+| 4.x     | ✅ ([in development][link-new-repo])  | ❌                     |
 
 ## Documentation
 
