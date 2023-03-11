@@ -5,6 +5,7 @@ namespace Telegram\Bot\Laravel\Facades;
 use Illuminate\Support\Facades\Facade;
 use Telegram\Bot\Api;
 use Telegram\Bot\BotsManager;
+use Telegram\Bot\Objects\User;
 
 /**
  * Class Telegram.
@@ -13,6 +14,7 @@ use Telegram\Bot\BotsManager;
  * @method static Api bot(?string $name = null)
  * @method static Api reconnect(?string $name = null)
  * @method static BotsManager disconnect(?string $name = null)
+ * @method static User getMe()
  *
  * @mixin BotsManager
  */

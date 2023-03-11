@@ -198,7 +198,7 @@ final class CommandBus extends AnswerBus
      * @param  string  $name Telegram command name without leading slash
      * @param  array<string, mixed>  $entity
      */
-    private function execute(string $name, Update $update, array $entity): mixed
+    protected function execute(string $name, Update $update, array $entity): mixed
     {
         $command = $this->commands[$name] ??
             $this->commandAliases[$name] ??
