@@ -6,6 +6,8 @@ use LogicException;
 
 /**
  * Singleton.
+ *
+ * @deprecated Will be removed in v4.
  */
 trait Singleton
 {

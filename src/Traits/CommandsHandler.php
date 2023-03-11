@@ -4,6 +4,7 @@ namespace Telegram\Bot\Traits;
 
 use Psr\Http\Message\RequestInterface;
 use Telegram\Bot\Commands\CommandBus;
+use Telegram\Bot\Exceptions\TelegramSDKException;
 use Telegram\Bot\Objects\Update;
 
 /**
@@ -52,6 +53,7 @@ trait CommandsHandler
      * Process the update object for a command using the getUpdates method.
      *
      * @return Update[]
+     * @throws TelegramSDKException
      */
     protected function useGetUpdates(): array
     {

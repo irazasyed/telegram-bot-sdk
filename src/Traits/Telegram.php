@@ -9,11 +9,13 @@ use Telegram\Bot\Api;
  */
 trait Telegram
 {
-    /** @var Api|null Holds the Super Class Instance. */
+    /**
+     * @var Api|null Telegram Api Instance.
+     */
     protected ?Api $telegram = null;
 
     /**
-     * Returns Super Class Instance.
+     * Get Telegram Api Instance.
      */
     public function getTelegram(): Api
     {
@@ -22,8 +24,6 @@ trait Telegram
 
     /**
      * Set Telegram Api Instance.
-     *
-     * @return $this
      */
     public function setTelegram(Api $telegram): self
     {

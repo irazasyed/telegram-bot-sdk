@@ -72,7 +72,7 @@ class Api
      */
     public function __construct(string $token = null, bool $async = false, HttpClientInterface $httpClientHandler = null, string $baseBotUrl = null)
     {
-        $this->accessToken = $token ?? getenv(self::BOT_TOKEN_ENV_NAME);
+        $this->setAccessToken($token ?? getenv(self::BOT_TOKEN_ENV_NAME));
         $this->validateAccessToken();
 
         if ($async) {
@@ -122,7 +122,7 @@ class Api
      */
     private function validateAccessToken(): void
     {
-        if (! $this->accessToken) {
+        if (! $this->getAccessToken()) {
             throw TelegramSDKException::tokenNotProvided(self::BOT_TOKEN_ENV_NAME);
         }
     }

@@ -45,10 +45,67 @@ trait Http
     protected ?TelegramResponse $lastResponse = null;
 
     /**
-     * Set Http Client Handler.
-     *
-     * @return $this
+     * Returns Telegram Bot API Access Token.
      */
+    public function getAccessToken(): string
+    {
+        return $this->accessToken;
+    }
+
+    /**
+     * Sets the bot access token to use with API requests.
+     *
+     * @param  string  $accessToken The bot access token to save.
+     */
+    public function setAccessToken(string $accessToken): self
+    {
+        $this->accessToken = $accessToken;
+
+        return $this;
+    }
+
+    /**
+     * Check if this is an asynchronous request (non-blocking).
+     */
+    public function isAsyncRequest(): bool
+    {
+        return $this->isAsyncRequest;
+    }
+
+    /**
+     * Make this request asynchronous (non-blocking).
+     */
+    public function setAsyncRequest(bool $isAsyncRequest): self
+    {
+        $this->isAsyncRequest = $isAsyncRequest;
+
+        return $this;
+    }
+
+    public function getTimeOut(): int
+    {
+        return $this->timeOut;
+    }
+
+    public function setTimeOut(int $timeOut): self
+    {
+        $this->timeOut = $timeOut;
+
+        return $this;
+    }
+
+    public function getConnectTimeOut(): int
+    {
+        return $this->connectTimeOut;
+    }
+
+    public function setConnectTimeOut(int $connectTimeOut): self
+    {
+        $this->connectTimeOut = $connectTimeOut;
+
+        return $this;
+    }
+
     public function setHttpClientHandler(HttpClientInterface $httpClientHandler): self
     {
         $this->httpClientHandler = $httpClientHandler;
@@ -56,11 +113,6 @@ trait Http
         return $this;
     }
 
-    /**
-     * Set Http Client Handler.
-     *
-     * @return $this
-     */
     public function setBaseBotUrl(string $baseBotUrl): self
     {
         $this->baseBotUrl = $baseBotUrl;
@@ -126,79 +178,7 @@ trait Http
     }
 
     /**
-     * Returns Telegram Bot API Access Token.
-     */
-    public function getAccessToken(): string
-    {
-        return $this->accessToken;
-    }
-
-    /**
-     * Sets the bot access token to use with API requests.
-     *
-     * @param  string  $accessToken The bot access token to save.
-     * @return $this
-     */
-    public function setAccessToken(string $accessToken): self
-    {
-        $this->accessToken = $accessToken;
-
-        return $this;
-    }
-
-    /**
-     * Check if this is an asynchronous request (non-blocking).
-     */
-    public function isAsyncRequest(): bool
-    {
-        return $this->isAsyncRequest;
-    }
-
-    /**
-     * Make this request asynchronous (non-blocking).
-     *
-     * @return $this
-     */
-    public function setAsyncRequest(bool $isAsyncRequest): self
-    {
-        $this->isAsyncRequest = $isAsyncRequest;
-
-        return $this;
-    }
-
-    public function getTimeOut(): int
-    {
-        return $this->timeOut;
-    }
-
-    /**
-     * @return $this
-     */
-    public function setTimeOut(int $timeOut): self
-    {
-        $this->timeOut = $timeOut;
-
-        return $this;
-    }
-
-    public function getConnectTimeOut(): int
-    {
-        return $this->connectTimeOut;
-    }
-
-    /**
-     * @return $this
-     */
-    public function setConnectTimeOut(int $connectTimeOut): self
-    {
-        $this->connectTimeOut = $connectTimeOut;
-
-        return $this;
-    }
-
-    /**
      * Sends a GET request to Telegram Bot API and returns the result.
-     *
      *
      * @throws TelegramSDKException
      */
