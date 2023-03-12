@@ -21,14 +21,14 @@ class Base extends Collection
      * @param  string  $method
      * @return $this
      */
-    public function __call($method, array $args)
+    public function __call($method, array $parameters)
     {
         if (! Str::startsWith($method, 'set')) {
-            return parent::__call($method, $args);
+            return parent::__call($method, $parameters);
         }
 
         $property = Str::snake(substr($method, 3));
-        $this->items[$property] = $args[0];
+        $this->items[$property] = $parameters[0];
 
         return $this;
     }

@@ -99,9 +99,9 @@ final class Keyboard extends Base
      *
      * ]
      *
-     * @return mixed
+     * @return string|array|Button
      */
-    public static function button(string|array $params = [])
+    public static function button(string|array $params = []): string|array|Button
     {
         if (is_string($params)) {
             return $params;
@@ -147,7 +147,7 @@ final class Keyboard extends Base
      *
      * @return mixed
      */
-    public static function inlineButton(string|array $params = [])
+    public static function inlineButton(string|array $params = []): mixed
     {
         return self::button($params);
     }

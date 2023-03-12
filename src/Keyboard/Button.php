@@ -23,9 +23,11 @@ final class Button extends Base
     /**
      * Button Label Text.
      *
-     * @param  string  $text
+     * @param string $text
+     *
+     * @return Button
      */
-    public function setText($text): self
+    public function setText(string $text): self
     {
         $this->items['text'] = $text;
 

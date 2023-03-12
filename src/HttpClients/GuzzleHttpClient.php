@@ -84,7 +84,7 @@ class GuzzleHttpClient implements HttpClientInterface
             }
         } catch (GuzzleException $guzzleException) {
             $response = null;
-            if ($guzzleException instanceof RequestExceptionInterface || $guzzleException instanceof RequestException) {
+            if ($guzzleException instanceof RequestExceptionInterface) {
                 $response = $guzzleException->getResponse();
             }
 
@@ -98,15 +98,12 @@ class GuzzleHttpClient implements HttpClientInterface
 
     /**
      * Prepares and returns request options.
-     *
-     * @param  string|mixed[]  $proxy
      */
     private function getOptions(
         array $headers,
         mixed $body,
         array $options,
-        bool $isAsyncRequest = false,
-        string|array $proxy = null
+        bool $isAsyncRequest = false
     ): array {
         $default_options = [
             RequestOptions::HEADERS => $headers,
@@ -115,10 +112,6 @@ class GuzzleHttpClient implements HttpClientInterface
             RequestOptions::CONNECT_TIMEOUT => $this->connectTimeOut,
             RequestOptions::SYNCHRONOUS => ! $isAsyncRequest,
         ];
-
-        if ($proxy !== null) {
-            $default_options[RequestOptions::PROXY] = $proxy;
-        }
 
         return array_merge($default_options, $options);
     }
