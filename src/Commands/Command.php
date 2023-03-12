@@ -77,7 +77,7 @@ abstract class Command implements CommandInterface
      */
     public function setAliases(array|string $aliases): self
     {
-        $this->aliases = is_array($aliases) ? $aliases : [$aliases];
+        $this->aliases = (array) $aliases;
 
         return $this;
     }
@@ -236,19 +236,11 @@ abstract class Command implements CommandInterface
 
     private function checkForCustomRegex(Collection $required, Collection $optional): string
     {
-        if ($this->pattern === '') {
+        if ($this->pattern === '' || $this->pattern === '0') {
             return '';
         }
 
-        if ($this->pattern === '0') {
-            return '';
-        }
-
-        if (! $required->isEmpty()) {
-            return '';
-        }
-
-        if (! $optional->isEmpty()) {
+        if (! $required->isEmpty() || ! $optional->isEmpty()) {
             return '';
         }
 

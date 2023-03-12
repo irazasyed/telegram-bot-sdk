@@ -194,10 +194,7 @@ trait Update
         return InputFile::create($certificate, 'certificate.pem');
     }
 
-    /**
-     * @return mixed
-     */
-    private function getRequestBody(?RequestInterface $request)
+    private function getRequestBody(?RequestInterface $request): mixed
     {
         $rawBody = $request instanceof RequestInterface ? (string) $request->getBody() : file_get_contents('php://input');
 

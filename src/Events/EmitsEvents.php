@@ -15,12 +15,13 @@ trait EmitsEvents
     /**
      * Emit an event.
      *
-     * @param  object|string  $event
+     * @param object|string $event
+     *
      * @return bool true if emitted, false otherwise.
      *
      * @throws InvalidArgumentException
      */
-    protected function emitEvent($event): bool
+    protected function emitEvent(object|string $event): bool
     {
         $this->validateEvent($event);
 
