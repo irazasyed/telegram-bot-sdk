@@ -21,8 +21,8 @@ Telegram Bot API - PHP SDK
 
 ## Supported Versions
 
-Only the latest released version of SDK is supported.
-To facilitate upgrades we almost never make backwards-incompatible changes.
+Only the latest released version of the SDK is supported. 
+To facilitate upgrades, we rarely make backward-incompatible changes.
 
 | Version | Supported                            | Documentation         |
 |---------|--------------------------------------|-----------------------|
@@ -61,8 +61,8 @@ Thanks to these companies for providing access to their products that have been 
 
 ## Disclaimer
 
-This project and its author are neither associated, nor affiliated with [Telegram](https://telegram.org/) in any way.
-See License section for more details.
+This project and its author are neither associated nor affiliated with [Telegram](https://telegram.org/) in any way. 
+Please see the [License][link-license] for more details.
 
 ## License
 
@@ -74,8 +74,6 @@ This project is released under the [BSD 3-Clause][link-license] License.
 [link-issues]: https://github.com/irazasyed/telegram-bot-sdk/issues
 [link-contributors]: https://github.com/irazasyed/telegram-bot-sdk/contributors
 [link-docs]: https://telegram-bot-sdk.readme.io/docs
-[link-license]: https://github.com/irazasyed/telegram-bot-sdk/blob/master/LICENSE
-[link-sdk-users]: https://github.com/irazasyed/telegram-bot-sdk/wiki/Who's-Using-Telegram-Bot-SDK%3F
-[link-jetbrains]: https://www.jetbrains.com/?from=telegram-bot-sdk
+[link-license]: https://github.com/irazasyed/telegram-bot-sdk/blob/develop/LICENSE.md
 [link-telegram-bot-api]: https://core.telegram.org/bots
 [link-awesome-telegram-bots]: https://github.com/telegram-bot-sdk/awesome-telegram-bots
