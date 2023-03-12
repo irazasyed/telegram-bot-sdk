@@ -15,7 +15,6 @@ trait EmitsEvents
     /**
      * Emit an event.
      *
-     * @param object|string $event
      *
      * @return bool true if emitted, false otherwise.
      *
