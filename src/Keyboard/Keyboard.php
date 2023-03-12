@@ -98,8 +98,6 @@ final class Keyboard extends Base
      * @var bool           Optional. If True, the user's current location will be sent when the button is pressed. Available in private chats only
      *
      * ]
-     *
-     * @return string|array|Button
      */
     public static function button(string|array $params = []): string|array|Button
     {
@@ -144,8 +142,6 @@ final class Keyboard extends Base
      * @var string                                Optional. Specify True, to send a Pay button. NOTE: This type of button must always be the first button in the first row.
      *
      * ]
-     *
-     * @return mixed
      */
     public static function inlineButton(string|array $params = []): mixed
     {
