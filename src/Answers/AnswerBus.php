@@ -51,7 +51,7 @@ abstract class AnswerBus
 
         // otherwise fetch each dependency out of the container
         $container = $this->telegram->getContainer();
-        $dependencies = array_map(static fn ($param) => $container->make($param->getType()?->getName()), $params);
+        $dependencies = array_map(static fn ($param) => $container->get($param->getType()?->getName()), $params);
 
         // and instantiate the object with dependencies through ReflectionClass
         return $classReflector->newInstanceArgs($dependencies);

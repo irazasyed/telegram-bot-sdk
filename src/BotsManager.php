@@ -2,11 +2,11 @@
 
 namespace Telegram\Bot;
 
-use Illuminate\Contracts\Container\Container;
 use Illuminate\Support\Arr;
 use Telegram\Bot\Commands\CommandInterface;
 use Telegram\Bot\Exceptions\TelegramBotNotFoundException;
 use Telegram\Bot\Exceptions\TelegramSDKException;
+use Psr\Container\ContainerInterface;
 
 /**
  * Class BotsManager.
@@ -15,7 +15,7 @@ use Telegram\Bot\Exceptions\TelegramSDKException;
  */
 final class BotsManager
 {
-    private ?Container $container = null;
+    private ?ContainerInterface $container = null;
 
     /** @var array<string, Api> The active bot instances. */
     private array $bots = [];
@@ -30,9 +30,9 @@ final class BotsManager
     /**
      * Set the IoC Container.
      *
-     * @param  Container  $container Container instance
+     * @param  ContainerInterface  $container Container instance
      */
-    public function setContainer(Container $container): self
+    public function setContainer(ContainerInterface $container): self
     {
         $this->container = $container;
 

@@ -25,9 +25,9 @@
     "ext-json": "*",
     "guzzlehttp/guzzle": "^7.4.5",
     "guzzlehttp/psr7": "^2.4",
-    "illuminate/console": "9 - 10",
     "illuminate/support": "9 - 10",
-    "league/event": "^3.0"
+    "league/event": "^3.0",
+    "psr/container": "^2.0"
   },
   "require-dev": {
     "pestphp/pest": "^1.22",
@@ -76,14 +76,14 @@
   },
   "scripts": {
     "refactor": "rector --debug",
-    "test:lint": "parallel-lint . --blame --colors --exclude vendor",
-    "test:refactor": "rector --dry-run",
-    "test:unit": "pest --colors=always",
-    "test:coverage": "pest --coverage --colors=always",
     "test": [
       "@test:lint",
       "@test:refactor",
       "@test:unit"
-    ]
+    ],
+    "test:coverage": "pest --coverage --colors=always",
+    "test:lint": "parallel-lint . --blame --colors --exclude vendor",
+    "test:refactor": "rector --dry-run",
+    "test:unit": "pest --colors=always"
   }
 }
