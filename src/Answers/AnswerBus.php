@@ -34,26 +34,10 @@ abstract class AnswerBus
      */
     protected function buildDependencyInjectedClass(object|string $class): object
     {
-        $classReflector = new ReflectionClass($class);
-        $constructorReflector = $classReflector->getConstructor();
-
-        if (! $constructorReflector) {
-            return new $class();
+        if (is_object($class)) {
+            $class = $class::class;
         }
 
-        // get constructor params
-        $params = $constructorReflector->getParameters();
-
-        // if no params are needed proceed with normal instantiation
-        if ($params === []) {
-            return new $class();
-        }
-
-        // otherwise fetch each dependency out of the container
-        $container = $this->telegram->getContainer();
-        $dependencies = array_map(static fn ($param) => $container->get($param->getType()?->getName()), $params);
-
-        // and instantiate the object with dependencies through ReflectionClass
-        return $classReflector->newInstanceArgs($dependencies);
+        return $this->telegram->getContainer()->get($class);
     }
 }
