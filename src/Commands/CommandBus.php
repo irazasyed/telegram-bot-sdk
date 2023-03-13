@@ -229,7 +229,7 @@ final class CommandBus extends AnswerBus
             $commandInstance = $command;
         } else {
             $commandInstance = $this->telegram->hasContainer()
-                ? $this->buildDependencyInjectedAnswer($command)
+                ? $this->buildDependencyInjectedClass($command)
                 : new $command();
         }
 

@@ -45,63 +45,11 @@ trait Http
     protected ?TelegramResponse $lastResponse = null;
 
     /**
-     * Returns Telegram Bot API Access Token.
-     */
-    public function getAccessToken(): string
-    {
-        return $this->accessToken;
-    }
-
-    /**
-     * Sets the bot access token to use with API requests.
-     *
-     * @param  string  $accessToken The bot access token to save.
-     */
-    public function setAccessToken(string $accessToken): self
-    {
-        $this->accessToken = $accessToken;
-
-        return $this;
-    }
-
-    /**
-     * Check if this is an asynchronous request (non-blocking).
-     */
-    public function isAsyncRequest(): bool
-    {
-        return $this->isAsyncRequest;
-    }
-
-    /**
      * Make this request asynchronous (non-blocking).
      */
     public function setAsyncRequest(bool $isAsyncRequest): self
     {
         $this->isAsyncRequest = $isAsyncRequest;
-
-        return $this;
-    }
-
-    public function getTimeOut(): int
-    {
-        return $this->timeOut;
-    }
-
-    public function setTimeOut(int $timeOut): self
-    {
-        $this->timeOut = $timeOut;
-
-        return $this;
-    }
-
-    public function getConnectTimeOut(): int
-    {
-        return $this->connectTimeOut;
-    }
-
-    public function setConnectTimeOut(int $connectTimeOut): self
-    {
-        $this->connectTimeOut = $connectTimeOut;
 
         return $this;
     }
@@ -118,18 +66,6 @@ trait Http
         $this->baseBotUrl = $baseBotUrl;
 
         return $this;
-    }
-
-    /**
-     * Returns the TelegramClient service.
-     */
-    public function getClient(): TelegramClient
-    {
-        if ($this->client === null) {
-            $this->client = new TelegramClient($this->httpClientHandler, $this->baseBotUrl);
-        }
-
-        return $this->client;
     }
 
     /**
@@ -190,20 +126,6 @@ trait Http
     }
 
     /**
-     * Sends a POST request to Telegram Bot API and returns the result.
-     *
-     * @param  bool  $fileUpload Set true if a file is being uploaded.
-     *
-     * @throws TelegramSDKException
-     */
-    protected function post(string $endpoint, array $params = [], bool $fileUpload = false): TelegramResponse
-    {
-        $params = $this->normalizeParams($params, $fileUpload);
-
-        return $this->sendRequest('POST', $endpoint, $params);
-    }
-
-    /**
      * Converts a reply_markup field in the $params to a string.
      */
     protected function replyMarkupToString(array $params): array
@@ -213,62 +135,6 @@ trait Http
         }
 
         return $params;
-    }
-
-    /**
-     * Sends a multipart/form-data request to Telegram Bot API and returns the result.
-     * Used primarily for file uploads.
-     *
-     *
-     * @throws CouldNotUploadInputFile
-     * @throws TelegramSDKException
-     */
-    protected function uploadFile(string $endpoint, array $params, string $inputFileField): TelegramResponse
-    {
-        //Check if the field in the $params array (that is being used to send the relative file), is a file id.
-        if (! isset($params[$inputFileField])) {
-            throw CouldNotUploadInputFile::missingParam($inputFileField);
-        }
-
-        if ($this->hasFileId($inputFileField, $params)) {
-            return $this->post($endpoint, $params);
-        }
-
-        //Sending an actual file requires it to be sent using multipart/form-data
-        return $this->post($endpoint, $this->prepareMultipartParams($params, $inputFileField), true);
-    }
-
-    /**
-     * Prepare Multipart Params for File Upload.
-     *
-     *
-     * @throws CouldNotUploadInputFile
-     */
-    protected function prepareMultipartParams(array $params, string $inputFileField): array
-    {
-        $this->validateInputFileField($params, $inputFileField);
-
-        //Iterate through all param options and convert to multipart/form-data.
-        return collect($params)
-            ->reject(static fn ($value): bool => null === $value)
-            ->map(fn ($contents, $name) => $this->generateMultipartData($contents, $name))
-            ->values()
-            ->all();
-    }
-
-    /**
-     * Generates the multipart data required when sending files to telegram.
-     */
-    protected function generateMultipartData(mixed $contents, string $name): array
-    {
-        if (! $this->isInputFile($contents)) {
-            return ['name' => $name, 'contents' => $contents];
-        }
-
-        $filename = $contents->getFilename();
-        $contents = $contents->getContents();
-
-        return ['name' => $name, 'contents' => $contents, 'filename' => $filename];
     }
 
     /**
@@ -300,6 +166,134 @@ trait Http
     }
 
     /**
+     * Returns Telegram Bot API Access Token.
+     */
+    public function getAccessToken(): string
+    {
+        return $this->accessToken;
+    }
+
+    /**
+     * Sets the bot access token to use with API requests.
+     *
+     * @param  string  $accessToken The bot access token to save.
+     */
+    public function setAccessToken(string $accessToken): self
+    {
+        $this->accessToken = $accessToken;
+
+        return $this;
+    }
+
+    /**
+     * Check if this is an asynchronous request (non-blocking).
+     */
+    public function isAsyncRequest(): bool
+    {
+        return $this->isAsyncRequest;
+    }
+
+    public function getTimeOut(): int
+    {
+        return $this->timeOut;
+    }
+
+    public function setTimeOut(int $timeOut): self
+    {
+        $this->timeOut = $timeOut;
+
+        return $this;
+    }
+
+    public function getConnectTimeOut(): int
+    {
+        return $this->connectTimeOut;
+    }
+
+    public function setConnectTimeOut(int $connectTimeOut): self
+    {
+        $this->connectTimeOut = $connectTimeOut;
+
+        return $this;
+    }
+
+    /**
+     * Returns the TelegramClient service.
+     */
+    public function getClient(): TelegramClient
+    {
+        if ($this->client === null) {
+            $this->client = new TelegramClient($this->httpClientHandler, $this->baseBotUrl);
+        }
+
+        return $this->client;
+    }
+
+    /**
+     * Sends a multipart/form-data request to Telegram Bot API and returns the result.
+     * Used primarily for file uploads.
+     *
+     *
+     * @throws CouldNotUploadInputFile
+     * @throws TelegramSDKException
+     */
+    protected function uploadFile(string $endpoint, array $params, string $inputFileField): TelegramResponse
+    {
+        //Check if the field in the $params array (that is being used to send the relative file), is a file id.
+        if (! isset($params[$inputFileField])) {
+            throw CouldNotUploadInputFile::missingParam($inputFileField);
+        }
+
+        if ($this->hasFileId($inputFileField, $params)) {
+            return $this->post($endpoint, $params);
+        }
+
+        //Sending an actual file requires it to be sent using multipart/form-data
+        return $this->post($endpoint, $this->prepareMultipartParams($params, $inputFileField), true);
+    }
+
+    /**
+     * Sends a POST request to Telegram Bot API and returns the result.
+     *
+     * @param  bool  $fileUpload Set true if a file is being uploaded.
+     *
+     * @throws TelegramSDKException
+     */
+    protected function post(string $endpoint, array $params = [], bool $fileUpload = false): TelegramResponse
+    {
+        $params = $this->normalizeParams($params, $fileUpload);
+
+        return $this->sendRequest('POST', $endpoint, $params);
+    }
+
+    private function normalizeParams(array $params, $fileUpload): array
+    {
+        if ($fileUpload) {
+            return ['multipart' => $params];
+        }
+
+        return ['form_params' => $this->replyMarkupToString($params)];
+    }
+
+    /**
+     * Prepare Multipart Params for File Upload.
+     *
+     *
+     * @throws CouldNotUploadInputFile
+     */
+    protected function prepareMultipartParams(array $params, string $inputFileField): array
+    {
+        $this->validateInputFileField($params, $inputFileField);
+
+        //Iterate through all param options and convert to multipart/form-data.
+        return collect($params)
+            ->reject(static fn ($value): bool => null === $value)
+            ->map(fn ($contents, $name) => $this->generateMultipartData($contents, $name))
+            ->values()
+            ->all();
+    }
+
+    /**
      * @throws CouldNotUploadInputFile
      */
     protected function validateInputFileField(array $params, $inputFileField): void
@@ -320,12 +314,18 @@ trait Http
         throw CouldNotUploadInputFile::inputFileParameterShouldBeInputFileEntity($inputFileField);
     }
 
-    private function normalizeParams(array $params, $fileUpload): array
+    /**
+     * Generates the multipart data required when sending files to telegram.
+     */
+    protected function generateMultipartData(mixed $contents, string $name): array
     {
-        if ($fileUpload) {
-            return ['multipart' => $params];
+        if (! $this->isInputFile($contents)) {
+            return ['name' => $name, 'contents' => $contents];
         }
 
-        return ['form_params' => $this->replyMarkupToString($params)];
+        $filename = $contents->getFilename();
+        $contents = $contents->getContents();
+
+        return ['name' => $name, 'contents' => $contents, 'filename' => $filename];
     }
 }

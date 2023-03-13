@@ -86,6 +86,16 @@ class Api
     }
 
     /**
+     * @throws TelegramSDKException
+     */
+    private function validateAccessToken(): void
+    {
+        if (! $this->getAccessToken()) {
+            throw TelegramSDKException::tokenNotProvided(self::BOT_TOKEN_ENV_NAME);
+        }
+    }
+
+    /**
      * @deprecated This method will be removed in SDK v4.
      * Invoke Bots Manager.
      */
@@ -115,15 +125,5 @@ class Api
         }
 
         throw new BadMethodCallException(sprintf('Method [%s] does not exist.', $method));
-    }
-
-    /**
-     * @throws TelegramSDKException
-     */
-    private function validateAccessToken(): void
-    {
-        if (! $this->getAccessToken()) {
-            throw TelegramSDKException::tokenNotProvided(self::BOT_TOKEN_ENV_NAME);
-        }
     }
 }

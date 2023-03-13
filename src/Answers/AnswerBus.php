@@ -33,30 +33,28 @@ abstract class AnswerBus
     /**
      * Use PHP Reflection and Laravel Container to instantiate the answer with type hinted dependencies.
      */
-    protected function buildDependencyInjectedAnswer($answerClass): object
+    protected function buildDependencyInjectedClass(object|string $class): object
     {
-        // check if the command has a constructor
-        if (! method_exists($answerClass, '__construct')) {
-            return new $answerClass();
+        $classReflector = new ReflectionClass($class);
+        $constructorReflector = $classReflector->getConstructor();
+
+        if (!$constructorReflector) {
+            return new $class();
         }
 
         // get constructor params
-        $constructorReflector = new ReflectionMethod($answerClass, '__construct');
         $params = $constructorReflector->getParameters();
 
         // if no params are needed proceed with normal instantiation
         if ($params === []) {
-            return new $answerClass();
+            return new $class();
         }
 
         // otherwise fetch each dependency out of the container
         $container = $this->telegram->getContainer();
-        $dependencies = [];
-        foreach ($params as $param) {
-            $dependencies[] = $container->make($param->getType()->getName());
-        }
+        $dependencies = array_map(static fn($param) => $container->make($param->getType()?->getName()), $params);
 
         // and instantiate the object with dependencies through ReflectionClass
-        return (new ReflectionClass($answerClass))->newInstanceArgs($dependencies);
+        return $classReflector->newInstanceArgs($dependencies);
     }
 }
