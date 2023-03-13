@@ -45,19 +45,17 @@ trait Update
      *
      * @throws TelegramSDKException
      */
-    public function getUpdates(array $params = [], bool $shouldEmitEvents = true): array
+    public function getUpdates(array $params = [], bool $shouldDispatchEvents = true): array
     {
         $response = $this->get('getUpdates', $params);
 
         return collect($response->getResult())
-            ->map(function ($data) use ($shouldEmitEvents): UpdateObject {
+            ->map(function ($data) use ($shouldDispatchEvents): UpdateObject {
                 $update = new UpdateObject($data);
 
-                if ($shouldEmitEvents) {
-                    $this->emitEvent(new UpdateWasReceived($update, $this));
+                if ($shouldDispatchEvents) {
+                    $this->dispatchUpdateEvent($update);
                 }
-
-                $this->dispatchUpdateEvent($update);
 
                 return $update;
             })
@@ -134,9 +132,9 @@ trait Update
      * @deprecated Call method getWebhookUpdate (note lack of letter s at end)
      *             To be removed in next major version.
      */
-    public function getWebhookUpdates(bool $shouldEmitEvent = true): UpdateObject
+    public function getWebhookUpdates(bool $shouldDispatchEvents = true): UpdateObject
     {
-        return $this->getWebhookUpdate($shouldEmitEvent);
+        return $this->getWebhookUpdate($shouldDispatchEvents);
     }
 
     /**
@@ -145,17 +143,15 @@ trait Update
      *
      * @see setWebhook
      */
-    public function getWebhookUpdate(bool $shouldEmitEvent = true, ?RequestInterface $request = null): UpdateObject
+    public function getWebhookUpdate(bool $shouldDispatchEvents = true, ?RequestInterface $request = null): UpdateObject
     {
         $body = $this->getRequestBody($request);
 
         $update = new UpdateObject($body);
 
-        if ($shouldEmitEvent) {
-            $this->emitEvent(new UpdateWasReceived($update, $this));
+        if ($shouldDispatchEvents) {
+            $this->dispatchUpdateEvent($update);
         }
-
-        $this->dispatchUpdateEvent($update);
 
         return $update;
     }
@@ -204,19 +200,24 @@ trait Update
     /** Dispatch Update Event. */
     protected function dispatchUpdateEvent(UpdateObject $update): void
     {
-        $eventDispatcher = $this->eventDispatcher();
+        if (! $this->hasEventDispatcher()) {
+            return;
+        }
 
-        $eventDispatcher->dispatch(new UpdateEvent($this, $update));
+        $dispatcher = $this->eventDispatcher();
+
+        $dispatcher->dispatch(new UpdateWasReceived($update, $this));
+        $dispatcher->dispatch(new UpdateEvent($this, $update));
 
         $updateType = $update->objectType();
         if (is_string($updateType)) {
-            $eventDispatcher->dispatch(new UpdateEvent($this, $update, $updateType));
+            $dispatcher->dispatch(new UpdateEvent($this, $update, $updateType));
 
             if (method_exists($update->getMessage(), 'objectType')) {
                 $messageType = $update->getMessage()->objectType();
 
                 if (null !== $messageType) {
-                    $eventDispatcher->dispatch(new UpdateEvent($this, $update, sprintf('%s.%s', $updateType, $messageType)));
+                    $dispatcher->dispatch(new UpdateEvent($this, $update, sprintf('%s.%s', $updateType, $messageType)));
                 }
             }
         }

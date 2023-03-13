@@ -130,35 +130,19 @@ class Update extends BaseObject
      */
     public function getMessage(): Collection
     {
-        switch ($this->detectType()) {
-            case 'message':
-                return $this->message;
-            case 'edited_message':
-                return $this->editedMessage;
-            case 'channel_post':
-                return $this->channelPost;
-            case 'edited_channel_post':
-                return $this->editedChannelPost;
-            case 'inline_query':
-                return $this->inlineQuery;
-            case 'chosen_inline_result':
-                return $this->chosenInlineResult;
-            case 'callback_query':
-                $callbackQuery = $this->callbackQuery;
-                if ($callbackQuery->has('message')) {
-                    return $callbackQuery->message;
-                }
-
-                break;
-            case 'shipping_query':
-                return $this->shippingQuery;
-            case 'pre_checkout_query':
-                return $this->preCheckoutQuery;
-            case 'poll':
-                return $this->poll;
-        }
-
-        return collect();
+        return match ($this->detectType()) {
+            'message' => $this->message,
+            'edited_message' => $this->editedMessage,
+            'channel_post' => $this->channelPost,
+            'edited_channel_post' => $this->editedChannelPost,
+            'inline_query' => $this->inlineQuery,
+            'chosen_inline_result' => $this->chosenInlineResult,
+            'callback_query' => $this->callbackQuery->has('message') ? $this->callbackQuery->message : collect(),
+            'shipping_query' => $this->shippingQuery,
+            'pre_checkout_query' => $this->preCheckoutQuery,
+            'poll' => $this->poll,
+            default => collect(),
+        };
     }
 
     /**

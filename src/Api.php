@@ -5,7 +5,7 @@ namespace Telegram\Bot;
 use BadMethodCallException;
 use Illuminate\Support\Traits\Macroable;
 use Telegram\Bot\Commands\CommandBus;
-use Telegram\Bot\Events\EmitsEvents;
+use Telegram\Bot\Events\HasEventDispatcher;
 use Telegram\Bot\Exceptions\TelegramSDKException;
 use Telegram\Bot\HttpClients\HttpClientInterface;
 use Telegram\Bot\Methods\Chat;
@@ -34,7 +34,7 @@ class Api
     use Macroable {
         Macroable::__call as macroCall;
     }
-    use EmitsEvents;
+    use HasEventDispatcher;
     use Http;
     use CommandsHandler;
     use HasContainer;

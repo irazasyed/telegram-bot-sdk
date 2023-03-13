@@ -26,9 +26,12 @@ abstract class BaseObject extends Collection
     }
 
     /**
-     * Property relations.
+     * Returns raw result.
      */
-    abstract public function relations(): array;
+    public function getRawResult($data): mixed
+    {
+        return data_get($data, 'result', $data);
+    }
 
     /**
      * Magically access collection data.
@@ -43,11 +46,6 @@ abstract class BaseObject extends Collection
     public function __set(string $name, mixed $value): void
     {
         throw new InvalidArgumentException(sprintf('Cannot set property “%s” on “%s” immutable object.', $name, static::class));
-    }
-
-    public function __isset(string $name): bool
-    {
-        return $this->getPropertyValue($name) !== null;
     }
 
     /**
@@ -85,6 +83,11 @@ abstract class BaseObject extends Collection
     }
 
     /**
+     * Property relations.
+     */
+    abstract public function relations(): array;
+
+    /**
      * @param  array  $relationRawData
      * @return array|Enumerable|EnumeratesValues|BaseObject
      */
@@ -110,6 +113,11 @@ abstract class BaseObject extends Collection
         }
 
         return $relatedObjects;
+    }
+
+    public function __isset(string $name): bool
+    {
+        return $this->getPropertyValue($name) !== null;
     }
 
     /**
@@ -143,27 +151,11 @@ abstract class BaseObject extends Collection
     }
 
     /**
-     * Returns raw result.
-     */
-    public function getRawResult($data): mixed
-    {
-        return data_get($data, 'result', $data);
-    }
-
-    /**
      * Get Status of request.
      */
     public function getStatus(): mixed
     {
         return data_get($this->items, 'ok', false);
-    }
-
-    /**
-     * Detect type based on fields.
-     */
-    public function objectType(): ?string
-    {
-        return null;
     }
 
     /**
@@ -179,13 +171,11 @@ abstract class BaseObject extends Collection
     }
 
     /**
-     * Determine the type by given types.
+     * Detect type based on fields.
      */
-    protected function findType(array $types): ?string
+    public function objectType(): ?string
     {
-        return $this->keys()
-            ->intersect($types)
-            ->pop();
+        return null;
     }
 
     /**
@@ -202,5 +192,15 @@ abstract class BaseObject extends Collection
         $property = substr($method, 3);
 
         return $this->getPropertyValue($property);
+    }
+
+    /**
+     * Determine the type by given types.
+     */
+    protected function findType(array $types): ?string
+    {
+        return $this->keys()
+            ->intersect($types)
+            ->pop();
     }
 }
