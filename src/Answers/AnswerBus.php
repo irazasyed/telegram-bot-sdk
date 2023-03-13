@@ -4,7 +4,6 @@ namespace Telegram\Bot\Answers;
 
 use BadMethodCallException;
 use ReflectionClass;
-use ReflectionMethod;
 use Telegram\Bot\Traits\Telegram;
 
 /**
@@ -38,7 +37,7 @@ abstract class AnswerBus
         $classReflector = new ReflectionClass($class);
         $constructorReflector = $classReflector->getConstructor();
 
-        if (!$constructorReflector) {
+        if (! $constructorReflector) {
             return new $class();
         }
 
@@ -52,7 +51,7 @@ abstract class AnswerBus
 
         // otherwise fetch each dependency out of the container
         $container = $this->telegram->getContainer();
-        $dependencies = array_map(static fn($param) => $container->make($param->getType()?->getName()), $params);
+        $dependencies = array_map(static fn ($param) => $container->make($param->getType()?->getName()), $params);
 
         // and instantiate the object with dependencies through ReflectionClass
         return $classReflector->newInstanceArgs($dependencies);
