@@ -3,10 +3,10 @@
 namespace Telegram\Bot;
 
 use Illuminate\Support\Arr;
+use Psr\Container\ContainerInterface;
 use Telegram\Bot\Commands\CommandInterface;
 use Telegram\Bot\Exceptions\TelegramBotNotFoundException;
 use Telegram\Bot\Exceptions\TelegramSDKException;
-use Psr\Container\ContainerInterface;
 
 /**
  * Class BotsManager.

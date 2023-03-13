@@ -3,7 +3,6 @@
 namespace Telegram\Bot\Answers;
 
 use BadMethodCallException;
-use ReflectionClass;
 use Telegram\Bot\Traits\Telegram;
 
 /**
