@@ -14,7 +14,7 @@ use Telegram\Bot\Objects\Update;
 /**
  * Class CommandBus.
  */
-final class CommandBus extends AnswerBus
+class CommandBus extends AnswerBus
 {
     /**
      * @var array<string, Command> Holds all commands. Keys are command names (without leading slashes).
@@ -125,7 +125,7 @@ final class CommandBus extends AnswerBus
      * @param  string  $text Command name with a leading slash
      * @return string Telegram command name (without leading slash)
      */
-    private function parseCommand(string $text, int $offset, int $length): string
+    protected function parseCommand(string $text, int $offset, int $length): string
     {
         if (trim($text) === '') {
             throw new InvalidArgumentException('Message is empty, Cannot parse for command');

@@ -15,9 +15,16 @@ trait CommandsHandler
     /**
      * Return Command Bus.
      */
-    protected function getCommandBus(): CommandBus
+    public function getCommandBus(): CommandBus
     {
         return $this->commandBus;
+    }
+
+    public function setCommandBus(CommandBus $commandBus): static
+    {
+        $this->commandBus = $commandBus;
+
+        return $this;
     }
 
     /**

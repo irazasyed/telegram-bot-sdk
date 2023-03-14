@@ -362,7 +362,7 @@ it('can get the webhook info', function () {
 test('the commands handler can get all commands', function () {
     $this->api->addCommands($this->commandGenerator(4)->all());
 
-    $commands = $this->api->getCommands();
+    $commands = $this->api->getCommandBus()->getCommands();
 
     expect($commands)->toHaveCount(4);
 });
