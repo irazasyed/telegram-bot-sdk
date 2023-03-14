@@ -133,9 +133,15 @@ use Telegram\Bot\BotsManager;
  * @method static bool setWebhook(array $params)
  * @method static bool deleteWebhook()
  * @method static \Telegram\Bot\Objects\WebhookInfo getWebhookInfo()
- * @method static \Telegram\Bot\Objects\Update getWebhookUpdates(bool $shouldDispatchEvents = true)
  * @method static \Telegram\Bot\Objects\Update getWebhookUpdate(bool $shouldDispatchEvents = true, ?\Psr\Http\Message\RequestInterface $request = null)
  * @method static bool removeWebhook()
+ *
+ * @see \Telegram\Bot\Commands\CommandBus
+ *
+ * @method static \Telegram\Bot\Commands\CommandBus addCommands(array $commands)
+ * @method static \Telegram\Bot\Commands\CommandBus addCommand(\Telegram\Bot\Commands\CommandInterface|string $command)
+ * @method static \Telegram\Bot\Commands\CommandBus removeCommand(string $name)
+ * @method static \Telegram\Bot\Commands\CommandBus removeCommands(array $names)
  */
 final class Telegram extends Facade
 {
