@@ -46,7 +46,6 @@ use Telegram\Bot\BotsManager;
  * @method static int getConnectTimeOut()
  * @method static \Telegram\Bot\Api setConnectTimeOut(int $connectTimeOut)
  * @method static \Telegram\Bot\TelegramClient getClient()
- * @method static array getCommands()
  * @method static \Telegram\Bot\Objects\Update|array commandsHandler(bool $webhook = false, ?\Psr\Http\Message\RequestInterface $request = null)
  * @method static void processCommand(\Telegram\Bot\Objects\Update $update)
  * @method static mixed triggerCommand(string $name, \Telegram\Bot\Objects\Update $update, ?array $entity = null)
@@ -138,6 +137,7 @@ use Telegram\Bot\BotsManager;
  *
  * @see \Telegram\Bot\Commands\CommandBus
  *
+ * @method static array getCommands()
  * @method static \Telegram\Bot\Commands\CommandBus addCommands(array $commands)
  * @method static \Telegram\Bot\Commands\CommandBus addCommand(\Telegram\Bot\Commands\CommandInterface|string $command)
  * @method static \Telegram\Bot\Commands\CommandBus removeCommand(string $name)

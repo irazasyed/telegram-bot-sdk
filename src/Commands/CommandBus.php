@@ -125,7 +125,7 @@ final class CommandBus extends AnswerBus
      * @param  string  $text Command name with a leading slash
      * @return string Telegram command name (without leading slash)
      */
-    public function parseCommand(string $text, int $offset, int $length): string
+    private function parseCommand(string $text, int $offset, int $length): string
     {
         if (trim($text) === '') {
             throw new InvalidArgumentException('Message is empty, Cannot parse for command');

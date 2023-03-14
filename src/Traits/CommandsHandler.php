@@ -21,14 +21,6 @@ trait CommandsHandler
     }
 
     /**
-     * Get all registered commands.
-     */
-    public function getCommands(): array
-    {
-        return $this->commandBus->getCommands();
-    }
-
-    /**
      * Processes Inbound Commands.
      *
      * @return Update|Update[]
