@@ -2,8 +2,8 @@
 
 namespace Telegram\Bot\Answers;
 
-use Illuminate\Contracts\Container\Container;
 use BadMethodCallException;
+use Illuminate\Contracts\Container\Container;
 use Telegram\Bot\Traits\Telegram;
 
 /**

@@ -248,6 +248,7 @@ abstract class Command implements CommandInterface
         if (! $optional->isEmpty()) {
             return '';
         }
+
         return $this->pattern;
     }
 
