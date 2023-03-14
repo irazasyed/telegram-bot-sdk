@@ -39,7 +39,7 @@ abstract class AnswerBus
 
         $container = $this->telegram->getContainer();
 
-        if($container instanceof \Illuminate\Contracts\Container\Container) {
+        if ($container instanceof \Illuminate\Contracts\Container\Container) {
             return $container->make($class);
         }
 
