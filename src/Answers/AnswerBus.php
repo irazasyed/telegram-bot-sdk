@@ -2,6 +2,7 @@
 
 namespace Telegram\Bot\Answers;
 
+use Illuminate\Contracts\Container\Container;
 use BadMethodCallException;
 use Telegram\Bot\Traits\Telegram;
 
@@ -39,7 +40,7 @@ abstract class AnswerBus
 
         $container = $this->telegram->getContainer();
 
-        if ($container instanceof \Illuminate\Contracts\Container\Container) {
+        if ($container instanceof Container) {
             return $container->make($class);
         }
 

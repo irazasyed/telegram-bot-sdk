@@ -236,14 +236,18 @@ abstract class Command implements CommandInterface
 
     private function checkForCustomRegex(Collection $required, Collection $optional): string
     {
-        if ($this->pattern === '' || $this->pattern === '0') {
+        if ($this->pattern === '') {
             return '';
         }
-
-        if (! $required->isEmpty() || ! $optional->isEmpty()) {
+        if ($this->pattern === '0') {
             return '';
         }
-
+        if (! $required->isEmpty()) {
+            return '';
+        }
+        if (! $optional->isEmpty()) {
+            return '';
+        }
         return $this->pattern;
     }
 

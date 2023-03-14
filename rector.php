@@ -19,7 +19,7 @@ return static function (RectorConfig $rectorConfig): void {
         ],
     ]);
 
-    $rectorConfig->importNames();
+    $rectorConfig->importNames(importDocBlockNames: false);
 
     $rectorConfig->rules([
         InlineConstructorDefaultToPropertyRector::class,

@@ -210,7 +210,7 @@ final class BotsManager
         $commandGroups = collect($this->getConfig('command_groups'));
         $sharedCommands = collect($this->getConfig('shared_commands'));
 
-        return collect($commands)->map(function ($command) use ($commandGroups, $sharedCommands) {
+        return collect($commands)->map(function ($command) use ($commandGroups, $sharedCommands): mixed {
             // If the command is a group, we'll parse through the group of commands
             // and resolve the full class name.
             if ($commandGroups->has($command)) {
