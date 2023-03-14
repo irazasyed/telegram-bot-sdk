@@ -37,6 +37,12 @@ abstract class AnswerBus
             $class = $class::class;
         }
 
-        return $this->telegram->getContainer()->get($class);
+        $container = $this->telegram->getContainer();
+
+        if($container instanceof \Illuminate\Contracts\Container\Container) {
+            return $container->make($class);
+        }
+
+        return $container->get($class);
     }
 }
