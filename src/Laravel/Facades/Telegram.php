@@ -142,7 +142,6 @@ use Telegram\Bot\BotsManager;
  * @method static \Telegram\Bot\Commands\CommandBus addCommand(\Telegram\Bot\Commands\CommandInterface|string $command)
  * @method static \Telegram\Bot\Commands\CommandBus removeCommand(string $name)
  * @method static \Telegram\Bot\Commands\CommandBus removeCommands(array $names)
- *
  */
 final class Telegram extends Facade
 {
