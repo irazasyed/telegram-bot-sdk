@@ -6,8 +6,6 @@ use Illuminate\Support\Facades\Facade;
 use Telegram\Bot\BotsManager;
 
 /**
- * Class Telegram.
- *
  * @see \Telegram\Bot\BotsManager
  *
  * @method static \Telegram\Bot\BotsManager setContainer(\Psr\Container\ContainerInterface $container)
@@ -46,6 +44,8 @@ use Telegram\Bot\BotsManager;
  * @method static int getConnectTimeOut()
  * @method static \Telegram\Bot\Api setConnectTimeOut(int $connectTimeOut)
  * @method static \Telegram\Bot\TelegramClient getClient()
+ * @method static \Telegram\Bot\Commands\CommandBus getCommandBus()
+ * @method static \Telegram\Bot\Api setCommandBus(\Telegram\Bot\Commands\CommandBus $commandBus)
  * @method static \Telegram\Bot\Objects\Update|array commandsHandler(bool $webhook = false, ?\Psr\Http\Message\RequestInterface $request = null)
  * @method static void processCommand(\Telegram\Bot\Objects\Update $update)
  * @method static mixed triggerCommand(string $name, \Telegram\Bot\Objects\Update $update, ?array $entity = null)
@@ -142,6 +142,7 @@ use Telegram\Bot\BotsManager;
  * @method static \Telegram\Bot\Commands\CommandBus addCommand(\Telegram\Bot\Commands\CommandInterface|string $command)
  * @method static \Telegram\Bot\Commands\CommandBus removeCommand(string $name)
  * @method static \Telegram\Bot\Commands\CommandBus removeCommands(array $names)
+ *
  */
 final class Telegram extends Facade
 {
