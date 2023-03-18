@@ -30,7 +30,7 @@
     "psr/container": "^2.0"
   },
   "require-dev": {
-    "irazasyed/docgen": "^0.1",
+    "irazasyed/docgen": "^0.2",
     "pestphp/pest": "^1.22",
     "php-parallel-lint/php-parallel-lint": "^1.3",
     "phpspec/prophecy": "^1.17",
