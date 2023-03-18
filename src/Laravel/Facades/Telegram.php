@@ -27,7 +27,7 @@ use Telegram\Bot\BotsManager;
  * @method static void mixin($mixin, $replace = true)
  * @method static void hasMacro($name)
  * @method static void flushMacros()
- * @method static void macroCall($method, array $parameters)
+ * @method static void macroCall($method, $parameters)
  * @method static bool hasEventDispatcher()
  * @method static void useEventDispatcher(\League\Event\EventDispatcher $emitter)
  * @method static \League\Event\EventDispatcher eventDispatcher()

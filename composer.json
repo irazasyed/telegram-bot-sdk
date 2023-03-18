@@ -30,6 +30,7 @@
     "psr/container": "^2.0"
   },
   "require-dev": {
+    "irazasyed/docgen": "^0.1",
     "pestphp/pest": "^1.22",
     "php-parallel-lint/php-parallel-lint": "^1.3",
     "phpspec/prophecy": "^1.17",
@@ -75,6 +76,7 @@
     }
   },
   "scripts": {
+    "docgen": "docgen",
     "refactor": "rector --debug",
     "test": [
       "@test:lint",
@@ -82,6 +84,7 @@
       "@test:unit"
     ],
     "test:coverage": "pest --coverage --colors=always",
+    "test:docgen": "docgen -d",
     "test:lint": "parallel-lint . --blame --colors --exclude vendor",
     "test:refactor": "rector --dry-run",
     "test:unit": "pest --colors=always"
