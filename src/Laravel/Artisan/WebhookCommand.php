@@ -149,7 +149,7 @@ class WebhookCommand extends Command
     {
         $rows = $response->map(function ($value, $key): array {
             $key = Str::title(str_replace('_', ' ', $key));
-            $value = is_bool($value) ? $this->mapBool($value) : $value;
+            $value = is_bool($value) ? $this->mapBool($value) : (is_array($value) ? implode("\n", $value) : $value);
 
             return ['key' => $key, 'value' => $value];
         })->toArray();
