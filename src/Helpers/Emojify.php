@@ -54,11 +54,11 @@ final class Emojify
      */
     public static function getInstance()
     {
-        if (null === static::$instance) {
-            static::$instance = new self();
+        if (null === self::$instance) {
+            self::$instance = new self();
         }
 
-        return static::$instance;
+        return self::$instance;
     }
 
     /**
