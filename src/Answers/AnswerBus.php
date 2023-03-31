@@ -2,6 +2,8 @@
 
 namespace Telegram\Bot\Answers;
 
+use BadMethodCallException;
+use Illuminate\Contracts\Container\Container;
 use Telegram\Bot\Traits\Telegram;
 
 /**
@@ -14,56 +16,34 @@ abstract class AnswerBus
     /**
      * Handle calls to missing methods.
      *
-     * @param  string  $method
-     * @param  array  $parameters
      * @return mixed
      *
-     * @throws \BadMethodCallException
+     * @throws BadMethodCallException
      */
-    public function __call($method, $parameters)
+    public function __call(string $method, array $parameters)
     {
         if (method_exists($this, $method)) {
             return call_user_func_array([$this, $method], $parameters);
         }
 
-        throw new \BadMethodCallException("Method [$method] does not exist.");
+        throw new BadMethodCallException(sprintf('Method [%s] does not exist.', $method));
     }
 
     /**
      * Use PHP Reflection and Laravel Container to instantiate the answer with type hinted dependencies.
-     *
-     * @return object
      */
-    protected function buildDependencyInjectedAnswer($answerClass)
+    protected function buildDependencyInjectedClass(object|string $class): object
     {
-        // check if the command has a constructor
-        if (! method_exists($answerClass, '__construct')) {
-            return new $answerClass();
+        if (is_object($class)) {
+            $class = $class::class;
         }
 
-        // get constructor params
-        $constructorReflector = new \ReflectionMethod($answerClass, '__construct');
-        $params = $constructorReflector->getParameters();
-
-        // if no params are needed proceed with normal instantiation
-        if (empty($params)) {
-            return new $answerClass();
-        }
-
-        // otherwise fetch each dependency out of the container
         $container = $this->telegram->getContainer();
-        $dependencies = [];
-        foreach ($params as $param) {
-            if (version_compare(PHP_VERSION, '8.0.0') >= 0) {
-                $dependencies[] = $container->make($param->getType()->getName());
-            } else {
-                $dependencies[] = $container->make($param->getClass()->name);
-            }
+
+        if ($container instanceof Container) {
+            return $container->make($class);
         }
 
-        // and instantiate the object with dependencies through ReflectionClass
-        $classReflector = new \ReflectionClass($answerClass);
-
-        return $classReflector->newInstanceArgs($dependencies);
+        return $container->get($class);
     }
 }

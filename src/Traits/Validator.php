@@ -28,15 +28,15 @@ trait Validator
     /**
      * Determine the given string is a file id.
      *
-     * @param  string  $value
+     * @param  string|InputFile|resource  $value
      */
-    protected function isFileId($value): bool
+    protected function isFileId(mixed $value): bool
     {
         if (! is_string($value)) {
             return false;
         }
 
-        return preg_match('/^[\w\-]{20,}+$/u', trim($value)) > 0;
+        return preg_match('#^[\w\-]{20,}+$#u', trim($value)) > 0;
     }
 
     /**
@@ -44,7 +44,7 @@ trait Validator
      *
      * @param  string  $value A filename or URL to a sticker
      */
-    protected function isUrl($value): bool
+    protected function isUrl(string $value): bool
     {
         return (bool) filter_var($value, FILTER_VALIDATE_URL);
     }
@@ -54,10 +54,10 @@ trait Validator
      *
      * @param  string  $string A json string
      */
-    protected function is_json($string): bool
+    protected function is_json(string $string): bool
     {
-        json_decode($string);
+        json_decode($string, false);
 
-        return json_last_error() == JSON_ERROR_NONE;
+        return json_last_error() === JSON_ERROR_NONE;
     }
 }

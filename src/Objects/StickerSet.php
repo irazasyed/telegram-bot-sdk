@@ -18,8 +18,10 @@ class StickerSet extends BaseObject
 {
     /**
      * {@inheritdoc}
+     *
+     * @return array{stickers: array<class-string<Sticker>>, thumb: string}
      */
-    public function relations()
+    public function relations(): array
     {
         return [
             'stickers' => [Sticker::class],

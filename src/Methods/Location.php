@@ -67,7 +67,7 @@ trait Location
      *
      * @throws TelegramSDKException
      */
-    public function editMessageLiveLocation(array $params)
+    public function editMessageLiveLocation(array $params): MessageObject
     {
         $response = $this->post('editMessageLiveLocation', $params);
 
@@ -92,7 +92,7 @@ trait Location
      *
      * @throws TelegramSDKException
      */
-    public function stopMessageLiveLocation(array $params)
+    public function stopMessageLiveLocation(array $params): MessageObject
     {
         $response = $this->post('stopMessageLiveLocation', $params);
 

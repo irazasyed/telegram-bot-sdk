@@ -4,56 +4,75 @@ namespace Telegram\Bot;
 
 use BadMethodCallException;
 use Illuminate\Support\Traits\Macroable;
+use Telegram\Bot\Commands\CommandBus;
+use Telegram\Bot\Events\HasEventDispatcher;
 use Telegram\Bot\Exceptions\TelegramSDKException;
 use Telegram\Bot\HttpClients\HttpClientInterface;
+use Telegram\Bot\Methods\Chat;
+use Telegram\Bot\Methods\Commands;
+use Telegram\Bot\Methods\EditMessage;
+use Telegram\Bot\Methods\Game;
+use Telegram\Bot\Methods\Get;
+use Telegram\Bot\Methods\Location;
+use Telegram\Bot\Methods\Message;
+use Telegram\Bot\Methods\Passport;
+use Telegram\Bot\Methods\Payments;
+use Telegram\Bot\Methods\Query;
+use Telegram\Bot\Methods\Stickers;
+use Telegram\Bot\Methods\Update;
+use Telegram\Bot\Traits\CommandsHandler;
+use Telegram\Bot\Traits\HasContainer;
+use Telegram\Bot\Traits\Http;
 
 /**
  * Class Api.
  *
- * @mixin Commands\CommandBus
+ * @mixin CommandBus
  */
 class Api
 {
     use Macroable {
-        __call as macroCall;
+        Macroable::__call as macroCall;
     }
-    use Events\EmitsEvents;
-    use Traits\Http;
-    use Traits\CommandsHandler;
-    use Traits\HasContainer;
-    use Methods\Chat;
-    use Methods\Commands;
-    use Methods\EditMessage;
-    use Methods\Game;
-    use Methods\Get;
-    use Methods\Location;
-    use Methods\Message;
-    use Methods\Passport;
-    use Methods\Payments;
-    use Methods\Query;
-    use Methods\Stickers;
-    use Methods\Update;
+    use HasEventDispatcher;
+    use Http;
+    use CommandsHandler;
+    use HasContainer;
+    use Chat;
+    use Commands;
+    use EditMessage;
+    use Game;
+    use Get;
+    use Location;
+    use Message;
+    use Passport;
+    use Payments;
+    use Query;
+    use Stickers;
+    use Update;
 
     /** @var string Version number of the Telegram Bot PHP SDK. */
-    const VERSION = '3.0.0';
+    public const VERSION = '3.10.0';
 
     /** @var string The name of the environment variable that contains the Telegram Bot API Access Token. */
-    const BOT_TOKEN_ENV_NAME = 'TELEGRAM_BOT_TOKEN';
+    public const BOT_TOKEN_ENV_NAME = 'TELEGRAM_BOT_TOKEN';
+
+    private CommandBus $commandBus;
 
     /**
      * Instantiates a new Telegram super-class object.
      *
      *
-     * @param  string  $token             The Telegram Bot API Access Token.
-     * @param  bool  $async             (Optional) Indicates if the request to Telegram will be asynchronous (non-blocking).
+     * @param  string|null  $token The Telegram Bot API Access Token.
+     * @param  bool  $async (Optional) Indicates if the request to Telegram will be asynchronous (non-blocking).
      * @param  HttpClientInterface|null  $httpClientHandler (Optional) Custom HTTP Client Handler.
-     * @param  string|null  $base_bot_url (Optional) Custom base bot url.
+     * @param  string|null  $baseBotUrl (Optional) Custom base bot url.
      *
      * @throws TelegramSDKException
      */
-    public function __construct($token = null, $async = false, $httpClientHandler = null, $base_bot_url = null)
+    public function __construct(string $token = null, bool $async = false, HttpClientInterface $httpClientHandler = null, string $baseBotUrl = null)
     {
-        $this->accessToken = $token ?? getenv(static::BOT_TOKEN_ENV_NAME);
+        $this->setAccessToken($token ?? getenv(self::BOT_TOKEN_ENV_NAME));
         $this->validateAccessToken();
 
         if ($async) {
@@ -62,16 +81,25 @@ class Api
 
         $this->httpClientHandler = $httpClientHandler;
 
-        $this->baseBotUrl = $base_bot_url;
+        $this->baseBotUrl = $baseBotUrl;
+        $this->commandBus = new CommandBus($this);
+    }
+
+    /**
+     * @throws TelegramSDKException
+     */
+    private function validateAccessToken(): void
+    {
+        if (! $this->getAccessToken()) {
+            throw TelegramSDKException::tokenNotProvided(self::BOT_TOKEN_ENV_NAME);
+        }
     }
 
     /**
      * @deprecated This method will be removed in SDK v4.
      * Invoke Bots Manager.
-     *
-     * @param  array  $config
      */
-    public static function manager($config): BotsManager
+    public static function manager(array $config): BotsManager
     {
         return new BotsManager($config);
     }
@@ -81,31 +109,21 @@ class Api
      *
      * @return mixed
      */
-    public function __call($method, $arguments)
+    public function __call($method, $parameters)
     {
-        if (static::hasMacro($method)) {
-            return $this->macroCall($method, $arguments);
+        if (self::hasMacro($method)) {
+            return $this->macroCall($method, $parameters);
         }
 
         if (method_exists($this, $method)) {
-            return call_user_func_array([$this, $method], $arguments);
+            return call_user_func_array([$this, $method], $parameters);
         }
 
         //If the method does not exist on the API, try the commandBus.
-        if (preg_match('/^\w+Commands?/', $method, $matches)) {
-            return call_user_func_array([$this->getCommandBus(), $matches[0]], $arguments);
+        if (preg_match('#^\w+Commands?#', $method, $matches)) {
+            return call_user_func_array([$this->getCommandBus(), $matches[0]], $parameters);
         }
 
-        throw new BadMethodCallException("Method [$method] does not exist.");
-    }
-
-    /**
-     * @throws TelegramSDKException
-     */
-    private function validateAccessToken()
-    {
-        if (! $this->accessToken || ! is_string($this->accessToken)) {
-            throw TelegramSDKException::tokenNotProvided(static::BOT_TOKEN_ENV_NAME);
-        }
+        throw new BadMethodCallException(sprintf('Method [%s] does not exist.', $method));
     }
 }

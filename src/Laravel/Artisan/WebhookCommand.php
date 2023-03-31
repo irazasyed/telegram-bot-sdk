@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 use Symfony\Component\Console\Helper\TableCell;
 use Telegram\Bot\Api;
 use Telegram\Bot\BotsManager;
+use Telegram\Bot\Exceptions\TelegramBotNotFoundException;
 use Telegram\Bot\Exceptions\TelegramSDKException;
 use Telegram\Bot\Objects\WebhookInfo;
 
@@ -30,34 +31,25 @@ class WebhookCommand extends Command
      */
     protected $description = 'Ease the Process of setting up and removing webhooks.';
 
-    /** @var Api */
-    protected $telegram;
+    protected Api $telegram;
 
-    /** @var BotsManager */
-    protected $botsManager;
+    protected BotsManager $botsManager;
 
     /** @var array Bot Config */
-    protected $config = [];
-
-    /**
-     * WebhookCommand constructor.
-     */
-    public function __construct(BotsManager $botsManager)
-    {
-        parent::__construct();
-
-        $this->botsManager = $botsManager;
-    }
+    protected array $config = [];
 
     /**
      * Execute the console command.
      *
      * @throws TelegramSDKException
      */
-    public function handle()
+    public function handle(BotsManager $botsManager): void
     {
-        $bot = $this->hasArgument('bot') ? $this->argument('bot') : null;
-        $this->telegram = $this->botsManager->bot($bot);
+        $this->botsManager = $botsManager;
+        $bot = $this->argument('bot');
+
+        $this->resolveTelegramBot($bot);
+
         $this->config = $this->botsManager->getBotConfig($bot);
 
         if ($this->option('setup')) {
@@ -65,7 +57,7 @@ class WebhookCommand extends Command
         }
 
         if ($this->option('remove')) {
-            $this->removeWebHook();
+            $this->removeWebhook();
         }
 
         if ($this->option('info')) {
@@ -78,12 +70,23 @@ class WebhookCommand extends Command
      *
      * @throws TelegramSDKException
      */
-    protected function setupWebhook()
+    private function setupWebhook(): void
     {
-        $params = ['url' => data_get($this->config, 'webhook_url')];
+        $this->info('Setting up webhook...');
+        $this->newLine();
+
+        $webhookUrl = data_get($this->config, 'webhook_url');
+
+        if (! Str::startsWith($webhookUrl, 'https://')) {
+            $this->error('Your webhook url must start with https://');
+
+            return;
+        }
+
+        $params = ['url' => $webhookUrl];
         $certificatePath = data_get($this->config, 'certificate_path', false);
 
-        if ($certificatePath) {
+        if ($certificatePath && 'YOUR-CERTIFICATE-PATH' !== $certificatePath) {
             $params['certificate'] = $certificatePath;
         }
 
@@ -102,9 +105,9 @@ class WebhookCommand extends Command
      *
      * @throws TelegramSDKException
      */
-    protected function removeWebHook()
+    private function removeWebhook(): void
     {
-        if ($this->confirm("Are you sure you want to remove the webhook for {$this->config['bot']}?")) {
+        if ($this->confirm(sprintf('Are you sure you want to remove the webhook for %s?', $this->config['bot']))) {
             $this->info('Removing webhook...');
 
             if ($this->telegram->removeWebhook()) {
@@ -122,36 +125,33 @@ class WebhookCommand extends Command
      *
      * @throws TelegramSDKException
      */
-    protected function getInfo()
+    private function getInfo(): void
     {
         $this->alert('Webhook Info');
 
-        if ($this->hasArgument('bot') && ! $this->option('all')) {
-            $response = $this->telegram->getWebhookInfo();
-            $this->makeWebhookInfoResponse($response, $this->argument('bot'));
+        $bots = collect($this->botsManager->getConfig('bots'));
 
-            return;
+        if (! $this->option('all')) {
+            $bots = $bots->only($this->config['bot']);
         }
 
-        if ($this->option('all')) {
-            $bots = $this->botsManager->getConfig('bots');
-            collect($bots)->each(function ($bot, $key) {
-                $response = $this->botsManager->bot($key)->getWebhookInfo();
-                $this->makeWebhookInfoResponse($response, $key);
-            });
-        }
+        $bots->each(function ($bot, $botName): void {
+            $response = $this->botsManager->bot($botName)->getWebhookInfo();
+
+            $this->makeWebhookInfoResponse($response, $botName);
+        });
     }
 
     /**
      * Make WebhookInfo Response for console.
      */
-    protected function makeWebhookInfoResponse(WebhookInfo $response, string $bot)
+    private function makeWebhookInfoResponse(WebhookInfo $response, string $bot): void
     {
-        $rows = $response->map(function ($value, $key) {
+        $rows = $response->map(function ($value, $key): array {
             $key = Str::title(str_replace('_', ' ', $key));
-            $value = is_bool($value) ? $this->mapBool($value) : $value;
+            $value = is_bool($value) ? $this->mapBool($value) : (is_array($value) ? implode("\n", $value) : $value);
 
-            return compact('key', 'value');
+            return ['key' => $key, 'value' => $value];
         })->toArray();
 
         $this->table([
@@ -162,11 +162,23 @@ class WebhookCommand extends Command
 
     /**
      * Map Boolean Value to Yes/No.
-     *
-     * @return string
      */
-    protected function mapBool($value)
+    private function mapBool(bool $value): string
     {
         return $value ? 'Yes' : 'No';
+    }
+
+    private function resolveTelegramBot(string|null $bot): void
+    {
+        try {
+            $this->telegram = $this->botsManager->bot($bot);
+        } catch (TelegramBotNotFoundException $e) {
+            $this->warn($e->getMessage());
+            $this->warn('You must specify a proper bot name or configure one.');
+            $this->newLine();
+            $this->info('💡Omitting the bot name will fallback to the default bot.');
+
+            exit(1);
+        }
     }
 }

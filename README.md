@@ -3,7 +3,7 @@
 <p align="center">
 <a href="https://phpchat.co"><img src="https://img.shields.io/badge/Slack-PHP%20Chat-5c6aaa.svg?logo=slack&labelColor=4A154B&style=for-the-badge" alt="Join PHP Chat"/></a>
 <a href="https://t.me/PHPChatCo"><img src="https://img.shields.io/badge/Chat-on%20Telegram-2CA5E0.svg?logo=telegram&style=for-the-badge" alt="Chat on Telegram"/></a>
-<a href="https://github.com/irazasyed/telegram-bot-sdk/actions"><img src="https://img.shields.io/github/workflow/status/irazasyed/telegram-bot-sdk/CI.svg?style=for-the-badge" alt="Build Status"/></a>
+<a href="https://github.com/irazasyed/telegram-bot-sdk/actions"><img src="https://img.shields.io/github/actions/workflow/status/irazasyed/telegram-bot-sdk/ci.yml?style=for-the-badge" alt="Build Status"/></a>
 <a href="https://github.com/irazasyed/telegram-bot-sdk/releases"><img src="https://img.shields.io/github/release/irazasyed/telegram-bot-sdk.svg?style=for-the-badge" alt="Latest Version"/></a>
 <a href="https://packagist.org/packages/irazasyed/telegram-bot-sdk"><img src="https://img.shields.io/packagist/dt/irazasyed/telegram-bot-sdk.svg?style=for-the-badge" alt="Total Downloads"/></a>
 </p>
@@ -21,14 +21,14 @@ Telegram Bot API - PHP SDK
 
 ## Supported Versions
 
-Only the latest released version of SDK is supported.
-To facilitate upgrades we almost never make backwards-incompatible changes.
+Only the latest released version of the SDK is supported. 
+To facilitate upgrades, we rarely make backward-incompatible changes.
 
-| Version | Supported                           | Documentation         |
-|---------|-------------------------------------|-----------------------|
-| 2.x     | ❌ (security fixes only)             | ✅ [docs][link-docs]   |
-| 3.x     | ✅ (current)                         | ❌                     |
-| 4.x     | ✅ ([in development][link-new-repo]) | ❌                     |
+| Version | Supported                            | Documentation         |
+|---------|--------------------------------------|-----------------------|
+| 2.x     | ❌                                    | ✅ [docs][link-docs]   |
+| 3.x     | ✅ (current)                          | ❌                     |
+| 4.x     | ✅ ([in development][link-new-repo])  | ❌                     |
 
 ## Documentation
 
@@ -50,7 +50,7 @@ Thank you for considering contributing to the project. Please review the [CONTRI
 
 ## Credits
 
-- [Syed Irfaq R.][link-author]
+- [Irfaq Syed][link-author]
 - [All Contributors][link-contributors]
 
 ## Thanks
@@ -61,8 +61,8 @@ Thanks to these companies for providing access to their products that have been 
 
 ## Disclaimer
 
-This project and its author is neither associated, nor affiliated with [Telegram](https://telegram.org/) in anyway.
-See License section for more details.
+This project and its author are neither associated nor affiliated with [Telegram](https://telegram.org/) in any way. 
+Please see the [License][link-license] for more details.
 
 ## License
 
@@ -74,8 +74,6 @@ This project is released under the [BSD 3-Clause][link-license] License.
 [link-issues]: https://github.com/irazasyed/telegram-bot-sdk/issues
 [link-contributors]: https://github.com/irazasyed/telegram-bot-sdk/contributors
 [link-docs]: https://telegram-bot-sdk.readme.io/docs
-[link-license]: https://github.com/irazasyed/telegram-bot-sdk/blob/master/LICENSE
-[link-sdk-users]: https://github.com/irazasyed/telegram-bot-sdk/wiki/Who's-Using-Telegram-Bot-SDK%3F
-[link-jetbrains]: https://www.jetbrains.com/?from=telegram-bot-sdk
+[link-license]: https://github.com/irazasyed/telegram-bot-sdk/blob/develop/LICENSE.md
 [link-telegram-bot-api]: https://core.telegram.org/bots
 [link-awesome-telegram-bots]: https://github.com/telegram-bot-sdk/awesome-telegram-bots

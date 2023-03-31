@@ -334,13 +334,10 @@ trait Message
      *
      * @link https://core.telegram.org/bots/api#sendmediagroup
      *
-     * @return MessageObject
-     *
      * @throws TelegramSDKException
-     *
      * //TODO Check this return type.
      */
-    public function sendMediaGroup(array $params)
+    public function sendMediaGroup(array $params): MessageObject
     {
         $response = $this->uploadFile('sendMediaGroup', $params, 'media');
 
@@ -445,7 +442,7 @@ trait Message
     {
         $params['options'] = is_string($params['options'])
             ? $params['options']
-            : json_encode($params['options']);
+            : json_encode($params['options'], JSON_THROW_ON_ERROR);
         $response = $this->post('sendPoll', $params);
 
         return new MessageObject($response->getDecodedBody());

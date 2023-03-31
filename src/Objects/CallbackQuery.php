@@ -19,8 +19,10 @@ class CallbackQuery extends BaseObject
 {
     /**
      * {@inheritdoc}
+     *
+     * @return array{from: string, message: string}
      */
-    public function relations()
+    public function relations(): array
     {
         return [
             'from' => User::class,

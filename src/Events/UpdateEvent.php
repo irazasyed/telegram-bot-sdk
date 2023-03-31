@@ -2,36 +2,28 @@
 
 namespace Telegram\Bot\Events;
 
-use League\Event\AbstractEvent;
+use League\Event\HasEventName;
 use Telegram\Bot\Api;
 use Telegram\Bot\Objects\Update;
 
-final class UpdateEvent extends AbstractEvent
+final class UpdateEvent implements HasEventName
 {
-    public const NAME = 'update';
-
     /**
-     * @deprecated Will be removed in SDK v4
-     *
      * @var string
      */
-    private $name;
+    public const NAME = 'update';
 
-    /** @var \Telegram\Bot\Api */
-    public $telegram;
-
-    /** @var \Telegram\Bot\Objects\Update */
-    public $update;
-
-    public function __construct(Api $telegram, Update $update, string $name = self::NAME)
-    {
-        $this->telegram = $telegram;
-        $this->update = $update;
-        $this->name = $name;
+    public function __construct(
+        public Api $telegram,
+        public Update $update,
+        /**
+         * @deprecated Will be removed in SDK v4
+         */
+        private string $name = self::NAME
+    ) {
     }
 
-    /** {@inheritDoc} */
-    public function getName(): string
+    public function eventName(): string
     {
         return $this->name;
     }

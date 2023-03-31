@@ -10,7 +10,7 @@ namespace Telegram\Bot\Objects;
 class VoiceChatStarted extends BaseObject
 {
     /** {@inheritDoc} */
-    public function relations()
+    public function relations(): array
     {
         return [];
     }

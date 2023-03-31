@@ -5,36 +5,35 @@ namespace Telegram\Bot\Commands;
 /**
  * Class HelpCommand.
  */
-class HelpCommand extends Command
+final class HelpCommand extends Command
 {
     /**
      * @var string Command Name
      */
-    protected $name = 'help';
+    protected string $name = 'help';
 
     /**
      * @var array Command Aliases
      */
-    protected $aliases = ['listcommands'];
+    protected array $aliases = ['listcommands'];
 
     /**
      * @var string Command Description
      */
-    protected $description = 'Help command, Get a list of commands';
+    protected string $description = 'Help command, Get a list of commands';
 
     /**
      * {@inheritdoc}
      */
-    public function handle()
+    public function handle(): void
     {
-        $commands = $this->telegram->getCommands();
+        $commands = $this->telegram->getCommandBus()->getCommands();
 
         $text = '';
         foreach ($commands as $name => $handler) {
-            /* @var Command $handler */
             $text .= sprintf('/%s - %s'.PHP_EOL, $name, $handler->getDescription());
         }
 
-        $this->replyWithMessage(compact('text'));
+        $this->replyWithMessage(['text' => $text]);
     }
 }

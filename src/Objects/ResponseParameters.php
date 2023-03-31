@@ -14,7 +14,7 @@ namespace Telegram\Bot\Objects;
  */
 class ResponseParameters extends BaseObject
 {
-    public function relations()
+    public function relations(): array
     {
         return [];
     }

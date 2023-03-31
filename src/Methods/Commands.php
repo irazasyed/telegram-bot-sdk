@@ -34,7 +34,7 @@ trait Commands
     {
         $params['commands'] = is_string($params['commands'])
             ? $params['commands']
-            : json_encode($params['commands']);
+            : json_encode($params['commands'], JSON_THROW_ON_ERROR);
 
         return $this->post('setMyCommands', $params)->getResult();
     }
@@ -51,7 +51,7 @@ trait Commands
      *
      * @link https://core.telegram.org/bots/api#deletemycommands
      *
-     * @param  array|null  $params
+     * @param  mixed[]  $params
      */
     public function deleteMyCommands(array $params = []): bool
     {

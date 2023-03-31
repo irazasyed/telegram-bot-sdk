@@ -33,8 +33,10 @@ class ChatMember extends BaseObject
 {
     /**
      * {@inheritdoc}
+     *
+     * @return array{user: string}
      */
-    public function relations()
+    public function relations(): array
     {
         return [
             'user' => User::class,

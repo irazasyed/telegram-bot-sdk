@@ -1,30 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.5/phpunit.xsd"
-         bootstrap="vendor/autoload.php"
+         xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
          backupGlobals="false"
          backupStaticAttributes="false"
+         bootstrap="vendor/autoload.php"
          colors="true"
-         verbose="true"
-         cacheResultFile=".phpunit.cache/test-results"
-         executionOrder="depends,defects"
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true"
+         processIsolation="false"
+         stopOnFailure="false"
+         executionOrder="random"
+         failOnWarning="true"
+         failOnRisky="true"
+         failOnEmptyTestSuite="true"
          forceCoversAnnotation="false"
          beStrictAboutCoversAnnotation="false"
          beStrictAboutOutputDuringTests="true"
          beStrictAboutTodoAnnotatedTests="true"
          convertDeprecationsToExceptions="true"
-         failOnRisky="false"
-         failOnWarning="false">
-    <coverage
-        cacheDirectory=".phpunit.cache/code-coverage"
-        processUncoveredFiles="true">
-        <include>
-            <directory suffix=".php">src</directory>
-        </include>
-    </coverage>
-    <testsuites>
-        <testsuite name="Telegram Bot SDK Test Suite">
-            <directory suffix="Test.php">tests</directory>
-        </testsuite>
-    </testsuites>
+         verbose="true">
+<testsuites>
+    <testsuite name="Telegram Bot SDK Test Suite">
+        <directory suffix=".php">tests</directory>
+    </testsuite>
+</testsuites>
+<coverage>
+    <include>
+        <directory suffix=".php">src</directory>
+    </include>
+</coverage>
 </phpunit>

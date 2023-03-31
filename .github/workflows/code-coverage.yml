@@ -1,0 +1,47 @@
+name: Unit test coverage
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '**.php'
+      - 'composer.json'
+      - 'phpunit.xml.dist'
+      - 'code-coverage.yml'
+  pull_request:
+    paths:
+      - '**.php'
+      - 'composer.json'
+      - 'phpunit.xml.dist'
+      - 'code-coverage.yml'
+
+jobs:
+  coverage:
+    if: (github.repository == 'irazasyed/telegram-bot-sdk') && !contains(github.event.head_commit.message, 'skip ci')
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "latest"
+          coverage: pcov
+
+      - name: Install dependencies
+        uses: ramsey/composer-install@v2
+        with:
+          composer-options: "--prefer-dist"
+
+      - name: Execute tests
+        run: vendor/bin/pest --coverage --coverage-clover build/pest.xml
+
+      - name: Upload to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: build/pest.xml
+          verbose: true

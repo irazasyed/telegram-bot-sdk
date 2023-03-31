@@ -18,14 +18,12 @@ namespace Telegram\Bot\Keyboard;
  *
  * @extends Base<TKey, TValue>
  */
-class Button extends Base
+final class Button extends Base
 {
     /**
      * Button Label Text.
-     *
-     * @param  string  $text
      */
-    public function setText($text): self
+    public function setText(string $text): self
     {
         $this->items['text'] = $text;
 

@@ -2,12 +2,10 @@
 
 namespace Telegram\Bot\Tests\Traits;
 
-use Guzzle\Http\Exception\RequestException;
 use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Middleware;
-use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use Illuminate\Support\Collection;
 use Telegram\Bot\HttpClients\GuzzleHttpClient;
@@ -17,25 +15,17 @@ trait GuzzleMock
     /**
      * This collection contains a history of all requests and responses
      * sent using the client.
-     *
-     * @var array
      */
-    protected $history = [];
+    protected array $history = [];
 
-    /**
-     * @return GuzzleHttpClient
-     */
-    public function getGuzzleHttpClient(array $responsesToQueue = [])
+    public function getGuzzleHttpClient(array $responsesToQueue = []): GuzzleHttpClient
     {
         $client = $this->createClientWithQueuedResponse($responsesToQueue);
 
         return new GuzzleHttpClient($client);
     }
 
-    /**
-     * @return Client
-     */
-    protected function createClientWithQueuedResponse(array $responsesToQueue)
+    protected function createClientWithQueuedResponse(array $responsesToQueue): Client
     {
         $this->history = [];
         $handler = HandlerStack::create(new MockHandler($responsesToQueue));
@@ -44,13 +34,7 @@ trait GuzzleMock
         return new Client(['handler' => $handler]);
     }
 
-    /**
-     * @param  array|bool  $data
-     * @param  int  $status_code
-     * @param  array  $headers
-     * @return Response
-     */
-    public function makeFakeServerResponse($data, $status_code = 200, $headers = [])
+    public function makeFakeServerResponse(bool|array $data, int $status_code = 200, array $headers = []): Response
     {
         return new Response(
             $status_code,
@@ -62,7 +46,7 @@ trait GuzzleMock
         );
     }
 
-    public function makeFakeInboundUpdate(array $data, $status_code = 200, $headers = [])
+    public function makeFakeInboundUpdate(array $data, $status_code = 200, $headers = []): Response
     {
         return new Response(
             $status_code,
@@ -76,7 +60,7 @@ trait GuzzleMock
         return collect($this->history);
     }
 
-    protected function makeFakeServerErrorResponse($error_code, $description, $status_code = 200, $headers = [])
+    protected function makeFakeServerErrorResponse($error_code, $description, $status_code = 200, $headers = []): Response
     {
         return new Response(
             $status_code,
@@ -84,7 +68,7 @@ trait GuzzleMock
             json_encode([
                 'ok' => false,
                 'error_code' => $error_code,
-                'description' => "$description",
+                'description' => sprintf('%s', $description),
             ])
         );
     }
