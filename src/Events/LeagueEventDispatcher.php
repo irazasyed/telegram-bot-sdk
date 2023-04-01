@@ -2,6 +2,8 @@
 
 namespace Telegram\Bot\Events;
 
-class LeagueEventDispatcher extends \League\Event\EventDispatcher implements EventDispatcherListenerContract
+use League\Event\EventDispatcher;
+
+class LeagueEventDispatcher extends EventDispatcher implements EventDispatcherListenerContract
 {
 }

@@ -8,7 +8,7 @@ use Telegram\Bot\Objects\Update;
 /**
  * Class UpdateWasReceived.
  */
-class UpdateWasReceived extends AbstractEvent implements HasEventName
+final class UpdateWasReceived extends AbstractEvent implements HasEventName
 {
     /**
      * UpdateWasReceived constructor.
@@ -24,6 +24,6 @@ class UpdateWasReceived extends AbstractEvent implements HasEventName
      */
     public function getName(): string
     {
-        return static::class;
+        return self::class;
     }
 }

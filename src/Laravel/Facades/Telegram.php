@@ -28,9 +28,10 @@ use Telegram\Bot\BotsManager;
  * @method static void hasMacro($name)
  * @method static void flushMacros()
  * @method static void macroCall($method, $parameters)
+ * @method static void useEventDispatcher(\Telegram\Bot\Events\EventDispatcherListenerContract $emitter)
+ * @method static \Telegram\Bot\Events\EventDispatcherListenerContract eventDispatcher()
  * @method static bool hasEventDispatcher()
- * @method static void useEventDispatcher(\League\Event\EventDispatcher $emitter)
- * @method static \League\Event\EventDispatcher eventDispatcher()
+ * @method static void on(string $event, callable $listener, int $priority = 0)
  * @method static \Telegram\Bot\Api setAsyncRequest(bool $isAsyncRequest)
  * @method static \Telegram\Bot\Api setHttpClientHandler(\Telegram\Bot\HttpClients\HttpClientInterface $httpClientHandler)
  * @method static \Telegram\Bot\Api setBaseBotUrl(string $baseBotUrl)
@@ -142,6 +143,7 @@ use Telegram\Bot\BotsManager;
  * @method static \Telegram\Bot\Commands\CommandBus addCommand(\Telegram\Bot\Commands\CommandInterface|string $command)
  * @method static \Telegram\Bot\Commands\CommandBus removeCommand(string $name)
  * @method static \Telegram\Bot\Commands\CommandBus removeCommands(array $names)
+ *
  */
 final class Telegram extends Facade
 {
