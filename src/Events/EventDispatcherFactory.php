@@ -16,4 +16,3 @@ class EventDispatcherFactory
         return new Emitter();
     }
 }
-

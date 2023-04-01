@@ -14,4 +14,3 @@ class Emitter extends \League\Event\Emitter implements EventDispatcherListenerCo
         return $this->emit($event);
     }
 }
-

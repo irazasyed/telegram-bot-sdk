@@ -15,7 +15,7 @@ if (class_exists(\League\Event\AbstractEvent::class)) {
     {
         public function eventName(): string
         {
-            if(method_exists($this, 'getName')) {
+            if (method_exists($this, 'getName')) {
                 return $this->getName();
             }
 
@@ -23,4 +23,3 @@ if (class_exists(\League\Event\AbstractEvent::class)) {
         }
     }
 }
-
