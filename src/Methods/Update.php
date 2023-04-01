@@ -206,7 +206,7 @@ trait Update
 
         $dispatcher = $this->eventDispatcher();
 
-        $dispatcher->dispatch(new UpdateWasReceived($update, $this));
+        $dispatcher->dispatch(new UpdateWasReceived($this, $update));
         $dispatcher->dispatch(new UpdateEvent($this, $update));
 
         $updateType = $update->objectType();

@@ -2,39 +2,33 @@
 
 namespace Telegram\Bot\Events;
 
-use League\Event\HasEventName;
 use Telegram\Bot\Api;
 use Telegram\Bot\Objects\Update;
 
 /**
  * Class UpdateWasReceived.
  */
-final class UpdateWasReceived implements HasEventName
+final class UpdateWasReceived extends AbstractEvent
 {
-    /**
-     * @var string
-     */
-    private const NAME = 'update.received';
-
     /**
      * UpdateWasReceived constructor.
      */
-    public function __construct(private Update $update, private Api $telegram)
+    public function __construct(public Api $telegram, public Update $update)
     {
-    }
-
-    public function update(): Update
-    {
-        return $this->update;
-    }
-
-    public function telegram(): Api
-    {
-        return $this->telegram;
     }
 
     public function eventName(): string
     {
-        return self::NAME;
+        return self::class;
+    }
+
+    /**
+     * Backwards compatibility method
+     *
+     * @deprecated use eventName instead
+     */
+    public function getName(): string
+    {
+        return self::class;
     }
 }

@@ -26,8 +26,9 @@
     "guzzlehttp/guzzle": "^7.4.5",
     "guzzlehttp/psr7": "^2.4",
     "illuminate/support": "9 - 10",
-    "league/event": "^3.0",
-    "psr/container": "^2.0"
+    "league/event": "^2.2 || ^3.0",
+    "psr/container": "^2.0",
+    "psr/event-dispatcher": "^1.0"
   },
   "require-dev": {
     "irazasyed/docgen": "^0.2",

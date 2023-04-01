@@ -2,11 +2,10 @@
 
 namespace Telegram\Bot\Events;
 
-use League\Event\HasEventName;
 use Telegram\Bot\Api;
 use Telegram\Bot\Objects\Update;
 
-final class UpdateEvent implements HasEventName
+final class UpdateEvent extends AbstractEvent implements HasEventName
 {
     /**
      * @var string
@@ -19,11 +18,16 @@ final class UpdateEvent implements HasEventName
         /**
          * @deprecated Will be removed in SDK v4
          */
-        private string $name = self::NAME
+        protected string $name = self::NAME
     ) {
     }
 
     public function eventName(): string
+    {
+        return $this->name;
+    }
+
+    public function getName(): string
     {
         return $this->name;
     }
