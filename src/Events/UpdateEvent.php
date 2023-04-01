@@ -2,11 +2,10 @@
 
 namespace Telegram\Bot\Events;
 
-use League\Event\HasEventName;
 use Telegram\Bot\Api;
 use Telegram\Bot\Objects\Update;
 
-final class UpdateEvent implements HasEventName
+final class UpdateEvent extends UpdateWasReceived
 {
     /**
      * @var string
@@ -14,16 +13,17 @@ final class UpdateEvent implements HasEventName
     public const NAME = 'update';
 
     public function __construct(
-        public Api $telegram,
-        public Update $update,
+        Api $telegram,
+        Update $update,
         /**
          * @deprecated Will be removed in SDK v4
          */
-        private string $name = self::NAME
+        protected string $name = self::NAME
     ) {
+        parent::__construct($telegram, $update);
     }
 
-    public function eventName(): string
+    public function getName(): string
     {
         return $this->name;
     }

@@ -21,7 +21,7 @@ class Base extends Collection
      * @param  string  $method
      * @return $this
      */
-    public function __call($method, array $parameters)
+    public function __call($method, $parameters)
     {
         if (! Str::startsWith($method, 'set')) {
             return parent::__call($method, $parameters);
