@@ -8,13 +8,18 @@ use Telegram\Bot\Objects\Update;
 /**
  * Class UpdateWasReceived.
  */
-final class UpdateWasReceived extends AbstractEvent implements HasEventName
+final class UpdateWasReceived extends AbstractEvent
 {
     /**
      * UpdateWasReceived constructor.
      */
     public function __construct(public Api $telegram, public Update $update)
     {
+    }
+
+    public function eventName(): string
+    {
+        return self::class;
     }
 
     /**

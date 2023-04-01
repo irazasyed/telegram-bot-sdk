@@ -310,14 +310,16 @@ test('check the webhook works and can dispatch an event', function () {
     $update = $api->getWebhookUpdate(true, $incomeWebhookRequest);
 
     expect($update)->toBeEmpty()
-        ->and($listener->numberOfTimeCalled())->toBe(2); // TODO: 2 or 1? Supposed to be one.
+        ->and($listener->numberOfTimeCalled())->toBe(1);
 });
 
 it('dispatches 3 events of update event type', function () {
     $listener = new ListenerSpy();
 
     $api = api($this->httpClient);
-    $api->on(UpdateEvent::class, $listener);
+    $api->on('update', $listener);
+    $api->on('message', $listener);
+    $api->on('message.text', $listener);
 
     $incomeWebhookRequest = createIncomeWebhookRequestInstance([
         'message' => [ // to help SDK to detect Update of "message" type and send 2nd event (with name "message")

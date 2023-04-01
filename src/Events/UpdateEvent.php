@@ -22,6 +22,11 @@ final class UpdateEvent extends AbstractEvent implements HasEventName
     ) {
     }
 
+    public function eventName(): string
+    {
+        return $this->name;
+    }
+
     public function getName(): string
     {
         return $this->name;

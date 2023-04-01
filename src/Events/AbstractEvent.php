@@ -13,13 +13,5 @@ if (class_exists(\League\Event\AbstractEvent::class)) {
 } else {
     abstract class AbstractEvent
     {
-        public function eventName(): string
-        {
-            if (method_exists($this, 'getName')) {
-                return $this->getName();
-            }
-
-            return static::class;
-        }
     }
 }
