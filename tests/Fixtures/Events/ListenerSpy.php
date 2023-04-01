@@ -2,8 +2,6 @@
 
 namespace Telegram\Bot\Tests\Fixtures\Events;
 
-use League\Event\Listener;
-
 class ListenerSpy
 {
     public array $events = [];
