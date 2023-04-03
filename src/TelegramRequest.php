@@ -15,10 +15,10 @@ final class TelegramRequest
     private ?string $accessToken;
 
     /** @var string The HTTP method for this request. */
-    private string $method;
+    private ?string $method;
 
     /** @var string The API endpoint for this request. */
-    private string $endpoint;
+    private ?string $endpoint;
 
     /** @var array The headers to send with this request. */
     private array $headers = [];
@@ -87,7 +87,7 @@ final class TelegramRequest
     /**
      * Set the bot access token for this request.
      */
-    public function setAccessToken(string $accessToken): self
+    public function setAccessToken(string|null $accessToken): self
     {
         $this->accessToken = $accessToken;
 
@@ -121,7 +121,7 @@ final class TelegramRequest
     /**
      * Set the endpoint for this request.
      */
-    public function setEndpoint(string $endpoint): self
+    public function setEndpoint(string|null $endpoint): self
     {
         $this->endpoint = $endpoint;
 
@@ -189,7 +189,7 @@ final class TelegramRequest
     /**
      * Set the HTTP method for this request.
      */
-    public function setMethod(string $method): self
+    public function setMethod(string|null $method): self
     {
         $this->method = strtoupper($method);
 
