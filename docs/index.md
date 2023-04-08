@@ -1,3 +1,7 @@
+# WE'VE MOVED TO A NEW HOME
+
+> Please visit our new documentation site: [Telegram Bot SDK for PHP](https://telegram-bot-sdk.com)
+
 # Overview
 
 ## Introduction
