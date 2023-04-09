@@ -160,7 +160,7 @@ final class TelegramResponse
      */
     public function getResult()
     {
-        return $this->decodedBody['result'];
+        return $this->decodedBody['result'] ?? false;
     }
 
     /**
