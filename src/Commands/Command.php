@@ -39,7 +39,7 @@ abstract class Command implements CommandInterface
     /**
      * @var string
      */
-    private const OPTIONAL_BOT_NAME = '(?:@.+?bot)?\s+?';
+    private const OPTIONAL_BOT_NAME = '(?:\@[\w]*bot\b)?\s+';
 
     /**
      * Get the Command Name.
@@ -184,9 +184,10 @@ abstract class Command implements CommandInterface
         $optional = $this->extractVariableNames('/\{(\D\w+?)\?}/');
         $customRegex = $this->checkForCustomRegex($required, $optional);
 
-        //Generate the regex needed to search for this pattern
+        // Generate the regex needed to search for this pattern
         $regex = $this->prepareRegex($required, $optional, $customRegex);
-        preg_match($regex, $this->relevantMessageSubString(), $matches);
+
+        preg_match("/{$regex}/sixu", $this->relevantMessageSubString(), $matches);
 
         return $this->formatMatches($matches, $required, $optional);
     }
@@ -200,26 +201,29 @@ abstract class Command implements CommandInterface
 
     private function prepareRegex(Collection $required, Collection $optional, string $customRegex): string
     {
-        if ($customRegex !== '' && $customRegex !== '0') {
+        if ($customRegex !== '') {
             $customRegex = sprintf('(?P<custom>%s)', $customRegex);
         }
 
+        $namedCapturePattern = '(?P<%s>[^ ]++)';
         $requiredPattern = $required
-            ->map(static fn ($varName): string => sprintf('(?P<%s>[^ ]++)', $varName))
-            ->implode('\s+?');
+            ->map(static fn ($varName): string => sprintf($namedCapturePattern, $varName))
+            ->implode('\s*');
 
         $optionalPattern = $optional
-            ->map(static fn ($varName): string => sprintf('(?:\s+?(?P<%s>[^ ]++))?', $varName))
+            ->map(static fn ($varName): string => sprintf("\s*{$namedCapturePattern}?", $varName))
             ->implode('');
 
         if ($this->aliases === []) {
             $commandName = $this->name;
         } else {
             $names = array_merge([$this->name], $this->aliases);
-            $commandName = '(?:'.implode('|', $names).')';
+            $commandName = implode('|', $names);
         }
 
-        return sprintf('%%/%s%s%s%s%s%%si', $commandName, self::OPTIONAL_BOT_NAME, $requiredPattern, $optionalPattern, $customRegex);
+        $commandName = "(?:{$commandName})";
+
+        return sprintf('(?:\/)%s%s%s%s%s', $commandName, self::OPTIONAL_BOT_NAME, $requiredPattern, $optionalPattern, $customRegex);
     }
 
     private function formatMatches(array $matches, Collection $required, Collection $optional): array
@@ -237,9 +241,6 @@ abstract class Command implements CommandInterface
     private function checkForCustomRegex(Collection $required, Collection $optional): string
     {
         if ($this->pattern === '') {
-            return '';
-        }
-        if ($this->pattern === '0') {
             return '';
         }
         if (! $required->isEmpty()) {
