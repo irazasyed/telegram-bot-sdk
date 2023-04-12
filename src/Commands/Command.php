@@ -187,7 +187,7 @@ abstract class Command implements CommandInterface
         // Generate the regex needed to search for this pattern
         $regex = $this->prepareRegex($required, $optional, $customRegex);
 
-        preg_match("/{$regex}/sixu", $this->relevantMessageSubString(), $matches);
+        preg_match("%{$regex}%sixu", $this->relevantMessageSubString(), $matches);
 
         return $this->formatMatches($matches, $required, $optional);
     }
