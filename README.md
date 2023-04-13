@@ -73,9 +73,9 @@ This project is released under the [BSD 3-Clause][link-license] License.
 [link-new-repo]: https://github.com/telegram-bot-sdk/telegram-bot-sdk
 [link-issues]: https://github.com/irazasyed/telegram-bot-sdk/issues
 [link-contributors]: https://github.com/irazasyed/telegram-bot-sdk/contributors
-[link-docs]: https://telegram-bot-sdk.com
-[link-v2-docs]: https://telegram-bot-sdk.com/docs/2.x
-[link-v3-docs]: https://telegram-bot-sdk.com
+[link-docs]: https://telegram-bot-sdk.com/
+[link-v2-docs]: https://telegram-bot-sdk.com/docs/2.x/
+[link-v3-docs]: https://telegram-bot-sdk.com/
 [link-license]: https://github.com/irazasyed/telegram-bot-sdk/blob/develop/LICENSE.md
 [link-telegram-bot-api]: https://core.telegram.org/bots
 [link-awesome-telegram-bots]: https://github.com/telegram-bot-sdk/awesome-telegram-bots
