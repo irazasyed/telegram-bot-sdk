@@ -171,12 +171,12 @@ abstract class Command implements CommandInterface
 
     private function makeRegexPattern(): array
     {
-        $pattern = '#\{(?<argument>\D\w+?)}|\{\s*(?<regex>\S+)\s*:\s*(?<pattern>.+)\s*}#';
+        $pattern = '#\{\s*(?<name>\w+)\s*(?::\s*(?<pattern>\S+)\s*)?\}#';
         preg_match_all(pattern: $pattern, subject: $this->pattern, matches: $matches, flags: PREG_SET_ORDER);
 
         $patterns = collect($matches)
             ->mapWithKeys(function ($match) {
-                $name = $match['regex'] ?? $match['argument'] ?? null;
+                $name = $match['name'] ?? null;
 
                 if ($name === null) {
                     return [];
