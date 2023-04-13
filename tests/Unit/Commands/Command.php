@@ -125,6 +125,7 @@ test('a command with more required pattern variables than exists in update messa
         'fname' => 'John',
         'lname' => 'Doe',
         'age' => '77',
+        'weight' => null,
     ]);
 });
 
@@ -212,5 +213,8 @@ it('checks the arguments can be detected in a message with multiple commands tha
     //This command should not be triggered for entity "2". But if it is, the arguments should be blank.
     $entity2 = $update->getMessage()->entities->get(2)->toArray();
     $this->command->make($this->api, $update, $entity2);
-    expect($this->command->getArguments())->toEqual([]);
+    expect($this->command->getArguments())->toEqual([
+        'fname' => null,
+        'lname' => null,
+    ]);
 });
