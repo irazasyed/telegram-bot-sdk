@@ -2,11 +2,11 @@
 
 namespace Telegram\Bot\Commands;
 
+use Telegram\Bot\Api;
+use Telegram\Bot\Objects\Update;
 use Illuminate\Support\Collection;
 use Telegram\Bot\Answers\Answerable;
-use Telegram\Bot\Api;
 use Telegram\Bot\Objects\MessageEntity;
-use Telegram\Bot\Objects\Update;
 
 /**
  * Class Command.
@@ -16,30 +16,24 @@ abstract class Command implements CommandInterface
     use Answerable;
 
     /**
+     * @var string
+     */
+    private const OPTIONAL_BOT_NAME = '(?:\@[\w]*bot\b)?\s+';
+    /**
      * The name of the Telegram command.
      * Ex: help - Whenever the user sends /help, this would be resolved.
      */
     protected string $name;
-
     /** @var string[] Command Aliases - Helpful when you want to trigger command with more than one name. */
     protected array $aliases = [];
-
     /** @var string The Telegram command description. */
     protected string $description;
-
     /** @var array Holds parsed command arguments */
     protected array $arguments = [];
-
     /** @var string Command Argument Pattern */
     protected string $pattern = '';
-
     /** @var array|null Details of the current entity this command is responding to - offset, length, type etc */
     protected ?array $entity;
-
-    /**
-     * @var string
-     */
-    private const OPTIONAL_BOT_NAME = '(?:\@[\w]*bot\b)?\s+';
 
     /**
      * Get the Command Name.
@@ -154,103 +148,42 @@ abstract class Command implements CommandInterface
     }
 
     /**
-     * {@inheritdoc}
-     */
-    abstract public function handle();
-
-    /**
-     * Helper to Trigger other Commands.
-     */
-    protected function triggerCommand(string $command): mixed
-    {
-        return $this->getCommandBus()->execute($command, $this->update, $this->entity);
-    }
-
-    /**
-     * Returns an instance of Command Bus.
-     */
-    public function getCommandBus(): CommandBus
-    {
-        return $this->telegram->getCommandBus();
-    }
-
-    /**
      * Parse Command Arguments.
      */
     protected function parseCommandArguments(): array
     {
-        //Extract variable names from the supplied pattern
-        $required = $this->extractVariableNames('/\{(\D\w+?)}/');
-        $optional = $this->extractVariableNames('/\{(\D\w+?)\?}/');
-        $customRegex = $this->checkForCustomRegex($required, $optional);
-
         // Generate the regex needed to search for this pattern
-        $regex = $this->prepareRegex($required, $optional, $customRegex);
+        $regex = $this->makeRegexPattern();
 
-        preg_match("%{$regex}%sixu", $this->relevantMessageSubString(), $matches);
+        preg_match("%{$regex[0]}%sixu", $this->relevantMessageSubString(), $matches);
 
-        return $this->formatMatches($matches, $required, $optional);
+        return $this->formatMatches($matches, $regex[1]);
     }
 
-    private function extractVariableNames(string $regex): Collection
+    private function makeRegexPattern(): array
     {
-        preg_match_all($regex, $this->pattern, $matches);
+        $pattern = '#\{(?<argument>\D\w+?)}|\{\s*(?<regex>\S+)\s*:\s*(?<pattern>.+)\s*}#';
+        preg_match_all(pattern: $pattern, subject: $this->pattern, matches: $matches, flags: PREG_SET_ORDER);
 
-        return collect($matches[1]);
-    }
+        $patterns = collect($matches)
+            ->mapWithKeys(function ($match) {
+                $name = $match['regex'] ?? $match['argument'] ?? null;
 
-    private function prepareRegex(Collection $required, Collection $optional, string $customRegex): string
-    {
-        if ($customRegex !== '') {
-            $customRegex = sprintf('(?P<custom>%s)', $customRegex);
-        }
+                if ($name === null) {
+                    return [];
+                }
 
-        $namedCapturePattern = '(?P<%s>[^ ]++)';
-        $requiredPattern = $required
-            ->map(static fn ($varName): string => sprintf($namedCapturePattern, $varName))
-            ->implode('\s*');
+                $pattern = $match['pattern'] ?? '[^ ]++';
 
-        $optionalPattern = $optional
-            ->map(static fn ($varName): string => sprintf("\s*{$namedCapturePattern}?", $varName))
-            ->implode('');
+                return [$name => "(?<$name>$pattern)?"];
+            })
+            ->filter();
 
-        if ($this->aliases === []) {
-            $commandName = $this->name;
-        } else {
-            $names = array_merge([$this->name], $this->aliases);
-            $commandName = implode('|', $names);
-        }
+        $commandName = ($this->aliases === []) ? $this->name : implode('|', [$this->name, ...$this->aliases]);
 
-        $commandName = "(?:{$commandName})";
+        $pattern = sprintf('(?:\/)%s%s%s', "(?:{$commandName})", self::OPTIONAL_BOT_NAME, $patterns->implode('\s*'));
 
-        return sprintf('(?:\/)%s%s%s%s%s', $commandName, self::OPTIONAL_BOT_NAME, $requiredPattern, $optionalPattern, $customRegex);
-    }
-
-    private function formatMatches(array $matches, Collection $required, Collection $optional): array
-    {
-        return collect($matches)
-            ->intersectByKeys(
-                $required
-                    ->merge($optional)
-                    // incase this was a custom regex search we need to add a custom key
-                    ->push('custom')
-                    ->flip()
-            )->all();
-    }
-
-    private function checkForCustomRegex(Collection $required, Collection $optional): string
-    {
-        if ($this->pattern === '') {
-            return '';
-        }
-        if (! $required->isEmpty()) {
-            return '';
-        }
-        if (! $optional->isEmpty()) {
-            return '';
-        }
-
-        return $this->pattern;
+        return [$pattern, $patterns->keys()->toArray()];
     }
 
     private function relevantMessageSubString(): bool|string
@@ -271,6 +204,19 @@ abstract class Command implements CommandInterface
         return $splice->count() === 2 ? $this->cutTextBetween($splice) : $this->cutTextFrom($splice);
     }
 
+    private function allCommandOffsets(): Collection
+    {
+        $message = $this->getUpdate()
+            ->getMessage();
+
+        return $message->hasCommand() ?
+            $message
+                ->get('entities', collect())
+                ->filter(static fn(MessageEntity $entity): bool => $entity->type === 'bot_command')
+                ->pluck('offset') :
+            collect();
+    }
+
     private function cutTextBetween(Collection $splice): string
     {
         return substr(
@@ -288,16 +234,38 @@ abstract class Command implements CommandInterface
         );
     }
 
-    private function allCommandOffsets(): Collection
+    private function formatMatches(array $matches, array $argKeys): array
     {
-        $message = $this->getUpdate()
-            ->getMessage();
+        $formattedMatches = collect($matches)
+            ->filter(static fn($match, $key): bool => is_string($key))
+            ->map(static fn($match): string => trim($match))
+            ->filter()
+            ->all();
 
-        return $message->hasCommand() ?
-            $message
-                ->get('entities', collect())
-                ->filter(static fn (MessageEntity $entity): bool => $entity->type === 'bot_command')
-                ->pluck('offset') :
-            collect();
+        return array_merge(
+            array_fill_keys($argKeys, null),
+            $formattedMatches
+        );
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    abstract public function handle();
+
+    /**
+     * Helper to Trigger other Commands.
+     */
+    protected function triggerCommand(string $command): mixed
+    {
+        return $this->getCommandBus()->execute($command, $this->update, $this->entity);
+    }
+
+    /**
+     * Returns an instance of Command Bus.
+     */
+    public function getCommandBus(): CommandBus
+    {
+        return $this->telegram->getCommandBus();
     }
 }
