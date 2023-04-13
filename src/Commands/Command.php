@@ -192,7 +192,7 @@ abstract class Command implements CommandInterface
 
         $pattern = sprintf('(?:\/)%s%s%s', "(?:{$commandName})", self::OPTIONAL_BOT_NAME, $patterns->implode('\s*'));
 
-        return [$pattern, $patterns->keys()->toArray()];
+        return [$pattern, $patterns->keys()->all()];
     }
 
     private function relevantMessageSubString(): bool|string
