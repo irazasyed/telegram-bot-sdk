@@ -102,9 +102,12 @@ abstract class Command implements CommandInterface
         return $this;
     }
 
+    public function argument(string $name, mixed $default = null): mixed
+    {
+        return $this->arguments[$name] ?? $default;
+    }
+
     /**
-     * Get Arguments Description.
-     *
      * Get Command Arguments.
      */
     public function getArguments(): array
