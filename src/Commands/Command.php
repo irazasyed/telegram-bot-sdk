@@ -2,11 +2,11 @@
 
 namespace Telegram\Bot\Commands;
 
-use Telegram\Bot\Api;
-use Telegram\Bot\Objects\Update;
 use Illuminate\Support\Collection;
 use Telegram\Bot\Answers\Answerable;
+use Telegram\Bot\Api;
 use Telegram\Bot\Objects\MessageEntity;
+use Telegram\Bot\Objects\Update;
 
 /**
  * Class Command.
@@ -19,19 +19,25 @@ abstract class Command implements CommandInterface
      * @var string
      */
     private const OPTIONAL_BOT_NAME = '(?:\@[\w]*bot\b)?\s+';
+
     /**
      * The name of the Telegram command.
      * Ex: help - Whenever the user sends /help, this would be resolved.
      */
     protected string $name;
+
     /** @var string[] Command Aliases - Helpful when you want to trigger command with more than one name. */
     protected array $aliases = [];
+
     /** @var string The Telegram command description. */
     protected string $description;
+
     /** @var array Holds parsed command arguments */
     protected array $arguments = [];
+
     /** @var string Command Argument Pattern */
     protected string $pattern = '';
+
     /** @var array|null Details of the current entity this command is responding to - offset, length, type etc */
     protected ?array $entity;
 
@@ -212,7 +218,7 @@ abstract class Command implements CommandInterface
         return $message->hasCommand() ?
             $message
                 ->get('entities', collect())
-                ->filter(static fn(MessageEntity $entity): bool => $entity->type === 'bot_command')
+                ->filter(static fn (MessageEntity $entity): bool => $entity->type === 'bot_command')
                 ->pluck('offset') :
             collect();
     }
@@ -237,8 +243,8 @@ abstract class Command implements CommandInterface
     private function formatMatches(array $matches, array $argKeys): array
     {
         $formattedMatches = collect($matches)
-            ->filter(static fn($match, $key): bool => is_string($key))
-            ->map(static fn($match): string => trim($match))
+            ->filter(static fn ($match, $key): bool => is_string($key))
+            ->map(static fn ($match): string => trim($match))
             ->filter()
             ->all();
 
