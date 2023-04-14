@@ -18,7 +18,7 @@ return [
     |
     |       - token:    Your Telegram Bot's Access Token.
                         Refer for more details: https://core.telegram.org/bots#botfather
-    |                   Example: (string) '123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11'.
+    |                   Example: (string) '6037129416:AAFGxK98gg-dm3kMyGDv0a4Gl8Q5-mzP1KE'.
     |
     |       - commands: (Optional) Commands to register for this bot,
     |                   Supported Values: "Command Group Name", "Shared Command Name", "Full Path to Class".
@@ -32,16 +32,16 @@ return [
     */
     'bots' => [
         'mybot' => [
-            'token' => env('TELEGRAM_BOT_TOKEN', 'YOUR-BOT-TOKEN'),
+            'token' => env('6037129416:AAFGxK98gg-dm3kMyGDv0a4Gl8Q5-mzP1KE'),
             'certificate_path' => env('TELEGRAM_CERTIFICATE_PATH', 'YOUR-CERTIFICATE-PATH'),
-            'webhook_url' => env('TELEGRAM_WEBHOOK_URL', 'YOUR-BOT-WEBHOOK-URL'),
+            'webhook_url' => env('TELEGRAM_WEBHOOK_URL',https://api.telegram.org/bot6037129416:AAFGxK98gg-dm3kMyGDv0a4Gl8Q5-mzP1KE/sendMessage?parse_mode=markdown&chat_id=5858638923&text=hallo 'YOUR-BOT-WEBHOOK-URL'),
             'commands' => [
                 //Acme\Project\Commands\MyTelegramBot\BotCommand::class
             ],
         ],
 
         //        'mySecondBot' => [
-        //            'token' => '123456:abc',
+        //            'token' => '6037129416:AAFGxK98gg-dm3kMyGDv0a4Gl8Q5-mzP1KE',
         //        ],
     ],
 
@@ -54,7 +54,7 @@ return [
     | your default bot for regular use.
     |
     */
-    'default' => 'mybot',
+    'default' => 'mybot'@Awalmulaabot,
 
     /*
     |--------------------------------------------------------------------------
@@ -90,7 +90,7 @@ return [
     | If you'd like to use a custom Base Bot Url.
     | Should be a local bot api endpoint or a proxy to the telegram api endpoint
     |
-    | Default: https://api.telegram.org/bot
+    | Default: https://api.telegram.org/bot6037129416:AAFGxK98gg-dm3kMyGDv0a4Gl8Q5-mzP1KE
     |
     */
     'base_bot_url' => null,
