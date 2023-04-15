@@ -3,7 +3,6 @@
 namespace Telegram\Bot\Commands;
 
 use Illuminate\Support\Collection;
-use Illuminate\Support\Str;
 use Telegram\Bot\Answers\Answerable;
 use Telegram\Bot\Api;
 use Telegram\Bot\Objects\MessageEntity;
