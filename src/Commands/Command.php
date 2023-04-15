@@ -38,8 +38,8 @@ abstract class Command implements CommandInterface
     /** @var string Command Argument Pattern */
     protected string $pattern = '';
 
-    /** @var array|null Details of the current entity this command is responding to - offset, length, type etc */
-    protected ?array $entity;
+    /** @var array Details of the current entity this command is responding to - offset, length, type etc */
+    protected array $entity = [];
 
     /**
      * Get the Command Name.
@@ -168,12 +168,12 @@ abstract class Command implements CommandInterface
         // Generate the regex needed to search for this pattern
         $regex = $this->makeRegexPattern();
 
-        preg_match("%{$regex}%ixmu", $this->relevantMessageSubString(), $matches, PREG_UNMATCHED_AS_NULL);
+        preg_match("%{$regex[0]}%ixmu", $this->relevantMessageSubString(), $matches, PREG_UNMATCHED_AS_NULL);
 
-        return $this->formatMatches($matches);
+        return $this->formatMatches($matches, $regex[1]);
     }
 
-    private function makeRegexPattern(): string
+    private function makeRegexPattern(): array
     {
         preg_match_all(
             pattern: '#\{\s*(?<name>\w+)\s*(?::\s*(?<pattern>\S+)\s*)?}#ixmu',
@@ -198,7 +198,10 @@ abstract class Command implements CommandInterface
 
         $commandName = ($this->aliases === []) ? $this->name : implode('|', [$this->name, ...$this->aliases]);
 
-        return sprintf('(?:\/)%s%s%s', "(?:{$commandName})", self::OPTIONAL_BOT_NAME, $patterns->implode('\s*'));
+        return [
+            sprintf('(?:\/)%s%s%s', "(?:{$commandName})", self::OPTIONAL_BOT_NAME, $patterns->implode('\s*')),
+            $patterns->keys()->all(),
+        ];
     }
 
     private function relevantMessageSubString(): string
@@ -249,9 +252,11 @@ abstract class Command implements CommandInterface
         );
     }
 
-    private function formatMatches(array $matches): array
+    private function formatMatches(array $matches, array $arguments): array
     {
-        return array_filter($matches, 'is_string', ARRAY_FILTER_USE_KEY);
+        $matches = array_filter($matches, 'is_string', ARRAY_FILTER_USE_KEY);
+
+        return array_merge(array_fill_keys($arguments, null), $matches);
     }
 
     /**
