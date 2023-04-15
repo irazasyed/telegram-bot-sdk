@@ -2,6 +2,7 @@
 
 namespace Telegram\Bot\Commands;
 
+use Illuminate\Support\Str;
 use Illuminate\Support\Collection;
 use Telegram\Bot\Answers\Answerable;
 use Telegram\Bot\Api;
@@ -161,18 +162,26 @@ abstract class Command implements CommandInterface
      */
     protected function parseCommandArguments(): array
     {
+        if ($this->pattern === '') {
+            return [];
+        }
+
         // Generate the regex needed to search for this pattern
         $regex = $this->makeRegexPattern();
 
-        preg_match("%{$regex[0]}%sixu", $this->relevantMessageSubString(), $matches);
+        preg_match("%{$regex[0]}%six", $this->relevantMessageSubString(), $matches);
 
         return $this->formatMatches($matches, $regex[1]);
     }
 
     private function makeRegexPattern(): array
     {
-        $pattern = '#\{\s*(?<name>\w+)\s*(?::\s*(?<pattern>\S+)\s*)?\}#';
-        preg_match_all(pattern: $pattern, subject: $this->pattern, matches: $matches, flags: PREG_SET_ORDER);
+        preg_match_all(
+            pattern: '#\{\s*(?<name>\w+)\s*(?::\s*(?<pattern>\S+)\s*)?}#',
+            subject: $this->pattern,
+            matches: $matches,
+            flags: PREG_SET_ORDER
+        );
 
         $patterns = collect($matches)
             ->mapWithKeys(function ($match) {
@@ -190,18 +199,19 @@ abstract class Command implements CommandInterface
 
         $commandName = ($this->aliases === []) ? $this->name : implode('|', [$this->name, ...$this->aliases]);
 
-        $pattern = sprintf('(?:\/)%s%s%s', "(?:{$commandName})", self::OPTIONAL_BOT_NAME, $patterns->implode('\s*'));
-
-        return [$pattern, $patterns->keys()->all()];
+        return [
+            sprintf('(?:\/)%s%s%s', "(?:{$commandName})", self::OPTIONAL_BOT_NAME, $patterns->implode('\s*')),
+            $patterns->keys()->all()
+        ];
     }
 
-    private function relevantMessageSubString(): bool|string
+    private function relevantMessageSubString(): string
     {
         //Get all the bot_command offsets in the Update object
         $commandOffsets = $this->allCommandOffsets();
 
         if ($commandOffsets->isEmpty()) {
-            return $this->getUpdate()->getMessage()->text;
+            return $this->getUpdate()->getMessage()->text ?? '';
         }
 
         //Extract the current offset for this command and, if it exists, the offset of the NEXT bot_command entity
@@ -228,18 +238,19 @@ abstract class Command implements CommandInterface
 
     private function cutTextBetween(Collection $splice): string
     {
-        return substr(
+        return Str::between(
             $this->getUpdate()->getMessage()->text,
             $splice->first(),
-            $splice->last() - $splice->first()
+            $splice->last()
         );
     }
 
-    private function cutTextFrom(Collection $splice): string
+    private function cutTextFrom(Collection $splice, int $start = 0): string
     {
-        return substr(
+        return Str::substr(
             $this->getUpdate()->getMessage()->text,
-            $splice->first()
+            $splice->first(),
+            null
         );
     }
 
