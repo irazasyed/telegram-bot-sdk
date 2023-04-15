@@ -19,9 +19,8 @@ final class InputFile
      * Create a new InputFile entity.
      *
      * @param  string|resource|StreamInterface|null  $file
-     * @param  string|null  $filename
      */
-    public static function create($file = null, $filename = null): self
+    public static function create($file = null, ?string $filename = null): self
     {
         return new self($file, $filename);
     }
@@ -105,10 +104,8 @@ final class InputFile
      * stream_meta command to get information required.
      *
      * Note: We can only get here if the file is a resource or a stream.
-     *
-     * @return string|null
      */
-    private function getUriMetaDataFromStream()
+    private function getUriMetaDataFromStream(): ?string
     {
         $meta = is_resource($this->file) ? stream_get_meta_data($this->file) : $this->file->getMetadata();
 

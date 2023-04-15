@@ -14,10 +14,8 @@ final class TelegramRequest
     /** @var string|null The bot access token to use for this request. */
     private ?string $accessToken;
 
-    /** @var string The HTTP method for this request. */
     private ?string $method;
 
-    /** @var string The API endpoint for this request. */
     private ?string $endpoint;
 
     /** @var array The headers to send with this request. */
