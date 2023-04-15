@@ -11,6 +11,7 @@ use Telegram\Bot\Objects\LoginUrl;
  * // For Standard Keyboard
  * $params = [
  *   'keyboard'          => '',
+ *   'is_persistent'     => '',
  *   'resize_keyboard'   => '',
  *   'one_time_keyboard' => '',
  *   'selective'         => '',
@@ -26,6 +27,7 @@ use Telegram\Bot\Objects\LoginUrl;
  * ];
  * </code>
  *
+ * @method $this setIsPersistent($boolean)       Optional. Requests clients to always show the keyboard when the regular keyboard is hidden.
  * @method $this setResizeKeyboard($boolean)     Optional. Requests clients to resize the keyboard vertically for optimal fit.
  * @method $this setOneTimeKeyboard($boolean)    Optional. Requests clients to hide the keyboard as soon as it's been used.
  * @method $this setSelective($boolean)          Optional. Use this parameter if you want to show the keyboard to specific users only.
