@@ -168,7 +168,7 @@ abstract class Command implements CommandInterface
         // Generate the regex needed to search for this pattern
         $regex = $this->makeRegexPattern();
 
-        preg_match("%{$regex}%six", $this->relevantMessageSubString(), $matches, PREG_UNMATCHED_AS_NULL);
+        preg_match("%{$regex}%ixmu", $this->relevantMessageSubString(), $matches, PREG_UNMATCHED_AS_NULL);
 
         return $this->formatMatches($matches);
     }
@@ -176,7 +176,7 @@ abstract class Command implements CommandInterface
     private function makeRegexPattern(): string
     {
         preg_match_all(
-            pattern: '#\{\s*(?<name>\w+)\s*(?::\s*(?<pattern>\S+)\s*)?}#',
+            pattern: '#\{\s*(?<name>\w+)\s*(?::\s*(?<pattern>\S+)\s*)?}#ixmu',
             subject: $this->pattern,
             matches: $matches,
             flags: PREG_SET_ORDER
