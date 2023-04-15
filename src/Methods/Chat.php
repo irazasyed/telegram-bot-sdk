@@ -227,7 +227,7 @@ trait Chat
      */
     public function setChatPhoto(array $params): bool
     {
-        return $this->post('setChatPhoto', $params)->getResult();
+        return $this->uploadFile('setChatPhoto', $params, 'photo')->getResult();
     }
 
     /**
