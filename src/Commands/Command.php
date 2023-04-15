@@ -184,15 +184,11 @@ abstract class Command implements CommandInterface
 
         $patterns = collect($matches)
             ->mapWithKeys(function ($match) {
-                $name = $match['name'] ?? null;
-
-                if ($name === null) {
-                    return [];
-                }
-
                 $pattern = $match['pattern'] ?? '[^ ]++';
 
-                return [$name => "(?<$name>$pattern)?"];
+                return [
+                    $match['name'] => "(?<{$match['name']}>{$pattern})?",
+                ];
             })
             ->filter();
 
@@ -219,26 +215,28 @@ abstract class Command implements CommandInterface
             2
         );
 
-        return $splice->count() === 2 ? $this->cutTextBetween($splice) : $this->cutTextFrom($splice);
+        return match ($splice->count()) {
+            2 => $this->cutTextBetween($splice),
+            default => $this->cutTextFrom($splice),
+        };
     }
 
     private function allCommandOffsets(): Collection
     {
-        $message = $this->getUpdate()
-            ->getMessage();
+        $message = $this->getUpdate()->getMessage();
 
-        return $message->hasCommand() ?
-            $message
+        return $message->hasCommand()
+            ? $message
                 ->get('entities', collect())
                 ->filter(static fn (MessageEntity $entity): bool => $entity->type === 'bot_command')
-                ->pluck('offset') :
-            collect();
+                ->pluck('offset')
+            : collect();
     }
 
     private function cutTextBetween(Collection $splice): string
     {
-        return substr(
-            $this->getUpdate()->getMessage()->text,
+        return mb_substr(
+            $this->getUpdate()->getMessage()->text ?? '',
             $splice->first(),
             $splice->last() - $splice->first()
         );
@@ -246,8 +244,8 @@ abstract class Command implements CommandInterface
 
     private function cutTextFrom(Collection $splice): string
     {
-        return substr(
-            $this->getUpdate()->getMessage()->text,
+        return mb_substr(
+            $this->getUpdate()->getMessage()->text ?? '',
             $splice->first()
         );
     }
