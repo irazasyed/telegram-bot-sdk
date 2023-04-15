@@ -2,8 +2,8 @@
 
 namespace Telegram\Bot\Commands;
 
-use Illuminate\Support\Str;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 use Telegram\Bot\Answers\Answerable;
 use Telegram\Bot\Api;
 use Telegram\Bot\Objects\MessageEntity;
@@ -201,7 +201,7 @@ abstract class Command implements CommandInterface
 
         return [
             sprintf('(?:\/)%s%s%s', "(?:{$commandName})", self::OPTIONAL_BOT_NAME, $patterns->implode('\s*')),
-            $patterns->keys()->all()
+            $patterns->keys()->all(),
         ];
     }
 
