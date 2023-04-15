@@ -168,12 +168,12 @@ abstract class Command implements CommandInterface
         // Generate the regex needed to search for this pattern
         $regex = $this->makeRegexPattern();
 
-        preg_match("%{$regex[0]}%six", $this->relevantMessageSubString(), $matches);
+        preg_match("%{$regex}%six", $this->relevantMessageSubString(), $matches, PREG_UNMATCHED_AS_NULL);
 
-        return $this->formatMatches($matches, $regex[1]);
+        return $this->formatMatches($matches);
     }
 
-    private function makeRegexPattern(): array
+    private function makeRegexPattern(): string
     {
         preg_match_all(
             pattern: '#\{\s*(?<name>\w+)\s*(?::\s*(?<pattern>\S+)\s*)?}#',
@@ -198,10 +198,7 @@ abstract class Command implements CommandInterface
 
         $commandName = ($this->aliases === []) ? $this->name : implode('|', [$this->name, ...$this->aliases]);
 
-        return [
-            sprintf('(?:\/)%s%s%s', "(?:{$commandName})", self::OPTIONAL_BOT_NAME, $patterns->implode('\s*')),
-            $patterns->keys()->all(),
-        ];
+        return sprintf('(?:\/)%s%s%s', "(?:{$commandName})", self::OPTIONAL_BOT_NAME, $patterns->implode('\s*'));
     }
 
     private function relevantMessageSubString(): string
@@ -252,18 +249,9 @@ abstract class Command implements CommandInterface
         );
     }
 
-    private function formatMatches(array $matches, array $argKeys): array
+    private function formatMatches(array $matches): array
     {
-        $formattedMatches = collect($matches)
-            ->filter(static fn ($match, $key): bool => is_string($key))
-            ->map(static fn ($match): string => trim($match))
-            ->filter()
-            ->all();
-
-        return array_merge(
-            array_fill_keys($argKeys, null),
-            $formattedMatches
-        );
+        return array_filter($matches, 'is_string', ARRAY_FILTER_USE_KEY);
     }
 
     /**
