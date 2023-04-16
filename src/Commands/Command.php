@@ -166,11 +166,11 @@ abstract class Command implements CommandInterface
         }
 
         // Generate the regex needed to search for this pattern
-        $regex = $this->makeRegexPattern();
+        [$pattern, $arguments] = $this->makeRegexPattern();
 
-        preg_match("%{$regex[0]}%ixmu", $this->relevantMessageSubString(), $matches, PREG_UNMATCHED_AS_NULL);
+        preg_match("%{$pattern}%ixmu", $this->relevantMessageSubString(), $matches, PREG_UNMATCHED_AS_NULL);
 
-        return $this->formatMatches($matches, $regex[1]);
+        return $this->formatMatches($matches, $arguments);
     }
 
     private function makeRegexPattern(): array
