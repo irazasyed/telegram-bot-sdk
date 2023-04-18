@@ -58,7 +58,7 @@ final class InputFile
     /**
      * Set File.
      *
-     * @param string|resource|StreamInterface $file
+     * @param  string|resource|StreamInterface  $file
      */
     public function setFile(mixed $file): self
     {
@@ -144,8 +144,6 @@ final class InputFile
 
     /**
      * Set contents of the file.
-     *
-     *
      */
     public function setContents(string $contents): self
     {

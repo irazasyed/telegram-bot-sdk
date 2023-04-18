@@ -137,7 +137,6 @@ class CommandBus extends AnswerBus
         return Str::of($command)->explode('@')->first();
     }
 
-
     /**
      * Handles Inbound Messages and Executes Appropriate Command.
      */
@@ -191,11 +190,10 @@ class CommandBus extends AnswerBus
         $command = $this->commands[$name]
             ?? $this->commandAliases[$name]
             ?? $this->commands['help']
-            ?? collect($this->commands)->first(fn($command): bool => $command instanceof $name);
+            ?? collect($this->commands)->first(fn ($command): bool => $command instanceof $name);
 
         return $command?->make($this->telegram, $update, $entity) ?? false;
     }
-
 
     /**
      * @param  CommandInterface|class-string<CommandInterface>  $command

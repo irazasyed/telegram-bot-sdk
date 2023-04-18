@@ -89,7 +89,7 @@ test('the correct request query string is created when a get method has paramete
     $request = $this->getHistory()->pluck('request')->first();
 
     expect($request->getBody())->toEqual('') //'The get request had a body when it should be blank.'
-    ->and($request->getUri()->getScheme())->toEqual('https')
+        ->and($request->getUri()->getScheme())->toEqual('https')
         ->and($request->getUri()->getHost())->toEqual('api.telegram.org')
         ->and($request->getUri()->getPath())->toEqual('/botSpecial_Bot_Token/getChatMember')
         ->and($request->getUri()->getQuery())->toEqual('chat_id=123456789&user_id=888888888');

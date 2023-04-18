@@ -79,10 +79,10 @@ final class Actions
         return (new ReflectionClass(self::class))->getConstants();
     }
 
-    public static function isActionValid(string $action) : bool
+    public static function isActionValid(string $action): bool
     {
         $actions = self::all();
-        if(in_array($action, $actions, true)) {
+        if (in_array($action, $actions, true)) {
             return true;
         }
 
