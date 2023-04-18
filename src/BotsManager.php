@@ -166,7 +166,7 @@ final class BotsManager
         );
 
         // Check if DI needs to be enabled for Commands
-        if ($this->container !== null && $this->getConfig('resolve_command_dependencies', false)) {
+        if ($this->container instanceof ContainerInterface && $this->getConfig('resolve_command_dependencies', false)) {
             $telegram::setContainer($this->container);
         }
 
@@ -240,6 +240,6 @@ final class BotsManager
      */
     public function __call(string $method, array $parameters)
     {
-        return call_user_func_array([$this->bot(), $method], $parameters);
+        return $this->bot()->$method(...$parameters);
     }
 }

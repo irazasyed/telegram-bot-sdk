@@ -3,6 +3,7 @@
 namespace Telegram\Bot\Answers;
 
 use BadMethodCallException;
+use Psr\Container\ContainerInterface;
 use Illuminate\Contracts\Container\Container;
 use Telegram\Bot\Traits\Telegram;
 
@@ -23,7 +24,7 @@ abstract class AnswerBus
     public function __call(string $method, array $parameters)
     {
         if (method_exists($this, $method)) {
-            return call_user_func_array([$this, $method], $parameters);
+            return $this->$method(...$parameters);
         }
 
         throw new BadMethodCallException(sprintf('Method [%s] does not exist.', $method));
@@ -35,7 +36,11 @@ abstract class AnswerBus
     protected function buildDependencyInjectedClass(object|string $class): object
     {
         if (is_object($class)) {
-            $class = $class::class;
+            return $class;
+        }
+
+        if(!$this->telegram->hasContainer()) {
+            return new $class();
         }
 
         $container = $this->telegram->getContainer();

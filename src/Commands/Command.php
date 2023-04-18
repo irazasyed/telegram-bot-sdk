@@ -183,7 +183,7 @@ abstract class Command implements CommandInterface
         );
 
         $patterns = collect($matches)
-            ->mapWithKeys(function ($match) {
+            ->mapWithKeys(function ($match): array {
                 $pattern = $match['pattern'] ?? '[^ ]++';
 
                 return [
@@ -215,22 +215,14 @@ abstract class Command implements CommandInterface
             2
         );
 
-        return match ($splice->count()) {
-            2 => $this->cutTextBetween($splice),
-            default => $this->cutTextFrom($splice),
-        };
+        return $splice->count() === 2 ? $this->cutTextBetween($splice) : $this->cutTextFrom($splice);
     }
 
     private function allCommandOffsets(): Collection
     {
-        $message = $this->getUpdate()->getMessage();
-
-        return $message->hasCommand()
-            ? $message
-                ->get('entities', collect())
-                ->filter(static fn (MessageEntity $entity): bool => $entity->type === 'bot_command')
-                ->pluck('offset')
-            : collect();
+        return $this->getUpdate()->getMessage()?->get('entities', collect())
+            ->filter(static fn(MessageEntity $entity): bool => $entity->type === 'bot_command')
+            ->pluck('offset') ?? collect();
     }
 
     private function cutTextBetween(Collection $splice): string

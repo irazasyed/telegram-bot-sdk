@@ -20,19 +20,18 @@ final class InputFile
      *
      * @param  string|resource|StreamInterface|null  $file
      */
-    public static function create($file = null, ?string $filename = null): self
+    public static function create(mixed $file = null, ?string $filename = null): self
     {
         return new self($file, $filename);
     }
 
     /**
-     * Create a file on-fly using the provided contents and filename.
+     * Create a file on-the-fly using the provided contents and filename.
      *
-     * @param  string  $contents
-     * @param  string  $filename
+     *
      * @return mixed
      */
-    public static function createFromContents($contents, $filename): InputFile
+    public static function createFromContents(string $contents, string $filename): InputFile
     {
         return (new self(null, $filename))->setContents($contents);
     }
@@ -42,7 +41,7 @@ final class InputFile
      *
      * @param  string|resource|StreamInterface|null  $file
      */
-    public function __construct(private $file = null, private ?string $filename = null)
+    public function __construct(private mixed $file = null, private ?string $filename = null)
     {
     }
 
@@ -59,9 +58,9 @@ final class InputFile
     /**
      * Set File.
      *
-     * @param  string|resource|StreamInterface|null  $file
+     * @param string|resource|StreamInterface $file
      */
-    public function setFile($file): self
+    public function setFile(mixed $file): self
     {
         $this->file = $file;
 
@@ -76,7 +75,7 @@ final class InputFile
      */
     public function getFilename(): string
     {
-        if ($this->isFileResourceOrStream() && $this->filename === null) {
+        if (null === $this->filename && $this->isFileResourceOrStream()) {
             return $this->filename = $this->attemptFileNameDetection();
         }
 
@@ -84,7 +83,7 @@ final class InputFile
     }
 
     /**
-     * Attempts to access the meta data in the stream or resource to determine what
+     * Attempts to access the metadata in the stream or resource to determine what
      * the filename should be if the user did not supply one.
      *
      *
@@ -138,7 +137,7 @@ final class InputFile
      *
      * @throws CouldNotUploadInputFile
      */
-    public function getContents()
+    public function getContents(): mixed
     {
         return $this->contents ?? $this->open();
     }
@@ -146,9 +145,9 @@ final class InputFile
     /**
      * Set contents of the file.
      *
-     * @param  string  $contents
+     *
      */
-    public function setContents($contents): self
+    public function setContents(string $contents): self
     {
         $this->contents = $contents;
 
@@ -182,7 +181,7 @@ final class InputFile
      */
     private function isStringOrNull(mixed $param): bool
     {
-        return in_array(gettype($param), ['string', 'NULL']);
+        return is_string($param) || is_null($param);
     }
 
     /**
@@ -192,7 +191,7 @@ final class InputFile
      */
     public function isFileRemote(): bool
     {
-        return is_string($this->file) && preg_match('#^(https?|ftp):\/\/.*#', $this->file) === 1;
+        return is_string($this->file) && preg_match('#^(?:https?|ftps?|sftp|ssh2)://#', $this->file) === 1;
     }
 
     /**

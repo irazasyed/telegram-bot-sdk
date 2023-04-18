@@ -52,7 +52,7 @@ class Api
     use Update;
 
     /** @var string Version number of the Telegram Bot PHP SDK. */
-    public const VERSION = '3.10.0';
+    public const VERSION = '3.12.0';
 
     /** @var string The name of the environment variable that contains the Telegram Bot API Access Token. */
     public const BOT_TOKEN_ENV_NAME = 'TELEGRAM_BOT_TOKEN';
@@ -116,12 +116,12 @@ class Api
         }
 
         if (method_exists($this, $method)) {
-            return call_user_func_array([$this, $method], $parameters);
+            return $this->$method(...$parameters);
         }
 
-        //If the method does not exist on the API, try the commandBus.
+        // If the method does not exist on the API, try the commandBus.
         if (preg_match('#^\w+Commands?#', $method, $matches)) {
-            return call_user_func_array([$this->getCommandBus(), $matches[0]], $parameters);
+            return $this->getCommandBus()->{$matches[0]}(...$parameters);
         }
 
         throw new BadMethodCallException(sprintf('Method [%s] does not exist.', $method));

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Telegram\Bot\Commands;
 
 use Illuminate\Support\Collection;
@@ -78,15 +80,8 @@ class CommandBus extends AnswerBus
          */
         $this->commands[$command->getName()] = $command;
 
-        $aliases = $command->getAliases();
-
-        if ($aliases === []) {
-            return $this;
-        }
-
         foreach ($command->getAliases() as $alias) {
             $this->checkForConflicts($command, $alias);
-
             $this->commandAliases[$alias] = $command;
         }
 
@@ -138,14 +133,10 @@ class CommandBus extends AnswerBus
             $length - 1
         );
 
-        // When in group - Ex: /command@MyBot
-        if (Str::contains($command, '@') && Str::endsWith($command, ['bot', 'Bot'])) {
-            $command = explode('@', $command);
-            $command = $command[0];
-        }
-
-        return $command;
+        // When in group - Ex: /command@MyBot. Just get the command name.
+        return Str::of($command)->explode('@')->first();
     }
+
 
     /**
      * Handles Inbound Messages and Executes Appropriate Command.
@@ -155,13 +146,10 @@ class CommandBus extends AnswerBus
         $message = $update->getMessage();
 
         if ($message->has('entities')) {
-            $this->parseCommandsIn($message)
-                ->each(function ($botCommandEntity) use ($update): void {
-                    $botCommandAsArray = $botCommandEntity instanceof MessageEntity
-                        ? $botCommandEntity->all()
-                        : $botCommandEntity;
-                    $this->process($botCommandAsArray, $update);
-                });
+            $this->parseCommandsIn($message)->each(fn ($entity) => $this->process(
+                $entity instanceof MessageEntity ? $entity->all() : $entity,
+                $update
+            ));
         }
 
         return $update;
@@ -179,7 +167,7 @@ class CommandBus extends AnswerBus
     /**
      * Execute a bot command from the update text.
      *
-     * @param  array<string, mixed>  $entity {@see \Telegram\Bot\Objects\MessageEntity} object attributes.
+     * @param  array<string, mixed>  $entity {@see MessageEntity} object attributes.
      */
     private function process(array $entity, Update $update): void
     {
@@ -200,13 +188,14 @@ class CommandBus extends AnswerBus
      */
     protected function execute(string $name, Update $update, array $entity): mixed
     {
-        $command = $this->commands[$name] ??
-            $this->commandAliases[$name] ??
-            $this->commands['help'] ??
-            collect($this->commands)->filter(static fn ($command): bool => $command instanceof $name)->first() ?? null;
+        $command = $this->commands[$name]
+            ?? $this->commandAliases[$name]
+            ?? $this->commands['help']
+            ?? collect($this->commands)->first(fn($command): bool => $command instanceof $name);
 
-        return $command !== null ? $command->make($this->telegram, $update, $entity) : false;
+        return $command?->make($this->telegram, $update, $entity) ?? false;
     }
+
 
     /**
      * @param  CommandInterface|class-string<CommandInterface>  $command
@@ -225,13 +214,7 @@ class CommandBus extends AnswerBus
             );
         }
 
-        if (is_object($command)) {
-            $commandInstance = $command;
-        } else {
-            $commandInstance = $this->telegram->hasContainer()
-                ? $this->buildDependencyInjectedClass($command)
-                : new $command();
-        }
+        $commandInstance = $this->buildDependencyInjectedClass($command);
 
         if ($commandInstance instanceof Command && $this->telegram) {
             $commandInstance->setTelegram($this->getTelegram());

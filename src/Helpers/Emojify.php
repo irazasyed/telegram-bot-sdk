@@ -54,7 +54,7 @@ final class Emojify
      */
     public static function getInstance()
     {
-        if (null === self::$instance) {
+        if (!self::$instance instanceof \Telegram\Bot\Helpers\Emojify) {
             self::$instance = new self();
         }
 

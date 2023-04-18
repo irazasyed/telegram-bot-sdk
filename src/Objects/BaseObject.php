@@ -52,7 +52,7 @@ abstract class BaseObject extends Collection
      * Magically map to an object class (if exists) and return data.
      *
      * @param  string  $property Name of the property or relation.
-     * @param  mixed  $default Default value or \Closure that returns default value.
+     * @param mixed $default Default value or \Closure that returns default value.
      */
     protected function getPropertyValue(string $property, mixed $default = null): mixed
     {
@@ -88,28 +88,27 @@ abstract class BaseObject extends Collection
     abstract public function relations(): array;
 
     /**
-     * @param  array  $relationRawData
      * @return array|Enumerable|EnumeratesValues|BaseObject
      */
-    protected function getRelationValue(string $relationName, iterable $relationRawData): mixed
+    protected function getRelationValue(string $relativeName, iterable $relativeData): mixed
     {
-        /** @var class-string<BaseObject>|list<class-string<BaseObject>> $relation */
-        $relation = $this->relations()[$relationName];
+        /** @var class-string<BaseObject>|list<class-string<BaseObject>> $relative */
+        $relative = $this->relations()[$relativeName];
 
-        if (is_string($relation)) {
-            if (! class_exists($relation)) {
-                throw new InvalidArgumentException(sprintf('Could not load “%s” relation: class “%s” not found.', $relationName, $relation));
+        if (is_string($relative)) {
+            if (! class_exists($relative)) {
+                throw new InvalidArgumentException(sprintf('Could not load “%s” relative: class “%s” not found.', $relativeName, $relative));
             }
 
-            return $relation::make($relationRawData);
+            return $relative::make($relativeData);
         }
 
-        /** @var class-string<BaseObject> $clasString */
-        $clasString = $relation[0];
+        /** @var class-string<BaseObject> $relativeClass */
+        $relativeClass = $relative[0];
         $relatedObjects = Collection::make();
         // @todo array type can be used in v4
-        foreach ($relationRawData as $singleObjectRawData) {
-            $relatedObjects[] = $clasString::make($singleObjectRawData);
+        foreach ($relativeData as $data) {
+            $relatedObjects->add($relativeClass::make($data));
         }
 
         return $relatedObjects;
@@ -129,15 +128,12 @@ abstract class BaseObject extends Collection
     public function get($key, $default = null): mixed
     {
         $value = parent::get($key, $default);
-        if (null === $value) {
-            return null;
+
+        if (is_array($value)) {
+            return $this->getPropertyValue($key, $default);
         }
 
-        if (! is_array($value)) {
-            return $value;
-        }
-
-        return $this->getPropertyValue($key, $default);
+        return $value;
     }
 
     /**

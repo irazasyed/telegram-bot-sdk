@@ -17,7 +17,6 @@ final class Entities
      * Entities constructor.
      */
     public function __construct(
-        /** @var string Message or Caption */
         private string $text
     ) {
     }
@@ -59,29 +58,21 @@ final class Entities
 
     /**
      * Apply format for given text and entities.
-     *
-     * @return mixed|string
      */
     private function apply(): string
     {
         $syntax = $this->syntax();
 
-        $this->entities = array_reverse($this->entities);
-        foreach ($this->entities as $entity) {
+        foreach (array_reverse($this->entities) as $entity) {
             $value = mb_substr($this->text, $entity['offset'], $entity['length']);
             $type = $entity['type'];
-            if (isset($syntax[$type])) {
-                if ($type === 'text_link') {
-                    $replacement = sprintf($syntax[$type][$this->mode], $value, $entity['url']);
-                } else {
-                    $replacement = sprintf(
-                        $syntax[$type][$this->mode],
-                        ($type === 'text_mention') ? $entity['user']['username'] : $value
-                    );
-                }
+            $replacement = match ($type) {
+                'text_link' => sprintf($syntax[$type][$this->mode], $value, $entity['url']),
+                'text_mention' => sprintf($syntax[$type][$this->mode], $entity['user']['username']),
+                default => sprintf($syntax[$type][$this->mode], $value),
+            };
 
-                $this->text = substr_replace($this->text, $replacement, $entity['offset'], $entity['length']);
-            }
+            $this->text = substr_replace($this->text, $replacement, $entity['offset'], $entity['length']);
         }
 
         return $this->text;

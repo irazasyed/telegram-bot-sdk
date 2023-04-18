@@ -2,6 +2,7 @@
 
 namespace Telegram\Bot\Methods;
 
+use Telegram\Bot\Actions;
 use Telegram\Bot\Exceptions\TelegramSDKException;
 use Telegram\Bot\Objects\Message as MessageObject;
 use Telegram\Bot\Traits\Http;
@@ -492,25 +493,8 @@ trait Message
      */
     public function sendChatAction(array $params): bool
     {
-        $validActions = [
-            'typing',
-            'upload_photo',
-            'record_video',
-            'upload_video',
-            'record_audio',
-            'upload_audio',
-            'upload_document',
-            'find_location',
-            'record_video_note',
-            'upload_video_note',
-        ];
+        Actions::isActionValid($params['action']);
 
-        if (isset($params['action']) && in_array($params['action'], $validActions)) {
-            $this->post('sendChatAction', $params);
-
-            return true;
-        }
-
-        throw new TelegramSDKException('Invalid Action! Accepted value: '.implode(', ', $validActions));
+        return $this->post('sendChatAction', $params)->getResult();
     }
 }

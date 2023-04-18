@@ -2,6 +2,9 @@
 
 namespace Telegram\Bot;
 
+use ReflectionClass;
+use Telegram\Bot\Exceptions\TelegramSDKException;
+
 /**
  * Class Actions.
  *
@@ -70,4 +73,19 @@ final class Actions
     /** Sets chat status as Sending Video Note.
      * @var string */
     public const UPLOAD_VIDEO_NOTE = 'upload_video_note';
+
+    public static function all(): array
+    {
+        return (new ReflectionClass(self::class))->getConstants();
+    }
+
+    public static function isActionValid(string $action) : bool
+    {
+        $actions = self::all();
+        if(in_array($action, $actions, true)) {
+            return true;
+        }
+
+        throw new TelegramSDKException('Invalid Action! Accepted value: '.implode(', ', $actions));
+    }
 }

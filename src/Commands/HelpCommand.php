@@ -20,7 +20,7 @@ final class HelpCommand extends Command
     /**
      * @var string Command Description
      */
-    protected string $description = 'Help command, Get a list of commands';
+    protected string $description = 'Get a list of available commands';
 
     /**
      * {@inheritdoc}

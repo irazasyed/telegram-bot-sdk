@@ -54,6 +54,6 @@ it('ensures a command make method works', function () {
     $commandBus->getCommands()->shouldHaveBeenCalled();
     $api->sendMessage([
         'chat_id' => 77777777,
-        'text' => "/help - Help command, Get a list of commands\n",
+        'text' => "/help - Get a list of available commands\n",
     ])->shouldHaveBeenCalled();
 });

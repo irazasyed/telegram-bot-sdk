@@ -10,9 +10,9 @@ use Psr\Container\ContainerInterface;
 trait HasContainer
 {
     /**
-     * @var ContainerInterface IoC Container
+     * @var null|ContainerInterface IoC Container
      */
-    protected static ContainerInterface $container;
+    protected static ?ContainerInterface $container = null;
 
     /**
      * Set the IoC Container.
@@ -25,7 +25,7 @@ trait HasContainer
     /**
      * Get the IoC Container.
      */
-    public function getContainer(): ContainerInterface
+    public function getContainer(): ?ContainerInterface
     {
         return self::$container;
     }
@@ -35,6 +35,6 @@ trait HasContainer
      */
     public function hasContainer(): bool
     {
-        return self::$container !== null;
+        return self::$container instanceof ContainerInterface;
     }
 }
