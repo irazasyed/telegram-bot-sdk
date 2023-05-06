@@ -39,7 +39,7 @@ final class TelegramResponse
      * @param  ResponseInterface|PromiseInterface  $response
      */
     public function __construct(/** @var TelegramRequest The original request that returned this response. */
-    private TelegramRequest $request, $response)
+        private TelegramRequest $request, $response)
     {
         if ($response instanceof ResponseInterface) {
             $this->httpStatusCode = $response->getStatusCode();
