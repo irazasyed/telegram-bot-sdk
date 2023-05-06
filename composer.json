@@ -37,7 +37,7 @@
     "phpspec/prophecy": "^1.17",
     "phpspec/prophecy-phpunit": "^2.0",
     "phpunit/phpunit": "^9.6",
-    "rector/rector": "^0.15.21"
+    "rector/rector": "^0.15.21 || ^0.16.0"
   },
   "suggest": {
     "illuminate/container": "Hold dependencies to be injected in commands constructors",
