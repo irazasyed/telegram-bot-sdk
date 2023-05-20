@@ -63,7 +63,8 @@ trait Http
 
     public function setBaseBotUrl(string $baseBotUrl): self
     {
-        $this->baseBotUrl = $baseBotUrl;
+        $baseBotUrl = str_replace('/bot', '', $baseBotUrl);
+        $this->baseBotUrl = rtrim($baseBotUrl, '/');
 
         return $this;
     }
@@ -110,7 +111,9 @@ trait Http
             $filename .= DIRECTORY_SEPARATOR.($originalFilename ?: basename($file->file_path));
         }
 
-        return $this->getClient()->download($file->file_path, $filename);
+        $telegramRequest = $this->resolveTelegramRequest('GET', '');
+
+        return $this->getClient()->download($file->file_path, $filename, $telegramRequest);
     }
 
     /**
