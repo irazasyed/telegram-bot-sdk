@@ -4,9 +4,9 @@ namespace Telegram\Bot;
 
 use GuzzleHttp\Promise\PromiseInterface;
 use Psr\Http\Message\ResponseInterface;
+use Telegram\Bot\Exceptions\TelegramSDKException;
 use Telegram\Bot\HttpClients\GuzzleHttpClient;
 use Telegram\Bot\HttpClients\HttpClientInterface;
-use Telegram\Bot\Exceptions\TelegramSDKException;
 
 final class TelegramClient
 {
@@ -14,6 +14,7 @@ final class TelegramClient
      * @var string
      */
     public const BASE_BOT_URL = 'https://api.telegram.org';
+
     private string $fileUrl = '{BASE_API_URL}/file/bot{TOKEN}/{FILE_PATH}';
 
     private HttpClientInterface $httpClientHandler;
