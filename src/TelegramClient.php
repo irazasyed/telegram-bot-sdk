@@ -11,12 +11,15 @@ use Telegram\Bot\HttpClients\HttpClientInterface;
 final class TelegramClient
 {
     public const BASE_API_URL = 'https://api.telegram.org';
+
     public const BASE_BOT_URL = self::BASE_API_URL.'/bot';
+
     private string $fileUrl = '{BASE_FILE_URL}/file/bot{TOKEN}/{FILE_PATH}';
 
     private HttpClientInterface $httpClientHandler;
 
     private string $baseBotUrl;
+
     private string $baseFileUrl;
 
     public function __construct(?HttpClientInterface $httpClientHandler = null, ?string $baseBotUrl = null)
