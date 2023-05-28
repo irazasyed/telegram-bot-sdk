@@ -10,24 +10,19 @@ use Telegram\Bot\HttpClients\HttpClientInterface;
 
 final class TelegramClient
 {
-    public const BASE_API_URL = 'https://api.telegram.org';
+    public const BASE_BOT_URL = 'https://api.telegram.org/bot';
 
-    public const BASE_BOT_URL = self::BASE_API_URL.'/bot';
-
-    private string $fileUrl = '{BASE_FILE_URL}/file/bot{TOKEN}/{FILE_PATH}';
+    private string $fileUrl = '{BASE_BOT_URL}/file/bot{TOKEN}/{FILE_PATH}';
 
     private HttpClientInterface $httpClientHandler;
 
     private string $baseBotUrl;
-
-    private string $baseFileUrl;
 
     public function __construct(?HttpClientInterface $httpClientHandler = null, ?string $baseBotUrl = null)
     {
         $this->httpClientHandler = $httpClientHandler ?? new GuzzleHttpClient();
 
         $this->baseBotUrl = $baseBotUrl ?? self::BASE_BOT_URL;
-        $this->baseFileUrl = $baseBotUrl ?? self::BASE_API_URL;
     }
 
     public function getHttpClientHandler(): HttpClientInterface
@@ -66,9 +61,11 @@ final class TelegramClient
      */
     public function getFileUrl(string $path, TelegramRequest $request): string
     {
+        $baseFileUrl = str_replace('/bot', '', $this->baseBotUrl);
+
         return str_replace(
-            ['{BASE_FILE_URL}', '{TOKEN}', '{FILE_PATH}'],
-            [$this->baseFileUrl, $request->getAccessToken(), $path],
+            ['{BASE_BOT_URL}', '{TOKEN}', '{FILE_PATH}'],
+            [$baseFileUrl, $request->getAccessToken(), $path],
             $this->fileUrl
         );
     }
