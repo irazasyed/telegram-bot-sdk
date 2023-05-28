@@ -10,21 +10,21 @@ use Telegram\Bot\HttpClients\HttpClientInterface;
 
 final class TelegramClient
 {
-    /**
-     * @var string
-     */
-    public const BASE_BOT_URL = 'https://api.telegram.org';
-
-    private string $fileUrl = '{BASE_API_URL}/file/bot{TOKEN}/{FILE_PATH}';
+    public const BASE_API_URL = 'https://api.telegram.org';
+    public const BASE_BOT_URL = self::BASE_API_URL.'/bot';
+    private string $fileUrl = '{BASE_FILE_URL}/file/bot{TOKEN}/{FILE_PATH}';
 
     private HttpClientInterface $httpClientHandler;
 
     private string $baseBotUrl;
+    private string $baseFileUrl;
 
-    public function __construct(HttpClientInterface $httpClientHandler = null, string $baseBotUrl = null)
+    public function __construct(?HttpClientInterface $httpClientHandler = null, ?string $baseBotUrl = null)
     {
         $this->httpClientHandler = $httpClientHandler ?? new GuzzleHttpClient();
+
         $this->baseBotUrl = $baseBotUrl ?? self::BASE_BOT_URL;
+        $this->baseFileUrl = $baseBotUrl ?? self::BASE_API_URL;
     }
 
     public function getHttpClientHandler(): HttpClientInterface
@@ -64,8 +64,8 @@ final class TelegramClient
     public function getFileUrl(string $path, TelegramRequest $request): string
     {
         return str_replace(
-            ['{BASE_API_URL}', '{TOKEN}', '{FILE_PATH}'],
-            [$this->baseBotUrl, $request->getAccessToken(), $path],
+            ['{BASE_FILE_URL}', '{TOKEN}', '{FILE_PATH}'],
+            [$this->baseFileUrl, $request->getAccessToken(), $path],
             $this->fileUrl
         );
     }
@@ -95,7 +95,7 @@ final class TelegramClient
                 $request->getMethod(),
                 $request->getHeaders(),
                 ['sink' => $filename],
-                $request->isAsyncRequest(),
+                $request->isAsyncRequest()
             );
 
         if ($response->getStatusCode() !== 200) {
@@ -107,7 +107,7 @@ final class TelegramClient
 
     public function prepareRequest(TelegramRequest $request): array
     {
-        $url = $this->baseBotUrl.'/bot'.$request->getAccessToken().'/'.$request->getEndpoint();
+        $url = $this->baseBotUrl.$request->getAccessToken().'/'.$request->getEndpoint();
 
         return [$url, $request->getMethod(), $request->getHeaders(), $request->isAsyncRequest()];
     }

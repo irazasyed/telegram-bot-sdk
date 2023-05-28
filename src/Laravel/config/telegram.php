@@ -90,7 +90,7 @@ return [
     | If you'd like to use a custom Base Bot Url.
     | Should be a local bot api endpoint or a proxy to the telegram api endpoint
     |
-    | Default: https://api.telegram.org
+    | Default: https://api.telegram.org/bot
     |
     */
     'base_bot_url' => null,
