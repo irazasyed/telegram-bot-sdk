@@ -27,7 +27,7 @@
     "guzzlehttp/psr7": "^2.5",
     "illuminate/support": "9 - 10",
     "league/event": "^2.2 || ^3.0",
-    "psr/container": "^2.0",
+    "psr/container": "^1.1 || ^2.0",
     "psr/event-dispatcher": "^1.0"
   },
   "require-dev": {
