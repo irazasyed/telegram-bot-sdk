@@ -20,7 +20,7 @@ trait Singleton
      */
     public static function Instance(): self
     {
-        if (null === self::$instance) {
+        if (self::$instance === null) {
             self::$instance = new static();
         }
 

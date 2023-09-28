@@ -180,7 +180,7 @@ final class BotsManager
     }
 
     /**
-     * @param list<(string | class-string<CommandInterface>)> $commands A list of command names or FQCNs of CommandInterface instances.
+     * @param  list<(string | class-string<CommandInterface>)>  $commands A list of command names or FQCNs of CommandInterface instances.
      * @return array An array of commands which includes global and bot specific commands.
      *
      * @deprecated Will be removed in SDK v4
@@ -203,7 +203,7 @@ final class BotsManager
     /**
      * Parse an array of commands and build a list.
      *
-     * @param list<(string | class-string<CommandInterface>)> $commands
+     * @param  list<(string | class-string<CommandInterface>)>  $commands
      */
     private function parseCommands(array $commands): array
     {

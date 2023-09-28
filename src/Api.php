@@ -31,19 +31,19 @@ use Telegram\Bot\Traits\Http;
  */
 class Api
 {
-    use Macroable {
-        Macroable::__call as macroCall;
-    }
-    use HasEventDispatcher;
-    use Http;
-    use CommandsHandler;
-    use HasContainer;
     use Chat;
     use Commands;
+    use CommandsHandler;
     use EditMessage;
     use Game;
     use Get;
+    use HasContainer;
+    use HasEventDispatcher;
+    use Http;
     use Location;
+    use Macroable {
+        Macroable::__call as macroCall;
+    }
     use Message;
     use Passport;
     use Payments;

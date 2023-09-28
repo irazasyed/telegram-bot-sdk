@@ -86,7 +86,7 @@ class WebhookCommand extends Command
         $params = ['url' => $webhookUrl];
         $certificatePath = data_get($this->config, 'certificate_path', false);
 
-        if ($certificatePath && 'YOUR-CERTIFICATE-PATH' !== $certificatePath) {
+        if ($certificatePath && $certificatePath !== 'YOUR-CERTIFICATE-PATH') {
             $params['certificate'] = $certificatePath;
         }
 
@@ -168,7 +168,7 @@ class WebhookCommand extends Command
         return $value ? 'Yes' : 'No';
     }
 
-    private function resolveTelegramBot(string|null $bot): void
+    private function resolveTelegramBot(?string $bot): void
     {
         try {
             $this->telegram = $this->botsManager->bot($bot);

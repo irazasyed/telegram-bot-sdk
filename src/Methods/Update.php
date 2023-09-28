@@ -143,7 +143,7 @@ trait Update
      *
      * @see setWebhook
      */
-    public function getWebhookUpdate(bool $shouldDispatchEvents = true, ?RequestInterface $request = null): UpdateObject
+    public function getWebhookUpdate(bool $shouldDispatchEvents = true, RequestInterface $request = null): UpdateObject
     {
         $body = $this->getRequestBody($request);
 
@@ -216,7 +216,7 @@ trait Update
             if (method_exists($update->getMessage(), 'objectType')) {
                 $messageType = $update->getMessage()->objectType();
 
-                if (null !== $messageType) {
+                if ($messageType !== null) {
                     $dispatcher->dispatch(new UpdateEvent($this, $update, sprintf('%s.%s', $updateType, $messageType)));
                 }
             }

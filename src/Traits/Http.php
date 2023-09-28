@@ -290,7 +290,7 @@ trait Http
 
         //Iterate through all param options and convert to multipart/form-data.
         return collect($params)
-            ->reject(static fn ($value): bool => null === $value)
+            ->reject(static fn ($value): bool => $value === null)
             ->map(fn ($contents, $name) => $this->generateMultipartData($contents, $name))
             ->values()
             ->all();

@@ -32,7 +32,7 @@ trait CommandsHandler
      *
      * @return Update|Update[]
      */
-    public function commandsHandler(bool $webhook = false, ?RequestInterface $request = null): Update|array
+    public function commandsHandler(bool $webhook = false, RequestInterface $request = null): Update|array
     {
         return $webhook ? $this->useWebHook($request) : $this->useGetUpdates();
     }
@@ -40,7 +40,7 @@ trait CommandsHandler
     /**
      * Process the update object for a command from your webhook.
      */
-    protected function useWebHook(?RequestInterface $request = null): Update
+    protected function useWebHook(RequestInterface $request = null): Update
     {
         $update = $this->getWebhookUpdate(true, $request);
         $this->processCommand($update);

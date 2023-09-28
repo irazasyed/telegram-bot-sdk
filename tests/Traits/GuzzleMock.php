@@ -73,8 +73,8 @@ trait GuzzleMock
         );
     }
 
-//    protected function makeFakeExceptionResponse($text, $uri)
-//    {
-//        return new RequestException($text, new Request('GET', $uri));
-//    }
+    //    protected function makeFakeExceptionResponse($text, $uri)
+    //    {
+    //        return new RequestException($text, new Request('GET', $uri));
+    //    }
 }

@@ -69,7 +69,7 @@ final class TelegramRequest
      */
     public function validateAccessToken(): void
     {
-        if (null === $this->accessToken) {
+        if ($this->accessToken === null) {
             throw new TelegramSDKException('You must provide your bot access token to make any API requests.');
         }
     }
@@ -85,7 +85,7 @@ final class TelegramRequest
     /**
      * Set the bot access token for this request.
      */
-    public function setAccessToken(string|null $accessToken): self
+    public function setAccessToken(?string $accessToken): self
     {
         $this->accessToken = $accessToken;
 
@@ -119,7 +119,7 @@ final class TelegramRequest
     /**
      * Set the endpoint for this request.
      */
-    public function setEndpoint(string|null $endpoint): self
+    public function setEndpoint(?string $endpoint): self
     {
         $this->endpoint = $endpoint;
 
@@ -187,7 +187,7 @@ final class TelegramRequest
     /**
      * Set the HTTP method for this request.
      */
-    public function setMethod(string|null $method): self
+    public function setMethod(?string $method): self
     {
         $this->method = strtoupper($method);
 
