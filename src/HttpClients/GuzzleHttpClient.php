@@ -3,6 +3,7 @@
 namespace Telegram\Bot\HttpClients;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Promise;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Promise\PromiseInterface;
