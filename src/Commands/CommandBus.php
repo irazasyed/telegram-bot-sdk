@@ -49,11 +49,11 @@ class CommandBus extends AnswerBus
     /**
      * Add a list of commands.
      *
-     * @param  list<CommandInterface|class-string<CommandInterface>>  $commands
+     * @param iterable<CommandInterface|class-string<CommandInterface>>  $commands
      *
      * @throws TelegramSDKException
      */
-    public function addCommands(array $commands): self
+    public function addCommands(iterable $commands): self
     {
         foreach ($commands as $command) {
             $this->addCommand($command);

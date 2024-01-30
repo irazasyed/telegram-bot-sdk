@@ -34,6 +34,15 @@ it('can add multiple commands to the bus', function () {
     expect($result)->toHaveCount(4);
 });
 
+it('can add multiple commands contained in an iterator to the bus', function () {
+    $iterator = new ArrayIterator($this->commandGenerator(4)->all());
+
+    $this->bus->addCommands($iterator);
+    $result = $this->bus->getCommands();
+
+    expect($result)->toHaveCount(4);
+});
+
 it('throws an exception if a no class exists for the name supplied as a command')
     ->tap(fn () => $this->bus->addCommand('badcommand'))
     ->throws(TelegramSDKException::class);
