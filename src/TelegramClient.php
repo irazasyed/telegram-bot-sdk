@@ -18,7 +18,7 @@ final class TelegramClient
 
     private string $baseBotUrl;
 
-    public function __construct(HttpClientInterface $httpClientHandler = null, string $baseBotUrl = null)
+    public function __construct(?HttpClientInterface $httpClientHandler = null, ?string $baseBotUrl = null)
     {
         $this->httpClientHandler = $httpClientHandler ?? new GuzzleHttpClient();
 
@@ -73,8 +73,8 @@ final class TelegramClient
     /**
      * Download file from Telegram server for given file path.
      *
-     * @param  string  $filePath File path on Telegram server.
-     * @param  string  $filename Download path to save file.
+     * @param  string  $filePath  File path on Telegram server.
+     * @param  string  $filename  Download path to save file.
      *
      * @throws TelegramSDKException
      */

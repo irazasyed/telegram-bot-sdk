@@ -22,7 +22,7 @@ class TelegramSDKException extends Exception
      *
      * @return static
      */
-    public static function fileDownloadFailed(string $reason, string $url = null): self
+    public static function fileDownloadFailed(string $reason, ?string $url = null): self
     {
         return new static($reason.': Failed to Download File '.$url);
     }

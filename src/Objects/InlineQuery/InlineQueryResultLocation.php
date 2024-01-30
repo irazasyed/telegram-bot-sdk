@@ -28,15 +28,15 @@ namespace Telegram\Bot\Objects\InlineQuery;
  *
  * @link https://core.telegram.org/bots/api#inlinequeryresultlocation
  *
- * @method $this setId(string)                     Unique identifier for this result, 1-64 Bytes
- * @method $this setLatitude(float)                Location latitude in degrees
- * @method $this setLongitude(float)               Location longitude in degrees
- * @method $this setTitle(string)                  Location title
- * @method $this setReplyMarkup(object)            (Optional). Inline keyboard attached to the message
- * @method $this setInputMessageContent(object)    (Optional). Content of the message to be sent instead of the location
- * @method $this setThumbUrl(string)               (Optional). Url of the thumbnail for the result
- * @method $this setThumbWidth(int)                (Optional). Thumbnail width
- * @method $this setThumbHeight(int)               (Optional). Thumbnail height
+ * @method $this setId(string) Unique identifier for this result, 1-64 Bytes
+ * @method $this setLatitude(float) Location latitude in degrees
+ * @method $this setLongitude(float) Location longitude in degrees
+ * @method $this setTitle(string) Location title
+ * @method $this setReplyMarkup(object) (Optional). Inline keyboard attached to the message
+ * @method $this setInputMessageContent(object) (Optional). Content of the message to be sent instead of the location
+ * @method $this setThumbUrl(string) (Optional). Url of the thumbnail for the result
+ * @method $this setThumbWidth(int) (Optional). Thumbnail width
+ * @method $this setThumbHeight(int) (Optional). Thumbnail height
  */
 class InlineQueryResultLocation extends InlineBaseObject
 {

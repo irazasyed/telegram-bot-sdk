@@ -39,9 +39,9 @@ final class TelegramRequest
      * @param  mixed[]  $params
      */
     public function __construct(
-        string $accessToken = null,
-        string $method = null,
-        string $endpoint = null,
+        ?string $accessToken = null,
+        ?string $method = null,
+        ?string $endpoint = null,
         array $params = [],
         bool $isAsyncRequest = false
     ) {

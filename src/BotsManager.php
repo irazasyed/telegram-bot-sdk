@@ -30,7 +30,7 @@ final class BotsManager
     /**
      * Set the IoC Container.
      *
-     * @param  ContainerInterface  $container Container instance
+     * @param  ContainerInterface  $container  Container instance
      */
     public function setContainer(ContainerInterface $container): self
     {
@@ -45,7 +45,7 @@ final class BotsManager
      *
      * @throws TelegramBotNotFoundException
      */
-    public function getBotConfig(string $name = null): array
+    public function getBotConfig(?string $name = null): array
     {
         $name ??= $this->getDefaultBotName();
 
@@ -66,7 +66,7 @@ final class BotsManager
      *
      * @throws TelegramSDKException
      */
-    public function bot(string $name = null): Api
+    public function bot(?string $name = null): Api
     {
         $name ??= $this->getDefaultBotName();
 
@@ -83,7 +83,7 @@ final class BotsManager
      *
      * @throws TelegramSDKException
      */
-    public function reconnect(string $name = null): Api
+    public function reconnect(?string $name = null): Api
     {
         $name ??= $this->getDefaultBotName();
         $this->disconnect($name);
@@ -94,7 +94,7 @@ final class BotsManager
     /**
      * Disconnect from the given bot.
      */
-    public function disconnect(string $name = null): self
+    public function disconnect(?string $name = null): self
     {
         $name ??= $this->getDefaultBotName();
         unset($this->bots[$name]);
@@ -180,7 +180,7 @@ final class BotsManager
     }
 
     /**
-     * @param  list<(string | class-string<CommandInterface>)>  $commands A list of command names or FQCNs of CommandInterface instances.
+     * @param  list<(string | class-string<CommandInterface>)>  $commands  A list of command names or FQCNs of CommandInterface instances.
      * @return array An array of commands which includes global and bot specific commands.
      *
      * @deprecated Will be removed in SDK v4

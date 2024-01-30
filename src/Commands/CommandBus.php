@@ -31,7 +31,7 @@ class CommandBus extends AnswerBus
     /**
      * Instantiate Command Bus.
      */
-    public function __construct(Api $telegram = null)
+    public function __construct(?Api $telegram = null)
     {
         $this->telegram = $telegram;
     }
@@ -65,7 +65,7 @@ class CommandBus extends AnswerBus
     /**
      * Add a command to the commands list.
      *
-     * @param  CommandInterface|class-string<CommandInterface>  $command Either an object or fully qualified class name (FQCN) of the command class.
+     * @param  CommandInterface|class-string<CommandInterface>  $command  Either an object or fully qualified class name (FQCN) of the command class.
      *
      * @throws TelegramSDKException
      */
@@ -91,7 +91,7 @@ class CommandBus extends AnswerBus
     /**
      * Remove a command from the list.
      *
-     * @param  string  $name Command's name without leading slash
+     * @param  string  $name  Command's name without leading slash
      */
     public function removeCommand(string $name): self
     {
@@ -103,7 +103,7 @@ class CommandBus extends AnswerBus
     /**
      * Removes a list of commands.
      *
-     * @param  list<string>  $names Command names
+     * @param  list<string>  $names  Command names
      */
     public function removeCommands(array $names): self
     {
@@ -117,7 +117,7 @@ class CommandBus extends AnswerBus
     /**
      * Parse a Command for a Match.
      *
-     * @param  string  $text Command name with a leading slash
+     * @param  string  $text  Command name with a leading slash
      * @return string Telegram command name (without leading slash)
      */
     protected function parseCommand(string $text, int $offset, int $length): string
@@ -166,7 +166,7 @@ class CommandBus extends AnswerBus
     /**
      * Execute a bot command from the update text.
      *
-     * @param  array<string, mixed>  $entity {@see MessageEntity} object attributes.
+     * @param  array<string, mixed>  $entity  {@see MessageEntity} object attributes.
      */
     private function process(array $entity, Update $update): void
     {
@@ -182,7 +182,7 @@ class CommandBus extends AnswerBus
     /**
      * Execute the command.
      *
-     * @param  string  $name Telegram command name without leading slash
+     * @param  string  $name  Telegram command name without leading slash
      * @param  array<string, mixed>  $entity
      */
     protected function execute(string $name, Update $update, array $entity): mixed

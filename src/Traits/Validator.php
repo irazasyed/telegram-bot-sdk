@@ -42,7 +42,7 @@ trait Validator
     /**
      * Determine given string is a URL.
      *
-     * @param  string  $value A filename or URL to a sticker
+     * @param  string  $value  A filename or URL to a sticker
      */
     protected function isUrl(string $value): bool
     {
@@ -52,7 +52,7 @@ trait Validator
     /**
      * Determine given string is a json object.
      *
-     * @param  string  $string A json string
+     * @param  string  $string  A json string
      */
     protected function is_json(string $string): bool
     {

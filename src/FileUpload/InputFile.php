@@ -20,7 +20,7 @@ final class InputFile
      *
      * @param  string|resource|StreamInterface|null  $file
      */
-    public static function create(mixed $file = null, string $filename = null): self
+    public static function create(mixed $file = null, ?string $filename = null): self
     {
         return new self($file, $filename);
     }

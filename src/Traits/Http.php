@@ -80,8 +80,8 @@ trait Http
     /**
      * Download a file from Telegram server by file ID.
      *
-     * @param  File|BaseObject|string  $file Telegram File Instance / File Response Object or File ID.
-     * @param  string  $filename Absolute path to dir or filename to save as.
+     * @param  File|BaseObject|string  $file  Telegram File Instance / File Response Object or File ID.
+     * @param  string  $filename  Absolute path to dir or filename to save as.
      *
      * @throws TelegramSDKException
      */
@@ -179,7 +179,7 @@ trait Http
     /**
      * Sets the bot access token to use with API requests.
      *
-     * @param  string  $accessToken The bot access token to save.
+     * @param  string  $accessToken  The bot access token to save.
      */
     public function setAccessToken(string $accessToken): self
     {
@@ -258,7 +258,7 @@ trait Http
     /**
      * Sends a POST request to Telegram Bot API and returns the result.
      *
-     * @param  bool  $fileUpload Set true if a file is being uploaded.
+     * @param  bool  $fileUpload  Set true if a file is being uploaded.
      *
      * @throws TelegramSDKException
      */

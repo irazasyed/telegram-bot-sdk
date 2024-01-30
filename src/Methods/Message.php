@@ -336,7 +336,7 @@ trait Message
      * @link https://core.telegram.org/bots/api#sendmediagroup
      *
      * @throws TelegramSDKException
-     * //TODO Check this return type.
+     *                              //TODO Check this return type.
      */
     public function sendMediaGroup(array $params): MessageObject
     {

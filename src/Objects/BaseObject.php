@@ -51,8 +51,8 @@ abstract class BaseObject extends Collection
     /**
      * Magically map to an object class (if exists) and return data.
      *
-     * @param  string  $property Name of the property or relation.
-     * @param  mixed  $default Default value or \Closure that returns default value.
+     * @param  string  $property  Name of the property or relation.
+     * @param  mixed  $default  Default value or \Closure that returns default value.
      */
     protected function getPropertyValue(string $property, mixed $default = null): mixed
     {

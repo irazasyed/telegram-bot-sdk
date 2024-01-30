@@ -11,21 +11,21 @@ use Telegram\Bot\Objects\Payments\ShippingQuery;
  *
  * @link https://core.telegram.org/bots/api#update
  *
- * @property int $updateId               The update's unique identifier. Update identifiers start from a certain positive number and increase sequentially.
- * @property Message|null $message                (Optional). New incoming message of any kind - text, photo, sticker, etc.
- * @property EditedMessage|null $editedMessage          (Optional). New version of a message that is known to the bot and was edited.
- * @property Message|null $channelPost            (Optional). New incoming channel post of any kind — text, photo, sticker, etc.
- * @property EditedMessage|null $editedChannelPost      (Optional). New version of a channel post that is known to the bot and was edited sticker, etc.
- * @property InlineQuery|null $inlineQuery            (Optional). New incoming inline query.
- * @property ChosenInlineResult|null $chosenInlineResult     (Optional). A result of an inline query that was chosen by the user and sent to their chat partner.
- * @property CallbackQuery|null $callbackQuery          (Optional). Incoming callback query.
- * @property ShippingQuery|null $shippingQuery          (Optional). New incoming shipping query. Only for invoices with flexible price
- * @property PreCheckoutQuery|null $preCheckoutQuery       (Optional). New incoming pre-checkout query. Contains full information about checkout
- * @property Poll|null $poll                   (Optional). New poll state. Bots receive only updates about stopped polls and polls, which are sent by the bot
- * @property PollAnswer|null $pollAnswer             (Optional). A user changed their answer in a non-anonymous poll. Bots receive new votes only in polls that were sent by the bot itself.
- * @property ChatMemberUpdated|null $myChatMember           (Optional). The bot's chat member status was updated in a chat. For private chats, this update is received only when the bot is blocked or unblocked by the user.
- * @property ChatMemberUpdated|null $chatMember             (Optional). A chat member's status was updated in a chat. The bot must be an administrator in the chat and must explicitly specify “chat_member” in the list of allowed_updates to receive these updates.
- * @property ChatJoinRequest|null $chatJoinRequest        (Optional). A request to join the chat has been sent. The bot must have the can_invite_users administrator right in the chat to receive these updates.
+ * @property int $updateId The update's unique identifier. Update identifiers start from a certain positive number and increase sequentially.
+ * @property Message|null $message (Optional). New incoming message of any kind - text, photo, sticker, etc.
+ * @property EditedMessage|null $editedMessage (Optional). New version of a message that is known to the bot and was edited.
+ * @property Message|null $channelPost (Optional). New incoming channel post of any kind — text, photo, sticker, etc.
+ * @property EditedMessage|null $editedChannelPost (Optional). New version of a channel post that is known to the bot and was edited sticker, etc.
+ * @property InlineQuery|null $inlineQuery (Optional). New incoming inline query.
+ * @property ChosenInlineResult|null $chosenInlineResult (Optional). A result of an inline query that was chosen by the user and sent to their chat partner.
+ * @property CallbackQuery|null $callbackQuery (Optional). Incoming callback query.
+ * @property ShippingQuery|null $shippingQuery (Optional). New incoming shipping query. Only for invoices with flexible price
+ * @property PreCheckoutQuery|null $preCheckoutQuery (Optional). New incoming pre-checkout query. Contains full information about checkout
+ * @property Poll|null $poll (Optional). New poll state. Bots receive only updates about stopped polls and polls, which are sent by the bot
+ * @property PollAnswer|null $pollAnswer (Optional). A user changed their answer in a non-anonymous poll. Bots receive new votes only in polls that were sent by the bot itself.
+ * @property ChatMemberUpdated|null $myChatMember (Optional). The bot's chat member status was updated in a chat. For private chats, this update is received only when the bot is blocked or unblocked by the user.
+ * @property ChatMemberUpdated|null $chatMember (Optional). A chat member's status was updated in a chat. The bot must be an administrator in the chat and must explicitly specify “chat_member” in the list of allowed_updates to receive these updates.
+ * @property ChatJoinRequest|null $chatJoinRequest (Optional). A request to join the chat has been sent. The bot must have the can_invite_users administrator right in the chat to receive these updates.
  */
 class Update extends BaseObject
 {

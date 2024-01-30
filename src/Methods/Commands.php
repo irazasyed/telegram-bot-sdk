@@ -26,7 +26,7 @@ trait Commands
      *
      * @link https://core.telegram.org/bots/api#setmycommands
      *
-     * @param  array  $params Where "commands" key is required, where value is a serialized array of commands.
+     * @param  array  $params  Where "commands" key is required, where value is a serialized array of commands.
      *
      * @throws TelegramSDKException
      */

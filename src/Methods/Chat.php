@@ -37,11 +37,11 @@ trait Chat
      * </code>
      * @link https://core.telegram.org/bots/api#kickchatmember
      *
-     * @param  array  $params     [
+     * @param  array  $params  [
      *
-     * @var int|string    Required. Unique identifier for the target group or username of the target supergroup (in the format @supergroupusername)
-     * @var int           Required. Unique identifier of the target user.
-     * @var int        (Optional). Unique identifier of the target user.
+     * @var int|string Required. Unique identifier for the target group or username of the target supergroup (in the format @supergroupusername)
+     * @var int Required. Unique identifier of the target user.
+     * @var int (Optional). Unique identifier of the target user.
      *
      * ]
      *
