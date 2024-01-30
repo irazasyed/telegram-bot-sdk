@@ -49,7 +49,7 @@ class CommandBus extends AnswerBus
     /**
      * Add a list of commands.
      *
-     * @param iterable<CommandInterface|class-string<CommandInterface>>  $commands
+     * @param  iterable<CommandInterface|class-string<CommandInterface>>  $commands
      *
      * @throws TelegramSDKException
      */
