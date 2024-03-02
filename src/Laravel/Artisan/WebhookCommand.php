@@ -90,6 +90,11 @@ class WebhookCommand extends Command
             $params['certificate'] = $certificatePath;
         }
 
+        $allowedUpdates = data_get($this->config, 'allowed_updates');
+        if ($allowedUpdates) {
+            $params['allowed_updates'] = $allowedUpdates;
+        }
+
         $response = $this->telegram->setWebhook($params);
         if ($response) {
             $this->info('Success: Your webhook has been set!');
