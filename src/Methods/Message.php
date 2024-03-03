@@ -497,4 +497,29 @@ trait Message
 
         return $this->post('sendChatAction', $params)->getResult();
     }
+
+    /**
+     * Send a poll.
+     *
+     * Use this method to send a native poll. A native poll can't be sent to a private chat.
+     *
+     * <code>
+     * $params = [
+     *       'chat_id'                       => '',  // int|string          - Required. Unique identifier for the target chat or username of the target channel (in the format "@channelusername"). A native poll can't be sent to a private chat.
+     *       'message_id'                    => '',  // int                 - Required. Identifier of the target message. If the message belongs to a media group, the reaction is set to the first non-deleted message in the group instead.
+     *       'reaction'                      => '',  // ReactionType[]      - (Optional). A JSON-serialized list of reaction types to set on the message. Currently, as non-premium users, bots can set up to one reaction per message. A custom emoji reaction can be used if it is either already present on the message or explicitly allowed by chat administrators.
+     *       'is_big'                        => '',  // bool                - (Optional). Pass True to set the reaction with a big animation
+     * ]
+     * </code>
+     *
+     * @link https://core.telegram.org/bots/api#setmessagereaction
+     *
+     * @throws TelegramSDKException
+     */
+    public function setMessageReaction(array $params): bool
+    {
+        $params['reaction'] = json_encode(Arr::wrap($params['reaction']), JSON_THROW_ON_ERROR);
+
+        return $this->post('setMessageReaction', $params)->getResult();
+    }
 }
