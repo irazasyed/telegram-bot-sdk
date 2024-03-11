@@ -90,7 +90,7 @@ class Api
      */
     private function validateAccessToken(): void
     {
-        if (! $this->getAccessToken()) {
+        if ($this->getAccessToken() === '' || $this->getAccessToken() === '0') {
             throw TelegramSDKException::tokenNotProvided(self::BOT_TOKEN_ENV_NAME);
         }
     }

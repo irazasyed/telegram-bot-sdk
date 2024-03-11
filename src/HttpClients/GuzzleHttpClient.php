@@ -2,6 +2,7 @@
 
 namespace Telegram\Bot\HttpClients;
 
+use GuzzleHttp\Promise\Utils;
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\GuzzleException;
@@ -45,7 +46,7 @@ class GuzzleHttpClient implements HttpClientInterface
      */
     public function __destruct()
     {
-        Promise\Utils::unwrap(self::$promises);
+        Utils::unwrap(self::$promises);
     }
 
     /**

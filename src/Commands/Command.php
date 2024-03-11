@@ -220,7 +220,7 @@ abstract class Command implements CommandInterface
 
     private function allCommandOffsets(): Collection
     {
-        return $this->getUpdate()->getMessage()?->get('entities', collect())
+        return $this->getUpdate()->getMessage()->get('entities', collect())
             ->filter(static fn (MessageEntity $entity): bool => $entity->type === 'bot_command')
             ->pluck('offset') ?? collect();
     }

@@ -28,8 +28,6 @@ final class InputFile
     /**
      * Create a file on-the-fly using the provided contents and filename.
      *
-     *
-     * @return mixed
      */
     public static function createFromContents(string $contents, string $filename): InputFile
     {

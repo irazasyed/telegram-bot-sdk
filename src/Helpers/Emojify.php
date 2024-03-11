@@ -52,7 +52,7 @@ final class Emojify
      *
      * @return Emojify The *Singleton* instance.
      */
-    public static function getInstance()
+    public static function getInstance(): ?\Telegram\Bot\Helpers\Emojify
     {
         if (! self::$instance instanceof \Telegram\Bot\Helpers\Emojify) {
             self::$instance = new self();
@@ -65,9 +65,8 @@ final class Emojify
      * Set File Path to Emoji Map File.
      *
      * @param  string  $emojiMapFile
-     * @return Emojify
      */
-    public function setEmojiMapFile($emojiMapFile)
+    public function setEmojiMapFile($emojiMapFile): self
     {
         $this->emojiMapFile = $emojiMapFile;
         $this->setupEmojiMaps();
@@ -118,10 +117,9 @@ final class Emojify
     /**
      * Replace.
      *
-     * @param  string  $delimiter
      * @return mixed
      */
-    private function replace($line, array $replace, bool $toWord = false, $delimiter = ':')
+    private function replace($line, array $replace, bool $toWord = false, string $delimiter = ':')
     {
         if ($toWord) {
             return $this->emojiToWordReplace($line, $replace, $delimiter);
@@ -136,7 +134,7 @@ final class Emojify
      *
      * @return mixed
      */
-    private function wordToEmojiReplace($line, array $replace, $delimiter)
+    private function wordToEmojiReplace($line, array $replace, string $delimiter)
     {
         foreach ($replace as $key => $value) {
             $line = str_replace($delimiter.$key.$delimiter, $value, $line);
@@ -150,7 +148,7 @@ final class Emojify
      *
      * @return mixed
      */
-    private function emojiToWordReplace($line, array $replace, $delimiter)
+    private function emojiToWordReplace($line, array $replace, string $delimiter)
     {
         foreach ($replace as $key => $value) {
             $line = str_replace($key, $delimiter.$value.$delimiter, $line);
