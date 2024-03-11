@@ -91,6 +91,10 @@ trait Update
     {
         $this->validateHookUrl($params['url']);
 
+        if (isset($params['allowed_updates'])) {
+            $params['allowed_updates'] = json_encode($params['allowed_updates'], JSON_THROW_ON_ERROR);
+        }
+
         if (isset($params['certificate'])) {
             $params['certificate'] = $this->formatCertificate($params['certificate']);
 
