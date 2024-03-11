@@ -47,7 +47,7 @@ jobs:
           echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
 
       - name: Install dependencies
-        uses: ramsey/composer-install@v2
+        uses: ramsey/composer-install@v3
         with:
           dependency-versions: ${{ matrix.dependencies }}
           composer-options: "--prefer-dist ${{ matrix.composer-options }}"
