@@ -2,6 +2,7 @@
 
 namespace Telegram\Bot\Methods;
 
+use Illuminate\Support\Arr;
 use Telegram\Bot\Actions;
 use Telegram\Bot\Exceptions\TelegramSDKException;
 use Telegram\Bot\Objects\Message as MessageObject;
