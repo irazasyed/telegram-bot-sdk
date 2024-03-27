@@ -54,9 +54,7 @@ trait Forum
      */
     public function editForumTopic(array $params): MessageObject
     {
-        $response = $this->post('editForumTopic', $params);
-
-        return new MessageObject($response->getDecodedBody());
+        return $this->post('editForumTopic', $params)->getResult();
     }
 
     /**
@@ -75,9 +73,7 @@ trait Forum
      */
     public function closeForumTopic(array $params): MessageObject
     {
-        $response = $this->post('closeForumTopic', $params);
-
-        return new MessageObject($response->getDecodedBody());
+        return $this->post('closeForumTopic', $params)->getResult();
     }
 
     /**
@@ -96,9 +92,7 @@ trait Forum
      */
     public function reopenForumTopic(array $params): MessageObject
     {
-        $response = $this->post('reopenForumTopic', $params);
-
-        return new MessageObject($response->getDecodedBody());
+        return $this->post('reopenForumTopic', $params)->getResult();
     }
 
     /**
@@ -117,8 +111,6 @@ trait Forum
      */
     public function deleteForumTopic(array $params): MessageObject
     {
-        $response = $this->post('deleteForumTopic', $params);
-
-        return new MessageObject($response->getDecodedBody());
+        return $this->post('deleteForumTopic', $params)->getResult();
     }
 }
