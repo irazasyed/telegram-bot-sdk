@@ -3,7 +3,7 @@
 namespace Telegram\Bot\Methods;
 
 use Telegram\Bot\Exceptions\TelegramSDKException;
-use Telegram\Bot\Objects\Message as MessageObject;
+use Telegram\Bot\Objects\ForumTopic as ForumTopicObject;
 use Telegram\Bot\Traits\Http;
 
 /**
@@ -29,11 +29,11 @@ trait Forum
      *
      * @throws TelegramSDKException
      */
-    public function createForumTopic(array $params): MessageObject
+    public function createForumTopic(array $params): ForumTopicObject
     {
         $response = $this->post('createForumTopic', $params);
 
-        return new MessageObject($response->getDecodedBody());
+        return new ForumTopicObject($response->getDecodedBody());
     }
 
     /**
