@@ -52,7 +52,7 @@ trait Forum
      *
      * @throws TelegramSDKException
      */
-    public function editForumTopic(array $params): MessageObject
+    public function editForumTopic(array $params): bool
     {
         return $this->post('editForumTopic', $params)->getResult();
     }
@@ -71,7 +71,7 @@ trait Forum
      *
      * @throws TelegramSDKException
      */
-    public function closeForumTopic(array $params): MessageObject
+    public function closeForumTopic(array $params): bool
     {
         return $this->post('closeForumTopic', $params)->getResult();
     }
@@ -90,7 +90,7 @@ trait Forum
      *
      * @throws TelegramSDKException
      */
-    public function reopenForumTopic(array $params): MessageObject
+    public function reopenForumTopic(array $params): bool
     {
         return $this->post('reopenForumTopic', $params)->getResult();
     }
@@ -109,7 +109,7 @@ trait Forum
      *
      * @throws TelegramSDKException
      */
-    public function deleteForumTopic(array $params): MessageObject
+    public function deleteForumTopic(array $params): bool
     {
         return $this->post('deleteForumTopic', $params)->getResult();
     }
