@@ -242,7 +242,7 @@ trait Http
      */
     protected function uploadFile(string $endpoint, array $params, string $inputFileField): TelegramResponse
     {
-        //Check if the field in the $params array (that is being used to send the relative file), is a file id.
+        // Check if the field in the $params array (that is being used to send the relative file), is a file id.
         if (! isset($params[$inputFileField])) {
             throw CouldNotUploadInputFile::missingParam($inputFileField);
         }
@@ -251,7 +251,7 @@ trait Http
             return $this->post($endpoint, $params);
         }
 
-        //Sending an actual file requires it to be sent using multipart/form-data
+        // Sending an actual file requires it to be sent using multipart/form-data
         return $this->post($endpoint, $this->prepareMultipartParams($params, $inputFileField), true);
     }
 
@@ -288,7 +288,7 @@ trait Http
     {
         $this->validateInputFileField($params, $inputFileField);
 
-        //Iterate through all param options and convert to multipart/form-data.
+        // Iterate through all param options and convert to multipart/form-data.
         return collect($params)
             ->reject(static fn ($value): bool => $value === null)
             ->map(fn ($contents, $name) => $this->generateMultipartData($contents, $name))

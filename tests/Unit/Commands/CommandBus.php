@@ -77,7 +77,7 @@ it('can remove a command from the bus', function () {
     expect($result)->toHaveCount(4);
     $this->assertStringContainsString('MockCommand3', $commandNames);
 
-    //Remove Specific command.
+    // Remove Specific command.
     $this->bus->removeCommand('MockCommand3');
 
     $newResult = $this->bus->getCommands();
@@ -98,7 +98,7 @@ it('can remove multiple commands from the bus', function () {
     $this->assertStringContainsString('MockCommand1', $commandNames);
     $this->assertStringContainsString('MockCommand4', $commandNames);
 
-    //Remove multiple commands at once
+    // Remove multiple commands at once
     $this->bus->removeCommands(['MockCommand1', 'MockCommand4']);
 
     $newResult = $this->bus->getCommands();

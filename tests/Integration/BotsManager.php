@@ -50,7 +50,7 @@ it('is possible to reconnect a bot that was disconnected or not used yet', funct
         ->toHaveKey('bot1');
 });
 
-//test('duplicated commands dont cause a problem', function () {
+// test('duplicated commands dont cause a problem', function () {
 //    $manager = new BotsManager(
 //        [
 //            'commands' => [
@@ -125,4 +125,4 @@ it('is possible to reconnect a bot that was disconnected or not used yet', funct
 //        ->and($commands03)->toHaveCount(5)
 //        ->and($commands04)->toHaveCount(7)
 //        ->and($commands05)->toHaveCount(8);
-//})->skip('This test is not working properly');
+// })->skip('This test is not working properly');

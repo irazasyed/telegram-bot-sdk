@@ -65,7 +65,7 @@ trait CommandsHandler
             $this->processCommand($update);
         }
 
-        //An update is considered confirmed as soon as getUpdates is called with an offset higher than it's update_id.
+        // An update is considered confirmed as soon as getUpdates is called with an offset higher than it's update_id.
         if ($highestId !== -1) {
             $this->markUpdateAsRead($highestId);
         }

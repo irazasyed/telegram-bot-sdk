@@ -202,14 +202,14 @@ abstract class Command implements CommandInterface
 
     private function relevantMessageSubString(): string
     {
-        //Get all the bot_command offsets in the Update object
+        // Get all the bot_command offsets in the Update object
         $commandOffsets = $this->allCommandOffsets();
 
         if ($commandOffsets->isEmpty()) {
             return $this->getUpdate()->getMessage()->text ?? '';
         }
 
-        //Extract the current offset for this command and, if it exists, the offset of the NEXT bot_command entity
+        // Extract the current offset for this command and, if it exists, the offset of the NEXT bot_command entity
         $splice = $commandOffsets->splice(
             $commandOffsets->search($this->entity['offset']),
             2
