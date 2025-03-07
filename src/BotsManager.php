@@ -64,12 +64,12 @@ final class BotsManager
      *
      * @throws TelegramSDKException
      */
-    public function bot(?string $name = null): Api
+    public function bot(?string $name = null, ?string $token = null): Api
     {
         $name ??= $this->getDefaultBotName();
 
         if (! isset($this->bots[$name])) {
-            $this->bots[$name] = $this->makeBot($name);
+            $this->bots[$name] = $this->makeBot($name, $token);
         }
 
         return $this->bots[$name];
@@ -150,11 +150,11 @@ final class BotsManager
      *
      * @throws TelegramSDKException
      */
-    protected function makeBot(string $name): Api
+    protected function makeBot(string $name, ?string $token = null): Api
     {
         $config = $this->getBotConfig($name);
 
-        $token = data_get($config, 'token');
+        $token = $token ?? data_get($config, 'token');
 
         $telegram = new Api(
             $token,
@@ -175,6 +175,16 @@ final class BotsManager
         $telegram->addCommands($commands);
 
         return $telegram;
+    }
+
+    /**
+     * Create a new bot instance with a dynamic token.
+     *
+     * @throws TelegramSDKException
+     */
+    public function createBotInstance(string $name, string $token): Api
+    {
+        return $this->makeBot($name, $token);
     }
 
     /**

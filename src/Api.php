@@ -75,7 +75,7 @@ class Api
     public function __construct(?string $token = null, bool $async = false, ?HttpClientInterface $httpClientHandler = null, ?string $baseBotUrl = null)
     {
         $this->setAccessToken($token ?? getenv(self::BOT_TOKEN_ENV_NAME));
-        $this->validateAccessToken();
+        $this->validateAccessToken($token);
 
         if ($async) {
             $this->setAsyncRequest($async);
@@ -90,9 +90,9 @@ class Api
     /**
      * @throws TelegramSDKException
      */
-    private function validateAccessToken(): void
+    private function validateAccessToken(?string $token = null): void
     {
-        if ($this->getAccessToken() === '' || $this->getAccessToken() === '0') {
+        if (($token === null || $token === '') && ($this->getAccessToken() === '' || $this->getAccessToken() === '0')) {
             throw TelegramSDKException::tokenNotProvided(self::BOT_TOKEN_ENV_NAME);
         }
     }
@@ -127,5 +127,15 @@ class Api
         }
 
         throw new BadMethodCallException(sprintf('Method [%s] does not exist.', $method));
+    }
+
+    /**
+     * Set the bot access token dynamically.
+     */
+    public function setAccessToken(string $accessToken): self
+    {
+        $this->accessToken = $accessToken;
+
+        return $this;
     }
 }
