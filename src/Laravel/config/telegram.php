@@ -153,7 +153,7 @@ return [
     */
     'command_groups' => [
         /* // Group Type: 1
-           'commmon' => [
+           'common' => [
                 Acme\Project\Commands\TodoCommand::class,
                 Acme\Project\Commands\TaskCommand::class,
            ],
