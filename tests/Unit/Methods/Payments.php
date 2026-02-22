@@ -72,7 +72,7 @@ test('createInvoiceLink json encodes prices parameter', function () {
     $body = (string) $request->getBody();
 
     $expectedPrices = json_encode([['label' => 'Product', 'amount' => 100]]);
-    expect($body)->toContain('prices=' . urlencode($expectedPrices));
+    expect($body)->toContain('prices='.urlencode($expectedPrices));
 });
 
 test('createInvoiceLink sends all required parameters', function () {
@@ -106,7 +106,7 @@ test('createInvoiceLink sends optional parameters when provided', function () {
     $request = $this->getHistory()->pluck('request')->first();
     $body = (string) $request->getBody();
 
-    expect($body)->toContain('photo_url=' . urlencode('https://example.com/photo.jpg'))
+    expect($body)->toContain('photo_url='.urlencode('https://example.com/photo.jpg'))
         ->and($body)->toContain('need_name=1')
         ->and($body)->toContain('need_email=1');
 });
