@@ -43,6 +43,7 @@ use Telegram\Bot\BotsManager;
  * @method static bool restrictChatMember(array $params)
  * @method static bool promoteChatMember(array $params)
  * @method static bool setChatAdministratorCustomTitle(array $params)
+ * @method static bool setChatMemberTag(array $params)
  * @method static bool banChatSenderChat(array $params)
  * @method static bool unbanChatSenderChat(array $params)
  * @method static bool setChatPermissions(array $params)
