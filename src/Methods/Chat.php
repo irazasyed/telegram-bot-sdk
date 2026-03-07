@@ -450,6 +450,7 @@ trait Chat
      *      'can_restrict_members'  => '',  // bool       - (Optional). Pass True, if the administrator can restrict, ban or unban chat members
      *      'can_pin_messages'      => '',  // bool       - (Optional). Pass True, if the administrator can pin messages, supergroups only
      *      'can_promote_members'   => '',  // bool       - (Optional). Pass True, if the administrator can add new administrators with a subset of his own privileges or demote administrators that he has promoted, directly or indirectly (promoted by administrators that were appointed by him)
+     *      'can_manage_tags'       => '',  // bool       - (Optional). Pass True if the administrator can edit the tags of regular members; for groups and supergroups only
      * ]
      * </code>
      *
@@ -482,6 +483,28 @@ trait Chat
     public function setChatAdministratorCustomTitle(array $params): bool
     {
         return $this->post('setChatAdministratorCustomTitle', $params)->getResult();
+    }
+
+    /**
+     * Use this method to set a tag for a regular member in a group or a supergroup. The bot must be an administrator in the chat for this to work and must have the can_manage_tags administrator right. Returns True on success.
+     *
+     * Returns True on success.
+     *
+     * <code>
+     * $params = [
+     *      'chat_id'       => '',  // int|string - Required. Unique identifier for the target chat or username of the target supergroup (in the format "@supergroupusername")
+     *      'user_id'       => '',  // int        - Required. Unique identifier of the target user
+     *      'tag'           => '',  // string     - Optional. New tag for the member; 0-16 characters, emoji are not allowed
+     * ]
+     * </code>
+     *
+     * @link https://core.telegram.org/bots/api#setchatmembertag
+     *
+     * @throws TelegramSDKException
+     */
+    public function setChatMemberTag(array $params): bool
+    {
+        return $this->post('setChatMemberTag', $params)->getResult();
     }
 
     /**
