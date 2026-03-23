@@ -59,7 +59,6 @@ Thanks to these companies for providing access to their products that have been 
 
 <div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
   <a href="https://1password.com/?utm_source=telegram-bot-sdk"><img src="https://user-images.githubusercontent.com/1915268/80118353-e79ac780-85a5-11ea-9447-6be9090ca8de.png" alt="1Password" height="36"></a>
-  <a href="https://www.jetbrains.com/?utm_source=telegram-bot-sdk"><img src="https://resources.jetbrains.com/storage/products/company/brand/logos/jb_square.svg" alt="JetBrains" height="100"></a>
 </div>
 
 
