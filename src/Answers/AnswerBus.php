@@ -39,7 +39,7 @@ abstract class AnswerBus
         }
 
         if (! $this->telegram->hasContainer()) {
-            return new $class();
+            return new $class;
         }
 
         $container = $this->telegram->getContainer();

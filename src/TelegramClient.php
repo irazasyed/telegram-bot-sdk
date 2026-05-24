@@ -20,14 +20,14 @@ final class TelegramClient
 
     public function __construct(?HttpClientInterface $httpClientHandler = null, ?string $baseBotUrl = null)
     {
-        $this->httpClientHandler = $httpClientHandler ?? new GuzzleHttpClient();
+        $this->httpClientHandler = $httpClientHandler ?? new GuzzleHttpClient;
 
         $this->baseBotUrl = $baseBotUrl ?? self::BASE_BOT_URL;
     }
 
     public function getHttpClientHandler(): HttpClientInterface
     {
-        return $this->httpClientHandler ?? new GuzzleHttpClient();
+        return $this->httpClientHandler ?? new GuzzleHttpClient;
     }
 
     public function setHttpClientHandler(HttpClientInterface $httpClientHandler): self

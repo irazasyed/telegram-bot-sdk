@@ -32,7 +32,7 @@ class CallbackQuery extends BaseObject
 
     public function objectType(): ?string
     {
-        //TODO - Check if message and inline_message_id are exclusive to each other
+        // TODO - Check if message and inline_message_id are exclusive to each other
         return $this->findType(['data', 'game_short_name']);
     }
 }

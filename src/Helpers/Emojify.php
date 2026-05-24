@@ -55,7 +55,7 @@ final class Emojify
     public static function getInstance(): ?\Telegram\Bot\Helpers\Emojify
     {
         if (! self::$instance instanceof \Telegram\Bot\Helpers\Emojify) {
-            self::$instance = new self();
+            self::$instance = new self;
         }
 
         return self::$instance;
@@ -171,7 +171,7 @@ final class Emojify
         }
 
         if (! file_exists($this->emojiMapFile)) {
-            throw new TelegramEmojiMapFileNotFoundException();
+            throw new TelegramEmojiMapFileNotFoundException;
         }
 
         return json_decode(file_get_contents($this->emojiMapFile), true, 512, JSON_THROW_ON_ERROR);

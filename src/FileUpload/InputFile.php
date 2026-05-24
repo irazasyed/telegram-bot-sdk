@@ -38,9 +38,7 @@ final class InputFile
      *
      * @param  string|resource|StreamInterface|null  $file
      */
-    public function __construct(private mixed $file = null, private ?string $filename = null)
-    {
-    }
+    public function __construct(private mixed $file = null, private ?string $filename = null) {}
 
     /**
      * Return the file.

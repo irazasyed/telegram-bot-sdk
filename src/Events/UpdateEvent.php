@@ -19,8 +19,7 @@ final class UpdateEvent extends AbstractEvent implements HasEventName
          * @deprecated Will be removed in SDK v4
          */
         protected string $name = self::NAME
-    ) {
-    }
+    ) {}
 
     public function eventName(): string
     {

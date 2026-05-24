@@ -35,7 +35,7 @@ class GuzzleHttpClient implements HttpClientInterface
      */
     public function __construct(?ClientInterface $client = null)
     {
-        $this->client = $client ?? new Client();
+        $this->client = $client ?? new Client;
     }
 
     /**

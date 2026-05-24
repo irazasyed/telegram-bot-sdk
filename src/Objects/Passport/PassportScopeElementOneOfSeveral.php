@@ -9,6 +9,4 @@ namespace Telegram\Bot\Objects\Passport;
  *
  * @link https://core.telegram.org/bots/api#passportscopeelementoneofseveral
  */
-class PassportScopeElementOneOfSeveral extends PassportScopeElement
-{
-}
+class PassportScopeElementOneOfSeveral extends PassportScopeElement {}

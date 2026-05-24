@@ -13,9 +13,7 @@ final class UpdateWasReceived extends AbstractEvent
     /**
      * UpdateWasReceived constructor.
      */
-    public function __construct(public Api $telegram, public Update $update)
-    {
-    }
+    public function __construct(public Api $telegram, public Update $update) {}
 
     public function eventName(): string
     {

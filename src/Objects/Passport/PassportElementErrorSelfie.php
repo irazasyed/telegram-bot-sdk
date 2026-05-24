@@ -12,6 +12,4 @@ namespace Telegram\Bot\Objects\Passport;
  * @property string $fileHash Base64-encoded hash of the file with the selfie
  * @property string $message Error message
  */
-class PassportElementErrorSelfie extends PassportElementError
-{
-}
+class PassportElementErrorSelfie extends PassportElementError {}

@@ -14,6 +14,4 @@ namespace Telegram\Bot\Objects\InputMedia;
  * @property string|null $caption (Optional). Caption of the photo to be sent, 0-200 characters
  * @property string|null $parseMode (Optional). Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
  */
-class InputMediaPhoto extends InputMedia
-{
-}
+class InputMediaPhoto extends InputMedia {}

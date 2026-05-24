@@ -39,7 +39,7 @@ it('ensures a command make method works', function () {
         ],
     ]);
 
-    $help = new HelpCommand();
+    $help = new HelpCommand;
     $api = $this->prophesize(Api::class);
 
     $commandBus = $this->prophesize(CommandBus::class);

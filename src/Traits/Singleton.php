@@ -21,7 +21,7 @@ trait Singleton
     public static function Instance(): self
     {
         if (self::$instance === null) {
-            self::$instance = new static();
+            self::$instance = new static;
         }
 
         return self::$instance;
@@ -31,9 +31,7 @@ trait Singleton
      * Protected constructor to prevent creating a new instance of the
      * Singleton via the `new` operator from outside of this class.
      */
-    protected function __construct()
-    {
-    }
+    protected function __construct() {}
 
     /**
      * Throw an exception when the user tries to clone the *Singleton*

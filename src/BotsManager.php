@@ -23,9 +23,7 @@ final class BotsManager
     /**
      * TelegramManager constructor.
      */
-    public function __construct(private array $config)
-    {
-    }
+    public function __construct(private array $config) {}
 
     /**
      * Set the IoC Container.
