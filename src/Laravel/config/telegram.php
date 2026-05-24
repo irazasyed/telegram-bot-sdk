@@ -40,7 +40,7 @@ return [
              */
             'allowed_updates' => null,
             'commands' => [
-                // Acme\Project\Commands\MyTelegramBot\BotCommand::class
+                //Acme\Project\Commands\MyTelegramBot\BotCommand::class
             ],
         ],
 
@@ -153,7 +153,7 @@ return [
     */
     'command_groups' => [
         /* // Group Type: 1
-           'common' => [
+           'commmon' => [
                 Acme\Project\Commands\TodoCommand::class,
                 Acme\Project\Commands\TaskCommand::class,
            ],

@@ -12,4 +12,6 @@ namespace Telegram\Bot\Objects\Passport;
  * @property string $fileHash Base64-encoded file hash
  * @property string $message Error message
  */
-class PassportElementErrorFile extends PassportElementError {}
+class PassportElementErrorFile extends PassportElementError
+{
+}

@@ -11,5 +11,7 @@ if (class_exists(\League\Event\AbstractEvent::class)) {
         }
     }
 } else {
-    abstract class AbstractEvent {}
+    abstract class AbstractEvent
+    {
+    }
 }

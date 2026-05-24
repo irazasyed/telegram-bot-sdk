@@ -18,4 +18,6 @@ namespace Telegram\Bot\Exceptions;
  *
  * @TODO Integrate with exceptions / error handler.
  */
-final class ResponseParameters {}
+final class ResponseParameters
+{
+}

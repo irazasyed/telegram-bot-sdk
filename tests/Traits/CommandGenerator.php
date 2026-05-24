@@ -34,7 +34,9 @@ trait CommandGenerator
                     return [sprintf('MockAlias%s', $this->instanceNumber)];
                 }
 
-                public function handle(): void {}
+                public function handle(): void
+                {
+                }
             });
     }
 }

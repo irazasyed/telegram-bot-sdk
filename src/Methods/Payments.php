@@ -101,45 +101,4 @@ trait Payments
     {
         return $this->post('answerPreCheckoutQuery', $params)->getResult();
     }
-
-    /**
-     * Create a link for an invoice.
-     *
-     * <code>
-     * $params = [
-     *      'business_connection_id'         => '',  // string         - (Optional). Unique identifier of the business connection on behalf of which the link will be created. For payments in Telegram Stars only.
-     *      'title'                          => '',  // string         - Required. Product name, 1-32 characters
-     *      'description'                    => '',  // string         - Required. Product description, 1-255 characters
-     *      'payload'                        => '',  // string         - Required. Bot-defined invoice payload, 1-128 bytes. This will not be displayed to the user, use for your internal processes.
-     *      'provider_token'                 => '',  // string         - (Optional). Payment provider token, obtained via @BotFather. Pass an empty string for payments in Telegram Stars.
-     *      'currency'                       => '',  // string         - Required. Three-letter ISO 4217 currency code, see more on currencies. Pass "XTR" for payments in Telegram Stars.
-     *      'prices'                         => '',  // LabeledPrice[] - Required. Price breakdown, a list of components (e.g. product price, tax, discount, delivery cost, delivery tax, bonus, etc.). Must contain exactly one item for payments in Telegram Stars.
-     *      'subscription_period'            => '',  // int            - (Optional). The number of seconds the subscription will be active for before the next payment. The currency must be set to "XTR" (Telegram Stars) if the parameter is used.
-     *      'max_tip_amount'                 => '',  // int            - (Optional). The maximum accepted amount for tips in the smallest units of the currency (integer, not float/double). Defaults to 0. Not supported for payments in Telegram Stars.
-     *      'suggested_tip_amounts'          => '',  // int[]          - (Optional). A JSON-serialized array of suggested amounts of tips in the smallest units of the currency. At most 4 suggested tip amounts can be specified. Not supported for payments in Telegram Stars.
-     *      'provider_data'                  => '',  // string         - (Optional). JSON-serialized data about the invoice, which will be shared with the payment provider.
-     *      'photo_url'                      => '',  // string         - (Optional). URL of the product photo for the invoice. Can be a photo of the goods or a marketing image for a service.
-     *      'photo_size'                     => '',  // int            - (Optional). Photo size in bytes
-     *      'photo_width'                    => '',  // int            - (Optional). Photo width
-     *      'photo_height'                   => '',  // int            - (Optional). Photo height
-     *      'need_name'                      => '',  // bool           - (Optional). Pass True if you require the user's full name to complete the order. Ignored for payments in Telegram Stars.
-     *      'need_phone_number'              => '',  // bool           - (Optional). Pass True if you require the user's phone number to complete the order. Ignored for payments in Telegram Stars.
-     *      'need_email'                     => '',  // bool           - (Optional). Pass True if you require the user's email address to complete the order. Ignored for payments in Telegram Stars.
-     *      'need_shipping_address'          => '',  // bool           - (Optional). Pass True if you require the user's shipping address to complete the order. Ignored for payments in Telegram Stars.
-     *      'send_phone_number_to_provider'  => '',  // bool           - (Optional). Pass True if the user's phone number should be sent to the provider. Ignored for payments in Telegram Stars.
-     *      'send_email_to_provider'         => '',  // bool           - (Optional). Pass True if the user's email address should be sent to the provider. Ignored for payments in Telegram Stars.
-     *      'is_flexible'                    => '',  // bool           - (Optional). Pass True if the final price depends on the shipping method. Ignored for payments in Telegram Stars.
-     * ]
-     * </code>
-     *
-     * @link https://core.telegram.org/bots/api#createinvoicelink
-     *
-     * @throws TelegramSDKException
-     */
-    public function createInvoiceLink(array $params): string
-    {
-        $params['prices'] = json_encode(Arr::wrap($params['prices']), JSON_THROW_ON_ERROR);
-
-        return $this->post('createInvoiceLink', $params)->getResult();
-    }
 }

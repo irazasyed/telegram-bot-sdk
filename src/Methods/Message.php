@@ -124,11 +124,7 @@ trait Message
      */
     public function sendPhoto(array $params): MessageObject
     {
-        if (filter_var($params['photo'], FILTER_VALIDATE_URL)) {
-            $response = $this->post('sendPhoto', $params);
-        } else {
-            $response = $this->uploadFile('sendPhoto', $params, 'photo');
-        }
+        $response = $this->uploadFile('sendPhoto', $params, 'photo');
 
         return new MessageObject($response->getDecodedBody());
     }

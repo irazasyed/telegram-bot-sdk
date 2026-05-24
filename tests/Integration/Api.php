@@ -88,7 +88,7 @@ test('the correct request query string is created when a get method has paramete
     /** @var Request $request */
     $request = $this->getHistory()->pluck('request')->first();
 
-    expect($request->getBody())->toEqual('') // 'The get request had a body when it should be blank.'
+    expect($request->getBody())->toEqual('') //'The get request had a body when it should be blank.'
         ->and($request->getUri()->getScheme())->toEqual('https')
         ->and($request->getUri()->getHost())->toEqual('api.telegram.org')
         ->and($request->getUri()->getPath())->toEqual('/botSpecial_Bot_Token/getChatMember')
@@ -211,7 +211,7 @@ it('requires all file uploads except file id to be created with file input objec
     ->throws(TelegramSDKException::class);
 
 it('throws an exception if the param key used to upload file does not match the method being used', function () {
-    // We want to send a document but the params have a voice key instead.
+    //We want to send a document but the params have a voice key instead.
     $this->api->sendDocument([
         'chat_id' => 123456789,
         'voice' => InputFile::create(fopen('php://input', 'rb'), 'Myvoice.ogg'),
@@ -248,7 +248,7 @@ it('can upload a file properly using the correct multipart data', function () {
     $data = [];
     $api = api($this->getGuzzleHttpClient([$this->makeFakeInboundUpdate($data)]));
 
-    // We can use any file input here, for testing a stream is quick and easy.
+    //We can use any file input here, for testing a stream is quick and easy.
     $api->sendDocument([
         'chat_id' => 123456789,
         'document' => InputFile::create(streamFor('Some text'), 'testing.txt'),
@@ -265,8 +265,8 @@ it('can upload a file properly using the correct multipart data', function () {
 });
 
 it('can set a webhook with its own certificate successfully', function () {
-    // Probably not the best way to attempt to create a file on a server.
-    // Help appreciated.
+    //Probably not the best way to attempt to create a file on a server.
+    //Help appreciated.
     $fakeFile = fopen('php://temp', 'wb+');
     fwrite($fakeFile, pubKey());
     fseek($fakeFile, 0);
@@ -284,7 +284,7 @@ it('can set a webhook with its own certificate successfully', function () {
         'certificate' => InputFile::create(streamFor(pubKey()), 'public.key'),
     ]);
 
-    // If the user uses just a string to the path/filename of the webhook cert.
+    //If the user uses just a string to the path/filename of the webhook cert.
     $api->setWebhook([
         'url' => 'https://example.com',
         'certificate' => $fakeFile,
@@ -300,7 +300,7 @@ it('can set a webhook with its own certificate successfully', function () {
 });
 
 test('check the webhook works and can dispatch an event', function () {
-    $listener = new ListenerSpy;
+    $listener = new ListenerSpy();
 
     $api = api($this->httpClient);
     $api->on(UpdateWasReceived::class, $listener);
@@ -314,7 +314,7 @@ test('check the webhook works and can dispatch an event', function () {
 });
 
 it('dispatches 3 events of update event type', function () {
-    $listener = new ListenerSpy;
+    $listener = new ListenerSpy();
 
     $api = api($this->httpClient);
     $api->on('update', $listener);

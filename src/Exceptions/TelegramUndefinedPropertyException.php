@@ -7,4 +7,6 @@ use Exception;
 /**
  * Class TelegramUndefinedPropertyException.
  */
-final class TelegramUndefinedPropertyException extends Exception {}
+final class TelegramUndefinedPropertyException extends Exception
+{
+}

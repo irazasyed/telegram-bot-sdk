@@ -59,7 +59,6 @@ use Telegram\Bot\Objects\WebApp\WebAppData;
  * @property string|null $replyMarkup (Optional). Inline keyboard attached to the message. login_url buttons are represented as ordinary url buttons.
  * @property WebAppData|null $webAppData (Optional). Service message: data sent by a Web App.
  * @property Chat|null $senderChat (Optional). Sender of a message which is a chat (group or channel).
- * @property string|null $sender_tag (Optional). Tag or custom title of the sender of the message; for supergroups only
  */
 class Message extends BaseObject
 {
@@ -102,13 +101,12 @@ class Message extends BaseObject
         'voice_chat_ended',
         'voice_chat_participants_invited',
         'web_app_data',
-        'sender_tag',
     ];
 
     /**
      * {@inheritdoc}
      *
-     * @return array{from: string, chat: string, forward_from: string, forward_from_chat: string, reply_to_message: class-string<Message>, entities: string[], caption_entities: string[], audio: string, dice: string, animation: string, document: string, game: string, photo: string[], sticker: string, video: string, voice: string, video_note: string, contact: string, location: string, venue: string, poll: string, new_chat_member: string, new_chat_members: string[], left_chat_member: string, new_chat_photo: string[], delete_chat_photo: string, pinned_message: class-string<Message>, invoice: string, successful_payment: string, passport_data: string, sender_chat: string, proximity_alert_triggered: string, voice_chat_started: string, voice_chat_ended: string, voice_chat_participants_invited: string, web_app_data: string, sender_tag: string}
+     * @return array{from: string, chat: string, forward_from: string, forward_from_chat: string, reply_to_message: class-string<Message>, entities: string[], caption_entities: string[], audio: string, dice: string, animation: string, document: string, game: string, photo: string[], sticker: string, video: string, voice: string, video_note: string, contact: string, location: string, venue: string, poll: string, new_chat_member: string, new_chat_members: string[], left_chat_member: string, new_chat_photo: string[], delete_chat_photo: string, pinned_message: class-string<Message>, invoice: string, successful_payment: string, passport_data: string, sender_chat: string, proximity_alert_triggered: string, voice_chat_started: string, voice_chat_ended: string, voice_chat_participants_invited: string, web_app_data: string}
      */
     public function relations(): array
     {
