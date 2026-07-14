@@ -60,6 +60,7 @@ use Telegram\Bot\Objects\WebApp\WebAppData;
  * @property WebAppData|null $webAppData (Optional). Service message: data sent by a Web App.
  * @property Chat|null $senderChat (Optional). Sender of a message which is a chat (group or channel).
  * @property string|null $sender_tag (Optional). Tag or custom title of the sender of the message; for supergroups only
+ * @property TelegramObject|null $richMessage (Optional). Rich formatted content of the message.
  */
 class Message extends BaseObject
 {
@@ -103,6 +104,7 @@ class Message extends BaseObject
         'voice_chat_participants_invited',
         'web_app_data',
         'sender_tag',
+        'rich_message',
     ];
 
     /**

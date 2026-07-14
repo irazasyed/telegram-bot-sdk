@@ -22,10 +22,11 @@ trait EditMessage
      *       'chat_id'                   => '',  // int|string - (Optional). Required if inline_message_id is not specified. Unique identifier for the target chat or username of the target channel (in the format "@channelusername")
      *       'message_id'                => '',  // int        - (Optional). Required if inline_message_id is not specified. Identifier of the sent message
      *       'inline_message_id'         => '',  // string     - (Optional). Required if chat_id and message_id are not specified. Identifier of the inline message
-     *       'text'                      => '',  // string     - Required. New text of the message.
+     *       'text'                      => '',  // string     - (Optional). New text of the message. Required if rich_message is not specified.
      *       'parse_mode'                => '',  // string     - (Optional). Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in your bot's message.
      *       'entities'                  => '',  // array      - (Optional). List of special entities that appear in the caption, which can be specified instead of parse_mode
      *       'disable_web_page_preview'  => '',  // bool       - (Optional). Disables link previews for links in this message
+     *       'rich_message'              => '',  // InputRichMessage|string - (Optional). New rich content. Required if text is not specified.
      *       'reply_markup'              => '',  // string     - (Optional). A JSON-serialized object for an inline keyboard.
      * ]
      * </code>
@@ -38,6 +39,7 @@ trait EditMessage
      */
     public function editMessageText(array $params): Message
     {
+        $params = $this->inputRichMessageToString($params);
         $response = $this->post('editMessageText', $params);
 
         return new Message($response->getDecodedBody());

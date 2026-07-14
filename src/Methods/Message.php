@@ -45,6 +45,42 @@ trait Message
     }
 
     /**
+     * Send a rich formatted message.
+     *
+     * The rich_message parameter accepts an InputRichMessage containing markdown or HTML,
+     * or an already JSON-serialized string.
+     *
+     * @link https://core.telegram.org/bots/api#sendrichmessage
+     *
+     * @throws TelegramSDKException
+     */
+    public function sendRichMessage(array $params): MessageObject
+    {
+        $params = $this->inputRichMessageToString($params);
+        $response = $this->post('sendRichMessage', $params);
+
+        return new MessageObject($response->getDecodedBody());
+    }
+
+    /**
+     * Stream a partial rich message while it is being generated.
+     *
+     * The rich_message parameter accepts an InputRichMessage containing markdown or HTML,
+     * or an already JSON-serialized string. The draft is an ephemeral 30-second preview; call
+     * sendRichMessage with the complete message to persist it.
+     *
+     * @link https://core.telegram.org/bots/api#sendrichmessagedraft
+     *
+     * @throws TelegramSDKException
+     */
+    public function sendRichMessageDraft(array $params): bool
+    {
+        $params = $this->inputRichMessageToString($params);
+
+        return $this->post('sendRichMessageDraft', $params)->getResult();
+    }
+
+    /**
      * Forward messages of any kind.
      *
      * <code>
