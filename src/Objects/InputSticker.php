@@ -22,12 +22,15 @@ use Telegram\Bot\FileUpload\InputFile;
 class InputSticker extends BaseObject
 {
     /**
-     * The sticker input is a scalar or InputFile, not a Sticker relation.
+     * InputSticker fields are request values, not inferred object relations.
      */
     protected function getPropertyValue(string $property, mixed $default = null): mixed
     {
-        if (Str::snake($property) === 'sticker') {
-            return $this->items['sticker'] ?? value($default);
+        $property = Str::snake($property);
+        if (in_array($property, ['sticker', 'emoji_list', 'keywords'], true)) {
+            return array_key_exists($property, $this->items)
+                ? $this->items[$property]
+                : value($default);
         }
 
         return parent::getPropertyValue($property, $default);

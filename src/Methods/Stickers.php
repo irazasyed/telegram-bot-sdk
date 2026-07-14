@@ -307,6 +307,9 @@ trait Stickers
     /**
      * @deprecated Bot API 6.6 renamed this method and its thumb parameter. Use
      *             setStickerSetThumbnail() with thumbnail and format instead.
+     *             For backward compatibility, static format is assumed when
+     *             format is omitted. Animated and video thumbnails must pass
+     *             their format explicitly.
      *
      * @throws TelegramSDKException
      */
@@ -317,6 +320,7 @@ trait Stickers
         }
 
         unset($params['thumb']);
+        $params['format'] ??= 'static';
 
         return $this->setStickerSetThumbnail($params);
     }

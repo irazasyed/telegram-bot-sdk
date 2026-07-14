@@ -34,6 +34,40 @@ test('sendSticker sends HTTP URLs without treating them as local uploads', funct
         ->toBe(['message_id' => 42]);
 });
 
+test('sendSticker sends file IDs without multipart encoding', function () {
+    $fileId = 'AwADBAADYwADO1wlBuF1ogMa7HnMAg';
+    $api = stickersApi($this->getGuzzleHttpClient([$this->makeFakeServerResponse([])]));
+
+    $api->sendSticker([
+        'chat_id' => 123456789,
+        'sticker' => $fileId,
+    ]);
+
+    /** @var Request $request */
+    $request = $this->getHistory()->pluck('request')->first();
+    parse_str((string) $request->getBody(), $body);
+
+    expect($request->getHeaderLine('Content-Type'))->toBe('application/x-www-form-urlencoded')
+        ->and($body['sticker'])->toBe($fileId);
+});
+
+test('sendSticker uploads InputFile values as multipart data', function () {
+    $api = stickersApi($this->getGuzzleHttpClient([$this->makeFakeServerResponse([])]));
+
+    $api->sendSticker([
+        'chat_id' => 123456789,
+        'sticker' => InputFile::create(streamFor('sticker contents'), 'sticker.webp'),
+    ]);
+
+    /** @var Request $request */
+    $request = $this->getHistory()->pluck('request')->first();
+    $body = (string) $request->getBody();
+
+    expect($request->getHeaderLine('Content-Type'))->toContain('multipart/form-data;')
+        ->and($body)->toContain('name="sticker"; filename="sticker.webp"')
+        ->and($body)->toContain('sticker contents');
+});
+
 test('uploadStickerFile uses the current sticker and sticker_format parameters', function () {
     $response = $this->makeFakeServerResponse([
         'file_id' => 'AwADBAADYwADO1wlBuF1ogMa7HnMAg',
@@ -120,6 +154,31 @@ test('createNewStickerSet uploads multiple nested InputSticker files with attach
         ->and($body)->toContain('video sticker');
 });
 
+test('nested sticker uploads avoid collisions with user multipart parameters', function () {
+    $api = stickersApi($this->getGuzzleHttpClient([$this->makeFakeServerResponse(true)]));
+
+    $api->createNewStickerSet([
+        'user_id' => 123456789,
+        'name' => 'animals_by_example_bot',
+        'title' => 'Animals',
+        'sticker_0' => 'user value',
+        'stickers' => [[
+            'sticker' => InputFile::create(streamFor('sticker contents'), 'sticker.webp'),
+            'format' => 'static',
+            'emoji_list' => ['🐼'],
+        ]],
+    ]);
+
+    /** @var Request $request */
+    $request = $this->getHistory()->pluck('request')->first();
+    $body = (string) $request->getBody();
+
+    expect($body)->toContain('attach:\/\/sticker_0_file')
+        ->and($body)->toContain('name="sticker_0"')
+        ->and($body)->toContain('user value')
+        ->and($body)->toContain('name="sticker_0_file"; filename="sticker.webp"');
+});
+
 test('addStickerToSet uploads a nested InputSticker file', function () {
     $api = stickersApi($this->getGuzzleHttpClient([$this->makeFakeServerResponse(true)]));
 
@@ -140,6 +199,30 @@ test('addStickerToSet uploads a nested InputSticker file', function () {
     expect($request->getUri()->getPath())->toBe('/botTELEGRAM_TOKEN/addStickerToSet')
         ->and($body)->toContain('attach:\/\/sticker_0')
         ->and($body)->toContain('name="sticker_0"; filename="animated.tgs"');
+});
+
+test('replaceStickerInSet uploads a nested InputSticker file', function () {
+    $api = stickersApi($this->getGuzzleHttpClient([$this->makeFakeServerResponse(true)]));
+
+    expect($api->replaceStickerInSet([
+        'user_id' => 123456789,
+        'name' => 'animals_by_example_bot',
+        'old_sticker' => 'old-file-id',
+        'sticker' => [
+            'sticker' => InputFile::create(streamFor('replacement sticker'), 'replacement.webm'),
+            'format' => 'video',
+            'emoji_list' => ['🎬'],
+        ],
+    ]))->toBeTrue();
+
+    /** @var Request $request */
+    $request = $this->getHistory()->pluck('request')->first();
+    $body = (string) $request->getBody();
+
+    expect($request->getUri()->getPath())->toBe('/botTELEGRAM_TOKEN/replaceStickerInSet')
+        ->and($body)->toContain('attach:\/\/sticker_0')
+        ->and($body)->toContain('name="sticker_0"; filename="replacement.webm"')
+        ->and($body)->toContain('replacement sticker');
 });
 
 test('getCustomEmojiStickers serializes identifiers and returns Sticker objects', function () {
@@ -268,6 +351,43 @@ test('setStickerSetThumbnail uploads the current thumbnail field and format', fu
         ->and($body)->not->toContain('name="thumb"');
 });
 
+test('setStickerSetThumbnail accepts reusable and omitted thumbnails', function (array $params, ?string $expectedThumbnail) {
+    $api = stickersApi($this->getGuzzleHttpClient([$this->makeFakeServerResponse(true)]));
+
+    expect($api->setStickerSetThumbnail($params))->toBeTrue();
+
+    /** @var Request $request */
+    $request = $this->getHistory()->pluck('request')->first();
+    parse_str((string) $request->getBody(), $body);
+
+    expect($request->getUri()->getPath())->toBe('/botTELEGRAM_TOKEN/setStickerSetThumbnail')
+        ->and($request->getHeaderLine('Content-Type'))->toBe('application/x-www-form-urlencoded');
+
+    if ($expectedThumbnail === null) {
+        expect($body)->not->toHaveKey('thumbnail');
+    } else {
+        expect($body['thumbnail'])->toBe($expectedThumbnail);
+    }
+})->with([
+    'file ID' => [[
+        'name' => 'animals_by_example_bot',
+        'user_id' => 123456789,
+        'thumbnail' => 'AwADBAADYwADO1wlBuF1ogMa7HnMAg',
+        'format' => 'static',
+    ], 'AwADBAADYwADO1wlBuF1ogMa7HnMAg'],
+    'HTTP URL' => [[
+        'name' => 'animals_by_example_bot',
+        'user_id' => 123456789,
+        'thumbnail' => 'https://example.com/thumbnail.webp',
+        'format' => 'static',
+    ], 'https://example.com/thumbnail.webp'],
+    'omitted thumbnail' => [[
+        'name' => 'animals_by_example_bot',
+        'user_id' => 123456789,
+        'format' => 'static',
+    ], null],
+]);
+
 test('setStickerSetThumb remains a compatibility alias for the renamed endpoint', function () {
     $api = stickersApi($this->getGuzzleHttpClient([$this->makeFakeServerResponse(true)]));
 
@@ -275,7 +395,6 @@ test('setStickerSetThumb remains a compatibility alias for the renamed endpoint'
         'name' => 'animals_by_example_bot',
         'user_id' => 123456789,
         'thumb' => 'AwADBAADYwADO1wlBuF1ogMa7HnMAg',
-        'format' => 'static',
     ]))->toBeTrue();
 
     /** @var Request $request */
@@ -284,5 +403,6 @@ test('setStickerSetThumb remains a compatibility alias for the renamed endpoint'
 
     expect($request->getUri()->getPath())->toBe('/botTELEGRAM_TOKEN/setStickerSetThumbnail')
         ->and($body['thumbnail'])->toBe('AwADBAADYwADO1wlBuF1ogMa7HnMAg')
+        ->and($body['format'])->toBe('static')
         ->and($body)->not->toHaveKey('thumb');
 });

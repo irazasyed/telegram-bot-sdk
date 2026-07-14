@@ -45,6 +45,7 @@ test('InputSticker preserves string and InputFile sticker values', function () {
         'sticker' => $fileId,
         'format' => 'static',
         'emoji_list' => ['🐼'],
+        'keywords' => ['panda', 'bamboo'],
     ]);
     $inputFile = InputFile::createFromContents('sticker contents', 'sticker.webp');
     $fileSticker = new InputSticker([
@@ -55,6 +56,10 @@ test('InputSticker preserves string and InputFile sticker values', function () {
 
     expect($stringSticker->sticker)->toBe($fileId)
         ->and($stringSticker->getSticker())->toBe($fileId)
+        ->and($stringSticker->emojiList)->toBe(['🐼'])
+        ->and($stringSticker->getEmojiList())->toBe(['🐼'])
+        ->and($stringSticker->keywords)->toBe(['panda', 'bamboo'])
+        ->and($stringSticker->getKeywords())->toBe(['panda', 'bamboo'])
         ->and($fileSticker->sticker)->toBe($inputFile)
         ->and($fileSticker->getSticker())->toBe($inputFile);
 });
