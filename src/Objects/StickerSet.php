@@ -9,22 +9,22 @@ namespace Telegram\Bot\Objects;
  *
  * @property string $name Sticker set name
  * @property string $title Sticker set title
- * @property bool $isAnimated True, if the sticker set contains animated stickers
- * @property bool $containsMasks True, if the sticker set contains masks
+ * @property string $stickerType Type of stickers in the set: regular, mask, or custom_emoji
  * @property Sticker[] $stickers List of all set stickers
- * @property PhotoSize|null $thumb (Optional). Sticker set thumbnail in the .WEBP or .TGS format
+ * @property PhotoSize|null $thumbnail (Optional). Sticker set thumbnail in .WEBP, .TGS, or .WEBM format
  */
 class StickerSet extends BaseObject
 {
     /**
      * {@inheritdoc}
      *
-     * @return array{stickers: array<class-string<Sticker>>, thumb: string}
+     * @return array{stickers: array<class-string<Sticker>>, thumbnail: string, thumb: string}
      */
     public function relations(): array
     {
         return [
             'stickers' => [Sticker::class],
+            'thumbnail' => PhotoSize::class,
             'thumb' => PhotoSize::class,
         ];
     }
