@@ -461,3 +461,73 @@ test('the command handler when using webhook to process updates for commands wil
 
     expect($update)->toBeInstanceOf(Update::class);
 });
+
+test('downloading a file fetches it over http when the file path is relative', function () {
+    $fileContents = 'remote file contents';
+    $response = new \GuzzleHttp\Psr7\Response(200, [], $fileContents);
+    $api = api($this->getGuzzleHttpClient([$response]));
+
+    $destination = sys_get_temp_dir().'/telegram-bot-sdk-test-'.uniqid().'/file.jpg';
+
+    try {
+        $file = new \Telegram\Bot\Objects\File([
+            'file_id' => 'ABC',
+            'file_unique_id' => 'ABC',
+            'file_path' => 'photos/file_0.jpg',
+        ]);
+
+        $api->downloadFile($file, $destination);
+
+        $request = $this->getHistory()->pluck('request')->first();
+
+        expect($this->getHistory())->toHaveCount(1)
+            ->and((string) $request->getUri())->toEqual('https://api.telegram.org/file/botTELEGRAM_TOKEN/photos/file_0.jpg')
+            ->and(file_get_contents($destination))->toEqual($fileContents);
+    } finally {
+        @unlink($destination);
+        @rmdir(dirname($destination));
+    }
+});
+
+test('downloading a file reads it directly from disk when the file path is an absolute local path', function () {
+    // A Bot API server started with --local returns an absolute file_path instead of a
+    // relative one, and does not serve file contents over HTTP in that mode, so the SDK
+    // must read the file directly off disk rather than issuing an HTTP request for it.
+    $api = api($this->getGuzzleHttpClient([]));
+
+    $source = tempnam(sys_get_temp_dir(), 'telegram-bot-sdk-test-source-');
+    file_put_contents($source, 'local file contents');
+    $destination = sys_get_temp_dir().'/telegram-bot-sdk-test-'.uniqid().'/file.jpg';
+
+    try {
+        $file = new \Telegram\Bot\Objects\File([
+            'file_id' => 'ABC',
+            'file_unique_id' => 'ABC',
+            'file_path' => $source,
+        ]);
+
+        $api->downloadFile($file, $destination);
+
+        expect($this->getHistory())->toHaveCount(0)
+            ->and(file_get_contents($destination))->toEqual('local file contents');
+    } finally {
+        @unlink($source);
+        @unlink($destination);
+        @rmdir(dirname($destination));
+    }
+});
+
+test('downloading a file from an absolute local path throws when the file cannot be read', function () {
+    $api = api($this->getGuzzleHttpClient([]));
+
+    $destination = sys_get_temp_dir().'/telegram-bot-sdk-test-'.uniqid().'/file.jpg';
+
+    $file = new \Telegram\Bot\Objects\File([
+        'file_id' => 'ABC',
+        'file_unique_id' => 'ABC',
+        'file_path' => '/nonexistent/directory/file.jpg',
+    ]);
+
+    expect(fn () => $api->downloadFile($file, $destination))
+        ->toThrow(TelegramSDKException::class);
+});
