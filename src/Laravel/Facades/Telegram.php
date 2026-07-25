@@ -104,6 +104,8 @@ use Telegram\Bot\Commands\CommandBus;
  * @method static void flushMacros()
  * @method static void macroCall($method, $parameters)
  * @method static \Telegram\Bot\Objects\Message sendMessage(array $params)
+ * @method static \Telegram\Bot\Objects\Message sendRichMessage(array $params)
+ * @method static bool sendRichMessageDraft(array $params)
  * @method static \Telegram\Bot\Objects\Message forwardMessage(array $params)
  * @method static \Telegram\Bot\Objects\Message copyMessage(array $params)
  * @method static \Telegram\Bot\Objects\Message sendPhoto(array $params)

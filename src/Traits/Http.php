@@ -9,6 +9,7 @@ use Telegram\Bot\FileUpload\InputFile;
 use Telegram\Bot\HttpClients\HttpClientInterface;
 use Telegram\Bot\Objects\BaseObject;
 use Telegram\Bot\Objects\File;
+use Telegram\Bot\Objects\InputRichMessage;
 use Telegram\Bot\TelegramClient;
 use Telegram\Bot\TelegramRequest;
 use Telegram\Bot\TelegramResponse;
@@ -126,6 +127,18 @@ trait Http
         $params = $this->replyMarkupToString($params);
 
         return $this->sendRequest('GET', $endpoint, $params);
+    }
+
+    /**
+     * JSON-serialize an InputRichMessage request parameter.
+     */
+    protected function inputRichMessageToString(array $params): array
+    {
+        if (($params['rich_message'] ?? null) instanceof InputRichMessage) {
+            $params['rich_message'] = $params['rich_message']->toJson(JSON_THROW_ON_ERROR);
+        }
+
+        return $params;
     }
 
     /**

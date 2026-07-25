@@ -11,7 +11,9 @@ use Telegram\Bot\Exceptions\TelegramResponseException;
 use Telegram\Bot\Exceptions\TelegramSDKException;
 use Telegram\Bot\FileUpload\InputFile;
 use Telegram\Bot\HttpClients\GuzzleHttpClient;
+use Telegram\Bot\Objects\InputRichMessage;
 use Telegram\Bot\Objects\Message;
+use Telegram\Bot\Objects\TelegramObject;
 use Telegram\Bot\Objects\Update;
 use Telegram\Bot\Objects\WebhookInfo;
 use Telegram\Bot\TelegramResponse;
@@ -111,6 +113,66 @@ test('the correct request body data is created when a post method has parameters
         ->and($request->getUri()->getHost())->toEqual('api.telegram.org')
         ->and($request->getUri()->getPath())->toEqual('/botSpecial_Bot_Token/sendMessage')
         ->and($request->getUri()->getQuery())->toEqual('');
+});
+
+test('rich message methods serialize InputRichMessage for the correct endpoints', function () {
+    $markdown = new InputRichMessage([
+        'markdown' => "# Status\n\nAll systems operational.",
+    ]);
+    $draftHtml = new InputRichMessage([
+        'html' => '<tg-thinking>Thinking...</tg-thinking>',
+    ]);
+    $editedHtml = new InputRichMessage([
+        'html' => '<h1>Updated</h1>',
+    ]);
+    $client = $this->getGuzzleHttpClient([
+        $this->makeFakeServerResponse([
+            'message_id' => 42,
+            'date' => 1_700_000_000,
+            'chat' => ['id' => 123, 'type' => 'private'],
+            'rich_message' => [
+                'blocks' => [['type' => 'paragraph', 'text' => 'All systems operational.']],
+            ],
+        ]),
+        $this->makeFakeServerResponse(true),
+        $this->makeFakeServerResponse([
+            'message_id' => 42,
+            'date' => 1_700_000_000,
+            'chat' => ['id' => 123, 'type' => 'private'],
+        ]),
+    ]);
+    $api = api($client, 'Special_Bot_Token');
+
+    $message = $api->sendRichMessage([
+        'chat_id' => 123,
+        'rich_message' => $markdown,
+    ]);
+    $draftSent = $api->sendRichMessageDraft([
+        'chat_id' => 123,
+        'draft_id' => 7,
+        'rich_message' => $draftHtml,
+    ]);
+    $editedMessage = $api->editMessageText([
+        'chat_id' => 123,
+        'message_id' => 42,
+        'rich_message' => $editedHtml,
+    ]);
+
+    $requests = $this->getHistory()->pluck('request')->values();
+    parse_str((string) $requests[0]->getBody(), $sendBody);
+    parse_str((string) $requests[1]->getBody(), $draftBody);
+    parse_str((string) $requests[2]->getBody(), $editBody);
+
+    expect($message)->toBeInstanceOf(Message::class)
+        ->and($message->richMessage)->toBeInstanceOf(TelegramObject::class)
+        ->and($draftSent)->toBeTrue()
+        ->and($editedMessage)->toBeInstanceOf(Message::class)
+        ->and($requests[0]->getUri()->getPath())->toBe('/botSpecial_Bot_Token/sendRichMessage')
+        ->and($sendBody['rich_message'])->toBe($markdown->toJson(JSON_THROW_ON_ERROR))
+        ->and($requests[1]->getUri()->getPath())->toBe('/botSpecial_Bot_Token/sendRichMessageDraft')
+        ->and($draftBody['rich_message'])->toBe($draftHtml->toJson(JSON_THROW_ON_ERROR))
+        ->and($requests[2]->getUri()->getPath())->toBe('/botSpecial_Bot_Token/editMessageText')
+        ->and($editBody['rich_message'])->toBe($editedHtml->toJson(JSON_THROW_ON_ERROR));
 });
 
 it('returns decoded update objects when updates are available', function () {
