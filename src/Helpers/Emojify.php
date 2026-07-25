@@ -52,9 +52,9 @@ final class Emojify
      *
      * @return Emojify The *Singleton* instance.
      */
-    public static function getInstance(): ?\Telegram\Bot\Helpers\Emojify
+    public static function getInstance(): ?Emojify
     {
-        if (! self::$instance instanceof \Telegram\Bot\Helpers\Emojify) {
+        if (! self::$instance instanceof Emojify) {
             self::$instance = new self;
         }
 

@@ -3,10 +3,12 @@
 namespace Telegram\Bot\Laravel\Facades;
 
 use Illuminate\Support\Facades\Facade;
+use Telegram\Bot\Api;
 use Telegram\Bot\BotsManager;
+use Telegram\Bot\Commands\CommandBus;
 
 /**
- * @see \Telegram\Bot\BotsManager
+ * @see BotsManager
  *
  * @method static \Telegram\Bot\BotsManager setContainer(\Psr\Container\ContainerInterface $container)
  * @method static array getBotConfig(?string $name = null)
@@ -20,7 +22,7 @@ use Telegram\Bot\BotsManager;
  * @method static array getBots()
  * @method static array parseBotCommands(array $commands)
  *
- * @see \Telegram\Bot\Api
+ * @see Api
  *
  * @method static \Telegram\Bot\BotsManager manager(array $config)
  * @method static bool kickChatMember(array $params)
@@ -153,7 +155,7 @@ use Telegram\Bot\BotsManager;
  * @method static bool reopenForumTopic(array $params)
  * @method static bool deleteForumTopic(array $params)
  *
- * @see \Telegram\Bot\Commands\CommandBus
+ * @see CommandBus
  *
  * @method static array getCommands()
  * @method static \Telegram\Bot\Commands\CommandBus addCommands(iterable $commands)

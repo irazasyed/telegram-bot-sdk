@@ -1,5 +1,8 @@
 <?php
 
+use GuzzleHttp\Psr7\Utils;
+use Psr\Http\Message\StreamInterface;
+
 /*
 |--------------------------------------------------------------------------
 | Expectations
@@ -15,10 +18,10 @@ expect()->extend('toBeOne', function () {
     return $this->toBe(1);
 });
 
-function streamFor($resource): Psr\Http\Message\StreamInterface
+function streamFor($resource): StreamInterface
 {
-    if (class_exists(\GuzzleHttp\Psr7\Utils::class)) {
-        return \GuzzleHttp\Psr7\Utils::streamFor($resource);
+    if (class_exists(Utils::class)) {
+        return Utils::streamFor($resource);
     }
 
     throw new RuntimeException('Not found "streamFor" implementation');

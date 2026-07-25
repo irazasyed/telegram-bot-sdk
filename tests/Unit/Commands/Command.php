@@ -1,10 +1,11 @@
 <?php
 
+use Prophecy\PhpUnit\ProphecyTrait;
 use Telegram\Bot\Api;
 use Telegram\Bot\Commands\Command;
 use Telegram\Bot\Objects\Update;
 
-uses(\Prophecy\PhpUnit\ProphecyTrait::class);
+uses(ProphecyTrait::class);
 beforeEach(function () {
     $this->api = $this->prophesize(Api::class)->reveal();
 

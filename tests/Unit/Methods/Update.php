@@ -1,8 +1,9 @@
 <?php
 
 use Telegram\Bot\Exceptions\TelegramSDKException;
+use Telegram\Bot\Methods\Update;
 
-uses(\Telegram\Bot\Methods\Update::class);
+uses(Update::class);
 test('a webhook url must use secure http', function () {
     $this->expectException(TelegramSDKException::class);
     $this->setWebhook([

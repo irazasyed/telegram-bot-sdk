@@ -1,13 +1,14 @@
 <?php
 
 use Prophecy\Argument;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Telegram\Bot\Api;
 use Telegram\Bot\Commands\CommandBus;
 use Telegram\Bot\Commands\HelpCommand;
 use Telegram\Bot\Objects\Message;
 use Telegram\Bot\Objects\Update;
 
-uses(\Prophecy\PhpUnit\ProphecyTrait::class);
+uses(ProphecyTrait::class);
 
 it('ensures a command make method works', function () {
     $update = new Update([

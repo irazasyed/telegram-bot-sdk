@@ -116,7 +116,7 @@ class Update extends BaseObject
     /**
      * Detect type based on properties.
      *
-     * @deprecated Will be removed in v4.0, please use {@see \Telegram\Bot\Objects\Update::objectType} instead.
+     * @deprecated Will be removed in v4.0, please use {@see Update::objectType} instead.
      */
     public function detectType(): ?string
     {
@@ -146,7 +146,7 @@ class Update extends BaseObject
     }
 
     /**
-     * Borrowed from {@see \Telegram\Bot\Objects\Update::getMessage()} from SDK v4.
+     * Borrowed from {@see Update::getMessage()} from SDK v4.
      * Get the message contained in the Update.
      */
     public function getRelatedObject(): Message|InlineQuery|ChosenInlineResult|CallbackQuery|ShippingQuery|PreCheckoutQuery|Poll|PollAnswer

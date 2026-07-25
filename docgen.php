@@ -1,15 +1,19 @@
 <?php
 
+use Telegram\Bot\Api;
+use Telegram\Bot\BotsManager;
+use Telegram\Bot\Commands\CommandBus;
+
 return [
     'facade' => Telegram\Bot\Laravel\Facades\Telegram::class,
 
     'classes' => [
-        \Telegram\Bot\BotsManager::class,
-        \Telegram\Bot\Api::class => [
+        BotsManager::class,
+        Api::class => [
             'setContainer',
             'getWebhookUpdates',
         ],
-        \Telegram\Bot\Commands\CommandBus::class => [
+        CommandBus::class => [
             'getTelegram',
             'setTelegram',
         ],
