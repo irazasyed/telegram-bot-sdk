@@ -11,6 +11,7 @@ use Telegram\Bot\Exceptions\TelegramResponseException;
 use Telegram\Bot\Exceptions\TelegramSDKException;
 use Telegram\Bot\FileUpload\InputFile;
 use Telegram\Bot\HttpClients\GuzzleHttpClient;
+use Telegram\Bot\HttpClients\HttpClientInterface;
 use Telegram\Bot\Objects\InputRichMessage;
 use Telegram\Bot\Objects\Message;
 use Telegram\Bot\Objects\TelegramObject;
@@ -44,6 +45,32 @@ it('uses the default Guzzle http client if none is specified', function () {
 
     expect($httpClientHandler)->toBeInstanceOf(GuzzleHttpClient::class);
 });
+
+it('resolves the http client handler from a class string', function () {
+    $httpClient = api(GuzzleHttpClient::class)->getClient()->getHttpClientHandler();
+
+    expect($httpClient)->toBeInstanceOf(GuzzleHttpClient::class);
+});
+
+it('throws an exception when the http client handler class string is invalid', function () {
+    api(stdClass::class);
+})->throws(TelegramSDKException::class, 'The httpClientHandler parameter must be a valid class-string implementing HttpClientInterface.');
+
+it('throws an exception when the http client handler cannot be instantiated', function () {
+    api(HttpClientInterface::class);
+})->throws(TelegramSDKException::class, 'The httpClientHandler class must be instantiable without constructor arguments.');
+
+it('throws an exception when the http client handler requires constructor arguments', function () {
+    $httpClientHandler = new class('required argument') extends GuzzleHttpClient
+    {
+        public function __construct(string $requiredArgument)
+        {
+            parent::__construct();
+        }
+    };
+
+    api($httpClientHandler::class);
+})->throws(TelegramSDKException::class, 'The httpClientHandler class must be instantiable without constructor arguments.');
 
 it('uses a Guzzle client with a mock queue without error', function () {
     expect($this->api)->toBeInstanceOf(Api::class);
