@@ -2,6 +2,7 @@
 
 use Telegram\Bot\BotsManager;
 use Telegram\Bot\Exceptions\TelegramBotNotFoundException;
+use Telegram\Bot\HttpClients\GuzzleHttpClient;
 
 beforeEach(function () {
     $this->manager = new BotsManager(botsManager());
@@ -22,6 +23,18 @@ test('an invalid or missing config parameter returns null')
     ->toBeInstanceOf(BotsManager::class)
     ->getDefaultBotName()
     ->toBeNull();
+
+it('resolves an http client handler class string from config', function () {
+    $config = botsManager();
+    $config['http_client_handler'] = GuzzleHttpClient::class;
+
+    $httpClientHandler = (new BotsManager($config))
+        ->bot()
+        ->getClient()
+        ->getHttpClientHandler();
+
+    expect($httpClientHandler)->toBeInstanceOf(GuzzleHttpClient::class);
+});
 
 it('is possible to remove a bot from the manager but leave the others', function () {
     $this->manager->bot('bot1');
