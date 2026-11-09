@@ -195,9 +195,9 @@ it('returns decoded update objects when updates are available', function () {
         ->and($secondUpdates[1]->message->text)->toEqual('Test4');
 });
 
-it('throws an exception if a method called does not exist')
-    ->tap(fn () => $this->api->badMethod())
-    ->throws(BadMethodCallException::class);
+it('throws an exception if a method called does not exist', function () {
+    $this->api->badMethod();
+})->throws(BadMethodCallException::class);
 
 it('checks the last response property gets populated after a request', function () {
     $data = [
@@ -228,9 +228,9 @@ it('throws an exception if the api response is not ok', function () {
     $api->getUpdates();
 })->throws(TelegramResponseException::class, 'BadResponse Test');
 
-it('throws exception if invalid chat action is sent')
-    ->tap(fn () => api()->sendChatAction(['action' => 'zzz']))
-    ->throws(TelegramSDKException::class);
+it('throws exception if invalid chat action is sent', function () {
+    api()->sendChatAction(['action' => 'zzz']);
+})->throws(TelegramSDKException::class);
 
 it('can use async promises to send requests', function () {
     $data = [
@@ -262,14 +262,14 @@ it('allows a file id to be used when using a method that involves a file upload'
     $this->assertStringContainsString('document=AwADBAADYwADO1wlBuF1ogMa7HnMAg', (string) $request->getBody());
 });
 
-it('requires all file uploads except file id to be created with file input object')
-    ->tap(fn ($type) => api()->sendDocument(['chat_id' => 123456789, 'document' => $type]))
-    ->with([
-        ['/local/path/to/file.pdf'],
-        ['https://example.com/file.pdf'],
-        [fopen('php://input', 'rb')],
-        [streamFor('testData')],
-    ])
+it('requires all file uploads except file id to be created with file input object', function ($type) {
+    api()->sendDocument(['chat_id' => 123456789, 'document' => $type]);
+})->with([
+    ['/local/path/to/file.pdf'],
+    ['https://example.com/file.pdf'],
+    [fopen('php://input', 'rb')],
+    [streamFor('testData')],
+])
     ->throws(TelegramSDKException::class);
 
 it('throws an exception if the param key used to upload file does not match the method being used', function () {

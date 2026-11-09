@@ -5,15 +5,17 @@ on:
   push:
     paths:
       - '**.php'
-      - 'ci.yml'
+      - '.github/workflows/ci.yml'
       - 'composer.json'
       - 'phpunit.xml.dist'
+      - 'phpunit9.xml.dist'
   pull_request:
     paths:
       - '**.php'
-      - 'ci.yml'
+      - '.github/workflows/ci.yml'
       - 'composer.json'
       - 'phpunit.xml.dist'
+      - 'phpunit9.xml.dist'
 
 jobs:
   tests:
@@ -24,7 +26,7 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        php: [8.0, 8.1, 8.2, 8.3, 8.4]
+        php: ['8.0', '8.1', '8.2', '8.3', '8.4']
         dependencies: [lowest, highest]
         experimental: [false]
 
@@ -50,13 +52,18 @@ jobs:
         uses: ramsey/composer-install@v4
         with:
           dependency-versions: ${{ matrix.dependencies }}
-          composer-options: "--prefer-dist ${{ matrix.composer-options }}"
+          composer-options: "--prefer-dist"
 
       - name: List Installed Dependencies
         run: composer show -D
 
       - name: Execute tests
-        run: composer test:unit
+        run: |
+          config=phpunit.xml.dist
+          if [[ $(vendor/bin/phpunit --version) == *"PHPUnit 9."* ]]; then
+            config=phpunit9.xml.dist
+          fi
+          composer test:unit -- --configuration "$config"
 
       - name: Check .php files for syntax errors
         run: composer test:lint -- --checkstyle | cs2pr

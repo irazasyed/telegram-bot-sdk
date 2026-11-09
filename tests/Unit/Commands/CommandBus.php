@@ -43,9 +43,9 @@ it('can add multiple commands contained in an iterator to the bus', function () 
     expect($result)->toHaveCount(4);
 });
 
-it('throws an exception if a no class exists for the name supplied as a command')
-    ->tap(fn () => $this->bus->addCommand('badcommand'))
-    ->throws(TelegramSDKException::class);
+it('throws an exception if a no class exists for the name supplied as a command', function () {
+    $this->bus->addCommand('badcommand');
+})->throws(TelegramSDKException::class);
 
 it('throws an exception if a commands alias matches a previously added command alias', function () {
     $this->bus->addCommands($this->commandGenerator(3)->all());
@@ -133,9 +133,9 @@ it('can parse a command from a group of bots', function () {
         ->and($commandName02)->toEqual('demo');
 });
 
-it('throws an exception if parsing for a command in a message with no text')
-    ->tap(fn () => $this->bus->parseCommand('', 5, 5))
-    ->throws(InvalidArgumentException::class);
+it('throws an exception if parsing for a command in a message with no text', function () {
+    $this->bus->parseCommand('', 5, 5);
+})->throws(InvalidArgumentException::class);
 
 it('throws an exception if command is not an instance of command interface', function () {
     $class = new class {};

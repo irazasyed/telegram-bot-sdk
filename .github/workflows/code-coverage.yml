@@ -7,17 +7,17 @@ on:
       - '**.php'
       - 'composer.json'
       - 'phpunit.xml.dist'
-      - 'code-coverage.yml'
+      - '.github/workflows/code-coverage.yml'
   pull_request:
     paths:
       - '**.php'
       - 'composer.json'
       - 'phpunit.xml.dist'
-      - 'code-coverage.yml'
+      - '.github/workflows/code-coverage.yml'
 
 jobs:
   coverage:
-    if: (github.repository == 'irazasyed/telegram-bot-sdk') && !contains(github.event.head_commit.message, 'skip ci')
+    if: "!contains(github.event.head_commit.message, 'skip ci')"
 
     runs-on: ubuntu-latest
 
@@ -28,7 +28,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: "latest"
+          php-version: "8.4"
           coverage: pcov
 
       - name: Install dependencies
@@ -40,6 +40,7 @@ jobs:
         run: vendor/bin/pest --coverage --coverage-clover build/pest.xml
 
       - name: Upload to Codecov
+        if: github.repository == 'irazasyed/telegram-bot-sdk'
         uses: codecov/codecov-action@v7
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
