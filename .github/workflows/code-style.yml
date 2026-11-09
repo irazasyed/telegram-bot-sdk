@@ -4,7 +4,7 @@ on:
   push:
     paths:
       - '**.php'
-      - 'code-style.yml'
+      - '.github/workflows/code-style.yml'
 
 jobs:
   code-style:
@@ -12,6 +12,8 @@ jobs:
 
     name: "Laravel Pint (Style)"
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v7

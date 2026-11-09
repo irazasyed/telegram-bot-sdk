@@ -9,8 +9,10 @@ uses(ProphecyTrait::class);
 beforeEach(function () {
     $this->api = $this->prophesize(Api::class)->reveal();
 
-    $this->command = $this->getMockForAbstractClass(Command::class)
-        ->setName('demo');
+    $this->command = (new class extends Command
+    {
+        public function handle() {}
+    })->setName('demo');
 });
 
 test('a command with no pattern set will return an empty argument array', function () {
