@@ -122,6 +122,8 @@ use Telegram\Bot\Commands\CommandBus;
  * @method static \Telegram\Bot\Objects\Message sendDice(array $params)
  * @method static bool sendChatAction(array $params)
  * @method static bool setMessageReaction(array $params)
+ * @method static bool deleteMessageReaction(array $params)
+ * @method static bool deleteAllMessageReactions(array $params)
  * @method static void setPassportDataErrors(array $params)
  * @method static \Telegram\Bot\Objects\Message sendInvoice(array $params)
  * @method static bool answerShippingQuery(array $params)

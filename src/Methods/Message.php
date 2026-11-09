@@ -2,7 +2,6 @@
 
 namespace Telegram\Bot\Methods;
 
-use Illuminate\Support\Arr;
 use Telegram\Bot\Actions;
 use Telegram\Bot\Exceptions\TelegramSDKException;
 use Telegram\Bot\Objects\Message as MessageObject;
@@ -540,13 +539,13 @@ trait Message
     }
 
     /**
-     * Send a poll.
+     * Set a reaction on a message.
      *
-     * Use this method to send a native poll. A native poll can't be sent to a private chat.
+     * Use this method to change the chosen reactions on a message. Returns True on success.
      *
      * <code>
      * $params = [
-     *       'chat_id'                       => '',  // int|string          - Required. Unique identifier for the target chat or username of the target channel (in the format "@channelusername"). A native poll can't be sent to a private chat.
+     *       'chat_id'                       => '',  // int|string          - Required. Unique identifier for the target chat or username of the target channel (in the format "@channelusername").
      *       'message_id'                    => '',  // int                 - Required. Identifier of the target message. If the message belongs to a media group, the reaction is set to the first non-deleted message in the group instead.
      *       'reaction'                      => '',  // ReactionType[]      - (Optional). A JSON-serialized list of reaction types to set on the message. Currently, as non-premium users, bots can set up to one reaction per message. A custom emoji reaction can be used if it is either already present on the message or explicitly allowed by chat administrators.
      *       'is_big'                        => '',  // bool                - (Optional). Pass True to set the reaction with a big animation
@@ -559,8 +558,59 @@ trait Message
      */
     public function setMessageReaction(array $params): bool
     {
-        $params['reaction'] = json_encode(Arr::wrap($params['reaction']), JSON_THROW_ON_ERROR);
+        $reaction = $params['reaction'] ?? [];
+        // A single reaction type is an associative array or object; a list is integer-keyed.
+        if (! is_array($reaction) || array_filter(array_keys($reaction), 'is_string')) {
+            $reaction = [$reaction];
+        }
+
+        $params['reaction'] = json_encode(array_values($reaction), JSON_THROW_ON_ERROR);
 
         return $this->post('setMessageReaction', $params)->getResult();
+    }
+
+    /**
+     * Remove a reaction from a message.
+     *
+     * Use this method to remove a reaction from a message in a group or a supergroup chat. The bot must have the "can_delete_messages" administrator right in the chat.
+     *
+     * <code>
+     * $params = [
+     *       'chat_id'       => '',  // int|string - Required. Unique identifier for the target chat or username of the target supergroup (in the format "@supergroupusername")
+     *       'message_id'    => '',  // int        - Required. Identifier of the target message.
+     *       'user_id'       => '',  // int        - (Optional). Identifier of the user whose reaction will be removed, if the reaction was added by a user.
+     *       'actor_chat_id' => '',  // int        - (Optional). Identifier of the chat whose reaction will be removed, if the reaction was added by a chat.
+     * ]
+     * </code>
+     *
+     * @link https://core.telegram.org/bots/api#deletemessagereaction
+     *
+     * @throws TelegramSDKException
+     */
+    public function deleteMessageReaction(array $params): bool
+    {
+        return $this->post('deleteMessageReaction', $params)->getResult();
+    }
+
+    /**
+     * Remove reactions added by a user or a chat.
+     *
+     * Use this method to remove up to 10000 recent reactions in a group or a supergroup chat added by a given user or chat. The bot must have the "can_delete_messages" administrator right in the chat.
+     *
+     * <code>
+     * $params = [
+     *       'chat_id'       => '',  // int|string - Required. Unique identifier for the target chat or username of the target supergroup (in the format "@supergroupusername")
+     *       'user_id'       => '',  // int        - (Optional). Identifier of the user whose reactions will be removed, if the reactions were added by a user.
+     *       'actor_chat_id' => '',  // int        - (Optional). Identifier of the chat whose reactions will be removed, if the reactions were added by a chat.
+     * ]
+     * </code>
+     *
+     * @link https://core.telegram.org/bots/api#deleteallmessagereactions
+     *
+     * @throws TelegramSDKException
+     */
+    public function deleteAllMessageReactions(array $params): bool
+    {
+        return $this->post('deleteAllMessageReactions', $params)->getResult();
     }
 }
