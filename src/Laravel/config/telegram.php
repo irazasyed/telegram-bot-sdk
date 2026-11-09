@@ -79,7 +79,8 @@ return [
     |--------------------------------------------------------------------------
     |
     | If you'd like to use a custom HTTP Client Handler.
-    | Should be an instance of \Telegram\Bot\HttpClients\HttpClientInterface
+    | Can be an instance or a class-string implementing \Telegram\Bot\HttpClients\HttpClientInterface.
+    | Using a class-string ensures the configuration can be cached.
     |
     | Default: GuzzlePHP
     |

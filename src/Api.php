@@ -4,6 +4,8 @@ namespace Telegram\Bot;
 
 use BadMethodCallException;
 use Illuminate\Support\Traits\Macroable;
+use ReflectionClass;
+use ReflectionException;
 use Telegram\Bot\Commands\CommandBus;
 use Telegram\Bot\Events\HasEventDispatcher;
 use Telegram\Bot\Exceptions\TelegramSDKException;
@@ -67,12 +69,12 @@ class Api
      *
      * @param  string|null  $token  The Telegram Bot API Access Token.
      * @param  bool  $async  (Optional) Indicates if the request to Telegram will be asynchronous (non-blocking).
-     * @param  HttpClientInterface|null  $httpClientHandler  (Optional) Custom HTTP Client Handler.
+     * @param  HttpClientInterface|class-string<HttpClientInterface>|null  $httpClientHandler  (Optional) Custom HTTP Client Handler.
      * @param  string|null  $baseBotUrl  (Optional) Custom base bot url.
      *
      * @throws TelegramSDKException
      */
-    public function __construct(?string $token = null, bool $async = false, ?HttpClientInterface $httpClientHandler = null, ?string $baseBotUrl = null)
+    public function __construct(?string $token = null, bool $async = false, string|HttpClientInterface|null $httpClientHandler = null, ?string $baseBotUrl = null)
     {
         $this->setAccessToken($token ?? getenv(self::BOT_TOKEN_ENV_NAME));
         $this->validateAccessToken();
@@ -81,7 +83,7 @@ class Api
             $this->setAsyncRequest($async);
         }
 
-        $this->httpClientHandler = $httpClientHandler;
+        $this->httpClientHandler = $this->resolveHttpClientHandler($httpClientHandler);
 
         $this->baseBotUrl = $baseBotUrl;
         $this->commandBus = new CommandBus($this);
@@ -127,5 +129,34 @@ class Api
         }
 
         throw new BadMethodCallException(sprintf('Method [%s] does not exist.', $method));
+    }
+
+    /**
+     * Resolve an HTTP client handler instance.
+     *
+     * @param  HttpClientInterface|class-string<HttpClientInterface>|null  $httpClientHandler
+     *
+     * @throws TelegramSDKException|ReflectionException
+     */
+    private function resolveHttpClientHandler(HttpClientInterface|string|null $httpClientHandler): ?HttpClientInterface
+    {
+        if (! is_string($httpClientHandler)) {
+            return $httpClientHandler;
+        }
+
+        // Check the class implements the interface
+        if (! is_a($httpClientHandler, HttpClientInterface::class, true)) {
+            throw new TelegramSDKException('The httpClientHandler parameter must be a valid class-string implementing HttpClientInterface.');
+        }
+
+        $reflection = new ReflectionClass($httpClientHandler);
+        $constructor = $reflection->getConstructor();
+
+        // Check it can be instantiated safely
+        if (! $reflection->isInstantiable() || ($constructor !== null && $constructor->getNumberOfRequiredParameters() > 0)) {
+            throw new TelegramSDKException('The httpClientHandler class must be instantiable without constructor arguments.');
+        }
+
+        return new $httpClientHandler;
     }
 }
