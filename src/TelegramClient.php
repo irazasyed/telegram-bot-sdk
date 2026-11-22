@@ -73,7 +73,10 @@ final class TelegramClient
     /**
      * Download file from Telegram server for given file path.
      *
-     * @param  string  $filePath  File path on Telegram server.
+     * @param  string  $filePath  File path on Telegram server. A local Bot API server started
+     *                            with --local returns an absolute path here instead, which is
+     *                            read directly off disk rather than fetched over HTTP, since the
+     *                            local server does not serve files over HTTP in that mode.
      * @param  string  $filename  Download path to save file.
      *
      * @throws TelegramSDKException
@@ -85,6 +88,14 @@ final class TelegramClient
         // Ensure dir is created.
         if (! @mkdir($fileDir, 0755, true) && ! is_dir($fileDir)) {
             throw TelegramSDKException::fileDownloadFailed('Directory '.$fileDir.' can\'t be created');
+        }
+
+        if (str_starts_with($filePath, '/')) {
+            if (! is_readable($filePath) || ! copy($filePath, $filename)) {
+                throw TelegramSDKException::fileDownloadFailed('Could not read local file', $filePath);
+            }
+
+            return $filename;
         }
 
         $response = $this->httpClientHandler
