@@ -1,6 +1,7 @@
 <?php
 
 use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\Stream;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Telegram\Bot\Api;
@@ -12,6 +13,7 @@ use Telegram\Bot\Exceptions\TelegramSDKException;
 use Telegram\Bot\FileUpload\InputFile;
 use Telegram\Bot\HttpClients\GuzzleHttpClient;
 use Telegram\Bot\HttpClients\HttpClientInterface;
+use Telegram\Bot\Objects\File;
 use Telegram\Bot\Objects\InputRichMessage;
 use Telegram\Bot\Objects\Message;
 use Telegram\Bot\Objects\TelegramObject;
@@ -491,13 +493,13 @@ test('the command handler when using webhook to process updates for commands wil
 
 test('downloading a file fetches it over http when the file path is relative', function () {
     $fileContents = 'remote file contents';
-    $response = new \GuzzleHttp\Psr7\Response(200, [], $fileContents);
+    $response = new Response(200, [], $fileContents);
     $api = api($this->getGuzzleHttpClient([$response]));
 
     $destination = sys_get_temp_dir().'/telegram-bot-sdk-test-'.uniqid().'/file.jpg';
 
     try {
-        $file = new \Telegram\Bot\Objects\File([
+        $file = new File([
             'file_id' => 'ABC',
             'file_unique_id' => 'ABC',
             'file_path' => 'photos/file_0.jpg',
@@ -527,7 +529,7 @@ test('downloading a file reads it directly from disk when the file path is an ab
     $destination = sys_get_temp_dir().'/telegram-bot-sdk-test-'.uniqid().'/file.jpg';
 
     try {
-        $file = new \Telegram\Bot\Objects\File([
+        $file = new File([
             'file_id' => 'ABC',
             'file_unique_id' => 'ABC',
             'file_path' => $source,
@@ -549,7 +551,7 @@ test('downloading a file from an absolute local path throws when the file cannot
 
     $destination = sys_get_temp_dir().'/telegram-bot-sdk-test-'.uniqid().'/file.jpg';
 
-    $file = new \Telegram\Bot\Objects\File([
+    $file = new File([
         'file_id' => 'ABC',
         'file_unique_id' => 'ABC',
         'file_path' => '/nonexistent/directory/file.jpg',
